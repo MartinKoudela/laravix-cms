@@ -23,3 +23,9 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# CMS
+/plugins/*/vendor
+/plugins/*/node_modules
+/themes/*/node_modules
+database/database.sqlite
