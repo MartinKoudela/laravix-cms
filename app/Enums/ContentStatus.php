@@ -2,13 +2,6 @@
 
 namespace App\Enums;
 
-class ContentStatus
+Enum ContentStatus
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
-    {
-        //
-    }
 }
