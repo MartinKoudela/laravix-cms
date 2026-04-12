@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('site_id')->constrained()->cascadeOnDelete();
+            $table->string('key');
+            $table->text('value')->nullable();
             $table->timestamps();
+
+            $table->unique(['site_id', 'key']);
         });
     }
 

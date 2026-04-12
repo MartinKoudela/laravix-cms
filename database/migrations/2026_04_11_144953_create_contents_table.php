@@ -13,7 +13,16 @@ return new class extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('site_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
+            $table->string('type');
+            $table->string('title');
+            $table->string('slug');
+            $table->string('status')->default('draft');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
+
+            $table->unique(['site_id', 'slug']);
         });
     }
 

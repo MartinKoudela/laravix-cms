@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('taxonomies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('site_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('parent_id')->nullable()->constrained('taxonomies')->nullOnDelete();
+            $table->string('type');
+            $table->string('name');
+            $table->string('slug');
             $table->timestamps();
+
+            $table->unique(['site_id', 'slug', 'type']);
         });
     }
 

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('site_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('path');
+            $table->string('disk');
+            $table->string('mime_type');
+            $table->unsignedBigInteger('size');
+            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

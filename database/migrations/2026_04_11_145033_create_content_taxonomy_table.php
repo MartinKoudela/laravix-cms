@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('content_taxonomy', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('content_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('taxonomy_id')->constrained()->cascadeOnDelete();
+
+            $table->primary(['content_id', 'taxonomy_id']);
         });
     }
 

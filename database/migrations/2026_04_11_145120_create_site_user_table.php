@@ -12,8 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('site_user', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId('site_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('role')->default('viewer');
             $table->timestamps();
+
+            $table->primary(['site_id', 'user_id']);
         });
     }
 

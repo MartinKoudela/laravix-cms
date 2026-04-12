@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('content_fields', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('content_id')->constrained()->cascadeOnDelete();
+            $table->string('key');
+            $table->text('value')->nullable();
             $table->timestamps();
+
+            $table->unique(['content_id', 'key']);
         });
     }
 
