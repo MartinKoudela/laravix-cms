@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-#[Fillable(['name', 'domain', 'theme', 'created_at', 'updated_at'])]
+#[Fillable(['name', 'domain', 'theme'])]
 class Site extends Model
 {
     public function contents(): HasMany
