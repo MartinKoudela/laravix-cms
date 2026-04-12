@@ -37,4 +37,11 @@ class Site extends Model
             ->withTimestamps();
     }
 
+    public static function availableThemes(): array
+    {
+        return collect(glob(base_path('themes/*'), GLOB_ONLYDIR))
+            ->mapWithKeys(fn ($path) => [basename($path) => basename($path)])
+            ->all();
+    }
+
 }
