@@ -28,8 +28,7 @@ class EditContent extends EditRecord
                     $slug = $record->is_homepage ? '' : ltrim($record->slug, '/');
 
                     return 'https://'.$record->site->domain.'/'.$slug;
-                })
-                ->openUrlInNewTab(),
+                }, shouldOpenInNewTab: true),
             DeleteAction::make(),
         ];
     }
