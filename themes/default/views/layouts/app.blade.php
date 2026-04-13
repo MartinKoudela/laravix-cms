@@ -5,23 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $content->title ?? $site->name }} – {{ $site->name }}</title>
     <meta name="description" content="{{ optional($content->fields->firstWhere('key', 'meta_description'))->value ?? optional($content->fields->firstWhere('key', 'excerpt'))->value ?? $site->name }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    typography: {
-                        DEFAULT: {
-                            css: {
-                                maxWidth: 'none',
-                            },
-                        },
-                    },
-                },
-            },
-            plugins: [],
-        }
-    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     @stack('head')
 </head>
 <body class="h-full bg-white text-gray-900 antialiased flex flex-col min-h-screen">
