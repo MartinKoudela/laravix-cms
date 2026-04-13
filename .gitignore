@@ -28,4 +28,15 @@ Thumbs.db
 /plugins/*/vendor
 /plugins/*/node_modules
 /themes/*/node_modules
+
+# Database
 database/database.sqlite
+database/*.sqlite
+
+# Storage uploads (user-generated content, not source code)
+/storage/app/public
+/storage/app/private
+
+# Testing
+/.phpunit.cache
+/coverage

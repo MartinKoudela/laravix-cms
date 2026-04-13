@@ -6,6 +6,7 @@ use App\Enums\ContentStatus;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
@@ -23,9 +24,8 @@ class ContentForm
                             ->required()
                             ->maxLength(255)
                             ->live(debounce: 500)
-                            ->afterStateUpdated(fn (TextInput $component, ?string $state) =>
-                                $component->getContainer()->getComponent('slug')
-                                    ?->state(str($state ?? '')->slug()->toString())
+                            ->afterStateUpdated(fn (TextInput $component, ?string $state) => $component->getContainer()->getComponent('slug')
+                                ?->state(str($state ?? '')->slug()->toString())
                             )
                             ->columnSpanFull(),
                         TextInput::make('slug')
@@ -39,6 +39,10 @@ class ContentForm
                             ->relationship('site', 'name')
                             ->required()
                             ->searchable(),
+                        Toggle::make('is_homepage')
+                            ->label('Set as homepage')
+                            ->helperText('Only one content per site can be the homepage.')
+                            ->columnSpanFull(),
                     ]),
                 Section::make('Publishing')
                     ->columns(2)

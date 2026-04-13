@@ -21,10 +21,8 @@ class CmsController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $resolvedSlug = ltrim($slug, '/') ?: 'home';
-
         $content = Content::where('site_id', $site->id)
-            ->where('slug', $resolvedSlug)
+            ->when(! $slug, fn ($q) => $q->where('is_homepage', true), fn ($q) => $q->where('slug', $slug))
             ->where('status', 'published')
             ->where(function ($query) {
                 $query->whereNull('published_at')

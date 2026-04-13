@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['site_id', 'type', 'title', 'slug', 'status', 'published_at', 'created_by'])]
+#[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'status', 'published_at', 'created_by'])]
 class Content extends Model
 {
     public function site(): BelongsTo
