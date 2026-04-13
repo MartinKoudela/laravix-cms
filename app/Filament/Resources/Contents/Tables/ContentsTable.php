@@ -4,8 +4,10 @@ namespace App\Filament\Resources\Contents\Tables;
 
 use App\Enums\ContentStatus;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -19,6 +21,11 @@ class ContentsTable
                 TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('slug')
+                    ->prefix('/')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('site.name')
                     ->sortable()
                     ->searchable(),
@@ -33,18 +40,24 @@ class ContentsTable
                         default => 'gray',
                     })
                     ->sortable(),
+                IconColumn::make('is_homepage')
+                    ->boolean()
+                    ->trueColor('success')
+                    ->falseColor('gray')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('author.name')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('updated_at', 'desc')
             ->filters([
                 SelectFilter::make('status')
                     ->options(collect(ContentStatus::cases())->mapWithKeys(
@@ -62,6 +75,7 @@ class ContentsTable
                 EditAction::make(),
             ])
             ->toolbarActions([
+                CreateAction::make(),
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
