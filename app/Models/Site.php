@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable(['name', 'domain', 'theme'])]
 class Site extends Model
@@ -37,11 +37,15 @@ class Site extends Model
             ->withTimestamps();
     }
 
+    public function setDomainAttribute(string $value): void
+    {
+        $this->attributes['domain'] = rtrim(parse_url($value, PHP_URL_HOST) ?? $value, '/');
+    }
+
     public static function availableThemes(): array
     {
         return collect(glob(base_path('themes/*'), GLOB_ONLYDIR))
             ->mapWithKeys(fn ($path) => [basename($path) => basename($path)])
             ->all();
     }
-
 }

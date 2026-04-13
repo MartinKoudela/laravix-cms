@@ -12,10 +12,19 @@ class CmsController extends Controller
 {
     public function show(Request $request, string $slug = '/'): View
     {
-        $site = Site::where('domain', $request->getHost())->firstOrFail();
+        $host = $request->getHost();
+        $site = Site::all()->first(
+            fn ($s) => rtrim(parse_url($s->domain, PHP_URL_HOST) ?? $s->domain, '/') === $host
+        );
+
+        if (! $site) {
+            throw new NotFoundHttpException;
+        }
+
+        $resolvedSlug = ltrim($slug, '/') ?: 'home';
 
         $content = Content::where('site_id', $site->id)
-            ->where('slug', ltrim($slug, '/'))
+            ->where('slug', $resolvedSlug)
             ->where('status', 'published')
             ->where(function ($query) {
                 $query->whereNull('published_at')
@@ -25,17 +34,15 @@ class CmsController extends Controller
             ->first();
 
         if (! $content) {
-            throw new NotFoundHttpException();
+            throw new NotFoundHttpException;
         }
 
         $theme = $site->theme ?? 'default';
 
-
-        $view = "themes.{$theme}.{$content->type}.show";
-
+        $view = "themes.{$theme}::{$content->type}.show";
 
         if (! view()->exists($view)) {
-            $view = "themes.{$theme}.default";
+            $view = "themes.{$theme}::default";
         }
 
         return view($view, compact('content', 'site'));
