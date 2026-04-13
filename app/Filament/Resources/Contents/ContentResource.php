@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Contents;
 use App\Filament\Resources\Contents\Pages\CreateContent;
 use App\Filament\Resources\Contents\Pages\EditContent;
 use App\Filament\Resources\Contents\Pages\ListContents;
+use App\Filament\Resources\Contents\RelationManagers;
 use App\Filament\Resources\Contents\Schemas\ContentForm;
 use App\Filament\Resources\Contents\Tables\ContentsTable;
 use App\Models\Content;
@@ -35,7 +36,7 @@ class ContentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\FieldsRelationManager::class,
         ];
     }
 

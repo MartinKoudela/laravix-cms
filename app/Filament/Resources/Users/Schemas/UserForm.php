@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class UserForm
@@ -12,16 +12,29 @@ class UserForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
-                    ->required(),
-                TextInput::make('email')
-                    ->label('Email address')
-                    ->email()
-                    ->required(),
-                DateTimePicker::make('email_verified_at'),
-                TextInput::make('password')
-                    ->password()
-                    ->required(),
+                Section::make('General')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255)
+                            ->unique(ignoreRecord: true),
+                    ]),
+                Section::make('Password')
+                    ->schema([
+                        TextInput::make('password')
+                            ->password()
+                            ->revealable()
+                            ->required()
+                            ->minLength(8)
+                            ->dehydrateStateUsing(fn ($state) => bcrypt($state))
+                            ->dehydrated(fn ($state) => filled($state))
+                            ->helperText('Leave blank to keep current password when editing.'),
+                    ]),
             ]);
     }
 }

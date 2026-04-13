@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\Media\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class MediaForm
@@ -12,23 +13,21 @@ class MediaForm
     {
         return $schema
             ->components([
-                Select::make('site_id')
-                    ->relationship('site', 'name')
-                    ->required(),
-                TextInput::make('name')
-                    ->required(),
-                TextInput::make('path')
-                    ->required(),
-                TextInput::make('disk')
-                    ->required(),
-                TextInput::make('mime_type')
-                    ->required(),
-                TextInput::make('size')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('created_by')
-                    ->required()
-                    ->numeric(),
+                Section::make('General')
+                    ->schema([
+                        Select::make('site_id')
+                            ->relationship('site', 'name')
+                            ->required()
+                            ->searchable(),
+                        FileUpload::make('path')
+                            ->label('File')
+                            ->required()
+                            ->disk('public')
+                            ->directory('media')
+                            ->storeFileNamesIn('name')
+                            ->maxSize(10240)
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 }

@@ -18,7 +18,8 @@ class TaxonomyResource extends Resource
 {
     protected static ?string $model = Taxonomy::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|null|\UnitEnum $navigationGroup = 'Content';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -30,13 +31,6 @@ class TaxonomyResource extends Resource
     public static function table(Table $table): Table
     {
         return TaxonomiesTable::configure($table);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

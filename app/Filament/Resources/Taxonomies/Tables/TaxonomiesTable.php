@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class TaxonomiesTable
@@ -14,27 +15,35 @@ class TaxonomiesTable
     {
         return $table
             ->columns([
+                TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('type')
+                    ->badge()
+                    ->sortable(),
                 TextColumn::make('site.name')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('parent.name')
-                    ->searchable(),
-                TextColumn::make('type')
-                    ->searchable(),
-                TextColumn::make('name')
-                    ->searchable(),
+                    ->label('Parent')
+                    ->searchable()
+                    ->placeholder('—'),
                 TextColumn::make('slug')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('type')
+                    ->options([
+                        'category' => 'Category',
+                        'tag' => 'Tag',
+                    ]),
+                SelectFilter::make('site')
+                    ->relationship('site', 'name'),
             ])
             ->recordActions([
                 EditAction::make(),

@@ -15,18 +15,20 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('created_at')
+                TextColumn::make('email')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('sites_count')
+                    ->counts('sites')
+                    ->label('Sites')
+                    ->sortable(),
+                TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

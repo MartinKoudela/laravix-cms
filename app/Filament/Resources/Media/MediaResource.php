@@ -8,7 +8,6 @@ use App\Filament\Resources\Media\Pages\ListMedia;
 use App\Filament\Resources\Media\Schemas\MediaForm;
 use App\Filament\Resources\Media\Tables\MediaTable;
 use App\Models\Media;
-use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +17,8 @@ class MediaResource extends Resource
 {
     protected static ?string $model = Media::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|null|\UnitEnum $navigationGroup = 'Content';
+    protected static string|null|\BackedEnum $navigationIcon = Heroicon::OutlinedPhoto;
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -30,13 +30,6 @@ class MediaResource extends Resource
     public static function table(Table $table): Table
     {
         return MediaTable::configure($table);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
