@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Forms\Components\TextInput;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -29,7 +30,7 @@ class UserForm
                         TextInput::make('password')
                             ->password()
                             ->revealable()
-                            ->required()
+                            ->required(fn ($livewire) => $livewire instanceof CreateRecord)
                             ->minLength(8)
                             ->dehydrateStateUsing(fn ($state) => bcrypt($state))
                             ->dehydrated(fn ($state) => filled($state))

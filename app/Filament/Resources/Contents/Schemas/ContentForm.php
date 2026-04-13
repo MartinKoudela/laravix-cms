@@ -32,7 +32,9 @@ class ContentForm
                             ->required()
                             ->maxLength(255)
                             ->key('slug')
-                            ->prefix('/'),
+                            ->prefix('/')
+                            ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, callable $get) => $rule->where('site_id', $get('site_id')))
+                            ->helperText('Must be unique per site.'),
                         Select::make('site_id')
                             ->relationship('site', 'name')
                             ->required()
