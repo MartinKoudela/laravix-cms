@@ -21,14 +21,22 @@ class CmsController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $content = Content::where('site_id', $site->id)
-            ->when(! $slug, fn ($q) => $q->where('is_homepage', true), fn ($q) => $q->where('slug', $slug))
+        $content = Content::query()
+            ->where('site_id', $site->id)
             ->where('status', 'published')
-            ->where(function ($query) {
-                $query->whereNull('published_at')
+            ->where(function ($q) use ($slug) {
+                if (is_null($slug) || $slug === '/') {
+                    $q->where('is_homepage', true);
+                } else {
+                    $q->where('slug', $slug);
+                }
+            })
+            ->where(function ($q) {
+                $q->whereNull('published_at')
                     ->orWhere('published_at', '<=', now());
             })
             ->with(['fields', 'taxonomies'])
+            ->orderBy('published_at', 'desc')
             ->first();
 
         if (! $content) {
