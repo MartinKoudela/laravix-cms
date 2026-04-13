@@ -51,6 +51,27 @@ class CmsController extends Controller
             $view = "themes.{$theme}::default";
         }
 
-        return view($view, compact('content', 'site'));
+        $navPages = Content::query()
+            ->where('site_id', $site->id)
+            ->where('type', 'page')
+            ->where('status', 'published')
+            ->where(function ($q) {
+                $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+            })
+            ->orderBy('title')
+            ->get(['id', 'title', 'slug', 'is_homepage']);
+
+        $recentPosts = Content::query()
+            ->where('site_id', $site->id)
+            ->where('type', 'post')
+            ->where('status', 'published')
+            ->where(function ($q) {
+                $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+            })
+            ->orderByDesc('published_at')
+            ->limit(5)
+            ->get(['id', 'title', 'slug', 'published_at']);
+
+        return view($view, compact('content', 'site', 'navPages', 'recentPosts'));
     }
 }
