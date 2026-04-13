@@ -18,8 +18,8 @@ class ContentResource extends Resource
 {
     protected static ?string $model = Content::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
+    protected static string|null|\UnitEnum $navigationGroup = 'Content';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema

@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\Contents\Tables;
 
+use App\Enums\ContentStatus;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ContentsTable
@@ -14,33 +16,47 @@ class ContentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('site.name')
-                    ->searchable(),
-                TextColumn::make('created_by')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('type')
-                    ->searchable(),
                 TextColumn::make('title')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
-                TextColumn::make('status')
-                    ->searchable(),
-                TextColumn::make('published_at')
-                    ->dateTime()
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('created_at')
+                TextColumn::make('site.name')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('type')
+                    ->badge()
+                    ->sortable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        ContentStatus::Published->value => 'success',
+                        ContentStatus::Scheduled->value => 'warning',
+                        default => 'gray',
+                    })
+                    ->sortable(),
+                TextColumn::make('author.name')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options(collect(ContentStatus::cases())->mapWithKeys(
+                        fn (ContentStatus $case) => [$case->value => $case->name]
+                    )),
+                SelectFilter::make('type')
+                    ->options([
+                        'page' => 'Page',
+                        'post' => 'Post',
+                    ]),
+                SelectFilter::make('site')
+                    ->relationship('site', 'name'),
             ])
             ->recordActions([
                 EditAction::make(),

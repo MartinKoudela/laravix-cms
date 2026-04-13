@@ -19,7 +19,8 @@ class SiteForm
                     ->schema([
                         TextInput::make('name')
                             ->required()
-                            ->maxLength(255),
+                            ->maxLength(255)
+                            ->helperText('The public name of the website.'),
                         TextInput::make('domain')
                             ->required()
                             ->maxLength(255)

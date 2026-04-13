@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
-Enum SiteRole
+enum SiteRole: string
 {
+    case Admin = 'admin';
+    case Editor = 'editor';
+    case Viewer = 'viewer';
 }

@@ -15,16 +15,24 @@ class SitesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('domain')
-                    ->searchable(),
+                    ->searchable()
+                    ->url(fn ($record) => 'https://' . $record->domain)
+                    ->openUrlInNewTab(),
                 TextColumn::make('theme')
-                    ->searchable(),
+                    ->badge()
+                    ->sortable(),
+                TextColumn::make('users_count')
+                    ->counts('users')
+                    ->label('Users')
+                    ->sortable(),
+                TextColumn::make('contents_count')
+                    ->counts('contents')
+                    ->label('Contents')
+                    ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -2,6 +2,9 @@
 
 namespace App\Enums;
 
-Enum ContentStatus
+enum ContentStatus: string
 {
+    case Draft = 'draft';
+    case Published = 'published';
+    case Scheduled = 'scheduled';
 }
