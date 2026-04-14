@@ -64,6 +64,7 @@ class ContentForm
                             ->options([
                                 'page' => 'Page',
                                 'post' => 'Post',
+                                'archive' => 'Archive',
                             ])
                             ->default('page')
                             ->disabled(fn ($record) => $record !== null)
