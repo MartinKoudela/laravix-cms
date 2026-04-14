@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\SiteRole;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasTenants;
 use Filament\Panel;
@@ -30,8 +31,8 @@ class User extends Authenticatable implements FilamentUser, HasTenants
 
     public function sites(): BelongsToMany
     {
-        return $this->belongsToMany(Site::class,
-            'site_user')
+        return $this->belongsToMany(Site::class, 'site_user')
+            ->using(SiteUser::class)
             ->withPivot('role')
             ->withTimestamps();
     }
@@ -48,6 +49,15 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         }
 
         return $this->sites;
+    }
+
+    public function roleForSite(Site $site): ?SiteRole
+    {
+        return $this->sites()
+            ->whereKey($site)
+            ->first()
+            ?->pivot
+            ->role;
     }
 
     public function canAccessTenant(Model $tenant): bool

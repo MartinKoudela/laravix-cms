@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\Activitylog\Support\LogOptions;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 #[Fillable(['name', 'domain', 'theme'])]
 class Site extends Model
@@ -42,6 +42,7 @@ class Site extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'site_user')
+            ->using(SiteUser::class)
             ->withPivot('role')
             ->withTimestamps();
     }
