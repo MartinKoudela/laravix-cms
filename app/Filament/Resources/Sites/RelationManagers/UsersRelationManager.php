@@ -43,9 +43,11 @@ class UsersRelationManager extends RelationManager
                 TextColumn::make('pivot.role')
                     ->label('Role')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        SiteRole::ADMIN->value => 'warning',
-                        SiteRole::EDITOR->value => 'info',
+                    ->color(fn (SiteRole|string $state): string => match (
+                        $state instanceof SiteRole ? $state : SiteRole::tryFrom($state)
+                    ) {
+                        SiteRole::ADMIN => 'warning',
+                        SiteRole::EDITOR => 'info',
                         default => 'gray',
                     }),
             ])
