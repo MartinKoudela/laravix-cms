@@ -23,6 +23,11 @@ class ActivityLogResource extends Resource
 
     protected static ?string $navigationLabel = 'Activity Log';
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->is_super_admin ?? false;
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema;

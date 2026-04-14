@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\Activitylog\Support\LogOptions;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 #[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'status', 'published_at', 'created_by'])]
 class Content extends Model
@@ -18,6 +18,14 @@ class Content extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty();
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'is_homepage' => 'boolean',
+            'published_at' => 'datetime',
+        ];
     }
 
     public function site(): BelongsTo

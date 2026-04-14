@@ -13,9 +13,7 @@ class CmsController extends Controller
     public function show(Request $request, string $slug = '/'): View
     {
         $host = $request->getHost();
-        $site = Site::all()->first(
-            fn ($s) => rtrim(parse_url($s->domain, PHP_URL_HOST) ?? $s->domain, '/') === $host
-        );
+        $site = Site::where('domain', $host)->first();
 
         if (! $site) {
             throw new NotFoundHttpException;
