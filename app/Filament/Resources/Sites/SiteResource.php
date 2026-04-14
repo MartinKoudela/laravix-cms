@@ -20,6 +20,11 @@ class SiteResource extends Resource
 
     protected static bool $isScopedToTenant = false;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->is_super_admin ?? false;
+    }
+
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedGlobeAlt;
