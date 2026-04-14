@@ -13,6 +13,7 @@ class MediaForm
         return $schema
             ->components([
                 Section::make('General')
+                    ->columnSpanFull()
                     ->schema([
                         FileUpload::make('path')
                             ->label('File')
@@ -21,6 +22,7 @@ class MediaForm
                             ->directory('media')
                             ->storeFileNamesIn('name')
                             ->maxSize(10240)
+                            ->imageEditor()
                             ->columnSpanFull(),
                     ]),
             ]);

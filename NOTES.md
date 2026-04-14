@@ -6,4 +6,4 @@
 - [ ] Improve settings UI
 - [ ] Improve other admin panels UI
 - [ ] add rich editors
-- [ ] add image editing tools
+- [x] add image editing tools
