@@ -36,21 +36,16 @@ class ContentForm
                             ->prefix('/')
                             ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, callable $get) => $rule->where('site_id', $get('site_id')))
                             ->helperText('Must be unique per site.'),
-                        Select::make('site_id')
-                            ->relationship('site', 'name')
-                            ->required()
-                            ->searchable()
-                            ->live(),
                         Toggle::make('is_homepage')
                             ->label('Set as homepage')
                             ->helperText('Only one content per site can be the homepage.')
                             ->columnSpanFull()
-                            ->hidden(function (?Content $record, Get $get): bool {
+                            ->hidden(function (?Content $record): bool {
                                 if ($record?->is_homepage) {
                                     return false;
                                 }
 
-                                $siteId = $get('site_id');
+                                $siteId = filament()->getTenant()?->id;
 
                                 if (! $siteId) {
                                     return false;
@@ -70,7 +65,9 @@ class ContentForm
                                 'page' => 'Page',
                                 'post' => 'Post',
                             ])
-                            ->default('page'),
+                            ->default('page')
+                            ->disabled(fn ($record) => $record !== null)
+                            ->dehydrated(),
                         Select::make('status')
                             ->required()
                             ->options(collect(ContentStatus::cases())->mapWithKeys(

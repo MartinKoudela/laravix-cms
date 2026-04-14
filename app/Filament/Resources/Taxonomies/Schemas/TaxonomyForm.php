@@ -6,7 +6,6 @@ use App\Models\Taxonomy;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class TaxonomyForm
@@ -22,9 +21,8 @@ class TaxonomyForm
                             ->required()
                             ->maxLength(255)
                             ->live(debounce: 500)
-                            ->afterStateUpdated(fn (TextInput $component, ?string $state) =>
-                                $component->getContainer()->getComponent('slug')
-                                    ?->state(str($state ?? '')->slug()->toString())
+                            ->afterStateUpdated(fn (TextInput $component, ?string $state) => $component->getContainer()->getComponent('slug')
+                                ?->state(str($state ?? '')->slug()->toString())
                             ),
                         TextInput::make('slug')
                             ->required()
@@ -38,17 +36,12 @@ class TaxonomyForm
                                 'tag' => 'Tag',
                             ])
                             ->default('category'),
-                        Select::make('site_id')
-                            ->relationship('site', 'name')
-                            ->required()
-                            ->searchable()
-                            ->live(),
                     ]),
                 Section::make('Hierarchy')
                     ->schema([
                         Select::make('parent_id')
-                            ->options(fn (Get $get) => Taxonomy::query()
-                                ->where('site_id', $get('site_id'))
+                            ->options(fn () => Taxonomy::query()
+                                ->where('site_id', filament()->getTenant()?->id)
                                 ->pluck('name', 'id')
                             )
                             ->searchable()

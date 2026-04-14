@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Media\Schemas;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -15,10 +14,6 @@ class MediaForm
             ->components([
                 Section::make('General')
                     ->schema([
-                        Select::make('site_id')
-                            ->relationship('site', 'name')
-                            ->required()
-                            ->searchable(),
                         FileUpload::make('path')
                             ->label('File')
                             ->required()
