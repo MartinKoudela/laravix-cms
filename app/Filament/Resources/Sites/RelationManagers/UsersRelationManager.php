@@ -44,8 +44,8 @@ class UsersRelationManager extends RelationManager
                     ->label('Role')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        SiteRole::Admin->value => 'warning',
-                        SiteRole::Editor->value => 'info',
+                        SiteRole::ADMIN->value => 'warning',
+                        SiteRole::EDITOR->value => 'info',
                         default => 'gray',
                     }),
             ])

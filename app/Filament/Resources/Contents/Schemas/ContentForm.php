@@ -73,10 +73,10 @@ class ContentForm
                             ->options(collect(ContentStatus::cases())->mapWithKeys(
                                 fn (ContentStatus $case) => [$case->value => $case->name]
                             ))
-                            ->default(ContentStatus::Draft->value)
+                            ->default(ContentStatus::DRAFT->value)
                             ->live(),
                         DateTimePicker::make('published_at')
-                            ->visible(fn (Get $get): bool => $get('status') === ContentStatus::Scheduled->value),
+                            ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
                     ]),
             ]);
     }

@@ -34,8 +34,8 @@ class ContentsTable
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        ContentStatus::Published->value => 'success',
-                        ContentStatus::Scheduled->value => 'warning',
+                        ContentStatus::PUBLISHED->value => 'success',
+                        ContentStatus::SCHEDULED->value => 'warning',
                         default => 'gray',
                     })
                     ->sortable(),

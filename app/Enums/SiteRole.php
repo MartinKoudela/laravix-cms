@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum SiteRole: string
 {
-    case Admin = 'admin';
-    case Editor = 'editor';
-    case Viewer = 'viewer';
+    case ADMIN = 'admin';
+    case EDITOR = 'editor';
+    case VIEWER = 'viewer';
 }

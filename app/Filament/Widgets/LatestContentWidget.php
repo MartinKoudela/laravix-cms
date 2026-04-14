@@ -16,6 +16,7 @@ class LatestContentWidget extends BaseWidget
     protected static ?string $heading = 'Recent Content';
 
     protected ?string $pollingInterval = null;
+
     protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
@@ -37,8 +38,8 @@ class LatestContentWidget extends BaseWidget
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        ContentStatus::Published->value => 'success',
-                        ContentStatus::Scheduled->value => 'warning',
+                        ContentStatus::PUBLISHED->value => 'success',
+                        ContentStatus::SCHEDULED->value => 'warning',
                         default => 'gray',
                     }),
                 TextColumn::make('updated_at')

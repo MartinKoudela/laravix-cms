@@ -40,3 +40,4 @@ database/*.sqlite
 # Testing
 /.phpunit.cache
 /coverage
+/memory/feedback_enum_naming.md
