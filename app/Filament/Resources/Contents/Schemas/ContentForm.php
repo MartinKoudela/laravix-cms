@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Contents\Schemas;
 
 use App\Enums\ContentStatus;
+use App\Models\Content;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -38,11 +39,27 @@ class ContentForm
                         Select::make('site_id')
                             ->relationship('site', 'name')
                             ->required()
-                            ->searchable(),
+                            ->searchable()
+                            ->live(),
                         Toggle::make('is_homepage')
                             ->label('Set as homepage')
                             ->helperText('Only one content per site can be the homepage.')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->hidden(function (?Content $record, Get $get): bool {
+                                if ($record?->is_homepage) {
+                                    return false;
+                                }
+
+                                $siteId = $get('site_id');
+
+                                if (! $siteId) {
+                                    return false;
+                                }
+
+                                return Content::where('site_id', $siteId)
+                                    ->where('is_homepage', true)
+                                    ->exists();
+                            }),
                     ]),
                 Section::make('Publishing')
                     ->columns(2)
