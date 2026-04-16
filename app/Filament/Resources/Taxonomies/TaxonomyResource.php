@@ -19,6 +19,7 @@ class TaxonomyResource extends Resource
     protected static ?string $model = Taxonomy::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
     protected static ?string $recordTitleAttribute = 'name';

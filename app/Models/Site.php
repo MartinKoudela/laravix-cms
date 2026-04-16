@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
+
 #[Fillable(['name', 'domain', 'theme'])]
 class Site extends Model
 {
@@ -16,7 +17,7 @@ class Site extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty()
-            ->useLogName('site-' . $this->id);
+            ->useLogName('site-'.$this->id);
 
     }
 
@@ -56,7 +57,7 @@ class Site extends Model
     public static function availableThemes(): array
     {
         return collect(glob(base_path('themes/*'), GLOB_ONLYDIR))
-            ->mapWithKeys(fn($path) => [basename($path) => basename($path)])
+            ->mapWithKeys(fn ($path) => [basename($path) => basename($path)])
             ->all();
     }
 }

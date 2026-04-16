@@ -19,7 +19,7 @@ class SitesTable
                     ->sortable(),
                 TextColumn::make('domain')
                     ->searchable()
-                    ->url(fn ($record) => 'https://' . $record->domain)
+                    ->url(fn ($record) => 'https://'.$record->domain)
                     ->openUrlInNewTab(),
                 TextColumn::make('theme')
                     ->badge()

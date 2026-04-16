@@ -5,11 +5,7 @@ namespace App\Filament\Resources\ActivityLogs;
 use App\Enums\SiteRole;
 use App\Filament\Resources\ActivityLogs\Pages\ListActivityLogs;
 use App\Filament\Resources\ActivityLogs\Tables\ActivityLogsTable;
-use App\Models\Content;
-use App\Models\Media;
-use App\Models\Setting;
 use App\Models\Site;
-use App\Models\Taxonomy;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -34,7 +30,7 @@ class ActivityLogResource extends Resource
     {
         $user = auth()->user();
 
-        if (!$user) {
+        if (! $user) {
             return false;
         }
 
@@ -53,11 +49,11 @@ class ActivityLogResource extends Resource
         $query = parent::getEloquentQuery();
         $site = filament()->getTenant();
 
-        if (!$site instanceof Site) {
+        if (! $site instanceof Site) {
             return $query->whereNull('id');
         }
 
-        return $query->where('log_name', 'site-' .
+        return $query->where('log_name', 'site-'.
             $site->id);
     }
 

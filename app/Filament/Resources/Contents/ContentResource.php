@@ -5,7 +5,7 @@ namespace App\Filament\Resources\Contents;
 use App\Filament\Resources\Contents\Pages\CreateContent;
 use App\Filament\Resources\Contents\Pages\EditContent;
 use App\Filament\Resources\Contents\Pages\ListContents;
-use App\Filament\Resources\Contents\RelationManagers;
+use App\Filament\Resources\Contents\RelationManagers\FieldsRelationManager;
 use App\Filament\Resources\Contents\Schemas\ContentForm;
 use App\Filament\Resources\Contents\Tables\ContentsTable;
 use App\Models\Content;
@@ -20,7 +20,9 @@ class ContentResource extends Resource
     protected static ?string $model = Content::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
@@ -36,7 +38,7 @@ class ContentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\FieldsRelationManager::class,
+            FieldsRelationManager::class,
         ];
     }
 

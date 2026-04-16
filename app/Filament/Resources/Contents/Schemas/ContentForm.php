@@ -4,6 +4,8 @@ namespace App\Filament\Resources\Contents\Schemas;
 
 use App\Enums\ContentStatus;
 use App\Models\Content;
+use App\Support\FieldComponentFactory;
+use App\Support\FieldRegistry;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -20,6 +22,7 @@ class ContentForm
             ->components([
                 Section::make('General')
                     ->columns(2)
+                    ->columnSpanFull()
                     ->schema([
                         TextInput::make('title')
                             ->required()
@@ -58,6 +61,7 @@ class ContentForm
                     ]),
                 Section::make('Publishing')
                     ->columns(2)
+                    ->columnSpanFull()
                     ->schema([
                         Select::make('type')
                             ->required()
@@ -79,6 +83,14 @@ class ContentForm
                         DateTimePicker::make('published_at')
                             ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
                     ]),
+                Section::make('Fields')
+                    ->schema(
+                        array_map(
+                            fn ($definition) => FieldComponentFactory::make($definition),
+                            FieldRegistry::forContentType(null)
+                        )
+                    )
+                    ->columnSpanFull(),
             ]);
     }
 }

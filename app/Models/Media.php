@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\Activitylog\Support\LogOptions;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
+
 #[Fillable(['site_id', 'name', 'path', 'disk', 'mime_type', 'size', 'created_by'])]
 class Media extends Model
 {
@@ -15,7 +16,7 @@ class Media extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty()
-            ->useLogName('site-' . $this->site_id);
+            ->useLogName('site-'.$this->site_id);
 
     }
 

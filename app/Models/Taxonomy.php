@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
+
 #[Fillable(['site_id', 'type', 'name', 'slug', 'parent_id'])]
 class Taxonomy extends Model
 {
@@ -17,7 +18,7 @@ class Taxonomy extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty()
-            ->useLogName('site-' . $this->site_id);
+            ->useLogName('site-'.$this->site_id);
 
     }
 
