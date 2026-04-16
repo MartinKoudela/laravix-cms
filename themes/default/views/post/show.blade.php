@@ -5,20 +5,14 @@
         $fields = $content->fields->keyBy('key');
         $body = $fields->get('body')?->value;
         $excerpt = $fields->get('excerpt')?->value;
-        $featuredImageRaw = $fields->get('featured_image')?->value;
-        $featuredImage = null;
-        if ($featuredImageRaw) {
-            $featuredImage = str_starts_with($featuredImageRaw, 'http')
-                ? $featuredImageRaw
-                : \Illuminate\Support\Facades\Storage::url($featuredImageRaw);
-        }
-        $extraFields = $content->fields->whereNotIn('key', ['body', 'excerpt', 'featured_image', 'meta_description']);
+        $heroImageId = $fields->get('hero_image')?->value;
+        $heroMedia = $heroImageId ? ($mediaMap[$heroImageId] ?? null) : null;
+        $extraFields = $content->fields->whereNotIn('key', ['body', 'excerpt', 'hero_image']);
     @endphp
 
-    {{-- Featured image --}}
-    @if ($featuredImage)
+    @if ($heroMedia)
         <div class="w-full h-64 sm:h-80 md:h-[480px] overflow-hidden bg-gray-100">
-            <img src="{{ $featuredImage }}" alt="{{ $content->title }}"
+            <img src="{{ $heroMedia->url }}" alt="{{ $heroMedia->name }}"
                  class="w-full h-full object-cover">
         </div>
     @endif

@@ -21,7 +21,7 @@ class MediaTable
             ->columns([
                 Split::make([
                     ImageColumn::make('path')
-                        ->disk('public')
+                        ->disk(fn ($record) => $record->disk)
                         ->imageSize(56)
                         ->square()
                         ->extraImgAttributes(['loading' => 'lazy'])
