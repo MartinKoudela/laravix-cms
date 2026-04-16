@@ -17,7 +17,7 @@ class ActivityLogsTable
                     ->searchable(),
                 TextColumn::make('description')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'created' => 'success',
                         'updated' => 'info',
                         'deleted' => 'danger',
@@ -25,9 +25,18 @@ class ActivityLogsTable
                     }),
                 TextColumn::make('subject_type')
                     ->label('Model')
-                    ->formatStateUsing(fn (string $state): string => class_basename($state))
+                    ->formatStateUsing(fn(string $state): string => class_basename($state))
                     ->badge()
                     ->color('gray'),
+                TextColumn::make('subject_name')
+                    ->label('Name')
+                    ->getStateUsing(function ($record): string {
+                        $changes = $record->attribute_changes;
+                        $attrs = $changes['attributes'] ?? $changes['old'] ?? [];
+
+                        return $attrs['title'] ?? $attrs['name'] ?? $attrs['key'] ?? '-';
+                    })
+                    ->sortable(false),
                 TextColumn::make('subject_id')
                     ->label('ID')
                     ->sortable(),

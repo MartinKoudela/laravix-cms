@@ -34,7 +34,7 @@ class ActivityLogResource extends Resource
     {
         $user = auth()->user();
 
-        if (! $user) {
+        if (!$user) {
             return false;
         }
 
@@ -53,28 +53,12 @@ class ActivityLogResource extends Resource
         $query = parent::getEloquentQuery();
         $site = filament()->getTenant();
 
-        if (! $site instanceof Site) {
+        if (!$site instanceof Site) {
             return $query->whereNull('id');
         }
 
-        return $query->where(function (Builder $q) use ($site): void {
-            $q->where(fn (Builder $s) => $s
-                ->where('subject_type', Content::class)
-                ->whereIn('subject_id', $site->contents()->pluck('id'))
-            )->orWhere(fn (Builder $s) => $s
-                ->where('subject_type', Media::class)
-                ->whereIn('subject_id', $site->media()->pluck('id'))
-            )->orWhere(fn (Builder $s) => $s
-                ->where('subject_type', Taxonomy::class)
-                ->whereIn('subject_id', $site->taxonomies()->pluck('id'))
-            )->orWhere(fn (Builder $s) => $s
-                ->where('subject_type', Setting::class)
-                ->whereIn('subject_id', $site->settings()->pluck('id'))
-            )->orWhere(fn (Builder $s) => $s
-                ->where('subject_type', Site::class)
-                ->where('subject_id', $site->id)
-            );
-        });
+        return $query->where('log_name', 'site-' .
+            $site->id);
     }
 
     public static function form(Schema $schema): Schema
