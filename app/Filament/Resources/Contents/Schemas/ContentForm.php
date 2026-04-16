@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Contents\Schemas;
 
 use App\Enums\ContentStatus;
 use App\Models\Content;
+use App\Models\Taxonomy;
 use App\Support\FieldComponentFactory;
 use App\Support\FieldRegistry;
 use Filament\Forms\Components\DateTimePicker;
@@ -82,6 +83,18 @@ class ContentForm
                             ->live(),
                         DateTimePicker::make('published_at')
                             ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
+                    ]),
+                Section::make('Taxonomies')
+                    ->columnSpanFull()
+                    ->schema([
+                        Select::make('taxonomies')
+                            ->relationship('taxonomies', 'name')
+                            ->multiple()
+                            ->searchable()
+                            ->preload()
+                            ->options(fn () => Taxonomy::where('site_id', filament()->getTenant()?->id)
+                                ->pluck('name', 'id')
+                            ),
                     ]),
                 Section::make('Fields')
                     ->schema(
