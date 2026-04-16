@@ -5,6 +5,7 @@ namespace App\Support;
 use App\Enums\FieldType;
 use App\Models\Media;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -24,6 +25,8 @@ class FieldComponentFactory
             FieldType::RICH_TEXT => RichEditor::make($key)->label($definition->label)->columnSpanFull(),
             FieldType::BOOLEAN => Toggle::make($key)->label($definition->label),
             FieldType::DATE => DatePicker::make($key)->label($definition->label),
+            FieldType::DATETIME => DateTimePicker::make($key)->label($definition->label),
+            FieldType::NUMBER => TextInput::make($key)->label($definition->label)->numeric(),
             FieldType::URL => TextInput::make($key)->label($definition->label)->url(),
             FieldType::IMAGE, FieldType::FILE => Select::make($key)
                 ->label($definition->label)
@@ -49,6 +52,7 @@ class FieldComponentFactory
             FieldType::SELECT => Select::make($key)
                 ->label($definition->label)
                 ->options($definition->config['options'] ?? []),
+
         };
     }
 
@@ -57,9 +61,9 @@ class FieldComponentFactory
         $url = e(Storage::disk($media->disk)->url($media->path));
         $name = e($media->name);
 
-        return "<div class=\"flex items-center gap-x-2\">
-            <img src=\"{$url}\" class=\"h-8 w-8 object-cover rounded shrink-0\">
-            <span>{$name}</span>
+        return "<div style=\"display:flex;align-items:center;gap:12px;padding:4px 0\">
+            <img src=\"{$url}\" style=\"width:48px;height:48px;object-fit:cover;border-radius:6px;flex-shrink:0\">
+            <span style=\"font-weight:500;font-size:14px\">{$name}</span>
         </div>";
     }
 }

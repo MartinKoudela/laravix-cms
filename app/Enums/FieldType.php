@@ -13,5 +13,6 @@ enum FieldType: string
     case SELECT = 'select';
     case URL = 'url';
     case DATE = 'date';
-
+    case DATETIME = 'datetime';
+    case NUMBER = 'number';
 }
