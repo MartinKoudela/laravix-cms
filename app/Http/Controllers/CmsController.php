@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\FieldType;
 use App\Models\Content;
+use App\Models\Media;
 use App\Models\Site;
+use App\Support\FieldRegistry;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -70,6 +73,20 @@ class CmsController extends Controller
             ->limit(5)
             ->get(['id', 'title', 'slug', 'published_at']);
 
-        return view($view, compact('content', 'site', 'navPages', 'recentPosts'));
+        $imageKeys = collect(FieldRegistry::forContentType($content->type))
+            ->filter(fn ($def) => $def->type === FieldType::IMAGE)
+            ->pluck('key');
+
+        $mediaIds = $content->fields
+            ->whereIn('key', $imageKeys->all())
+            ->pluck('value')
+            ->filter()
+            ->map(fn ($id) => (int) $id);
+
+        $mediaMap = Media::whereIn('id', $mediaIds)
+            ->get()
+            ->keyBy('id');
+
+        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'mediaMap'));
     }
 }
