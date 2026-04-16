@@ -24,7 +24,9 @@ class SiteForm
                         TextInput::make('domain')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('example.com'),
+                            ->placeholder('example.com')
+                            ->unique(table: 'sites', column:
+                                'domain', ignoreRecord: true),
                     ]),
                 Section::make('Appearance')
                     ->schema([
