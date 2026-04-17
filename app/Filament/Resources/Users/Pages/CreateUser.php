@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class CreateUser extends Page
@@ -30,15 +31,21 @@ class CreateUser extends Page
         return $schema
             ->statePath('data')
             ->components([
-                TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Select::make('role')
-                    ->options(collect(SiteRole::cases())->mapWithKeys(
-                        fn (SiteRole $case) => [$case->value => $case->name]
-                    ))
-                    ->required(),
+                Section::make('Invite User')
+                    ->description('The user will receive an email with a link to set up their account.')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Select::make('role')
+                            ->options(collect(SiteRole::cases())->mapWithKeys(
+                                fn (SiteRole $case) => [$case->value => $case->name]
+                            ))
+                            ->required()
+                            ->helperText('Role determines what the user can do within this site.'),
+                    ]),
             ]);
     }
 
@@ -52,7 +59,7 @@ class CreateUser extends Page
             'token' => UserInvitation::generateToken(),
             'site_id' => Filament::getTenant()->id,
             'invited_by' => auth()->id(),
-            'expires_at' => now()->addDays(7),
+            'expires_at' => now()->addDays(1),
         ]);
 
         Notification::make()
