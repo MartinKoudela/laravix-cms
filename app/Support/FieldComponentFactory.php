@@ -52,8 +52,13 @@ class FieldComponentFactory
             FieldType::SELECT => Select::make($key)
                 ->label($definition->label)
                 ->options($definition->config['options'] ?? []),
-
         };
+
+        if ($definition->hint) {
+            $component->helperText($definition->hint);
+        }
+
+        return $component;
     }
 
     private static function mediaOptionLabel(Media $media): string

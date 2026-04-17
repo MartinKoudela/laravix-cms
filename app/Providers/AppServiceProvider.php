@@ -21,9 +21,30 @@ class AppServiceProvider extends ServiceProvider
     {
 
         FieldRegistry::content([
+            // Content
             FieldDefinition::make('body')->type(FieldType::RICH_TEXT)->label('Body'),
             FieldDefinition::make('hero_image')->type(FieldType::IMAGE)->label('Hero Image'),
             FieldDefinition::make('excerpt')->type(FieldType::TEXTAREA)->label('Excerpt'),
+
+            // SEO
+            FieldDefinition::make('meta_title')
+                ->label('Meta Title')
+                ->group('SEO')
+                ->hint('Overrides the site-wide default when set.'),
+            FieldDefinition::make('meta_description')
+                ->type(FieldType::TEXTAREA)
+                ->label('Meta Description')
+                ->group('SEO')
+                ->hint('Up to 160 characters. Overrides the site-wide default.'),
+            FieldDefinition::make('og_image')
+                ->type(FieldType::IMAGE)
+                ->label('OG Image')
+                ->group('SEO')
+                ->hint('Overrides the site-wide OG image for this page.'),
+            FieldDefinition::make('noindex')
+                ->type(FieldType::BOOLEAN)
+                ->label('Hide from search engines')
+                ->group('SEO'),
         ]);
 
         SettingRegistry::register([
@@ -36,6 +57,21 @@ class AppServiceProvider extends ServiceProvider
                 ->type(FieldType::TEXTAREA)
                 ->label('Site Description')
                 ->group('General'),
+            SettingDefinition::make('logo')
+                ->type(FieldType::IMAGE)
+                ->label('Site Logo')
+                ->group('General')
+                ->hint('Displayed in the header and footer.'),
+            SettingDefinition::make('favicon')
+                ->type(FieldType::IMAGE)
+                ->label('Favicon')
+                ->group('General')
+                ->hint('Browser tab icon. Recommended: 32×32 or 64×64 PNG.'),
+            SettingDefinition::make('locale')
+                ->label('Locale')
+                ->group('General')
+                ->default('en')
+                ->hint('Language code used in <html lang="">. E.g. en, cs, de, fr.'),
             SettingDefinition::make('contact_email')
                 ->label('Contact Email')
                 ->group('General')
@@ -58,6 +94,10 @@ class AppServiceProvider extends ServiceProvider
                 ->label('OG Image')
                 ->group('SEO')
                 ->hint('Default Open Graph image for social sharing.'),
+            SettingDefinition::make('google_site_verification')
+                ->label('Google Site Verification')
+                ->group('SEO')
+                ->hint('Paste the content value from the Google Search Console meta tag.'),
             SettingDefinition::make('twitter_url')
                 ->type(FieldType::URL)
                 ->label('X / Twitter')

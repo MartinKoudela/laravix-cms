@@ -96,14 +96,17 @@ class ContentForm
                                 ->pluck('name', 'id')
                             ),
                     ]),
-                Section::make('Fields')
-                    ->schema(
-                        array_map(
+                ...array_map(
+                    fn (string $group, array $definitions) => Section::make($group)
+                        ->schema(array_map(
                             fn ($definition) => FieldComponentFactory::make($definition),
-                            FieldRegistry::forContentType(null)
-                        )
-                    )
-                    ->columnSpanFull(),
+                            $definitions,
+                        ))
+                        ->columns(2)
+                        ->columnSpanFull(),
+                    array_keys(FieldRegistry::grouped()),
+                    array_values(FieldRegistry::grouped()),
+                ),
             ]);
     }
 }

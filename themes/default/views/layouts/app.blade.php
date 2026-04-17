@@ -1,10 +1,89 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="{{ $settings->get('locale', 'en') }}" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $content->title ?? $site->name }} – {{ $site->name }}</title>
-    <meta name="description" content="{{ optional($content->fields->firstWhere('key', 'meta_description'))->value ?? optional($content->fields->firstWhere('key', 'excerpt'))->value ?? $site->name }}">
+
+    @if($faviconMedia)
+        <link rel="icon" href="{{ $faviconMedia->url }}">
+    @endif
+
+    <title>{{ $seo['title'] }} – {{ $settings->get('site_name', $site->name) }}</title>
+
+    @if($seo['description'])
+        <meta name="description" content="{{ $seo['description'] }}">
+    @endif
+
+    @if($seo['noindex'])
+        <meta name="robots" content="noindex, nofollow">
+    @endif
+
+    <link rel="canonical" href="{{ $seo['canonical'] }}">
+
+    {{-- Open Graph --}}
+    <meta property="og:title" content="{{ $seo['title'] }}">
+    <meta property="og:type" content="{{ $content->type === 'post' ? 'article' : 'website' }}">
+    <meta property="og:url" content="{{ $seo['canonical'] }}">
+    <meta property="og:site_name" content="{{ $settings->get('site_name', $site->name) }}">
+    @if($seo['description'])
+        <meta property="og:description" content="{{ $seo['description'] }}">
+    @endif
+    @if($seo['og_image_url'])
+        <meta property="og:image" content="{{ $seo['og_image_url'] }}">
+    @endif
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="{{ $seo['og_image_url'] ? 'summary_large_image' : 'summary' }}">
+    <meta name="twitter:title" content="{{ $seo['title'] }}">
+    @if($seo['description'])
+        <meta name="twitter:description" content="{{ $seo['description'] }}">
+    @endif
+    @if($seo['og_image_url'])
+        <meta name="twitter:image" content="{{ $seo['og_image_url'] }}">
+    @endif
+    @if($settings->get('twitter_url'))
+        <meta name="twitter:site" content="{{ $settings->get('twitter_url') }}">
+    @endif
+
+    {{-- Search Console verification --}}
+    @if($settings->get('google_site_verification'))
+        <meta name="google-site-verification" content="{{ $settings->get('google_site_verification') }}">
+    @endif
+
+    {{-- JSON-LD --}}
+    @php
+        $sameAs = array_values(array_filter([
+            $settings->get('twitter_url'),
+            $settings->get('linkedin_url'),
+            $settings->get('facebook_url'),
+            $settings->get('instagram_url'),
+            $settings->get('github_url'),
+        ]));
+
+        $organization = array_filter([
+            '@type' => 'Organization',
+            'name'  => $settings->get('site_name', $site->name),
+            'url'   => url('/'),
+            'sameAs' => $sameAs ?: null,
+        ]);
+
+        $webpage = array_filter([
+            '@type'         => $content->type === 'post' ? 'Article' : 'WebPage',
+            'headline'      => $seo['title'],
+            'url'           => $seo['canonical'],
+            'description'   => $seo['description'] ?: null,
+            'image'         => $seo['og_image_url'] ?: null,
+            'datePublished' => $content->published_at?->toIso8601String(),
+            'dateModified'  => $content->updated_at->toIso8601String(),
+        ]);
+
+        $jsonLd = [
+            '@context' => 'https://schema.org',
+            '@graph'   => [$organization, $webpage],
+        ];
+    @endphp
+    <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     @stack('head')
 </head>
@@ -14,8 +93,12 @@
     <header class="border-b border-gray-200 bg-white sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16">
-                <a href="/" class="text-xl font-bold text-gray-900 hover:text-gray-700 transition-colors">
-                    {{ $site->name }}
+                <a href="/" class="flex items-center hover:opacity-80 transition-opacity">
+                    @if($logoMedia)
+                        <img src="{{ $logoMedia->url }}" alt="{{ $settings->get('site_name', $site->name) }}" class="h-8 w-auto">
+                    @else
+                        <span class="text-xl font-bold text-gray-900">{{ $settings->get('site_name', $site->name) }}</span>
+                    @endif
                 </a>
 
                 {{-- Desktop nav --}}

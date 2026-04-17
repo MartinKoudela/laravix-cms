@@ -11,6 +11,7 @@ class FieldDefinition
         public readonly FieldType $type,
         public readonly string $label,
         public readonly ?string $group = null,
+        public readonly ?string $hint = null,
         public readonly array $config = [],
     ) {}
 
@@ -22,24 +23,30 @@ class FieldDefinition
     public function type(FieldType $type): static
     {
         return new static($this->key, $type, $this->label,
-            $this->group, $this->config);
+            $this->group, $this->hint, $this->config);
     }
 
     public function label(string $label): static
     {
         return new static($this->key, $this->type, $label,
-            $this->group, $this->config);
+            $this->group, $this->hint, $this->config);
     }
 
     public function group(string $group): static
     {
-        return new static($this->key, $this->type,
-            $this->label, $group, $this->config);
+        return new static($this->key, $this->type, $this->label,
+            $group, $this->hint, $this->config);
+    }
+
+    public function hint(string $hint): static
+    {
+        return new static($this->key, $this->type, $this->label,
+            $this->group, $hint, $this->config);
     }
 
     public function config(array $config): static
     {
-        return new static($this->key, $this->type,
-            $this->label, $this->group, $config);
+        return new static($this->key, $this->type, $this->label,
+            $this->group, $this->hint, $config);
     }
 }

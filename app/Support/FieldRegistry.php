@@ -26,10 +26,20 @@ class FieldRegistry
 
     public static function forContentType(?string $type): array
     {
-        $typeFields = $type ? (static::$perType[$type] ??
-            []) : [];
+        $typeFields = $type ? (static::$perType[$type] ?? []) : [];
 
-        return array_values(array_merge(static::$global,
-            $typeFields));
+        return array_values(array_merge(static::$global, $typeFields));
+    }
+
+    public static function grouped(?string $type = null, string $defaultGroup = 'Content'): array
+    {
+        $groups = [];
+
+        foreach (static::forContentType($type) as $definition) {
+            $group = $definition->group ?? $defaultGroup;
+            $groups[$group][] = $definition;
+        }
+
+        return $groups;
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\FieldType;
 use App\Models\Content;
 use App\Models\Media;
+use App\Models\Setting;
 use App\Models\Site;
 use App\Support\FieldRegistry;
 use Illuminate\Http\Request;
@@ -83,10 +84,35 @@ class CmsController extends Controller
             ->filter()
             ->map(fn ($id) => (int) $id);
 
-        $mediaMap = Media::whereIn('id', $mediaIds)
-            ->get()
-            ->keyBy('id');
+        $settings = Setting::where('site_id', $site->id)->pluck('value', 'key');
 
-        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'mediaMap'));
+        foreach (['og_image', 'logo', 'favicon'] as $imageKey) {
+            $id = (int) $settings->get($imageKey);
+            if ($id && ! $mediaIds->contains($id)) {
+                $mediaIds->push($id);
+            }
+        }
+
+        $mediaMap = Media::whereIn('id', $mediaIds)->get()->keyBy('id');
+
+        $contentFields = $content->fields->pluck('value', 'key');
+
+        $ogImageId = (int) ($contentFields->get('og_image') ?: $settings->get('og_image'));
+        $logoMedia = ($logoId = (int) $settings->get('logo')) ? $mediaMap->get($logoId) : null;
+        $faviconMedia = ($faviconId = (int) $settings->get('favicon')) ? $mediaMap->get($faviconId) : null;
+        $ogMedia = $ogImageId ? $mediaMap->get($ogImageId) : null;
+
+        $seo = [
+            'title' => $contentFields->get('meta_title')
+                ?: $settings->get('meta_title')
+                ?: $content->title,
+            'description' => $contentFields->get('meta_description')
+                ?: $settings->get('meta_description'),
+            'og_image_url' => $ogMedia?->url,
+            'noindex' => (bool) $contentFields->get('noindex'),
+            'canonical' => url($content->is_homepage ? '/' : '/'.$content->slug),
+        ];
+
+        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia'));
     }
 }

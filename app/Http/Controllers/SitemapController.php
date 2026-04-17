@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Content;
+use App\Models\Site;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
+class SitemapController extends Controller
+{
+    public function index(Request $request): Response
+    {
+        $host = $request->getHost();
+        $site = Site::where('domain', $host)->first();
+
+        if (! $site) {
+            throw new NotFoundHttpException;
+        }
+
+        $contents = Content::query()
+            ->where('site_id', $site->id)
+            ->where('status', 'published')
+            ->where(function ($q) {
+                $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+            })
+            ->whereNotExists(function ($q) {
+                $q->from('content_fields')
+                    ->whereColumn('content_fields.content_id', 'contents.id')
+                    ->where('content_fields.key', 'noindex')
+                    ->where('content_fields.value', '1');
+            })
+            ->orderByDesc('updated_at')
+            ->get(['id', 'slug', 'is_homepage', 'updated_at']);
+
+        $xml = view('sitemap', compact('contents'))->render();
+
+        return response($xml, 200, ['Content-Type' => 'application/xml']);
+    }
+
+    public function robots(Request $request): Response
+    {
+        $host = $request->getHost();
+        $site = Site::where('domain', $host)->first();
+
+        $sitemapUrl = $site ? url('/sitemap.xml') : null;
+
+        $content = "User-agent: *\nAllow: /\n";
+
+        if ($sitemapUrl) {
+            $content .= "\nSitemap: {$sitemapUrl}\n";
+        }
+
+        return response($content, 200, ['Content-Type' => 'text/plain']);
+    }
+}
