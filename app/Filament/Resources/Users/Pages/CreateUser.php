@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Users\Pages;
 
 use App\Enums\SiteRole;
 use App\Filament\Resources\Users\UserResource;
+use App\Mail\UserInvitationMail;
 use App\Models\UserInvitation;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
@@ -12,6 +13,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Mail;
 
 class CreateUser extends Page
 {
@@ -53,7 +55,7 @@ class CreateUser extends Page
     {
         $data = $this->form->getState();
 
-        UserInvitation::create([
+        $invitation = UserInvitation::create([
             'email' => $data['email'],
             'role' => $data['role'],
             'token' => UserInvitation::generateToken(),
@@ -62,8 +64,10 @@ class CreateUser extends Page
             'expires_at' => now()->addDays(1),
         ]);
 
+        Mail::to($invitation->email)->send(new UserInvitationMail($invitation));
+
         Notification::make()
-            ->title('Invitation sent')
+            ->title('Invitation sent to ' . $invitation->email)
             ->success()
             ->send();
 
