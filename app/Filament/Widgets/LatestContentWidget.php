@@ -37,11 +37,12 @@ class LatestContentWidget extends BaseWidget
                     ->badge(),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        ContentStatus::PUBLISHED->value => 'success',
-                        ContentStatus::SCHEDULED->value => 'warning',
+                    ->color(fn (ContentStatus $state): string => match ($state) {
+                        ContentStatus::PUBLISHED => 'success',
+                        ContentStatus::SCHEDULED => 'warning',
                         default => 'gray',
-                    }),
+                    })
+                    ->formatStateUsing(fn (ContentStatus $state): string => $state->value),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable(),
