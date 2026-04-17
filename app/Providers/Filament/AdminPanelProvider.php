@@ -29,10 +29,16 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('Laravix CMS')
-            // ->brandLogo(asset('laravix-logo.svg'))
+            ->brandLogo(asset('logo-full.svg'))
+            ->darkModeBrandLogo(asset('logo-full-dark.svg'))
+            ->brandLogoHeight('2.5rem')
             ->colors([
-                'primary' => Color::Indigo,
-                'gray' => Color::Slate,
+                'primary' => '#7F77DD',
+                'success' => '#1D9E75',
+                'gray' => '#888780',
+                'info' => Color::Sky,
+                'warning' => Color::Amber,
+                'danger' => Color::Rose,
             ])
             ->tenant(Site::class, slugAttribute: 'id')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
