@@ -9,10 +9,12 @@ use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
 use BackedEnum;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class UserResource extends Resource
 {
@@ -20,16 +22,22 @@ class UserResource extends Resource
 
     protected static bool $isScopedToTenant = false;
 
-    public static function canViewAny(): bool
-    {
-        return auth()->user()?->is_super_admin ?? false;
-    }
-
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->join('site_user', function ($join) {
+                $join->on('users.id', '=', 'site_user.user_id')
+                    ->where('site_user.site_id', '=', Filament::getTenant()?->id);
+            })
+            ->where('users.is_super_admin', false)
+            ->select('users.*', 'site_user.role');
+    }
 
     public static function form(Schema $schema): Schema
     {

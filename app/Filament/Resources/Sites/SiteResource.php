@@ -45,7 +45,6 @@ class SiteResource extends Resource
     {
         return [
             RelationManagers\SettingsRelationManager::class,
-            RelationManagers\UsersRelationManager::class,
         ];
     }
 

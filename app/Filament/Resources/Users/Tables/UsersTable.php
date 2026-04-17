@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Enums\SiteRole;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class UsersTable
@@ -20,11 +22,15 @@ class UsersTable
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('sites_count')
-                    ->counts('sites')
-                    ->label('Sites')
-                    ->sortable(),
+                TextColumn::make('role')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        SiteRole::ADMIN->value => 'warning',
+                        SiteRole::EDITOR->value => 'info',
+                        default => 'gray',
+                    }),
                 TextColumn::make('email_verified_at')
+                    ->label('Verified')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -34,7 +40,10 @@ class UsersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('role')
+                    ->options(collect(SiteRole::cases())->mapWithKeys(
+                        fn (SiteRole $case) => [$case->value => $case->name]
+                    )),
             ])
             ->recordActions([
                 EditAction::make(),

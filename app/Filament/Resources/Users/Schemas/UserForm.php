@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Enums\SiteRole;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\Pages\CreateRecord;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -19,22 +20,11 @@ class UserForm
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('email')
-                            ->email()
-                            ->required()
-                            ->maxLength(255)
-                            ->unique(ignoreRecord: true),
-                    ]),
-                Section::make('Password')
-                    ->schema([
-                        TextInput::make('password')
-                            ->password()
-                            ->revealable()
-                            ->required(fn ($livewire) => $livewire instanceof CreateRecord)
-                            ->minLength(8)
-                            ->dehydrateStateUsing(fn ($state) => bcrypt($state))
-                            ->dehydrated(fn ($state) => filled($state))
-                            ->helperText('Leave blank to keep current password when editing.'),
+                        Select::make('role')
+                            ->options(collect(SiteRole::cases())->mapWithKeys(
+                                fn (SiteRole $case) => [$case->value => $case->name]
+                            ))
+                            ->required(),
                     ]),
             ]);
     }
