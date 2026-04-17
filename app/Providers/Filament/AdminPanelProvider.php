@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Tenancy\RegisterSite;
 use App\Models\Site;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -31,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('Laravix CMS')
             ->brandLogo(asset('logo-full.svg'))
             ->darkModeBrandLogo(asset('logo-full-dark.svg'))
-            ->brandLogoHeight('2.5rem')
+            ->brandLogoHeight('3.2rem')
             ->colors([
                 'primary' => '#7F77DD',
                 'success' => '#1D9E75',
@@ -41,6 +42,7 @@ class AdminPanelProvider extends PanelProvider
                 'danger' => Color::Rose,
             ])
             ->tenant(Site::class, slugAttribute: 'id')
+            ->tenantRegistration(RegisterSite::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([

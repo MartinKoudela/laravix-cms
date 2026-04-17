@@ -21,12 +21,10 @@ class AppServiceProvider extends ServiceProvider
     {
 
         FieldRegistry::content([
-            // Content
             FieldDefinition::make('body')->type(FieldType::RICH_TEXT)->label('Body'),
             FieldDefinition::make('hero_image')->type(FieldType::IMAGE)->label('Hero Image'),
             FieldDefinition::make('excerpt')->type(FieldType::TEXTAREA)->label('Excerpt'),
 
-            // SEO
             FieldDefinition::make('meta_title')
                 ->label('Meta Title')
                 ->group('SEO')
@@ -48,7 +46,6 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         SettingRegistry::register([
-            // General
             SettingDefinition::make('site_name')
                 ->label('Site Name')
                 ->group('General')
@@ -78,7 +75,6 @@ class AppServiceProvider extends ServiceProvider
                 ->hint('Used in contact forms and transactional emails.')
                 ->config(['email' => true]),
 
-            // SEO
             SettingDefinition::make('meta_title')
                 ->label('Meta Title')
                 ->group('SEO')
