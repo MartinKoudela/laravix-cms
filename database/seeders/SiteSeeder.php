@@ -8,9 +8,8 @@ use Illuminate\Database\Seeder;
 
 class SiteSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    use WithoutModelEvents;
+
     public function run(): void
     {
         Site::factory()->count(15)->create();

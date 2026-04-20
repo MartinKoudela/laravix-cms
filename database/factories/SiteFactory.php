@@ -21,7 +21,6 @@ class SiteFactory extends Factory
             'name' => fake()->domainWord(),
             'domain' => fake()->domainName(),
             'theme' => fake()->randomElement(['default', 'blog']),
-
         ];
     }
 }

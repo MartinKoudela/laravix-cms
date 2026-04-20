@@ -8,9 +8,8 @@ use Illuminate\Database\Seeder;
 
 class MediaSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    use WithoutModelEvents;
+
     public function run(): void
     {
         Media::factory()->count(15)->create();

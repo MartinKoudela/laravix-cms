@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\SiteRole;
+use App\Models\Site;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,6 +18,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        User::factory()->create([
+            'name' => 'Martin Koudela',
+            'email' => 'mk@martinkoudela.com',
+            'password' => Hash::make('password'),
+            'is_super_admin' => true,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Jay Jay',
+            'email' => 'hello@jakubforman.eu',
+            'password' => Hash::make('password'),
+            'is_super_admin' => true,
+        ]);
+
         $this->call([
             SiteSeeder::class,
             UserSeeder::class,
@@ -24,18 +42,12 @@ class DatabaseSeeder extends Seeder
             TaxonomySeeder::class,
         ]);
 
-        User::factory()->create([
-            'name' => 'Martin Koudela',
-            'email' => 'mk@martinkoudela.com',
-            'password' => 'password',
-            'is_super_admin' => true,
-        ]);
-
-        User::factory()->create([
-            'name' => 'Jay Jay',
-            'email' => 'hello@jakubforman.eu',
-            'password' => 'password',
-            'is_super_admin' => true,
-        ]);
+        Site::all()->each(function (Site $site) {
+            User::all()->each(function (User $user) use ($site) {
+                $site->users()->attach($user->id, [
+                    'role' => fake()->randomElement(SiteRole::cases()),
+                ]);
+            });
+        });
     }
 }
