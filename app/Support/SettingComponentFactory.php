@@ -21,6 +21,7 @@ class SettingComponentFactory
 
         $component = match ($definition->type) {
             FieldType::TEXT => TextInput::make($key)->label($definition->label),
+            FieldType::COLOR => TextInput::make($key)->label($definition->label)->type('color')->extraInputAttributes(['style' => 'height:40px;padding:2px 4px;cursor:pointer']),
             FieldType::TEXTAREA => Textarea::make($key)->label($definition->label)->columnSpanFull(),
             FieldType::RICH_TEXT => RichEditor::make($key)->label($definition->label)->columnSpanFull(),
             FieldType::BOOLEAN => Toggle::make($key)->label($definition->label),

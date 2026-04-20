@@ -15,4 +15,5 @@ enum FieldType: string
     case DATE = 'date';
     case DATETIME = 'datetime';
     case NUMBER = 'number';
+    case COLOR = 'color';
 }

@@ -35,12 +35,8 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('logo-full-dark.svg'))
             ->brandLogoHeight('3.2rem')
             ->colors([
-                'primary' => '#7F77DD',
-                'success' => '#1D9E75',
-                'gray' => '#888780',
-                'info' => Color::Sky,
-                'warning' => Color::Amber,
-                'danger' => Color::Rose,
+                'primary' => Color::Indigo,
+                'gray' => Color::Slate,
             ])
             ->tenant(Site::class, slugAttribute: 'id')
             ->tenantRegistration(RegisterSite::class)

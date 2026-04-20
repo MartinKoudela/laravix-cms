@@ -15,11 +15,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call([
+            UserSeeder::class,
+            ContentSeeder::class,
+            MediaSeeder::class,
+            SettingSeeder::class,
+            SiteSeeder::class,
+            TaxonomySeeder::class,
+            UserSeeder::class,
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Martin Koudela',
+            'email' => 'mk@martinkoudela.com',
+            'password' => 'password',
+            'is_super_admin' => true,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Jay Jay',
+            'email' => 'hello@jakubforman.eu',
+            'password' => 'password',
+            'is_super_admin' => true,
         ]);
     }
 }

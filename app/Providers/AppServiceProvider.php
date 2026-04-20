@@ -114,6 +114,8 @@ class AppServiceProvider extends ServiceProvider
                 ->type(FieldType::URL)
                 ->label('GitHub')
                 ->group('Social'),
+            SettingDefinition::make('')
+
         ]);
 
         foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) as $themePath) {
