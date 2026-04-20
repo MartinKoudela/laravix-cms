@@ -25,7 +25,7 @@ class SiteResource extends Resource
         return auth()->user()?->is_super_admin ?? false;
     }
 
-    protected static string|null|\UnitEnum $navigationGroup = 'Management';
+    protected static string|null|\UnitEnum $navigationGroup = 'Laravix';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedGlobeAlt;
 

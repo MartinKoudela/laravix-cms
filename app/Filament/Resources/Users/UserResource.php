@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Users;
 
+use App\Enums\SiteRole;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
+use App\Models\Site;
 use App\Models\User;
 use BackedEnum;
 use Filament\Facades\Filament;
@@ -27,6 +29,24 @@ class UserResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return false;
+        }
+
+        if ($user->is_super_admin) {
+            return true;
+        }
+
+        $site = filament()->getTenant();
+
+        return $site instanceof Site
+            && $user->roleForSite($site) === SiteRole::ADMIN;
+    }
 
     public static function getEloquentQuery(): Builder
     {

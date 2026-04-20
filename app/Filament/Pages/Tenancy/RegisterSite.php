@@ -16,6 +16,11 @@ class RegisterSite extends RegisterTenant
         return true;
     }
 
+    public static function canView(): bool
+    {
+        return auth()->user()?->is_super_admin ?? false;
+    }
+
     public static function getLabel(): string
     {
         return 'Create Site';
