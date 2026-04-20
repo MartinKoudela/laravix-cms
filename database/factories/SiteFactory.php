@@ -18,7 +18,7 @@ class SiteFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->domainWord(),
+            'name' => fake()->company(),
             'domain' => fake()->domainName(),
             'theme' => fake()->randomElement(['default', 'blog']),
         ];

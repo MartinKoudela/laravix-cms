@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\Content;
+use App\Models\ContentField;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class ContentSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    use WithoutModelEvents;
     public function run(): void
     {
+        Content::factory()->count(20)->create();
+        ContentField::factory()->count(100)->create();
     }
 }
