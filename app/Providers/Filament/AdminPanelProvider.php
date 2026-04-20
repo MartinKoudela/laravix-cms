@@ -31,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->brandName('Laravix CMS')
             ->brandLogo(asset('logo-full.svg'))
+            ->favicon(asset('logo-favicon.png'))
             ->darkModeBrandLogo(asset('logo-full-dark.svg'))
             ->brandLogoHeight('3.2rem')
             ->colors([
