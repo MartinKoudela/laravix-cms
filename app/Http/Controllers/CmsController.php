@@ -55,7 +55,7 @@ class CmsController extends Controller
 
         $navPages = Content::query()
             ->where('site_id', $site->id)
-            ->where('type', 'page')
+            ->whereIn('type', ['page', 'archive'])
             ->where('status', 'published')
             ->where(function ($q) {
                 $q->whereNull('published_at')->orWhere('published_at', '<=', now());
@@ -73,6 +73,20 @@ class CmsController extends Controller
             ->orderByDesc('published_at')
             ->limit(5)
             ->get(['id', 'title', 'slug', 'published_at']);
+
+        $archivePosts = null;
+        if ($content->type === 'archive') {
+            $archivePosts = Content::query()
+                ->where('site_id', $site->id)
+                ->where('type', 'post')
+                ->where('status', 'published')
+                ->where(function ($q) {
+                    $q->whereNull('published_at')->orWhere('published_at', '<=', now());
+                })
+                ->with(['fields', 'taxonomies', 'author'])
+                ->orderByDesc('published_at')
+                ->get();
+        }
 
         $imageKeys = collect(FieldRegistry::forContentType($content->type))
             ->filter(fn ($def) => $def->type === FieldType::IMAGE)
@@ -113,6 +127,6 @@ class CmsController extends Controller
             'canonical' => url($content->is_homepage ? '/' : '/'.$content->slug),
         ];
 
-        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia'));
+        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'archivePosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia'));
     }
 }
