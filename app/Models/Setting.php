@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
@@ -11,7 +12,7 @@ use Spatie\Activitylog\Support\LogOptions;
 #[Fillable(['site_id', 'key', 'value'])]
 class Setting extends Model
 {
-    use LogsActivity;
+    use LogsActivity, HasFactory;
 
     public function getActivitylogOptions(): LogOptions
     {

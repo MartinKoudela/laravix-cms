@@ -16,12 +16,12 @@ class ContentFieldFactory extends Factory
         $fields = [
             'body' => fake()->paragraphs(3, true),
             'excerpt' => fake()->sentence(),
-            'seo_title' => fake()->sentence(5),
+            'seo_title' => fake()->word(),
             'seo_description' => fake()->sentence(),
             'featured_image' => 'images/'.fake()->uuid().'.jpg',
         ];
 
-        $key = fake()->unique()->randomElement(array_keys($fields));
+        $key = fake()->randomElement(array_keys($fields));
 
         return [
             'content_id' => Content::query()->inRandomOrder()->value('id'),

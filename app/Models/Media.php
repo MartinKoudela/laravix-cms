@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 #[Fillable(['site_id', 'name', 'path', 'disk', 'mime_type', 'size', 'created_by'])]
 class Media extends Model
 {
-    use LogsActivity;
+    use LogsActivity, HasFactory;
 
     public function getActivitylogOptions(): LogOptions
     {

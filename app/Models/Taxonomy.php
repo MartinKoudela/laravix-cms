@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,7 +14,7 @@ use Spatie\Activitylog\Support\LogOptions;
 #[Fillable(['site_id', 'type', 'name', 'slug', 'parent_id'])]
 class Taxonomy extends Model
 {
-    use LogsActivity;
+    use LogsActivity, HasFactory;
 
     public function getActivitylogOptions(): LogOptions
     {

@@ -21,7 +21,7 @@ class ContentFactory extends Factory
             'site_id' => Site::query()->inRandomOrder()->value('id'),
             'created_by' => User::query()->inRandomOrder()->value('id'),
             'type' => fake()->randomElement(['page', 'post', 'history']),
-            'title' => fake()->sentence(4),
+            'title' => fake()->word(),
             'slug' => fake()->unique()->slug(),
             'status' => $status,
             'published_at' =>  fake()->dateTimeBetween('-1 year'),
