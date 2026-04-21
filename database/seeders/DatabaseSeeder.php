@@ -18,21 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        User::factory()->create([
-            'name' => 'Martin Koudela',
-            'email' => 'mk@martinkoudela.com',
-            'password' => Hash::make('password'),
-            'is_super_admin' => true,
-        ]);
-
-        User::factory()->create([
-            'name' => 'Jay Jay',
-            'email' => 'hello@jakubforman.eu',
-            'password' => Hash::make('password'),
-            'is_super_admin' => true,
-        ]);
-
+        // TODO: přidat oprávnění - spatie permissions
         $this->call([
             SiteSeeder::class,
             UserSeeder::class,
@@ -42,6 +28,7 @@ class DatabaseSeeder extends Seeder
             TaxonomySeeder::class,
         ]);
 
+        // TODO: asi může zůstat, ale i tak není vhodné to mít takto, lepší je ->for() nebo ->has() a podobně jako alternativa této vazby
         Site::all()->each(function (Site $site) {
             User::all()->each(function (User $user) use ($site) {
                 $site->users()->attach($user->id, [
