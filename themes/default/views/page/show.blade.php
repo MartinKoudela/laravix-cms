@@ -7,7 +7,7 @@
         $excerpt = $fields->get('excerpt')?->value;
         $heroImageId = $fields->get('hero_image')?->value;
         $heroMedia = $heroImageId ? ($mediaMap[$heroImageId] ?? null) : null;
-        $extraFields = $content->fields->whereNotIn('key', ['body', 'excerpt', 'hero_image']);
+        $extraFields = $content->fields->whereNotIn('key', $systemFieldKeys);
     @endphp
 
     {{-- Hero / Featured image --}}

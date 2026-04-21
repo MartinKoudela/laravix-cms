@@ -16,9 +16,8 @@ class ContentFieldFactory extends Factory
         $fields = [
             'body' => fake()->paragraphs(3, true),
             'excerpt' => fake()->sentence(),
-            'seo_title' => fake()->word(),
-            'seo_description' => fake()->sentence(),
-            'featured_image' => 'images/'.fake()->uuid().'.jpg',
+            'meta_title' => fake()->word(),
+            'meta_description' => fake()->sentence(),
         ];
 
         $key = fake()->randomElement(array_keys($fields));

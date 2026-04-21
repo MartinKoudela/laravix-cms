@@ -120,6 +120,11 @@ class CmsController extends Controller
         $appearance = $content->fields->whereIn('key', $appearanceKeys->all())->pluck('value', 'key');
         $bgMedia = ($bgId = (int) $appearance->get('background_image')) ? $mediaMap->get($bgId) : null;
 
+        $systemFieldKeys = collect(FieldRegistry::forContentType($content->type))
+            ->pluck('key')
+            ->merge($appearanceKeys)
+            ->all();
+
         $ogImageId = (int) ($contentFields->get('og_image') ?: $settings->get('og_image'));
         $logoMedia = ($logoId = (int) $settings->get('logo')) ? $mediaMap->get($logoId) : null;
         $faviconMedia = ($faviconId = (int) $settings->get('favicon')) ? $mediaMap->get($faviconId) : null;
@@ -136,6 +141,6 @@ class CmsController extends Controller
             'canonical' => url($content->is_homepage ? '/' : '/'.$content->slug),
         ];
 
-        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'archivePosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia', 'appearance', 'bgMedia'));
+        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'archivePosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia', 'appearance', 'bgMedia', 'systemFieldKeys'));
     }
 }
