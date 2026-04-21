@@ -30,6 +30,13 @@ class UserSeeder extends Seeder
             'is_super_admin' => true,
         ]);
 
+        User::factory()->create([
+            'name' => 'Tomáš Vylímec',
+            'email' => 'tomas.vylimec@gmail.com',
+            'password' => Hash::make('password'),
+            'is_super_admin' => true,
+        ]);
+
         User::factory()->count(50)->create();
     }
 }
