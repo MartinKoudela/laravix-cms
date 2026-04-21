@@ -18,7 +18,9 @@ use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -28,6 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->brandName('Laravix CMS')
             ->brandLogo(asset('logo-full.png'))
@@ -66,6 +69,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                EasyFooterPlugin::make()
+                    ->withSentence(new HtmlString('<img src="/logo-favicon.png" style="" alt="Laravel Logo" width="20" height="20">Laravix'))
+                    ->withGithub(showLogo: true, showUrl: true)
+//                    ->withLinks([
+//                        ['title' => 'Website', 'url' => 'https://laravix.com'],
+//                        ['title' => 'Privacy Policy', 'url' => 'https://laravix.com/privacy-policy']
+//                    ]),
             ]);
     }
 }

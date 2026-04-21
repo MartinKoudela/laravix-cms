@@ -37,6 +37,17 @@ database/*.sqlite
 /storage/app/public
 /storage/app/private
 
+# AI tools
+/.agents
+/.ai
+/.claude
+/.codex
+/.copilot
+/.cursor
+/.mcp.json
+/.windsurf
+/memory
+
 # Testing
 /.phpunit.cache
 /coverage
