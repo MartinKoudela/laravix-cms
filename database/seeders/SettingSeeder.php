@@ -12,6 +12,7 @@ class SettingSeeder extends Seeder
 
     public function run(): void
     {
+        // TODO: popřemíšlet jestli to nedat přímo do sites seederu opět přes ->for() nebo alternativu seederu
         Site::all()->each(function (Site $site) {
             $settings = [
                 'site_name' => fake()->company(),
