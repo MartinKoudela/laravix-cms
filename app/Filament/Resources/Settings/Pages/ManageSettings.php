@@ -18,7 +18,7 @@ class ManageSettings extends Page
 
     protected string $view = 'filament.resources.settings.pages.manage-settings';
 
-    public array $data = [];
+    public ?array $data = [];
 
     public function mount(): void
     {
