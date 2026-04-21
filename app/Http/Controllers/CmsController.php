@@ -7,6 +7,7 @@ use App\Models\Content;
 use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Site;
+use App\Support\AppearanceRegistry;
 use App\Support\FieldRegistry;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -92,8 +93,12 @@ class CmsController extends Controller
             ->filter(fn ($def) => $def->type === FieldType::IMAGE)
             ->pluck('key');
 
+        $appearanceImageKeys = collect(AppearanceRegistry::forContentType($content->type))
+            ->filter(fn ($def) => $def->type === FieldType::IMAGE)
+            ->pluck('key');
+
         $mediaIds = $content->fields
-            ->whereIn('key', $imageKeys->all())
+            ->whereIn('key', $imageKeys->merge($appearanceImageKeys)->all())
             ->pluck('value')
             ->filter()
             ->map(fn ($id) => (int) $id);
@@ -111,6 +116,10 @@ class CmsController extends Controller
 
         $contentFields = $content->fields->pluck('value', 'key');
 
+        $appearanceKeys = collect(AppearanceRegistry::forContentType($content->type))->pluck('key');
+        $appearance = $content->fields->whereIn('key', $appearanceKeys->all())->pluck('value', 'key');
+        $bgMedia = ($bgId = (int) $appearance->get('background_image')) ? $mediaMap->get($bgId) : null;
+
         $ogImageId = (int) ($contentFields->get('og_image') ?: $settings->get('og_image'));
         $logoMedia = ($logoId = (int) $settings->get('logo')) ? $mediaMap->get($logoId) : null;
         $faviconMedia = ($faviconId = (int) $settings->get('favicon')) ? $mediaMap->get($faviconId) : null;
@@ -127,6 +136,6 @@ class CmsController extends Controller
             'canonical' => url($content->is_homepage ? '/' : '/'.$content->slug),
         ];
 
-        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'archivePosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia'));
+        return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'archivePosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia', 'appearance', 'bgMedia'));
     }
 }
