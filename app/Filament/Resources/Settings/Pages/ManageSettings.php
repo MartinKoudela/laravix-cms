@@ -10,6 +10,8 @@ use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 class ManageSettings extends Page
@@ -37,7 +39,7 @@ class ManageSettings extends Page
 
     public function form(Schema $schema): Schema
     {
-        $sections = [];
+        $tabs = [];
 
         foreach (SettingRegistry::grouped() as $group => $definitions) {
             $components = array_map(
@@ -45,10 +47,14 @@ class ManageSettings extends Page
                 $definitions,
             );
 
-            $sections[] = Section::make($group)->schema($components)->columns(2);
+            $tabs[] = Tab::make($group)->schema([
+                Section::make()->schema($components)->columns(2),
+            ]);
         }
 
-        return $schema->statePath('data')->components($sections);
+        return $schema->statePath('data')->components([
+            Tabs::make()->tabs($tabs),
+        ]);
     }
 
     public function save(): void

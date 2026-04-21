@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Enums\FieldType;
+use App\Support\AppearanceDefinition;
+use App\Support\AppearanceRegistry;
 use App\Support\FieldDefinition;
 use App\Support\FieldRegistry;
 use App\Support\SettingDefinition;
@@ -43,6 +45,29 @@ class AppServiceProvider extends ServiceProvider
                 ->type(FieldType::BOOLEAN)
                 ->label('Hide from search engines')
                 ->group('SEO'),
+        ]);
+        AppearanceRegistry::content([
+            AppearanceDefinition::make('color')
+                ->type(FieldType::COLOR)
+                ->label('Background Color'),
+            AppearanceDefinition::make('text_color')
+                ->type(FieldType::COLOR)
+                ->label('Text Color'),
+            AppearanceDefinition::make('background_image')
+                ->type(FieldType::IMAGE)
+                ->label('Background Image'),
+            AppearanceDefinition::make('layout')
+                ->type(FieldType::SELECT)
+                ->label('Layout')
+                ->config(['options' => [
+                    'full-width' => 'Full Width',
+                    'boxed' => 'Boxed',
+                    'sidebar-left' => 'Sidebar Left',
+                    'sidebar-right' => 'Sidebar Right',
+                ]]),
+            AppearanceDefinition::make('custom_css_class')
+                ->label('Custom CSS Class')
+                ->hint('Applied to the page wrapper element.'),
         ]);
 
         SettingRegistry::register([
