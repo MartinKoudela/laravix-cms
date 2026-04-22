@@ -10,6 +10,7 @@ use App\Models\Site;
 use App\Services\ContentResolver;
 use App\Services\MediaResolver;
 use App\Services\SeoBuilder;
+use App\Services\SiteResolver;
 use App\Support\AppearanceRegistry;
 use App\Support\FieldRegistry;
 use Illuminate\Http\Request;
@@ -23,13 +24,12 @@ class CmsController extends Controller
         private readonly ContentResolver $contentResolver,
         private readonly SeoBuilder $seoBuilder,
         private readonly MediaResolver $mediaResolver,
+        private readonly SiteResolver $siteResolver,
     ) {}
 
     public function show(Request $request, string $slug = '/'): View
     {
-        $host = $request->getHost();
-        $site = Site::where('domain', $host)->first();
-
+        $site = $this->siteResolver->resolve($request->getHost());
         if (! $site) {
             throw new NotFoundHttpException;
         }

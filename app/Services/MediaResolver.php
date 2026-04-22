@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Enums\FieldType;
 use App\Models\Media;
-use App\Support\FieldRegistry;
 use Illuminate\Support\Collection;
 
 class MediaResolver
