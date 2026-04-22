@@ -3,3 +3,322 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 @source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
+
+/* ── Sidebar – light mode ─────────────────────────────────────────── */
+.fi-sidebar {
+    background-color: #ffffff !important;
+    border-right: 1px solid rgba(0, 0, 0, 0.07) !important;
+}
+
+.fi-sidebar .fi-sidebar-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: none !important;
+}
+
+/* ── Sidebar – dark mode ──────────────────────────────────────────── */
+.dark .fi-sidebar {
+    background-color: #111113 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark .fi-sidebar .fi-sidebar-header {
+    background-color: #111113 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: none !important;
+}
+
+/* Nav item – base style */
+.fi-sidebar-item-btn {
+    border-radius: 8px !important;
+    transition: background 0.15s, box-shadow 0.15s !important;
+}
+
+/* Light mode nav item colors */
+.fi-sidebar-item-btn > .fi-icon {
+    color: rgba(0, 0, 0, 0.35) !important;
+    transition: color 0.15s !important;
+}
+
+.fi-sidebar-item-btn > .fi-sidebar-item-label {
+    color: rgba(0, 0, 0, 0.55) !important;
+    transition: color 0.15s !important;
+}
+
+/* Dark mode nav item colors */
+.dark .fi-sidebar-item-btn > .fi-icon {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.dark .fi-sidebar-item-btn > .fi-sidebar-item-label {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Nav item – hover (light) */
+.fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover {
+    background: rgba(255, 4, 101, 0.07) !important;
+}
+
+.fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-icon {
+    color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-sidebar-item-label {
+    color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Nav item – hover (dark) */
+.dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-icon {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-sidebar-item-label {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Nav item – active (gradient pill + glow) */
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%) !important;
+    box-shadow: 0 4px 18px -3px rgba(255, 4, 101, 0.5) !important;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon,
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label {
+    color: #fff !important;
+}
+
+/* Dot connector in grouped active items */
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-sidebar-item-grouped-border-part {
+    background-color: #fff !important;
+}
+
+/* Nav group label */
+.fi-sidebar-group-label {
+    color: rgba(0, 0, 0, 0.25) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.09em !important;
+    font-size: 0.62rem !important;
+    font-weight: 700 !important;
+}
+
+.dark .fi-sidebar-group-label {
+    color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Sidebar nav group btn icons */
+.fi-sidebar-group-btn > .fi-icon {
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .fi-sidebar-group-btn > .fi-icon {
+    color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Sidebar scrollbar */
+.fi-sidebar-nav {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
+.fi-sidebar-nav::-webkit-scrollbar { width: 3px; }
+.fi-sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.fi-sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+}
+.fi-sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 4, 101, 0.4);
+}
+
+/* ── Topbar – light mode ──────────────────────────────────────────── */
+.fi-topbar {
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.fi-topbar .fi-topbar-item-label {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.fi-topbar .fi-icon {
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ── Topbar – dark mode ───────────────────────────────────────────── */
+.dark .fi-topbar {
+    background-color: #111113 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .fi-topbar .fi-topbar-item-label {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.dark .fi-topbar .fi-icon {
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Tenant menu trigger button – light */
+.fi-tenant-menu-trigger-btn {
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 8px !important;
+    transition: background 0.15s, border-color 0.15s !important;
+}
+
+.fi-tenant-menu-trigger-btn:hover {
+    background: rgba(255, 4, 101, 0.07) !important;
+    border-color: rgba(255, 4, 101, 0.25) !important;
+}
+
+/* Tenant menu trigger button – dark */
+.dark .fi-tenant-menu-trigger-btn {
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .fi-tenant-menu-trigger-btn:hover {
+    background: rgba(255, 4, 101, 0.1) !important;
+    border-color: rgba(255, 4, 101, 0.3) !important;
+}
+
+/* ── Body / main area ─────────────────────────────────────────────── */
+.fi-body {
+    background-color: #f0f0f3 !important; /* light mode */
+}
+
+.dark .fi-body {
+    background-color: #0e0e10 !important; /* dark mode */
+}
+
+/* ── Page heading – gradient text ─────────────────────────────────── */
+.fi-header-heading {
+    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800 !important;
+    letter-spacing: -0.025em !important;
+}
+
+/* ── Sections / Cards ─────────────────────────────────────────────── */
+/* Light mode */
+.fi-section:not(.fi-section-not-contained):not(.fi-aside) {
+    border-radius: 16px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Dark mode */
+.dark .fi-section:not(.fi-section-not-contained):not(.fi-aside) {
+    background-color: #1a1a1f !important;
+    box-shadow: none !important;
+}
+
+/* Section border (ring) in dark mode */
+.dark .fi-section:not(.fi-section-not-contained):not(.fi-aside) {
+    --tw-ring-color: rgba(255, 255, 255, 0.07) !important;
+    --tw-ring-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Section header separator in dark mode */
+.dark .fi-section:not(.fi-section-not-contained) .fi-section-header {
+    border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ── Tables ───────────────────────────────────────────────────────── */
+.fi-ta-ctn {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+}
+
+/* Dark mode table */
+.dark .fi-ta-ctn {
+    background-color: #1a1a1f !important;
+    --tw-ring-color: rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Table header cell labels */
+.fi-ta-header-cell-ctn {
+    font-size: 0.67rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    font-weight: 700 !important;
+    opacity: 0.4 !important;
+}
+
+/* Table row hover in dark mode */
+.dark .fi-ta-row:hover td {
+    background-color: rgba(255, 4, 101, 0.03) !important;
+}
+
+/* ── Primary buttons – gradient ───────────────────────────────────── */
+.fi-btn.fi-color-primary:not(.fi-outlined) {
+    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 2px 10px -2px rgba(255, 4, 101, 0.4) !important;
+    transition: box-shadow 0.15s, transform 0.12s !important;
+}
+
+.fi-btn.fi-color-primary:not(.fi-outlined) > .fi-icon {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.fi-btn.fi-color-primary:not(.fi-outlined):hover {
+    box-shadow: 0 5px 18px -3px rgba(255, 4, 101, 0.55) !important;
+    transform: translateY(-1px) !important;
+}
+
+.fi-btn.fi-color-primary:not(.fi-outlined):active {
+    transform: translateY(0) !important;
+    box-shadow: 0 1px 5px -1px rgba(255, 4, 101, 0.3) !important;
+}
+
+/* ── Badges – primary ─────────────────────────────────────────────── */
+/* Light mode */
+.fi-badge.fi-color-primary {
+    background: rgba(255, 4, 101, 0.08) !important;
+    color: #e0004f !important;
+    --tw-ring-color: rgba(255, 4, 101, 0.15) !important;
+}
+
+/* Dark mode */
+.dark .fi-badge.fi-color-primary {
+    background: rgba(255, 4, 101, 0.15) !important;
+    color: #ff6b9d !important;
+    --tw-ring-color: rgba(255, 4, 101, 0.25) !important;
+}
+
+/* ── Dropdown panels ──────────────────────────────────────────────── */
+.fi-dropdown-panel {
+    border-radius: 12px !important;
+}
+
+/* Dark mode dropdown */
+.dark .fi-dropdown-panel {
+    background-color: #1e1e24 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ── Login / simple layout ────────────────────────────────────────── */
+.fi-simple-layout {
+    background: linear-gradient(160deg, #0d0d0f 0%, #1c0810 50%, #0d0d0f 100%) !important;
+}
+
+.fi-simple-main {
+    background-color: #18181b !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(255, 255, 255, 0.07) !important;
+    box-shadow:
+        0 0 0 1px rgba(255, 4, 101, 0.08),
+        0 24px 64px -12px rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Login headings */
+.fi-simple-header-heading {
+    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800 !important;
+}

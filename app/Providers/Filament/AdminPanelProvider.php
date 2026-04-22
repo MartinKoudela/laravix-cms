@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Tenancy\RegisterSite;
 use App\Models\Site;
+use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -20,7 +21,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -38,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->darkModeBrandLogo(asset('laravix-logo-white.svg'))
             ->brandLogoHeight('3rem')
             ->colors([
-                'primary' => Color::hex('#f0437c'),
+                'primary' => Color::hex('#ff0465'),
                 'gray' => Color::Zinc,
             ])
             ->tenant(Site::class, slugAttribute: 'id')
@@ -73,11 +73,11 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 EasyFooterPlugin::make()
                     ->withSentence(new HtmlString('<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix'))
-                    ->withGithub(showLogo: true, showUrl: true)
-//                    ->withLinks([
-//                        ['title' => 'Website', 'url' => 'https://laravix.com'],
-//                        ['title' => 'Privacy Policy', 'url' => 'https://laravix.com/privacy-policy']
-//                    ]),
+                    ->withGithub(showLogo: true, showUrl: true),
+                //                    ->withLinks([
+                //                        ['title' => 'Website', 'url' => 'https://laravix.com'],
+                //                        ['title' => 'Privacy Policy', 'url' => 'https://laravix.com/privacy-policy']
+                //                    ]),
             ]);
     }
 }
