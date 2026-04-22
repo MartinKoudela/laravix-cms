@@ -2,7 +2,7 @@
     {{-- Header --}}
     <x-slot:header>
         <x-mail::header :url="config('app.url')">
-            {{ asset('logo-full.png') }}
+            {{ asset('laravix-logo-black.png') }}
         </x-mail::header>
     </x-slot:header>
 

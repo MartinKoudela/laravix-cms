@@ -33,10 +33,10 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->brandName('Laravix CMS')
-            ->brandLogo(asset('logo-full.png'))
-            ->favicon(asset('logo-favicon.png'))
-            ->darkModeBrandLogo(asset('logo-full-light.png'))
-            ->brandLogoHeight('3.5rem')
+            ->brandLogo(asset('laravix-logo-black.svg'))
+            ->favicon(asset('favicon.ico'))
+            ->darkModeBrandLogo(asset('laravix-logo-white.svg'))
+            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => Color::hex('#f0437c'),
                 'gray' => Color::Zinc,
@@ -72,7 +72,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 EasyFooterPlugin::make()
-                    ->withSentence(new HtmlString('<img src="/logo-favicon.png" style="" alt="Laravel Logo" width="20" height="20">Laravix'))
+                    ->withSentence(new HtmlString('<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix'))
                     ->withGithub(showLogo: true, showUrl: true)
 //                    ->withLinks([
 //                        ['title' => 'Website', 'url' => 'https://laravix.com'],
