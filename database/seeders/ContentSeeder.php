@@ -22,7 +22,15 @@ class ContentSeeder extends Seeder
                 ->count(50)
                 ->for($site)
                 ->for($users->random(), 'author')
-                ->has(ContentField::factory()->count(4), 'fields')
+                ->has(
+                    ContentField::factory()->count(4)->sequence(
+                        ['key' => 'body', 'value' => fake()->paragraphs(3, true)],
+                        ['key' => 'excerpt', 'value' => fake()->sentence()],
+                        ['key' => 'meta_title', 'value' => fake()->word()],
+                        ['key' => 'meta_description', 'value' => fake()->sentence()],
+                    ),
+                    'fields'
+                )
                 ->create();
         });
     }
