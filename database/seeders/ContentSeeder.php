@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Content;
+use App\Models\ContentField;
+use App\Models\Site;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,20 +15,15 @@ class ContentSeeder extends Seeder
 
     public function run(): void
     {
-        // TODO: přepsat na na použití ->for() nebo alternativu pro vazbu, bude jednodušší zápis
-        // TODO: přidat ->for() pro konkrétního uživatele, generovat ne random počty, ale prokaždého třeba 50 příspěvků/stránke... obsahu...
-        Content::factory()->count(20)->create()->each(function (Content $content) {
-            $fields = [
-                'body' => fake()->paragraphs(3, true),
-                'excerpt' => fake()->sentence(),
-                'seo_title' => fake()->word(),
-                'seo_description' => fake()->sentence(),
-                'featured_image' => 'images/'.fake()->uuid().'.jpg',
-            ];
+        $users = User::all();
 
-            foreach ($fields as $key => $value) {
-                $content->fields()->create(['key' => $key, 'value' => $value]);
-            }
+        Site::all()->each(function (Site $site) use ($users) {
+            Content::factory()
+                ->count(50)
+                ->for($site)
+                ->for($users->random(), 'author')
+                ->has(ContentField::factory()->count(4), 'fields')
+                ->create();
         });
     }
 }
