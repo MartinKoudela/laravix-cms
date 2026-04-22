@@ -2,13 +2,16 @@
 
 namespace App\Services;
 
+use App\Enums\FieldType;
+use App\Models\Media;
+use App\Support\FieldRegistry;
+use Illuminate\Support\Collection;
+
 class MediaResolver
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+
+    public function resolve(Collection $mediaIds): Collection
     {
-        //
+        return Media::whereIn('id', $mediaIds)->get()->keyBy('id');
     }
 }

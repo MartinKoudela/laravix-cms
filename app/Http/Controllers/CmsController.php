@@ -8,6 +8,7 @@ use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Site;
 use App\Services\ContentResolver;
+use App\Services\MediaResolver;
 use App\Services\SeoBuilder;
 use App\Support\AppearanceRegistry;
 use App\Support\FieldRegistry;
@@ -21,6 +22,7 @@ class CmsController extends Controller
     public function __construct(
         private readonly ContentResolver $contentResolver,
         private readonly SeoBuilder $seoBuilder,
+        private readonly MediaResolver $mediaResolver,
     ) {}
 
     public function show(Request $request, string $slug = '/'): View
@@ -100,7 +102,7 @@ class CmsController extends Controller
             }
         }
 
-        $mediaMap = Media::whereIn('id', $mediaIds)->get()->keyBy('id');
+        $mediaMap = $this->mediaResolver->resolve($mediaIds);
 
         $contentFields = $content->fields->pluck('value', 'key');
 
