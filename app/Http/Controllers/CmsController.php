@@ -7,6 +7,8 @@ use App\Models\Content;
 use App\Models\Media;
 use App\Models\Setting;
 use App\Models\Site;
+use App\Services\ContentResolver;
+use App\Services\SeoBuilder;
 use App\Support\AppearanceRegistry;
 use App\Support\FieldRegistry;
 use Illuminate\Http\Request;
@@ -15,6 +17,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CmsController extends Controller
 {
+
+    public function __construct(
+        private readonly ContentResolver $contentResolver,
+        private readonly SeoBuilder $seoBuilder,
+    ) {}
+
     public function show(Request $request, string $slug = '/'): View
     {
         $host = $request->getHost();
@@ -24,27 +32,7 @@ class CmsController extends Controller
             throw new NotFoundHttpException;
         }
 
-        $content = Content::query()
-            ->where('site_id', $site->id)
-            ->where('status', 'published')
-            ->where(function ($q) use ($slug) {
-                if (is_null($slug) || $slug === '/') {
-                    $q->where('is_homepage', true);
-                } else {
-                    $q->where('slug', $slug);
-                }
-            })
-            ->where(function ($q) {
-                $q->whereNull('published_at')
-                    ->orWhere('published_at', '<=', now());
-            })
-            ->with(['fields', 'taxonomies'])
-            ->orderBy('published_at', 'desc')
-            ->first();
-
-        if (! $content) {
-            throw new NotFoundHttpException;
-        }
+        $content = $this->contentResolver->resolve($site, $slug);
 
         $theme = $site->theme ?? 'default';
 
@@ -128,18 +116,9 @@ class CmsController extends Controller
         $ogImageId = (int) ($contentFields->get('og_image') ?: $settings->get('og_image'));
         $logoMedia = ($logoId = (int) $settings->get('logo')) ? $mediaMap->get($logoId) : null;
         $faviconMedia = ($faviconId = (int) $settings->get('favicon')) ? $mediaMap->get($faviconId) : null;
-        $ogMedia = $ogImageId ? $mediaMap->get($ogImageId) : null;
 
-        $seo = [
-            'title' => $contentFields->get('meta_title')
-                ?: $settings->get('meta_title')
-                ?: $content->title,
-            'description' => $contentFields->get('meta_description')
-                ?: $settings->get('meta_description'),
-            'og_image_url' => $ogMedia?->url,
-            'noindex' => (bool) $contentFields->get('noindex'),
-            'canonical' => url($content->is_homepage ? '/' : '/'.$content->slug),
-        ];
+        $ogMedia = $ogImageId ? $mediaMap->get($ogImageId) : null;
+        $seo = $this->seoBuilder->build($contentFields, $settings, $content, $ogMedia);
 
         return view($view, compact('content', 'site', 'navPages', 'recentPosts', 'archivePosts', 'mediaMap', 'settings', 'seo', 'logoMedia', 'faviconMedia', 'appearance', 'bgMedia', 'systemFieldKeys'));
     }
