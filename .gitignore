@@ -47,8 +47,9 @@ database/*.sqlite
 /.mcp.json
 /.windsurf
 /memory
+CLAUDE.md
+AGENTS.md
 
 # Testing
-/.phpunit.cache
 /coverage
 /memory/feedback_enum_naming.md

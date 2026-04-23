@@ -300,21 +300,34 @@
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* ── Login / simple layout ────────────────────────────────────────── */
+/* ── Login / simple layout – light ───────────────────────────────── */
 .fi-simple-layout {
-    background: linear-gradient(160deg, #0d0d0f 0%, #1c0810 50%, #0d0d0f 100%) !important;
+    background: linear-gradient(160deg, #f5f5f8 0%, #fdf0f4 50%, #f5f5f8 100%) !important;
 }
 
 .fi-simple-main {
-    background-color: #18181b !important;
+    background-color: #ffffff !important;
     border-radius: 18px !important;
+    border: 1px solid rgba(0, 0, 0, 0.07) !important;
+    box-shadow:
+        0 0 0 1px rgba(255, 4, 101, 0.06),
+        0 24px 64px -12px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ── Login / simple layout – dark ────────────────────────────────── */
+.dark .fi-simple-layout {
+    background: linear-gradient(160deg, #0d0d0f 0%, #1c0810 50%, #0d0d0f 100%) !important;
+}
+
+.dark .fi-simple-main {
+    background-color: #18181b !important;
     border: 1px solid rgba(255, 255, 255, 0.07) !important;
     box-shadow:
         0 0 0 1px rgba(255, 4, 101, 0.08),
         0 24px 64px -12px rgba(0, 0, 0, 0.55) !important;
 }
 
-/* Login headings */
+/* Login heading – gradient text (both modes) */
 .fi-simple-header-heading {
     background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%);
     -webkit-background-clip: text;

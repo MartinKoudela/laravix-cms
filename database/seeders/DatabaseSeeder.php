@@ -7,7 +7,6 @@ use App\Models\Site;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SiteSeeder::class,
             UserSeeder::class,
-            MediaSeeder::class,
             ContentSeeder::class,
             SettingSeeder::class,
             TaxonomySeeder::class,
