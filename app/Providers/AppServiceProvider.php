@@ -11,6 +11,7 @@ use App\Support\SettingDefinition;
 use App\Support\SettingRegistry;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -145,5 +146,14 @@ class AppServiceProvider extends ServiceProvider
             $themeName = basename($themePath);
             View::addNamespace("themes.{$themeName}", "{$themePath}/views");
         }
+
+        LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+            $switch
+                ->locales(['en', 'cs', 'de', 'fr', 'es', 'it', 'pl'])
+                ->circular()
+                ->nativeLabel()
+                ->visible(insidePanels: true, outsidePanels: true)
+                ->userPreferredLocale(fn () => request()->getPreferredLanguage(['en', 'cs', 'de', 'fr', 'es', 'it', 'pl']));
+        });
     }
 }

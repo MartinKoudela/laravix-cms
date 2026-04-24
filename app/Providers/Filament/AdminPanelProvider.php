@@ -72,8 +72,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 EasyFooterPlugin::make()
-                    ->withSentence(new HtmlString('<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix'))
-                    ->withGithub(showLogo: true, showUrl: true),
+                    ->withSentence(new HtmlString('<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v'.config('app.version'))),
                 //                    ->withLinks([
                 //                        ['title' => 'Website', 'url' => 'https://laravix.com'],
                 //                        ['title' => 'Privacy Policy', 'url' => 'https://laravix.com/privacy-policy']

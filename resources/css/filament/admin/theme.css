@@ -3,6 +3,7 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 @source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
+@source '../../../../vendor/bezhansalleh/filament-language-switch/**';
 
 /* ── Sidebar – light mode ─────────────────────────────────────────── */
 .fi-sidebar {
