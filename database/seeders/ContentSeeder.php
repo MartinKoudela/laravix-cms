@@ -19,7 +19,7 @@ class ContentSeeder extends Seeder
 
         Site::all()->each(function (Site $site) use ($users) {
             Content::factory()
-                ->count(50)
+                ->count(5)
                 ->for($site)
                 ->for($users->random(), 'author')
                 ->has(
