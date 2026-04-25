@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Contents;
 
+use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\Contents\Pages\CreateContent;
 use App\Filament\Resources\Contents\Pages\EditContent;
 use App\Filament\Resources\Contents\Pages\ListContents;
@@ -17,6 +18,8 @@ use Filament\Tables\Table;
 
 class ContentResource extends Resource
 {
+    use TranslatesNavigationGroup;
+
     protected static ?string $model = Content::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';

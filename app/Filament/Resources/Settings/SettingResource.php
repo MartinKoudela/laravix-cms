@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Settings;
 
 use App\Enums\SiteRole;
+use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\Settings\Pages\ManageSettings;
 use App\Models\Setting;
 use App\Models\Site;
@@ -12,6 +13,8 @@ use Filament\Support\Icons\Heroicon;
 
 class SettingResource extends Resource
 {
+    use TranslatesNavigationGroup;
+
     protected static ?string $model = Setting::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';

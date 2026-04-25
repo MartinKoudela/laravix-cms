@@ -25,8 +25,7 @@ class SiteForm
                             ->required()
                             ->maxLength(255)
                             ->placeholder('example.com')
-                            ->unique(table: 'sites', column:
-                                'domain', ignoreRecord: true),
+                            ->unique(table: 'sites', column: 'domain', ignoreRecord: true),
                     ]),
                 Section::make('Appearance')
                     ->schema([

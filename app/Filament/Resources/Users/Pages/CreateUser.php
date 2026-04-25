@@ -67,7 +67,7 @@ class CreateUser extends Page
         Mail::to($invitation->email)->send(new UserInvitationMail($invitation));
 
         Notification::make()
-            ->title('Invitation sent to ' . $invitation->email)
+            ->title('Invitation sent to '.$invitation->email)
             ->success()
             ->send();
 
