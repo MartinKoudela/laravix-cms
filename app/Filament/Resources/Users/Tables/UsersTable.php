@@ -17,12 +17,15 @@ class UsersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
+                    ->label(__('E-mail'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('role')
+                    ->label(__('Role'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         SiteRole::ADMIN->value => 'warning',
@@ -30,11 +33,12 @@ class UsersTable
                         default => 'gray',
                     }),
                 TextColumn::make('email_verified_at')
-                    ->label('Verified')
+                    ->label(__('Verified'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

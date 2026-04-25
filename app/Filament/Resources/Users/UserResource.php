@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Users;
 
 use App\Enums\SiteRole;
-use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\Users\Pages\CreateUser;
 use App\Filament\Resources\Users\Pages\EditUser;
 use App\Filament\Resources\Users\Pages\ListUsers;
@@ -21,8 +20,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class UserResource extends Resource
 {
-    use TranslatesNavigationGroup;
-
     public static function getModelLabel(): string
     {
         return __('user');
@@ -32,6 +29,7 @@ class UserResource extends Resource
     {
         return __('users');
     }
+
     protected static ?string $model = User::class;
 
     protected static bool $isScopedToTenant = false;

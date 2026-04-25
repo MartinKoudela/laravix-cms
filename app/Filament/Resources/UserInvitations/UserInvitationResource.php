@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\UserInvitations;
 
 use App\Enums\SiteRole;
-use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\UserInvitations\Pages\ListUserInvitations;
 use App\Filament\Resources\UserInvitations\Schemas\UserInvitationForm;
 use App\Filament\Resources\UserInvitations\Tables\UserInvitationsTable;
@@ -17,8 +16,6 @@ use Filament\Tables\Table;
 
 class UserInvitationResource extends Resource
 {
-    use TranslatesNavigationGroup;
-
     public static function getModelLabel(): string
     {
         return __('invitation');
@@ -28,6 +25,7 @@ class UserInvitationResource extends Resource
     {
         return __('invitations');
     }
+
     protected static ?string $model = UserInvitation::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';

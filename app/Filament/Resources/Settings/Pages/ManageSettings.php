@@ -47,7 +47,7 @@ class ManageSettings extends Page
                 $definitions,
             );
 
-            $tabs[] = Tab::make($group)->schema([
+            $tabs[] = Tab::make(__($group))->schema([
                 Section::make()->schema($components)->columns(2),
             ]);
         }
@@ -70,7 +70,7 @@ class ManageSettings extends Page
         }
 
         Notification::make()
-            ->title('Settings saved')
+            ->title(__('Settings saved'))
             ->success()
             ->send();
     }
@@ -79,7 +79,7 @@ class ManageSettings extends Page
     {
         return [
             Action::make('save')
-                ->label('Save Settings')
+                ->label(__('Save Settings'))
                 ->action('save'),
         ];
     }

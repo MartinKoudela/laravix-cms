@@ -14,24 +14,30 @@ class TaxonomiesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->columnToggleFormMaxHeight('400')
             ->columns([
                 TextColumn::make('name')
+                    ->label(__('Title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
+                    ->label(__('Type'))
                     ->badge()
                     ->sortable(),
                 TextColumn::make('site.name')
+                    ->label(__('Site'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('parent.name')
-                    ->label('Parent')
+                    ->label(__('Parent'))
                     ->searchable()
                     ->placeholder('—'),
                 TextColumn::make('slug')
+                    ->label(__('Slug'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

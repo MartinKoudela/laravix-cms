@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Settings;
 
 use App\Enums\SiteRole;
-use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\Settings\Pages\ManageSettings;
 use App\Models\Setting;
 use App\Models\Site;
@@ -13,8 +12,6 @@ use Filament\Support\Icons\Heroicon;
 
 class SettingResource extends Resource
 {
-    use TranslatesNavigationGroup;
-
     public static function getModelLabel(): string
     {
         return __('setting');

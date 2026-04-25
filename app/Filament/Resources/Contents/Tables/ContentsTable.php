@@ -16,22 +16,28 @@ class ContentsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->columnToggleFormMaxHeight('400px')
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('slug')
+                    ->label(__('Slug'))
                     ->prefix('/')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('site.name')
+                    ->label(__('Site'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('type')
+                    ->label(__('Type'))
                     ->badge()
                     ->sortable(),
                 TextColumn::make('status')
+                    ->label(__('Status'))
                     ->badge()
                     ->color(fn (ContentStatus $state): string => match ($state) {
                         ContentStatus::PUBLISHED => 'success',
@@ -41,18 +47,22 @@ class ContentsTable
                     ->formatStateUsing(fn (ContentStatus $state): string => $state->value)
                     ->sortable(),
                 IconColumn::make('is_homepage')
+                    ->label(__('Homepage'))
                     ->boolean()
                     ->trueColor('success')
                     ->falseColor('gray')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('author.name')
+                    ->label(__('Author'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('published_at')
+                    ->label(__('Published at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

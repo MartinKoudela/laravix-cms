@@ -14,12 +14,14 @@ class UserInvitationsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->columnToggleFormMaxHeight('200px')
             ->columns([
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label(__('E-mail'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('role')
+                    ->label(__('Role'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         SiteRole::ADMIN->value => 'warning',
@@ -27,16 +29,16 @@ class UserInvitationsTable
                         default => 'gray',
                     }),
                 TextColumn::make('accepted_at')
-                    ->label('Status')
+                    ->label(__('Status'))
                     ->badge()
                     ->getStateUsing(fn ($record): string => $record->accepted_at ? 'Accepted' : 'Pending')
                     ->color(fn (string $state): string => $state === 'Accepted' ? 'success' : 'gray'),
                 TextColumn::make('invitedBy.name')
-                    ->label('Invited by')
+                    ->label(__('Invited by'))
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('expires_at')
-                    ->label('Expires')
+                    ->label(__('Expires'))
                     ->dateTime()
                     ->sortable()
                     ->color(fn ($state): string => $state?->isPast() ? 'danger' : 'gray'),

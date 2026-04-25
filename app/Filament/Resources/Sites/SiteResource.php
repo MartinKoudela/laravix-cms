@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Sites;
 
-use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\Sites\Pages\CreateSite;
 use App\Filament\Resources\Sites\Pages\EditSite;
 use App\Filament\Resources\Sites\Pages\ListSites;
@@ -17,8 +16,6 @@ use Filament\Tables\Table;
 
 class SiteResource extends Resource
 {
-    use TranslatesNavigationGroup;
-
     public static function getModelLabel(): string
     {
         return __('site');

@@ -10,7 +10,6 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class MediaTable
@@ -29,6 +28,7 @@ class MediaTable
                         ->grow(false),
                     Stack::make([
                         TextColumn::make('name')
+                            ->label(__('Title'))
                             ->weight(FontWeight::Medium)
                             ->searchable()
                             ->sortable(),
@@ -39,33 +39,14 @@ class MediaTable
                     ]),
                     Stack::make([
                         TextColumn::make('size')
+                            ->label(__('Size'))
                             ->formatStateUsing(fn (int $state): string => number_format($state / 1024, 1).' KB')
-                            ->color('gray')
-                            ->sortable(),
-                        TextColumn::make('site.name')
                             ->color('gray')
                             ->sortable(),
                     ])->visibleFrom('md'),
                 ]),
             ])
             ->defaultSort('created_at', 'desc')
-            ->filters([
-                SelectFilter::make('site')
-                    ->relationship('site', 'name'),
-                SelectFilter::make('type')
-                    ->label('File type')
-                    ->options([
-                        'image' => 'Images',
-                        'other' => 'Other files',
-                    ])
-                    ->query(function ($query, array $data): void {
-                        if ($data['value'] === 'image') {
-                            $query->where('mime_type', 'like', 'image/%');
-                        } elseif ($data['value'] === 'other') {
-                            $query->where('mime_type', 'not like', 'image/%');
-                        }
-                    }),
-            ])
             ->recordActions([
                 EditAction::make(),
             ])

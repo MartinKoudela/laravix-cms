@@ -19,18 +19,20 @@ class SettingComponentFactory
     {
         $key = $definition->key;
 
+        $label = __($definition->label);
+
         $component = match ($definition->type) {
-            FieldType::TEXT => TextInput::make($key)->label($definition->label),
-            FieldType::COLOR => TextInput::make($key)->label($definition->label)->type('color')->extraInputAttributes(['style' => 'height:40px;padding:2px 4px;cursor:pointer']),
-            FieldType::TEXTAREA => Textarea::make($key)->label($definition->label)->columnSpanFull(),
-            FieldType::RICH_TEXT => RichEditor::make($key)->label($definition->label)->columnSpanFull(),
-            FieldType::BOOLEAN => Toggle::make($key)->label($definition->label),
-            FieldType::DATE => DatePicker::make($key)->label($definition->label),
-            FieldType::DATETIME => DateTimePicker::make($key)->label($definition->label),
-            FieldType::NUMBER => TextInput::make($key)->label($definition->label)->numeric(),
-            FieldType::URL => TextInput::make($key)->label($definition->label)->url(),
+            FieldType::TEXT => TextInput::make($key)->label($label),
+            FieldType::COLOR => TextInput::make($key)->label($label)->type('color')->extraInputAttributes(['style' => 'height:40px;padding:2px 4px;cursor:pointer']),
+            FieldType::TEXTAREA => Textarea::make($key)->label($label)->columnSpanFull(),
+            FieldType::RICH_TEXT => RichEditor::make($key)->label($label)->columnSpanFull(),
+            FieldType::BOOLEAN => Toggle::make($key)->label($label),
+            FieldType::DATE => DatePicker::make($key)->label($label),
+            FieldType::DATETIME => DateTimePicker::make($key)->label($label),
+            FieldType::NUMBER => TextInput::make($key)->label($label)->numeric(),
+            FieldType::URL => TextInput::make($key)->label($label)->url(),
             FieldType::IMAGE, FieldType::FILE => Select::make($key)
-                ->label($definition->label)
+                ->label($label)
                 ->allowHtml()
                 ->searchable()
                 ->getSearchResultsUsing(fn (string $search) => Media::where('site_id', filament()->getTenant()?->id)
@@ -51,12 +53,12 @@ class SettingComponentFactory
                     : '-'
                 ),
             FieldType::SELECT => Select::make($key)
-                ->label($definition->label)
+                ->label($label)
                 ->options($definition->config['options'] ?? []),
         };
 
         if ($definition->hint) {
-            $component->helperText($definition->hint);
+            $component->helperText(__($definition->hint));
         }
 
         if ($definition->required) {

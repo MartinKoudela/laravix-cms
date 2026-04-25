@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Media;
 
-use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\Media\Pages\CreateMedia;
 use App\Filament\Resources\Media\Pages\EditMedia;
 use App\Filament\Resources\Media\Pages\ListMedia;
@@ -17,8 +16,6 @@ use Filament\Tables\Table;
 
 class MediaResource extends Resource
 {
-    use TranslatesNavigationGroup;
-
     public static function getModelLabel(): string
     {
         return __('media');

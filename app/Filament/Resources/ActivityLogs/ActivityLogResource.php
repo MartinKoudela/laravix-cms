@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ActivityLogs;
 
 use App\Enums\SiteRole;
-use App\Filament\Concerns\TranslatesNavigationGroup;
 use App\Filament\Resources\ActivityLogs\Pages\ListActivityLogs;
 use App\Filament\Resources\ActivityLogs\Tables\ActivityLogsTable;
 use App\Models\Site;
@@ -17,9 +16,6 @@ use Spatie\Activitylog\Models\Activity;
 
 class ActivityLogResource extends Resource
 {
-    use TranslatesNavigationGroup;
-
-
     public static function getModelLabel(): string
     {
         return __('activity log');

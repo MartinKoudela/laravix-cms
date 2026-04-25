@@ -24,6 +24,53 @@
     "users": "uživatelé",
 
     "site": "web",
-    "sites": "weby"
+    "sites": "weby",
 
+    "Title": "Název",
+    "Slug": "Slug",
+    "Site": "Web",
+    "Type": "Typ",
+    "Status": "Status",
+    "Author": "Autor",
+    "Homepage": "Domovská stránka",
+    "Updated at": "Aktualizováno",
+    "Published at": "Vydáno",
+
+    "Size": "Velikost",
+    "Parent": "Rodič",
+    "Created at": "Vytvořeno",
+
+    "User": "Uživatel",
+    "Action": "Akce",
+    "Model": "Model",
+    "When": "Kdy",
+
+    "Email address": "E-mail",
+    "Role": "Role",
+    "Invited by": "Pozvánka od",
+    "Expires": "Platnost",
+
+    "Name": "Jméno",
+    "Verified": "Ověření",
+
+    "Domain": "Doména",
+    "Theme": "Motiv",
+    "Users": "Uživatelů",
+    "Contents": "Obsahu",
+
+    "General": "Obecné",
+    "SEO": "SEO",
+    "Social": "Sociální sítě",
+    "Site Name": "Název webu",
+    "Site Description": "Popis webu",
+    "Site Logo": "Logo webu",
+    "Favicon": "Favicon",
+    "Locale": "Jazyk",
+    "Contact Email": "Kontaktní e-mail",
+    "Meta Title": "Meta název",
+    "Meta Description": "Meta popis",
+    "OG Image": "OG obrázek",
+    "Google Site Verification": "Google ověření",
+    "Save Settings": "Uložit nastavení",
+    "Settings saved": "Nastavení uloženo"
 }

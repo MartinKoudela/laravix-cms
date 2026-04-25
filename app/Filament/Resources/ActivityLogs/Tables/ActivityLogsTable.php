@@ -13,9 +13,10 @@ class ActivityLogsTable
         return $table
             ->columns([
                 TextColumn::make('causer.name')
-                    ->label('User')
+                    ->label(__('User'))
                     ->searchable(),
                 TextColumn::make('description')
+                    ->label(__('Action'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'created' => 'success',
@@ -24,12 +25,12 @@ class ActivityLogsTable
                         default => 'gray',
                     }),
                 TextColumn::make('subject_type')
-                    ->label('Model')
+                    ->label(__('Model'))
                     ->formatStateUsing(fn (string $state): string => class_basename($state))
                     ->badge()
                     ->color('gray'),
                 TextColumn::make('subject_name')
-                    ->label('Name')
+                    ->label(__('Title'))
                     ->getStateUsing(function ($record): string {
                         $changes = $record->attribute_changes;
                         $attrs = $changes['attributes'] ?? $changes['old'] ?? [];
@@ -41,7 +42,7 @@ class ActivityLogsTable
                     ->label('ID')
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label('When')
+                    ->label(__('When'))
                     ->dateTime()
                     ->sortable(),
             ])
