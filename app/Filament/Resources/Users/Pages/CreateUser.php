@@ -33,11 +33,12 @@ class CreateUser extends Page
         return $schema
             ->statePath('data')
             ->components([
-                Section::make('Invite User')
-                    ->description('The user will receive an email with a link to set up their account.')
+                Section::make(__('Invite User'))
+                    ->description(__('The user will receive an email with a link to set up their account.'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('email')
+                            ->label(__('E-mail'))
                             ->email()
                             ->required()
                             ->maxLength(255),
@@ -46,7 +47,7 @@ class CreateUser extends Page
                                 fn (SiteRole $case) => [$case->value => $case->name]
                             ))
                             ->required()
-                            ->helperText('Role determines what the user can do within this site.'),
+                            ->helperText(__('Role determines what the user can do within this site.')),
                     ]),
             ]);
     }
@@ -67,7 +68,7 @@ class CreateUser extends Page
         Mail::to($invitation->email)->send(new UserInvitationMail($invitation));
 
         Notification::make()
-            ->title('Invitation sent to '.$invitation->email)
+            ->title(__('Invitation sent to :email', ['email' => $invitation->email]))
             ->success()
             ->send();
 

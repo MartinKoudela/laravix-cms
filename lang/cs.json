@@ -1,31 +1,22 @@
 {
     "Content": "Obsah",
     "Management": "Správa",
-
     "contents": "obsahy",
     "content": "obsah",
-
     "media": "médium",
     "medias": "média",
-
     "taxonomy": "taxonomie",
     "taxonomies": "taxonymy",
-
     "activity log": "aktivita",
     "activity logs": "aktivita",
-
     "setting": "nastavení",
     "settings": "nastavení",
-
     "invitation": "pozvánka",
     "invitations": "pozvánky",
-
     "user": "uživatel",
     "users": "uživatelé",
-
     "site": "web",
     "sites": "weby",
-
     "Title": "Název",
     "Slug": "Slug",
     "Site": "Web",
@@ -35,29 +26,23 @@
     "Homepage": "Domovská stránka",
     "Updated at": "Aktualizováno",
     "Published at": "Vydáno",
-
     "Size": "Velikost",
     "Parent": "Rodič",
     "Created at": "Vytvořeno",
-
     "User": "Uživatel",
     "Action": "Akce",
     "Model": "Model",
     "When": "Kdy",
-
     "Email address": "E-mail",
     "Role": "Role",
     "Invited by": "Pozvánka od",
     "Expires": "Platnost",
-
     "Name": "Jméno",
     "Verified": "Ověření",
-
     "Domain": "Doména",
     "Theme": "Motiv",
     "Users": "Uživatelů",
     "Contents": "Obsahu",
-
     "General": "Obecné",
     "SEO": "SEO",
     "Social": "Sociální sítě",
@@ -73,7 +58,6 @@
     "Google Site Verification": "Google ověření",
     "Save Settings": "Uložit nastavení",
     "Settings saved": "Nastavení uloženo",
-
     "Recent Content": "Nedávný obsah",
     "Sites": "Weby",
     "Total managed sites": "Celkem spravovaných webů",
@@ -82,5 +66,51 @@
     "Drafts": "Koncepty",
     "Awaiting publication": "Čeká na publikování",
     "Media files": "Mediální soubory",
-    "Uploaded files": "Nahraných souborů"
+    "Uploaded files": "Nahraných souborů",
+    "Publishing": "Publikování",
+    "Taxonomies": "Taxonomie",
+    "Appearance": "Vzhled",
+    "Hierarchy": "Hierarchie",
+    "Set as homepage": "Nastavit jako úvodní stránku",
+    "Must be unique per site.": "Musí být jedinečné v rámci webu.",
+    "Only one content per site can be the homepage.": "Pouze jeden obsah na webu může být úvodní stránka.",
+    "Page": "Stránka",
+    "Post": "Příspěvek",
+    "Archive": "Archiv",
+    "Category": "Kategorie",
+    "Tag": "Štítek",
+    "Optional. Set a parent to create nested categories.": "Volitelné. Nastavte nadřazenou kategorii pro vytvoření vnořené struktury.",
+    "Preview": "Náhled",
+    "File": "Soubor",
+    "Accepted": "Přijato",
+    "Pending": "Čeká",
+    "Invite User": "Pozvat uživatele",
+    "The user will receive an email with a link to set up their account.": "Uživatel obdrží e-mail s odkazem pro nastavení účtu.",
+    "Role determines what the user can do within this site.": "Role určuje, co může uživatel na tomto webu dělat.",
+    "Invitation sent to :email": "Pozvánka odeslána na :email",
+    "Create Site": "Vytvořit web",
+    "The public name of the website.": "Veřejný název webu.",
+    "Created": "Vytvořeno",
+    "Updated": "Upraveno",
+    "Deleted": "Smazáno",
+    "Body": "Tělo",
+    "Hero Image": "Hlavní obrázek",
+    "Excerpt": "Úryvek",
+    "Hide from search engines": "Skrýt před vyhledávači",
+    "Background Color": "Barva pozadí",
+    "Text Color": "Barva textu",
+    "Background Image": "Obrázek pozadí",
+    "Layout": "Rozvržení",
+    "Custom CSS Class": "Vlastní CSS třída",
+    "Applied to the page wrapper element.": "Aplikováno na obalový element stránky.",
+    "Overrides the site-wide default when set.": "Přepíše výchozí nastavení webu, pokud je vyplněno.",
+    "Up to 160 characters. Overrides the site-wide default.": "Až 160 znaků. Přepíše výchozí nastavení webu.",
+    "Overrides the site-wide OG image for this page.": "Přepíše výchozí OG obrázek webu pro tuto stránku.",
+    "Displayed in the header and footer.": "Zobrazeno v hlavičce a patičce.",
+    "X / Twitter": "X / Twitter",
+    "LinkedIn": "LinkedIn",
+    "Facebook": "Facebook",
+    "Instagram": "Instagram",
+    "GitHub": "GitHub",
+    "Manage Settings": "Správa nastavení"
 }

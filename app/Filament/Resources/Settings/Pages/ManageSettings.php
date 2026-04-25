@@ -20,6 +20,11 @@ class ManageSettings extends Page
 
     protected string $view = 'filament.resources.settings.pages.manage-settings';
 
+    public function getTitle(): string
+    {
+        return __('Manage Settings');
+    }
+
     public ?array $data = [];
 
     public function mount(): void

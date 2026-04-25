@@ -14,13 +14,15 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make('General')
+                Section::make(__('General'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
+                            ->label(__('Name'))
                             ->required()
                             ->maxLength(255),
                         Select::make('role')
+                            ->label(__('Role'))
                             ->options(collect(SiteRole::cases())->mapWithKeys(
                                 fn (SiteRole $case) => [$case->value => $case->name]
                             ))

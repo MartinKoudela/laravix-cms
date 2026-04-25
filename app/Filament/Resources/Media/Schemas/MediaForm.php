@@ -12,11 +12,11 @@ class MediaForm
     {
         return $schema
             ->components([
-                Section::make('General')
+                Section::make(__('General'))
                     ->columnSpanFull()
                     ->schema([
                         FileUpload::make('path')
-                            ->label('File')
+                            ->label(__('File'))
                             ->required()
                             ->disk('public')
                             ->directory('media')

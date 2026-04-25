@@ -14,22 +14,25 @@ class SiteForm
     {
         return $schema
             ->components([
-                Section::make('General')
+                Section::make(__('General'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
+                            ->label(__('Title'))
                             ->required()
                             ->maxLength(255)
-                            ->helperText('The public name of the website.'),
+                            ->helperText(__('The public name of the website.')),
                         TextInput::make('domain')
+                            ->label(__('Domain'))
                             ->required()
                             ->maxLength(255)
                             ->placeholder('example.com')
                             ->unique(table: 'sites', column: 'domain', ignoreRecord: true),
                     ]),
-                Section::make('Appearance')
+                Section::make(__('Appearance'))
                     ->schema([
                         Select::make('theme')
+                            ->label(__('Theme'))
                             ->required()
                             ->default('default')
                             ->options(Site::availableThemes()),

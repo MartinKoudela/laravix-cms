@@ -45,8 +45,8 @@ class TaxonomiesTable
             ->filters([
                 SelectFilter::make('type')
                     ->options([
-                        'category' => 'Category',
-                        'tag' => 'Tag',
+                        'category' => __('Category'),
+                        'tag' => __('Tag'),
                     ]),
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),

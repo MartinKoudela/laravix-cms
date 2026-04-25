@@ -39,7 +39,7 @@ class ActivityLogsTable
                     })
                     ->sortable(false),
                 TextColumn::make('subject_id')
-                    ->label('ID')
+                    ->label(__('ID'))
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label(__('When'))
@@ -49,11 +49,11 @@ class ActivityLogsTable
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('description')
-                    ->label('Action')
+                    ->label(__('Action'))
                     ->options([
-                        'created' => 'Created',
-                        'updated' => 'Updated',
-                        'deleted' => 'Deleted',
+                        'created' => __('Created'),
+                        'updated' => __('Updated'),
+                        'deleted' => __('Deleted'),
                     ]),
             ]);
     }

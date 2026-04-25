@@ -33,12 +33,13 @@ class ContentForm
                 Tabs::make()
                     ->columnSpanFull()
                     ->tabs([
-                        Tab::make('Content')
+                        Tab::make(__('Content'))
                             ->schema([
-                                Section::make('General')
+                                Section::make(__('General'))
                                     ->columns(2)
                                     ->schema([
                                         TextInput::make('title')
+                                            ->label(__('Title'))
                                             ->required()
                                             ->maxLength(255)
                                             ->live(debounce: 500)
@@ -47,15 +48,16 @@ class ContentForm
                                             )
                                             ->columnSpanFull(),
                                         TextInput::make('slug')
+                                            ->label(__('Slug'))
                                             ->required()
                                             ->maxLength(255)
                                             ->key('slug')
                                             ->prefix('/')
                                             ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, callable $get) => $rule->where('site_id', $get('site_id')))
-                                            ->helperText('Must be unique per site.'),
+                                            ->helperText(__('Must be unique per site.')),
                                         Toggle::make('is_homepage')
-                                            ->label('Set as homepage')
-                                            ->helperText('Only one content per site can be the homepage.')
+                                            ->label(__('Set as homepage'))
+                                            ->helperText(__('Only one content per site can be the homepage.'))
                                             ->columnSpanFull()
                                             ->hidden(function (?Content $record): bool {
                                                 if ($record?->is_homepage) {
@@ -73,20 +75,22 @@ class ContentForm
                                                     ->exists();
                                             }),
                                     ]),
-                                Section::make('Publishing')
+                                Section::make(__('Publishing'))
                                     ->columns(2)
                                     ->schema([
                                         Select::make('type')
+                                            ->label(__('Type'))
                                             ->required()
                                             ->options([
-                                                'page' => 'Page',
-                                                'post' => 'Post',
-                                                'archive' => 'Archive',
+                                                'page' => __('Page'),
+                                                'post' => __('Post'),
+                                                'archive' => __('Archive'),
                                             ])
                                             ->default('page')
                                             ->disabled(fn ($record) => $record !== null)
                                             ->dehydrated(),
                                         Select::make('status')
+                                            ->label(__('Status'))
                                             ->required()
                                             ->options(collect(ContentStatus::cases())->mapWithKeys(
                                                 fn (ContentStatus $case) => [$case->value => $case->name]
@@ -96,9 +100,10 @@ class ContentForm
                                         DateTimePicker::make('published_at')
                                             ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
                                     ]),
-                                Section::make('Taxonomies')
+                                Section::make(__('Taxonomies'))
                                     ->schema([
                                         Select::make('taxonomies')
+                                            ->label(__('Taxonomies'))
                                             ->relationship('taxonomies', 'name')
                                             ->multiple()
                                             ->searchable()
@@ -108,7 +113,7 @@ class ContentForm
                                             ),
                                     ]),
                                 ...array_map(
-                                    fn (string $group, array $definitions) => Section::make($group)
+                                    fn (string $group, array $definitions) => Section::make(__($group))
                                         ->schema(array_map(
                                             fn ($definition) => FieldComponentFactory::make($definition),
                                             $definitions,
@@ -118,7 +123,7 @@ class ContentForm
                                     array_values($contentGroups),
                                 ),
                             ]),
-                        Tab::make('SEO')
+                        Tab::make(__('SEO'))
                             ->schema([
                                 Section::make()
                                     ->columns(2)
@@ -127,7 +132,7 @@ class ContentForm
                                         $seoDefinitions,
                                     )),
                             ]),
-                        Tab::make('Appearance')
+                        Tab::make(__('Appearance'))
                             ->schema([
                                 Section::make()
                                     ->columns(2)

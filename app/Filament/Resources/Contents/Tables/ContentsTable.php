@@ -75,8 +75,8 @@ class ContentsTable
                     )),
                 SelectFilter::make('type')
                     ->options([
-                        'page' => 'Page',
-                        'post' => 'Post',
+                        'page' => __('Page'),
+                        'post' => __('Post'),
                     ]),
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),

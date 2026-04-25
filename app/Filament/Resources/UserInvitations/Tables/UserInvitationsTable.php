@@ -31,8 +31,8 @@ class UserInvitationsTable
                 TextColumn::make('accepted_at')
                     ->label(__('Status'))
                     ->badge()
-                    ->getStateUsing(fn ($record): string => $record->accepted_at ? 'Accepted' : 'Pending')
-                    ->color(fn (string $state): string => $state === 'Accepted' ? 'success' : 'gray'),
+                    ->getStateUsing(fn ($record): string => $record->accepted_at ? __('Accepted') : __('Pending'))
+                    ->color(fn (string $state): string => $state === __('Accepted') ? 'success' : 'gray'),
                 TextColumn::make('invitedBy.name')
                     ->label(__('Invited by'))
                     ->sortable()
