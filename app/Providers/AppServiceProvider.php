@@ -149,11 +149,30 @@ class AppServiceProvider extends ServiceProvider
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['en', 'cs', 'de', 'fr', 'es', 'it', 'pl'])
+                ->locales(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh'])
+                ->flags([
+                    'en' => 'https://flagcdn.com/gb.svg',
+                    'cs' => 'https://flagcdn.com/cz.svg',
+                    'sk' => 'https://flagcdn.com/sk.svg',
+                    'de' => 'https://flagcdn.com/de.svg',
+                    'fr' => 'https://flagcdn.com/fr.svg',
+                    'es' => 'https://flagcdn.com/es.svg',
+                    'it' => 'https://flagcdn.com/it.svg',
+                    'pl' => 'https://flagcdn.com/pl.svg',
+                    'pt' => 'https://flagcdn.com/br.svg',
+                    'uk' => 'https://flagcdn.com/ua.svg',
+                    'nl' => 'https://flagcdn.com/nl.svg',
+                    'hu' => 'https://flagcdn.com/hu.svg',
+                    'ro' => 'https://flagcdn.com/ro.svg',
+                    'sv' => 'https://flagcdn.com/se.svg',
+                    'tr' => 'https://flagcdn.com/tr.svg',
+                    'ja' => 'https://flagcdn.com/jp.svg',
+                    'zh' => 'https://flagcdn.com/cn.svg',
+                ])
                 ->circular()
                 ->nativeLabel()
                 ->visible(insidePanels: true, outsidePanels: true)
-                ->userPreferredLocale(fn () => request()->getPreferredLanguage(['en', 'cs', 'de', 'fr', 'es', 'it', 'pl']));
+                ->userPreferredLocale(fn () => request()->getPreferredLanguage(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh']));
         });
     }
 }
