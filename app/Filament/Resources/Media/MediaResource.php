@@ -19,6 +19,16 @@ class MediaResource extends Resource
 {
     use TranslatesNavigationGroup;
 
+    public static function getModelLabel(): string
+    {
+        return __('media');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('medias');
+    }
+
     protected static ?string $model = Media::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';

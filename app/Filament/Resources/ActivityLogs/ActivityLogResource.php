@@ -19,6 +19,17 @@ class ActivityLogResource extends Resource
 {
     use TranslatesNavigationGroup;
 
+
+    public static function getModelLabel(): string
+    {
+        return __('activity log');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('activity logs');
+    }
+
     protected static ?string $model = Activity::class;
 
     protected static bool $isScopedToTenant = false;
@@ -26,8 +37,6 @@ class ActivityLogResource extends Resource
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
-
-    protected static ?string $navigationLabel = 'Activity Log';
 
     public static function canViewAny(): bool
     {

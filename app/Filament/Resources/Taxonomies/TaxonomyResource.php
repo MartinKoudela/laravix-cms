@@ -19,6 +19,16 @@ class TaxonomyResource extends Resource
 {
     use TranslatesNavigationGroup;
 
+    public static function getModelLabel(): string
+    {
+        return __('taxonomy');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('taxonomies');
+    }
+
     protected static ?string $model = Taxonomy::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';

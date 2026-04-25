@@ -20,6 +20,16 @@ class ContentResource extends Resource
 {
     use TranslatesNavigationGroup;
 
+    public static function getModelLabel(): string
+    {
+        return __('content');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('contents');
+    }
+
     protected static ?string $model = Content::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';

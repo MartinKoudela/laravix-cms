@@ -23,6 +23,15 @@ class UserResource extends Resource
 {
     use TranslatesNavigationGroup;
 
+    public static function getModelLabel(): string
+    {
+        return __('user');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('users');
+    }
     protected static ?string $model = User::class;
 
     protected static bool $isScopedToTenant = false;

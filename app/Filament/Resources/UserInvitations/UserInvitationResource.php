@@ -19,6 +19,15 @@ class UserInvitationResource extends Resource
 {
     use TranslatesNavigationGroup;
 
+    public static function getModelLabel(): string
+    {
+        return __('invitation');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('invitations');
+    }
     protected static ?string $model = UserInvitation::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';

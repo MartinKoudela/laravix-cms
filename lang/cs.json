@@ -1,5 +1,29 @@
 {
     "Content": "Obsah",
     "Management": "Správa",
-    "Users": "Uživatelé"
+
+    "contents": "obsahy",
+    "content": "obsah",
+
+    "media": "médium",
+    "medias": "média",
+
+    "taxonomy": "taxonomie",
+    "taxonomies": "taxonymy",
+
+    "activity log": "aktivita",
+    "activity logs": "aktivita",
+
+    "setting": "nastavení",
+    "settings": "nastavení",
+
+    "invitation": "pozvánka",
+    "invitations": "pozvánky",
+
+    "user": "uživatel",
+    "users": "uživatelé",
+
+    "site": "web",
+    "sites": "weby"
+
 }

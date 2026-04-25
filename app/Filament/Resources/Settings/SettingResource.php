@@ -15,6 +15,16 @@ class SettingResource extends Resource
 {
     use TranslatesNavigationGroup;
 
+    public static function getModelLabel(): string
+    {
+        return __('setting');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('settings');
+    }
+
     protected static ?string $model = Setting::class;
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
