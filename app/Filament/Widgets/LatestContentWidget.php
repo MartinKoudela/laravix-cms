@@ -13,9 +13,12 @@ use Filament\Widgets\TableWidget as BaseWidget;
 
 class LatestContentWidget extends BaseWidget
 {
-    protected static ?string $heading = 'Recent Content';
-
     protected ?string $pollingInterval = null;
+
+    public function getTableHeading(): string
+    {
+        return __('Recent Content');
+    }
 
     protected int|string|array $columnSpan = 'full';
 
@@ -30,12 +33,16 @@ class LatestContentWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable(),
                 TextColumn::make('site.name')
+                    ->label(__('Site'))
                     ->sortable(),
                 TextColumn::make('type')
+                    ->label(__('Type'))
                     ->badge(),
                 TextColumn::make('status')
+                    ->label(__('Status'))
                     ->badge()
                     ->color(fn (ContentStatus $state): string => match ($state) {
                         ContentStatus::PUBLISHED => 'success',
@@ -44,6 +51,7 @@ class LatestContentWidget extends BaseWidget
                     })
                     ->formatStateUsing(fn (ContentStatus $state): string => $state->value),
                 TextColumn::make('updated_at')
+                    ->label(__('Updated at'))
                     ->dateTime()
                     ->sortable(),
             ])

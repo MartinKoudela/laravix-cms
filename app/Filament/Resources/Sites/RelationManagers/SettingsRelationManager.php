@@ -61,9 +61,4 @@ class SettingsRelationManager extends RelationManager
                 ]),
             ]);
     }
-
-    public function makeFilamentTranslatableContentDriver(): ?TranslatableContentDriver
-    {
-        // TODO: Implement makeFilamentTranslatableContentDriver() method.
-    }
 }
