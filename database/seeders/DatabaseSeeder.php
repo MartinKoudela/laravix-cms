@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // TODO: přidat oprávnění - spatie permissions
         $this->call([
             SiteSeeder::class,
             UserSeeder::class,

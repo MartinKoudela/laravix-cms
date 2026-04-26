@@ -17,6 +17,7 @@ class SiteSeeder extends Seeder
             'name' => 'localhost',
             'domain' => 'localhost'
         ]);
+
         Site::factory()->count(6)->create();
     }
 }
