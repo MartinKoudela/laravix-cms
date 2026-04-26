@@ -17,21 +17,21 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
-            'password' => Hash::make('example_admin'),
+            'password' => Hash::make('example_'),
             'is_super_admin' => true,
         ]);
 
         User::factory()->create([
             'name' => 'Manager',
             'email' => 'manager@example.com',
-            'password' => Hash::make('example_admin'),
+            'password' => Hash::make('example_'),
             'is_super_admin' => false,
         ]);
 
         User::factory()->create([
             'name' => 'User',
             'email' => 'user@example.com',
-            'password' => Hash::make('example_admin'),
+            'password' => Hash::make('example_'),
             'is_super_admin' => false,
         ]);
 
