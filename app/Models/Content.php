@@ -12,7 +12,7 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-#[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'status', 'published_at', 'created_by'])]
+#[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'blocks', 'status', 'published_at', 'created_by'])]
 class Content extends Model
 {
     use LogsActivity, HasFactory;
@@ -30,6 +30,7 @@ class Content extends Model
             'is_homepage' => 'boolean',
             'published_at' => 'datetime',
             'status' => ContentStatus::class,
+            'blocks' => 'array',
         ];
     }
 

@@ -62,7 +62,32 @@ class FieldComponentFactory
         return $component;
     }
 
-    private static function mediaOptionLabel(Media $media): string
+    public static function mediaSelect(string $key, string $label): Select
+    {
+        return Select::make($key)
+            ->label($label)
+            ->allowHtml()
+            ->searchable()
+            ->getSearchResultsUsing(fn (string $search) => Media::where('site_id', filament()->getTenant()?->id)
+                ->where('name', 'like', "%{$search}%")
+                ->limit(20)
+                ->get()
+                ->mapWithKeys(fn (Media $media) => [$media->id => static::mediaOptionLabel($media)])
+                ->toArray()
+            )
+            ->options(fn () => Media::where('site_id', filament()->getTenant()?->id)
+                ->limit(20)
+                ->get()
+                ->mapWithKeys(fn (Media $media) => [$media->id => static::mediaOptionLabel($media)])
+                ->toArray()
+            )
+            ->getOptionLabelUsing(fn ($value) => ($media = Media::find($value))
+                ? static::mediaOptionLabel($media)
+                : '-'
+            );
+    }
+
+    public static function mediaOptionLabel(Media $media): string
     {
         $url = e(Storage::disk($media->disk)->url($media->path));
         $name = e($media->name);

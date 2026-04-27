@@ -5,13 +5,21 @@ namespace App\Providers;
 use App\Enums\FieldType;
 use App\Support\AppearanceDefinition;
 use App\Support\AppearanceRegistry;
+use App\Support\BlockDefinition;
+use App\Support\BlockRegistry;
+use App\Support\FieldComponentFactory;
 use App\Support\FieldDefinition;
 use App\Support\FieldRegistry;
 use App\Support\SettingDefinition;
 use App\Support\SettingRegistry;
+use BezhanSalleh\LanguageSwitch\LanguageSwitch;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -141,6 +149,71 @@ class AppServiceProvider extends ServiceProvider
                 ->label('GitHub')
                 ->group('Social'),
         ]);
+
+        BlockRegistry::register(
+            BlockDefinition::make('text')
+                ->label('Text')
+                ->icon('heroicon-o-document-text')
+                ->schema(fn () => [
+                    TextInput::make('heading')->label(fn () => __('Heading'))->columnSpanFull(),
+                    RichEditor::make('content')->label(fn () => __('Content'))->columnSpanFull(),
+                ]),
+            BlockDefinition::make('hero')
+                ->label('Hero')
+                ->icon('heroicon-o-photo')
+                ->schema(fn () => [
+                    TextInput::make('heading')->label(fn () => __('Heading'))->columnSpanFull(),
+                    Textarea::make('subheading')->label(fn () => __('Subheading'))->columnSpanFull(),
+                    FieldComponentFactory::mediaSelect('image_id', __('Image')),
+                    TextInput::make('button_label')->label(fn () => __('Button Label')),
+                    TextInput::make('button_url')->label(fn () => __('Button URL'))->url(),
+                ]),
+            BlockDefinition::make('cards')
+                ->label('Cards')
+                ->icon('heroicon-o-squares-2x2')
+                ->schema(fn () => [
+                    TextInput::make('heading')->label(fn () => __('Heading'))->columnSpanFull(),
+                    Repeater::make('items')
+                        ->label(fn () => __('Cards'))
+                        ->schema([
+                            TextInput::make('title')->label(fn () => __('Title')),
+                            Textarea::make('description')->label(fn () => __('Description'))->columnSpanFull(),
+                            FieldComponentFactory::mediaSelect('image_id', __('Image')),
+                            TextInput::make('link')->label(fn () => __('Link'))->url(),
+                        ])
+                        ->columnSpanFull(),
+                ]),
+            BlockDefinition::make('columns')
+                ->label('Columns')
+                ->icon('heroicon-o-view-columns')
+                ->schema(fn () => [
+                    Repeater::make('columns')
+                        ->label(fn () => __('Columns'))
+                        ->schema([
+                            RichEditor::make('content')->label(fn () => __('Content'))->columnSpanFull(),
+                        ])
+                        ->columnSpanFull(),
+                ]),
+            BlockDefinition::make('button')
+                ->label('Button')
+                ->icon('heroicon-o-cursor-arrow-rays')
+                ->schema(fn () => [
+                    TextInput::make('label')->label(fn () => __('Label')),
+                    TextInput::make('url')->label(fn () => __('URL'))->url(),
+                    Select::make('style')
+                        ->label(fn () => __('Style'))
+                        ->options(fn () => [
+                            'primary' => __('Primary'),
+                            'secondary' => __('Secondary'),
+                            'outline' => __('Outline'),
+                        ])
+                        ->default('primary'),
+                ]),
+            BlockDefinition::make('divider')
+                ->label('Divider')
+                ->icon('heroicon-o-minus')
+                ->schema([]),
+        );
 
         foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) as $themePath) {
             $themeName = basename($themePath);

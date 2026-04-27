@@ -8,6 +8,8 @@ use App\Models\Setting;
 use App\Models\Site;
 use App\Support\AppearanceRegistry;
 use App\Support\FieldRegistry;
+use App\Support\BlockRegistry;
+
 
 class PageDataBuilder
 {
@@ -61,6 +63,9 @@ class PageDataBuilder
             ->pluck('value')
             ->filter()
             ->map(fn ($id) => (int) $id);
+
+        $blockMediaIds = collect(BlockRegistry::extractMediaIds($content->blocks ?? []));
+        $mediaIds = $mediaIds->merge($blockMediaIds)->unique();
 
         foreach (['og_image', 'logo', 'favicon'] as $key) {
             $id = (int) $settings->get($key);
