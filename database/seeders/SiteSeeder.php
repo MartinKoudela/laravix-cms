@@ -12,6 +12,12 @@ class SiteSeeder extends Seeder
 
     public function run(): void
     {
+        // defailt localhost domain for docker or other server
+        Site::factory()->create([
+            'name' => 'localhost',
+            'domain' => 'localhost'
+        ]);
+
         Site::factory()->count(6)->create();
     }
 }

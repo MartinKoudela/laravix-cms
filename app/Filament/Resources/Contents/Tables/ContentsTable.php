@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Contents\Tables;
 
 use App\Enums\ContentStatus;
+use App\Filament\Actions\PreviewAction;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -83,6 +85,7 @@ class ContentsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                PreviewAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
