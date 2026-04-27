@@ -16,6 +16,7 @@ class CardsBlock
         return BlockDefinition::make('cards')
             ->label('Cards')
             ->icon('heroicon-o-squares-2x2')
+            ->nestable(false)
             ->schema(fn () => [
                 TextInput::make('heading')->label(fn () => __('Heading'))->columnSpanFull(),
                 Repeater::make('items')
@@ -25,7 +26,7 @@ class CardsBlock
                         FieldComponentFactory::mediaSelect('image_id', __('Image')),
                         TextInput::make('link')->label(fn () => __('Link'))->url(),
                         Builder::make('blocks')
-                            ->blocks(BlockRegistry::toBlocks())
+                            ->blocks(BlockRegistry::toNestableBlocks())
                             ->collapsible()
                             ->columnSpanFull(),
                     ])

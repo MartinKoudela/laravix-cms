@@ -14,6 +14,7 @@ class BlockDefinition
         public readonly string $label,
         public readonly ?string $icon = null,
         public readonly \Closure|array $schema = [],
+        public readonly bool $nestable = true,
     ) {}
 
     public static function make(string $key): static
@@ -23,17 +24,22 @@ class BlockDefinition
 
     public function label(string $label): static
     {
-        return new static($this->key, $label, $this->icon, $this->schema);
+        return new static($this->key, $label, $this->icon, $this->schema, $this->nestable);
     }
 
     public function icon(string $icon): static
     {
-        return new static($this->key, $this->label, $icon, $this->schema);
+        return new static($this->key, $this->label, $icon, $this->schema, $this->nestable);
     }
 
     public function schema(\Closure|array $schema): static
     {
-        return new static($this->key, $this->label, $this->icon, $schema);
+        return new static($this->key, $this->label, $this->icon, $schema, $this->nestable);
+    }
+
+    public function nestable(bool $nestable): static
+    {
+        return new static($this->key, $this->label, $this->icon, $this->schema, $nestable);
     }
 
     public function toBlock(): Block

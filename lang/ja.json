@@ -139,5 +139,7 @@
     "Divider": "区切り線",
     "Hero": "ヒーロー",
     "Text": "テキスト",
-    "Number of Columns": "列数"
+    "Number of Columns": "列数",
+    "Button Group": "ボタングループ",
+    "Buttons": "ボタン"
 }

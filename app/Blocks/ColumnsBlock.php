@@ -15,6 +15,7 @@ class ColumnsBlock
         return BlockDefinition::make('columns')
             ->label('Columns')
             ->icon('heroicon-o-view-columns')
+            ->nestable(false)
             ->schema(fn () => [
                 Select::make('columns_count')
                     ->label(fn () => __('Number of Columns'))
@@ -25,7 +26,7 @@ class ColumnsBlock
                     ->label(fn () => __('Columns'))
                     ->schema([
                         Builder::make('blocks')
-                            ->blocks(BlockRegistry::toBlocks())
+                            ->blocks(BlockRegistry::toNestableBlocks())
                             ->collapsible()
                             ->columnSpanFull(),
                     ])

@@ -20,7 +20,15 @@ class BlockRegistry
 
     public static function toBlocks(): array
     {
-        return array_map(fn(BlockDefinition $def) => $def->toBlock(), static::$blocks);
+        return array_map(fn (BlockDefinition $def) => $def->toBlock(), static::$blocks);
+    }
+
+    public static function toNestableBlocks(): array
+    {
+        return array_map(
+            fn (BlockDefinition $def) => $def->toBlock(),
+            array_filter(static::$blocks, fn (BlockDefinition $def) => $def->nestable)
+        );
     }
 
     public static function extractMediaIds(array $blocks): array
@@ -37,11 +45,10 @@ class BlockRegistry
     {
         foreach ($data as $key => $value) {
             if (str_ends_with($key, '_id') && is_numeric($value) && $value) {
-                $ids[] = (int)$value;
+                $ids[] = (int) $value;
             } elseif (is_array($value)) {
                 static::collectIds($value, $ids);
             }
         }
     }
 }
-

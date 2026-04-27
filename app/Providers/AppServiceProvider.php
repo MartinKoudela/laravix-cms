@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Blocks\ButtonBlock;
+use App\Blocks\ButtonGroupBlock;
 use App\Blocks\CardsBlock;
 use App\Blocks\ColumnsBlock;
 use App\Blocks\DividerBlock;
@@ -155,6 +156,7 @@ class AppServiceProvider extends ServiceProvider
             CardsBlock::definition(),
             ColumnsBlock::definition(),
             ButtonBlock::definition(),
+            ButtonGroupBlock::definition(),
             DividerBlock::definition(),
         );
 

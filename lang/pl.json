@@ -139,5 +139,7 @@
     "Divider": "Separator",
     "Hero": "Hero",
     "Text": "Tekst",
-    "Number of Columns": "Liczba kolumn"
+    "Number of Columns": "Liczba kolumn",
+    "Button Group": "Grupa przycisków",
+    "Buttons": "Przyciski"
 }

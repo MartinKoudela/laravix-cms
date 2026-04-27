@@ -139,5 +139,7 @@
     "Divider": "Trennlinie",
     "Hero": "Hero",
     "Text": "Text",
-    "Number of Columns": "Anzahl der Spalten"
+    "Number of Columns": "Anzahl der Spalten",
+    "Button Group": "Schaltflächengruppe",
+    "Buttons": "Schaltflächen"
 }

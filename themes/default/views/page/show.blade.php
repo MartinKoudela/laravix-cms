@@ -13,11 +13,6 @@
 
     @if ($hasBlocks)
         {{-- Builder mode --}}
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-2 leading-tight max-w-3xl">
-                {{ $content->title }}
-            </h1>
-        </div>
 
         @foreach ($content->blocks as $block)
             @include("themes.default::blocks.{$block['type']}", array_merge($block['data'] ?? [], ['mediaMap' => $mediaMap]))
