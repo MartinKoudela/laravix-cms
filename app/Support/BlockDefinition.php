@@ -38,30 +38,34 @@ class BlockDefinition
 
     public function toBlock(): Block
     {
-        $schema = is_callable($this->schema) ? ($this->schema)() : $this->schema;
+        $definition = $this;
 
         $block = Block::make($this->key)
-            ->label(fn () => __($this->label))
-            ->schema([
-                ...$schema,
-                Section::make(__('Block Settings'))
-                    ->collapsed()
-                    ->schema([
-                        TextInput::make('css_class')
-                            ->label(__('CSS Class')),
-                        Select::make('padding')
-                            ->label(__('Padding'))
-                            ->options([
-                                'none' => __('None'),
-                                'sm' => __('Small'),
-                                'md' => __('Medium'),
-                                'lg' => __('Large'),
-                            ]),
-                        TextInput::make('background_color')
-                            ->label(__('Background Color'))
-                            ->type('color'),
-                    ]),
-            ]);
+            ->label(fn () => __($definition->label))
+            ->schema(function () use ($definition) {
+                $schema = is_callable($definition->schema) ? ($definition->schema)() : $definition->schema;
+
+                return [
+                    ...$schema,
+                    Section::make(fn () => __('Block Settings'))
+                        ->collapsed()
+                        ->schema([
+                            TextInput::make('css_class')
+                                ->label(fn () => __('CSS Class')),
+                            Select::make('padding')
+                                ->label(fn () => __('Padding'))
+                                ->options(fn () => [
+                                    'none' => __('None'),
+                                    'sm' => __('Small'),
+                                    'md' => __('Medium'),
+                                    'lg' => __('Large'),
+                                ]),
+                            TextInput::make('background_color')
+                                ->label(fn () => __('Background Color'))
+                                ->type('color'),
+                        ]),
+                ];
+            });
 
         if ($this->icon) {
             $block->icon($this->icon);
