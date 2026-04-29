@@ -141,5 +141,16 @@
     "Text": "Testo",
     "Number of Columns": "Numero di colonne",
     "Button Group": "Gruppo di pulsanti",
-    "Buttons": "Pulsanti"
+    "Buttons": "Pulsanti",
+    "navigation": "navigazione",
+    "Manage Navigation": "Gestisci navigazione",
+    "Navigation saved": "Navigazione salvata",
+    "Save Navigation": "Salva navigazione",
+    "Header Navigation": "Navigazione intestazione",
+    "Footer Navigation": "Navigazione piè di pagina",
+    "Target": "Destinazione",
+    "Same tab": "Stessa scheda",
+    "New tab": "Nuova scheda",
+    "Submenu": "Sottomenu",
+    "Or enter a URL manually": "O inserisci un URL manualmente"
 }

@@ -141,5 +141,16 @@
     "Text": "Tekst",
     "Number of Columns": "Aantal kolommen",
     "Button Group": "Knoppengroep",
-    "Buttons": "Knoppen"
+    "Buttons": "Knoppen",
+    "navigation": "navigatie",
+    "Manage Navigation": "Navigatie beheren",
+    "Navigation saved": "Navigatie opgeslagen",
+    "Save Navigation": "Navigatie opslaan",
+    "Header Navigation": "Koptekst navigatie",
+    "Footer Navigation": "Voettekst navigatie",
+    "Target": "Doel",
+    "Same tab": "Hetzelfde tabblad",
+    "New tab": "Nieuw tabblad",
+    "Submenu": "Submenu",
+    "Or enter a URL manually": "Of voer een URL handmatig in"
 }

@@ -21,6 +21,7 @@ class NavigationComponentFactory
                 TextInput::make('label')
                     ->label(fn () => __('Label'))
                     ->required()
+                    ->live(debounce: 500)
                     ->columnSpanFull(),
                 Select::make('content_id')
                     ->label(fn () => __('Page'))
@@ -45,7 +46,8 @@ class NavigationComponentFactory
                     ->placeholder(fn () => __('Or enter a URL manually'))
                     ->nullable(),
                 TextInput::make('url')
-                    ->label(fn () => __('URL')),
+                    ->label(fn () => __('URL'))
+                    ->live(debounce: 500),
                 Select::make('target')
                     ->label(fn () => __('Target'))
                     ->options([

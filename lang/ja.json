@@ -141,5 +141,16 @@
     "Text": "テキスト",
     "Number of Columns": "列数",
     "Button Group": "ボタングループ",
-    "Buttons": "ボタン"
+    "Buttons": "ボタン",
+    "navigation": "ナビゲーション",
+    "Manage Navigation": "ナビゲーション管理",
+    "Navigation saved": "ナビゲーションを保存しました",
+    "Save Navigation": "ナビゲーションを保存",
+    "Header Navigation": "ヘッダーナビゲーション",
+    "Footer Navigation": "フッターナビゲーション",
+    "Target": "ターゲット",
+    "Same tab": "同じタブ",
+    "New tab": "新しいタブ",
+    "Submenu": "サブメニュー",
+    "Or enter a URL manually": "またはURLを手動で入力"
 }

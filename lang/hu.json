@@ -141,5 +141,16 @@
     "Text": "Szöveg",
     "Number of Columns": "Oszlopok száma",
     "Button Group": "Gombcsoport",
-    "Buttons": "Gombok"
+    "Buttons": "Gombok",
+    "navigation": "navigáció",
+    "Manage Navigation": "Navigáció kezelése",
+    "Navigation saved": "Navigáció mentve",
+    "Save Navigation": "Navigáció mentése",
+    "Header Navigation": "Fejléc navigáció",
+    "Footer Navigation": "Lábléc navigáció",
+    "Target": "Cél",
+    "Same tab": "Ugyanaz a lap",
+    "New tab": "Új lap",
+    "Submenu": "Almenü",
+    "Or enter a URL manually": "Vagy adjon meg URL-t manuálisan"
 }

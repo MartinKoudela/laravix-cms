@@ -141,5 +141,16 @@
     "Text": "Tekst",
     "Number of Columns": "Liczba kolumn",
     "Button Group": "Grupa przycisków",
-    "Buttons": "Przyciski"
+    "Buttons": "Przyciski",
+    "navigation": "nawigacja",
+    "Manage Navigation": "Zarządzaj nawigacją",
+    "Navigation saved": "Nawigacja zapisana",
+    "Save Navigation": "Zapisz nawigację",
+    "Header Navigation": "Nawigacja nagłówka",
+    "Footer Navigation": "Nawigacja stopki",
+    "Target": "Cel",
+    "Same tab": "Ta sama karta",
+    "New tab": "Nowa karta",
+    "Submenu": "Podmenu",
+    "Or enter a URL manually": "Lub wpisz URL ręcznie"
 }

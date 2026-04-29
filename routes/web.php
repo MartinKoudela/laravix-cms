@@ -11,6 +11,8 @@ Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 Route::get('/invitation/{token}', [InvitationController::class, 'show'])->name('invitation.accept');
 Route::post('/invitation/{token}', [InvitationController::class, 'accept'])->name('invitation.accept.submit');
 
+Route::get('/__nav-preview/{token}', [CmsController::class, 'navPreview'])->name('nav.preview');
+
 Route::get('/{slug?}', [CmsController::class, 'show'])
     ->where('slug', '.*')
     ->name('cms.show');

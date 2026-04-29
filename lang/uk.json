@@ -141,5 +141,16 @@
     "Text": "Текст",
     "Number of Columns": "Кількість стовпців",
     "Button Group": "Група кнопок",
-    "Buttons": "Кнопки"
+    "Buttons": "Кнопки",
+    "navigation": "навігація",
+    "Manage Navigation": "Управління навігацією",
+    "Navigation saved": "Навігацію збережено",
+    "Save Navigation": "Зберегти навігацію",
+    "Header Navigation": "Навігація заголовка",
+    "Footer Navigation": "Навігація підвалу",
+    "Target": "Ціль",
+    "Same tab": "Та сама вкладка",
+    "New tab": "Нова вкладка",
+    "Submenu": "Підменю",
+    "Or enter a URL manually": "Або введіть URL вручну"
 }

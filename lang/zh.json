@@ -141,5 +141,16 @@
     "Text": "文本",
     "Number of Columns": "列数",
     "Button Group": "按钮组",
-    "Buttons": "按钮"
+    "Buttons": "按钮",
+    "navigation": "导航",
+    "Manage Navigation": "管理导航",
+    "Navigation saved": "导航已保存",
+    "Save Navigation": "保存导航",
+    "Header Navigation": "页眉导航",
+    "Footer Navigation": "页脚导航",
+    "Target": "目标",
+    "Same tab": "同一标签页",
+    "New tab": "新标签页",
+    "Submenu": "子菜单",
+    "Or enter a URL manually": "或手动输入URL"
 }

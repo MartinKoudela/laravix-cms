@@ -141,5 +141,16 @@
     "Text": "Text",
     "Number of Columns": "Număr de coloane",
     "Button Group": "Grup de butoane",
-    "Buttons": "Butoane"
+    "Buttons": "Butoane",
+    "navigation": "navigare",
+    "Manage Navigation": "Gestionare navigare",
+    "Navigation saved": "Navigare salvată",
+    "Save Navigation": "Salvare navigare",
+    "Header Navigation": "Navigare antet",
+    "Footer Navigation": "Navigare subsol",
+    "Target": "Țintă",
+    "Same tab": "Același tab",
+    "New tab": "Tab nou",
+    "Submenu": "Submeniu",
+    "Or enter a URL manually": "Sau introduceți un URL manual"
 }

@@ -141,5 +141,16 @@
     "Text": "Text",
     "Number of Columns": "Antal kolumner",
     "Button Group": "Knappgrupp",
-    "Buttons": "Knappar"
+    "Buttons": "Knappar",
+    "navigation": "navigering",
+    "Manage Navigation": "Hantera navigering",
+    "Navigation saved": "Navigering sparad",
+    "Save Navigation": "Spara navigering",
+    "Header Navigation": "Sidhuvud navigering",
+    "Footer Navigation": "Sidfot navigering",
+    "Target": "Mål",
+    "Same tab": "Samma flik",
+    "New tab": "Ny flik",
+    "Submenu": "Undermeny",
+    "Or enter a URL manually": "Eller ange en URL manuellt"
 }

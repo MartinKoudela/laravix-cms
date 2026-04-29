@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Navigation\Pages;
 
 use App\Filament\Resources\Navigation\NavigationResource;
+use App\Models\Site;
 use App\Support\NavigationComponentFactory;
 use App\Support\NavigationRegistry;
 use Filament\Actions\Action;
@@ -21,35 +22,82 @@ class ManageNavigation extends Page
         return __('Manage Navigation');
     }
 
-    public ?array $data = [];
+    public ?array $headerData = [];
+
+    public ?array $footerData = [];
+
+    public ?Site $site = null;
+
+    public string $previewToken = '';
 
     public function mount(): void
     {
-        $site = filament()->getTenant();
+        $this->site = filament()->getTenant();
+        $navigations = $this->site?->navigations ?? [];
 
-        $this->form->fill([
-            'navigations' => $site?->navigations ?? [],
-        ]);
+        $this->headerForm->fill(['navigations' => ['header' => $navigations['header'] ?? []]]);
+        $this->footerForm->fill(['navigations' => ['footer' => $navigations['footer'] ?? []]]);
+
+        $this->refreshPreview();
     }
 
-    public function form(Schema $schema): Schema
+    public function updated(string $property): void
     {
-        $components = array_map(
-            fn ($definition) => NavigationComponentFactory::make($definition),
-            NavigationRegistry::all(),
-        );
+        if (str_starts_with($property, 'headerData') || str_starts_with($property, 'footerData')) {
+            $this->refreshPreview();
+        }
+    }
 
-        return $schema->statePath('data')->components($components);
+    public function refreshPreview(): void
+    {
+        $this->previewToken = md5($this->site->id.'-'.auth()->id().'-nav-preview');
+
+        cache()->put("preview_nav_{$this->previewToken}", [
+            'site_id'     => $this->site->id,
+            'navigations' => array_merge(
+                $this->headerData['navigations'] ?? [],
+                $this->footerData['navigations'] ?? [],
+            ),
+        ], now()->addMinutes(30));
+
+        $this->dispatch('nav-preview-updated');
+    }
+
+    public function headerForm(Schema $schema): Schema
+    {
+        $definition = NavigationRegistry::all()['header'] ?? null;
+
+        return $schema
+            ->statePath('headerData')
+            ->components($definition ? [NavigationComponentFactory::make($definition)] : []);
+    }
+
+    public function footerForm(Schema $schema): Schema
+    {
+        $definition = NavigationRegistry::all()['footer'] ?? null;
+
+        return $schema
+            ->statePath('footerData')
+            ->components($definition ? [NavigationComponentFactory::make($definition)] : []);
+    }
+
+    protected function getForms(): array
+    {
+        return ['headerForm', 'footerForm'];
     }
 
     public function save(): void
     {
-        $state = $this->form->getState();
-        $site = filament()->getTenant();
+        $site = $this->site ?? filament()->getTenant();
 
         $site->update([
-            'navigations' => $state['navigations'] ?? [],
+            'navigations' => array_merge(
+                $this->headerForm->getState()['navigations'] ?? [],
+                $this->footerForm->getState()['navigations'] ?? [],
+            ),
         ]);
+
+        $this->refreshPreview();
 
         Notification::make()
             ->title(__('Navigation saved'))

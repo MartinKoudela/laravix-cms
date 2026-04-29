@@ -141,5 +141,16 @@
     "Text": "Metin",
     "Number of Columns": "Sütun sayısı",
     "Button Group": "Düğme grubu",
-    "Buttons": "Düğmeler"
+    "Buttons": "Düğmeler",
+    "navigation": "gezinti",
+    "Manage Navigation": "Gezintiyi yönet",
+    "Navigation saved": "Gezinti kaydedildi",
+    "Save Navigation": "Gezintiyi kaydet",
+    "Header Navigation": "Başlık gezintisi",
+    "Footer Navigation": "Altbilgi gezintisi",
+    "Target": "Hedef",
+    "Same tab": "Aynı sekme",
+    "New tab": "Yeni sekme",
+    "Submenu": "Alt menü",
+    "Or enter a URL manually": "Veya bir URL manuel olarak girin"
 }

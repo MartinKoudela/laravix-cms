@@ -141,5 +141,16 @@
     "Text": "Text",
     "Number of Columns": "Počet stĺpcov",
     "Button Group": "Skupina tlačidiel",
-    "Buttons": "Tlačidlá"
+    "Buttons": "Tlačidlá",
+    "navigation": "navigácia",
+    "Manage Navigation": "Správa navigácie",
+    "Navigation saved": "Navigácia uložená",
+    "Save Navigation": "Uložiť navigáciu",
+    "Header Navigation": "Navigácia v hlavičke",
+    "Footer Navigation": "Navigácia v päte",
+    "Target": "Cieľ",
+    "Same tab": "Rovnaká záložka",
+    "New tab": "Nová záložka",
+    "Submenu": "Podmenu",
+    "Or enter a URL manually": "Alebo zadajte URL ručne"
 }

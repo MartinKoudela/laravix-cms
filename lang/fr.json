@@ -141,5 +141,16 @@
     "Text": "Texte",
     "Number of Columns": "Nombre de colonnes",
     "Button Group": "Groupe de boutons",
-    "Buttons": "Boutons"
+    "Buttons": "Boutons",
+    "navigation": "navigation",
+    "Manage Navigation": "Gérer la navigation",
+    "Navigation saved": "Navigation enregistrée",
+    "Save Navigation": "Enregistrer la navigation",
+    "Header Navigation": "Navigation d'en-tête",
+    "Footer Navigation": "Navigation de pied de page",
+    "Target": "Cible",
+    "Same tab": "Même onglet",
+    "New tab": "Nouvel onglet",
+    "Submenu": "Sous-menu",
+    "Or enter a URL manually": "Ou entrez une URL manuellement"
 }
