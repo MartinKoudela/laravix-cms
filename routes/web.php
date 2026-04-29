@@ -12,6 +12,7 @@ Route::get('/invitation/{token}', [InvitationController::class, 'show'])->name('
 Route::post('/invitation/{token}', [InvitationController::class, 'accept'])->name('invitation.accept.submit');
 
 Route::get('/__nav-preview/{token}', [CmsController::class, 'navPreview'])->name('nav.preview');
+Route::get('/__appearance-preview/{token}', [CmsController::class, 'appearancePreview'])->name('appearance.preview');
 
 Route::get('/{slug?}', [CmsController::class, 'show'])
     ->where('slug', '.*')

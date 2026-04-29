@@ -19,6 +19,40 @@ class EditContent extends EditRecord
 
     protected array $appearanceData = [];
 
+    public string $appearancePreviewToken = '';
+
+    public function mount(int|string $record): void
+    {
+        $this->appearancePreviewToken = md5($record.'-'.auth()->id().'-appearance-preview');
+
+        parent::mount($record);
+
+        $this->refreshAppearancePreview();
+    }
+
+    public function updated(string $property): void
+    {
+        if (str_starts_with($property, 'data.appearance_')) {
+            $this->refreshAppearancePreview();
+        }
+    }
+
+    public function refreshAppearancePreview(): void
+    {
+        $appearance = [];
+
+        foreach (AppearanceRegistry::forContentType($this->record->type) as $definition) {
+            $appearance[$definition->key] = $this->data['appearance_'.$definition->key] ?? null;
+        }
+
+        cache()->put("preview_appearance_{$this->appearancePreviewToken}", [
+            'content_id' => $this->record->id,
+            'appearance' => $appearance,
+        ], now()->addMinutes(30));
+
+        $this->dispatch('appearance-preview-updated');
+    }
+
     protected function getHeaderActions(): array
     {
         return [

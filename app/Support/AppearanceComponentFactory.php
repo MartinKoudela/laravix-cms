@@ -21,15 +21,15 @@ class AppearanceComponentFactory
         $label = __($definition->label);
 
         $component = match ($definition->type) {
-            FieldType::TEXT => TextInput::make($key)->label($label),
-            FieldType::COLOR => TextInput::make($key)->label($label)->type('color')->extraInputAttributes(['style' => 'height:40px;padding:2px 4px;cursor:pointer']),
-            FieldType::TEXTAREA => Textarea::make($key)->label($label)->columnSpanFull(),
-            FieldType::RICH_TEXT => RichEditor::make($key)->label($label)->columnSpanFull(),
-            FieldType::BOOLEAN => Toggle::make($key)->label($label),
-            FieldType::DATE => DatePicker::make($key)->label($label),
-            FieldType::DATETIME => DateTimePicker::make($key)->label($label),
-            FieldType::NUMBER => TextInput::make($key)->label($label)->numeric(),
-            FieldType::URL => TextInput::make($key)->label($label)->url(),
+            FieldType::TEXT => TextInput::make($key)->label($label)->live(debounce: 800),
+            FieldType::COLOR => TextInput::make($key)->label($label)->type('color')->extraInputAttributes(['style' => 'height:40px;padding:2px 4px;cursor:pointer'])->live(debounce: 800),
+            FieldType::TEXTAREA => Textarea::make($key)->label($label)->columnSpanFull()->live(debounce: 800),
+            FieldType::RICH_TEXT => RichEditor::make($key)->label($label)->columnSpanFull()->live(debounce: 800),
+            FieldType::BOOLEAN => Toggle::make($key)->label($label)->live(),
+            FieldType::DATE => DatePicker::make($key)->label($label)->live(),
+            FieldType::DATETIME => DateTimePicker::make($key)->label($label)->live(),
+            FieldType::NUMBER => TextInput::make($key)->label($label)->numeric()->live(debounce: 800),
+            FieldType::URL => TextInput::make($key)->label($label)->url()->live(debounce: 800),
             FieldType::IMAGE, FieldType::FILE => Select::make($key)
                 ->label($label)
                 ->allowHtml()

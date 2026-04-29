@@ -7,8 +7,10 @@ use App\Models\Content;
 use App\Models\Taxonomy;
 use App\Support\AppearanceComponentFactory;
 use App\Support\AppearanceRegistry;
+use App\Support\BlockRegistry;
 use App\Support\FieldComponentFactory;
 use App\Support\FieldRegistry;
+use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,10 +19,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
-use App\Support\BlockRegistry;
-use Filament\Forms\Components\Builder;
-
 
 class ContentForm
 {
@@ -28,7 +28,7 @@ class ContentForm
     {
         $grouped = FieldRegistry::grouped();
         $seoDefinitions = $grouped['SEO'] ?? [];
-        $contentGroups = array_filter($grouped, fn(string $key) => $key !== 'SEO', ARRAY_FILTER_USE_KEY);
+        $contentGroups = array_filter($grouped, fn (string $key) => $key !== 'SEO', ARRAY_FILTER_USE_KEY);
         $appearanceDefinitions = AppearanceRegistry::forContentType(null);
 
         return $schema
@@ -46,7 +46,7 @@ class ContentForm
                                             ->required()
                                             ->maxLength(255)
                                             ->live(debounce: 500)
-                                            ->afterStateUpdated(fn(TextInput $component, ?string $state) => $component->getContainer()->getComponent('slug')
+                                            ->afterStateUpdated(fn (TextInput $component, ?string $state) => $component->getContainer()->getComponent('slug')
                                                 ?->state(str($state ?? '')->slug()->toString())
                                             )
                                             ->columnSpanFull(),
@@ -56,7 +56,7 @@ class ContentForm
                                             ->maxLength(255)
                                             ->key('slug')
                                             ->prefix('/')
-                                            ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn($rule, callable $get) => $rule->where('site_id', $get('site_id')))
+                                            ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, callable $get) => $rule->where('site_id', $get('site_id')))
                                             ->helperText(__('Must be unique per site.')),
                                         Toggle::make('is_homepage')
                                             ->label(__('Set as homepage'))
@@ -69,7 +69,7 @@ class ContentForm
 
                                                 $siteId = filament()->getTenant()?->id;
 
-                                                if (!$siteId) {
+                                                if (! $siteId) {
                                                     return false;
                                                 }
 
@@ -90,18 +90,18 @@ class ContentForm
                                                 'archive' => __('Archive'),
                                             ])
                                             ->default('page')
-                                            ->disabled(fn($record) => $record !== null)
+                                            ->disabled(fn ($record) => $record !== null)
                                             ->dehydrated(),
                                         Select::make('status')
                                             ->label(__('Status'))
                                             ->required()
                                             ->options(collect(ContentStatus::cases())->mapWithKeys(
-                                                fn(ContentStatus $case) => [$case->value => $case->name]
+                                                fn (ContentStatus $case) => [$case->value => $case->name]
                                             ))
                                             ->default(ContentStatus::DRAFT->value)
                                             ->live(),
                                         DateTimePicker::make('published_at')
-                                            ->visible(fn(Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
+                                            ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
                                     ]),
                                 Section::make(__('Taxonomies'))
                                     ->schema([
@@ -111,14 +111,14 @@ class ContentForm
                                             ->multiple()
                                             ->searchable()
                                             ->preload()
-                                            ->options(fn() => Taxonomy::where('site_id', filament()->getTenant()?->id)
+                                            ->options(fn () => Taxonomy::where('site_id', filament()->getTenant()?->id)
                                                 ->pluck('name', 'id')
                                             ),
                                     ]),
                                 ...array_map(
-                                    fn(string $group, array $definitions) => Section::make(__($group))
+                                    fn (string $group, array $definitions) => Section::make(__($group))
                                         ->schema(array_map(
-                                            fn($definition) => FieldComponentFactory::make($definition),
+                                            fn ($definition) => FieldComponentFactory::make($definition),
                                             $definitions,
                                         ))
                                         ->columns(2),
@@ -131,21 +131,23 @@ class ContentForm
                                 Section::make()
                                     ->columns(2)
                                     ->schema(array_map(
-                                        fn($definition) => FieldComponentFactory::make($definition),
+                                        fn ($definition) => FieldComponentFactory::make($definition),
                                         $seoDefinitions,
                                     )),
                             ]),
                         Tab::make(__('Appearance'))
                             ->schema([
+                                View::make('filament.partials.appearance-preview')
+                                    ->viewData(fn ($livewire) => ['token' => $livewire->appearancePreviewToken ?? '']),
                                 Section::make()
                                     ->columns(2)
                                     ->schema(array_map(
-                                        fn($definition) => AppearanceComponentFactory::make($definition),
+                                        fn ($definition) => AppearanceComponentFactory::make($definition),
                                         $appearanceDefinitions,
                                     )),
                             ]),
                         Tab::make(__('Builder'))
-                            ->hidden(fn(Get $get): bool => $get('type') !== 'page')
+                            ->hidden(fn (Get $get): bool => $get('type') !== 'page')
                             ->schema([
                                 Builder::make('blocks')
                                     ->blocks(BlockRegistry::toBlocks())
