@@ -47,7 +47,8 @@ class NavigationComponentFactory
                     ->nullable(),
                 TextInput::make('url')
                     ->label(fn () => __('URL'))
-                    ->live(debounce: 500),
+                    ->live(debounce: 500)
+                    ->nullable(),
                 Select::make('target')
                     ->label(fn () => __('Target'))
                     ->options([
@@ -65,7 +66,7 @@ class NavigationComponentFactory
                     ->schema([
                         TextInput::make('label')
                             ->label(fn () => __('Label'))
-                            ->required()
+                            ->nullable()
                             ->columnSpanFull(),
                         Select::make('content_id')
                             ->label(fn () => __('Page'))
@@ -91,13 +92,14 @@ class NavigationComponentFactory
                             ->nullable(),
                         TextInput::make('url')
                             ->label(fn () => __('URL'))
-                            ->required(),
+                            ->nullable(),
                         Select::make('target')
                             ->label(fn () => __('Target'))
                             ->options([
                                 '_self' => __('Same tab'),
                                 '_blank' => __('New tab'),
                             ])
+                            ->nullable()
                             ->default('_self'),
                         static::mediaSelect('image_id', __('Image')),
                         Textarea::make('description')
@@ -106,6 +108,7 @@ class NavigationComponentFactory
                             ->columnSpanFull(),
                     ])
                     ->collapsible()
+                    ->collapsed()
                     ->columnSpanFull(),
             ])
             ->columns(2)
