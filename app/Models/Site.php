@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['name', 'domain', 'theme'])]
+#[Fillable(['name', 'domain', 'theme', 'navigations'])]
 class Site extends Model
 {
     use HasFactory, LogsActivity;
@@ -20,6 +20,13 @@ class Site extends Model
         return LogOptions::defaults()->logFillable()->logOnlyDirty()
             ->useLogName('site-'.$this->id);
 
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'navigations' => 'array',
+        ];
     }
 
     public function contents(): HasMany

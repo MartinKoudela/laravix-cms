@@ -103,18 +103,29 @@
 
                 {{-- Desktop nav --}}
                 <nav class="hidden md:flex items-center gap-6">
-                    @foreach ($navPages as $page)
-                        <a href="{{ $page->is_homepage ? '/' : '/'.$page->slug }}"
-                           class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors {{ (isset($content) && $content->id === $page->id) ? 'text-gray-900 font-semibold' : '' }}">
-                            {{ $page->title }}
-                        </a>
+                    @foreach ($navigations['header'] ?? [] as $item)
+                        @if (!empty($item['children']))
+                            <div class="relative group">
+                                <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
+                                   class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                                    {{ $item['label'] }}
+                                </a>
+                                <div class="absolute left-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block z-50">
+                                    @foreach ($item['children'] as $child)
+                                        <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
+                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                            {{ $child['label'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @else
+                            <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
+                               class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                                {{ $item['label'] }}
+                            </a>
+                        @endif
                     @endforeach
-                    @if ($recentPosts->isNotEmpty())
-                        <a href="/blog"
-                           class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
-                            Blog
-                        </a>
-                    @endif
                 </nav>
 
                 {{-- Mobile menu button --}}
@@ -127,15 +138,18 @@
 
             {{-- Mobile nav --}}
             <nav id="mobile-menu" class="hidden md:hidden pb-4 flex flex-col gap-3">
-                @foreach ($navPages as $page)
-                    <a href="{{ $page->is_homepage ? '/' : '/'.$page->slug }}"
+                @foreach ($navigations['header'] ?? [] as $item)
+                    <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
                        class="text-sm font-medium text-gray-700 hover:text-gray-900 py-1">
-                        {{ $page->title }}
+                        {{ $item['label'] }}
                     </a>
+                    @foreach ($item['children'] ?? [] as $child)
+                        <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
+                           class="text-sm text-gray-500 hover:text-gray-900 py-1 pl-4">
+                            {{ $child['label'] }}
+                        </a>
+                    @endforeach
                 @endforeach
-                @if ($recentPosts->isNotEmpty())
-                    <a href="/blog" class="text-sm font-medium text-gray-700 hover:text-gray-900 py-1">Blog</a>
-                @endif
             </nav>
         </div>
     </header>
@@ -168,10 +182,10 @@
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p class="text-sm text-gray-500">&copy; {{ date('Y') }} {{ $site->name }}</p>
                 <nav class="flex flex-wrap justify-center gap-4">
-                    @foreach ($navPages as $page)
-                        <a href="{{ $page->is_homepage ? '/' : '/'.$page->slug }}"
+                    @foreach ($navigations['footer'] ?? [] as $item)
+                        <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
                            class="text-sm text-gray-500 hover:text-gray-700 transition-colors">
-                            {{ $page->title }}
+                            {{ $item['label'] }}
                         </a>
                     @endforeach
                 </nav>

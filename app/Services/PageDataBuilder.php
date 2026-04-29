@@ -7,9 +7,8 @@ use App\Models\Content;
 use App\Models\Setting;
 use App\Models\Site;
 use App\Support\AppearanceRegistry;
-use App\Support\FieldRegistry;
 use App\Support\BlockRegistry;
-
+use App\Support\FieldRegistry;
 
 class PageDataBuilder
 {
@@ -88,10 +87,13 @@ class PageDataBuilder
         $logoMedia = ($logoId = (int) $settings->get('logo')) ? $mediaMap->get($logoId) : null;
         $faviconMedia = ($faviconId = (int) $settings->get('favicon')) ? $mediaMap->get($faviconId) : null;
 
+        $navigations = $site->navigations ?? [];
+
         return compact(
             'navPages', 'recentPosts', 'archivePosts',
             'settings', 'mediaMap', 'appearance',
-            'bgMedia', 'systemFieldKeys', 'logoMedia', 'faviconMedia'
+            'bgMedia', 'systemFieldKeys', 'logoMedia', 'faviconMedia',
+            'navigations'
         );
     }
 }

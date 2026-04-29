@@ -15,6 +15,8 @@ use App\Support\AppearanceRegistry;
 use App\Support\BlockRegistry;
 use App\Support\FieldDefinition;
 use App\Support\FieldRegistry;
+use App\Support\NavigationDefinition;
+use App\Support\NavigationRegistry;
 use App\Support\SettingDefinition;
 use App\Support\SettingRegistry;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
@@ -158,6 +160,11 @@ class AppServiceProvider extends ServiceProvider
             ButtonBlock::definition(),
             ButtonGroupBlock::definition(),
             DividerBlock::definition(),
+        );
+
+        NavigationRegistry::register(
+            NavigationDefinition::make('header')->label('Header Navigation'),
+            NavigationDefinition::make('footer')->label('Footer Navigation'),
         );
 
         foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) as $themePath) {
