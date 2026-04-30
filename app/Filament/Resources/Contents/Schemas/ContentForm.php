@@ -7,10 +7,8 @@ use App\Models\Content;
 use App\Models\Taxonomy;
 use App\Support\AppearanceComponentFactory;
 use App\Support\AppearanceRegistry;
-use App\Support\BlockRegistry;
 use App\Support\FieldComponentFactory;
 use App\Support\FieldRegistry;
-use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -149,12 +147,11 @@ class ContentForm
                         Tab::make(__('Builder'))
                             ->hidden(fn (Get $get): bool => $get('type') !== 'page')
                             ->schema([
-                                Builder::make('blocks')
-                                    ->blocks(BlockRegistry::toBlocks())
-                                    ->collapsible()
-                                    ->cloneable()
-                                    ->reorderableWithButtons()
-                                    ->blockPickerColumns(3)
+                                View::make('filament.partials.block-builder')
+                                    ->viewData(fn ($livewire) => [
+                                        'contentId' => $livewire->record->id,
+                                        'previewToken' => $livewire->blockPreviewToken ?? '',
+                                    ])
                                     ->columnSpanFull(),
                             ]),
                     ]),

@@ -6,6 +6,7 @@ use App\Models\Content;
 use App\Models\Site;
 use App\Services\PageDataBuilder;
 use App\Services\SeoBuilder;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class PreviewController extends Controller
@@ -15,11 +16,18 @@ class PreviewController extends Controller
         private readonly SeoBuilder $seoBuilder,
     ) {}
 
-    public function nav(string $token): View
+    private function loading(): Response
+    {
+        return response(view('preview-loading'));
+    }
+
+    public function nav(string $token): View|Response
     {
         $cached = cache()->get("preview_nav_{$token}");
 
-        abort_if(! $cached, 404);
+        if (! $cached) {
+            return $this->loading();
+        }
 
         $site = Site::findOrFail($cached['site_id']);
 
@@ -43,11 +51,13 @@ class PreviewController extends Controller
         return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));
     }
 
-    public function appearance(string $token): View
+    public function appearance(string $token): View|Response
     {
         $cached = cache()->get("preview_appearance_{$token}");
 
-        abort_if(! $cached, 404);
+        if (! $cached) {
+            return $this->loading();
+        }
 
         $content = Content::with(['fields', 'taxonomies', 'site'])->findOrFail($cached['content_id']);
         $site = $content->site;
@@ -60,11 +70,13 @@ class PreviewController extends Controller
         return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));
     }
 
-    public function blocks(string $token): View
+    public function blocks(string $token): View|Response
     {
         $cached = cache()->get("preview_blocks_{$token}");
 
-        abort_if(! $cached, 404);
+        if (! $cached) {
+            return $this->loading();
+        }
 
         $content = Content::with(['fields', 'taxonomies', 'site'])->findOrFail($cached['content_id']);
         $content->blocks = $cached['blocks'];
