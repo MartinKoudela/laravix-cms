@@ -127,6 +127,12 @@ class BlockEditor extends Component
         $this->refreshPreview();
     }
 
+    public function updateRepeaterField(string $fieldKey, int $itemIndex, string $subFieldKey, mixed $value): void
+    {
+        $this->blocks[$this->editingIndex]['data'][$fieldKey][$itemIndex][$subFieldKey] = $value;
+        $this->refreshPreview();
+    }
+
     public function backToList(): void
     {
         $this->editingIndex = null;

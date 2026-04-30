@@ -227,18 +227,19 @@
 
                                         @elseif($subField['type'] === 'select')
                                             <select
-                                                wire:model.live="blocks.{{ $editingIndex }}.data.{{ $field['key'] }}.{{ $itemIdx }}.{{ $subField['key'] }}"
+                                                x-on:change="$wire.updateRepeaterField('{{ $field['key'] }}', {{ $itemIdx }}, '{{ $subField['key'] }}', $event.target.value)"
                                                 style="width:100%; padding:0.375rem 0.625rem; border:1px solid #d1d5db; border-radius:0.375rem; font-size:0.8125rem; background:#fff; color:#111827;"
                                             >
                                                 <option value="">—</option>
                                                 @foreach($subField['options'] as $optVal => $optLabel)
-                                                    <option value="{{ $optVal }}">{{ $optLabel }}</option>
+                                                    <option value="{{ $optVal }}" {{ ($blocks[$editingIndex]['data'][$field['key']][$itemIdx][$subField['key']] ?? '') == $optVal ? 'selected' : '' }}>{{ $optLabel }}</option>
                                                 @endforeach
                                             </select>
                                         @else
                                             <input
                                                 type="text"
-                                                wire:model.blur="blocks.{{ $editingIndex }}.data.{{ $field['key'] }}.{{ $itemIdx }}.{{ $subField['key'] }}"
+                                                value="{{ $blocks[$editingIndex]['data'][$field['key']][$itemIdx][$subField['key']] ?? '' }}"
+                                                x-on:blur="$wire.updateRepeaterField('{{ $field['key'] }}', {{ $itemIdx }}, '{{ $subField['key'] }}', $event.target.value)"
                                                 style="width:100%; padding:0.375rem 0.625rem; border:1px solid #d1d5db; border-radius:0.375rem; font-size:0.8125rem; color:#111827; box-sizing:border-box;"
                                             >
                                         @endif
