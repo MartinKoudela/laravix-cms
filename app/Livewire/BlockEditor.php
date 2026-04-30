@@ -28,6 +28,10 @@ class BlockEditor extends Component
 
     public function render()
     {
+        if (! $this->siteId) {
+            $this->siteId = Content::find($this->contentId)?->site_id ?? 0;
+        }
+
         $blockFields = [];
         $mediaItems = [];
 
@@ -37,7 +41,11 @@ class BlockEditor extends Component
 
             if ($definition) {
                 $blockFields = $definition->toEditorFields();
-                $hasImageField = collect($blockFields)->contains('type', 'image');
+                $hasImageField = collect($blockFields)->contains('type', 'image')
+                    || collect($blockFields)
+                        ->where('type', 'repeater')
+                        ->flatMap(fn ($f) => $f['fields'] ?? [])
+                        ->contains('type', 'image');
 
                 if ($hasImageField && $this->siteId) {
                     $mediaItems = Media::where('site_id', $this->siteId)

@@ -23,7 +23,7 @@
                             @if (!empty($item['title']))
                                 <h3 class="text-lg font-semibold text-gray-900 mb-3">{{ $item['title'] }}</h3>
                             @endif
-                            @foreach ($item['blocks'] ?? [] as $nestedBlock)
+                            @foreach (is_array($item['blocks'] ?? null) ? $item['blocks'] : [] as $nestedBlock)
                                 @include(
                                     "themes.default::blocks.{$nestedBlock['type']}",
                                     array_merge($nestedBlock['data'] ?? [], ['mediaMap' => $mediaMap])

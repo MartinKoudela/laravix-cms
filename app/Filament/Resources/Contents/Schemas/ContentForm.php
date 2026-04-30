@@ -149,7 +149,7 @@ class ContentForm
                             ->schema([
                                 View::make('filament.partials.block-builder')
                                     ->viewData(fn ($livewire) => [
-                                        'contentId' => $livewire->record->id,
+                                        'contentId' => $livewire->record?->id,
                                         'previewToken' => $livewire->blockPreviewToken ?? '',
                                     ])
                                     ->columnSpanFull(),

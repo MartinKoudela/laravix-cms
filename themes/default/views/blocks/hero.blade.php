@@ -17,7 +17,25 @@
         @if (!empty($subheading))
             <p class="text-xl text-gray-500 mb-8 leading-relaxed">{{ $subheading }}</p>
         @endif
-        @if (!empty($button_label) && !empty($button_url))
+
+        @if (!empty($buttons) && is_array($buttons))
+            <div class="flex flex-wrap gap-3 justify-center">
+                @foreach($buttons as $btn)
+                    @if(!empty($btn['label']) && !empty($btn['href']))
+                        @php
+                            $variantClasses = match($btn['variant'] ?? 'primary') {
+                                'secondary' => 'bg-gray-100 text-gray-900 hover:bg-gray-200',
+                                'outline' => 'border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white',
+                                default => 'bg-gray-900 text-white hover:bg-gray-700',
+                            };
+                        @endphp
+                        <a href="{{ $btn['href'] }}" class="inline-block px-6 py-3 font-medium rounded-lg transition {{ $variantClasses }}">
+                            {{ $btn['label'] }}
+                        </a>
+                    @endif
+                @endforeach
+            </div>
+        @elseif(!empty($button_label) && !empty($button_url))
             <a href="{{ $button_url }}"
                class="inline-block px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-700 transition">
                 {{ $button_label }}

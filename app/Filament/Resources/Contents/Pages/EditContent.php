@@ -20,6 +20,7 @@ class EditContent extends EditRecord
     protected array $appearanceData = [];
 
     public string $appearancePreviewToken = '';
+
     public string $blockPreviewToken = '';
 
     public function mount(int|string $record): void
@@ -133,6 +134,11 @@ class EditContent extends EditRecord
                 ['key' => $key],
                 ['value' => $value],
             );
+        }
+
+        $cached = cache()->get("preview_blocks_{$this->blockPreviewToken}");
+        if ($cached && array_key_exists('blocks', $cached)) {
+            $this->record->update(['blocks' => $cached['blocks']]);
         }
     }
 }

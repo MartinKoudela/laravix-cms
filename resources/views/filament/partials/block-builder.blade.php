@@ -1,3 +1,8 @@
+@if(!$contentId)
+    <div style="display:flex; align-items:center; justify-content:center; padding:3rem; color:#9ca3af; font-size:0.875rem;">
+        {{ __('Save the content first to use the block builder.') }}
+    </div>
+@else
 <div id="block-builder-wrap" style="display:flex; height:calc(100vh - 200px); gap:0; overflow:hidden; width:100%;">
     <div id="block-editor-pane" style="width:40%; overflow-y:auto; padding:1rem;">
         @livewire('block-editor', ['contentId' => $contentId, 'previewToken' => $previewToken])
@@ -25,3 +30,4 @@
         });
     })();
 </script>
+@endif

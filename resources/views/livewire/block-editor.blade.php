@@ -198,7 +198,34 @@
                                 @foreach($field['fields'] as $subField)
                                     <div style="margin-bottom:0.5rem;">
                                         <label style="display:block; font-size:0.7rem; font-weight:500; color:#9ca3af; margin-bottom:0.25rem;">{{ $subField['label'] }}</label>
-                                        @if($subField['type'] === 'select')
+                                        @if($subField['type'] === 'image')
+                                            @php $subCurrentId = $blocks[$editingIndex]['data'][$field['key']][$itemIdx][$subField['key']] ?? null; @endphp
+                                            @if($subCurrentId && ($subCurrentMedia = collect($mediaItems)->firstWhere('id', (int) $subCurrentId)))
+                                                <div style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem; border:1.5px solid var(--color-primary-400,#60a5fa); border-radius:0.5rem; margin-bottom:0.375rem; background:#f0f7ff;">
+                                                    <img src="{{ $subCurrentMedia['url'] }}" alt="{{ $subCurrentMedia['name'] }}" style="width:2.5rem;height:2.5rem;object-fit:cover;border-radius:0.25rem;flex-shrink:0;">
+                                                    <span style="flex:1;font-size:0.75rem;color:#111827;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ $subCurrentMedia['name'] }}</span>
+                                                    <button type="button"
+                                                        wire:click="$set('blocks.{{ $editingIndex }}.data.{{ $field['key'] }}.{{ $itemIdx }}.{{ $subField['key'] }}', null)"
+                                                        style="font-size:0.7rem;color:#9ca3af;background:transparent;border:none;cursor:pointer;">✕</button>
+                                                </div>
+                                            @endif
+                                            @if(empty($mediaItems))
+                                                <p style="font-size:0.75rem;color:#9ca3af;">{{ __('No media uploaded yet.') }}</p>
+                                            @else
+                                                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.25rem;max-height:8rem;overflow-y:auto;">
+                                                    @foreach($mediaItems as $media)
+                                                        <button type="button"
+                                                            wire:click="$set('blocks.{{ $editingIndex }}.data.{{ $field['key'] }}.{{ $itemIdx }}.{{ $subField['key'] }}', {{ $media['id'] }})"
+                                                            title="{{ $media['name'] }}"
+                                                            style="background:transparent;border:2px solid {{ (int)($blocks[$editingIndex]['data'][$field['key']][$itemIdx][$subField['key']] ?? 0) === $media['id'] ? 'var(--color-primary-600,#2563eb)' : 'transparent' }};padding:0;border-radius:0.375rem;overflow:hidden;aspect-ratio:1;cursor:pointer;"
+                                                        >
+                                                            <img src="{{ $media['url'] }}" alt="{{ $media['name'] }}" style="width:100%;height:100%;object-fit:cover;display:block;">
+                                                        </button>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+
+                                        @elseif($subField['type'] === 'select')
                                             <select
                                                 wire:model.live="blocks.{{ $editingIndex }}.data.{{ $field['key'] }}.{{ $itemIdx }}.{{ $subField['key'] }}"
                                                 style="width:100%; padding:0.375rem 0.625rem; border:1px solid #d1d5db; border-radius:0.375rem; font-size:0.8125rem; background:#fff; color:#111827;"
