@@ -20,20 +20,26 @@ class EditContent extends EditRecord
     protected array $appearanceData = [];
 
     public string $appearancePreviewToken = '';
+    public string $blockPreviewToken = '';
 
     public function mount(int|string $record): void
     {
         $this->appearancePreviewToken = md5($record.'-'.auth()->id().'-appearance-preview');
+        $this->blockPreviewToken = md5($record.'-'.auth()->id().'-block-preview');
 
         parent::mount($record);
 
         $this->refreshAppearancePreview();
+        $this->refreshBlockPreview();
     }
 
     public function updated(string $property): void
     {
         if (str_starts_with($property, 'data.appearance_')) {
             $this->refreshAppearancePreview();
+        }
+        if (str_starts_with($property, 'data.blocks')) {
+            $this->refreshBlockPreview();
         }
     }
 
@@ -51,6 +57,16 @@ class EditContent extends EditRecord
         ], now()->addMinutes(30));
 
         $this->dispatch('appearance-preview-updated');
+    }
+
+    public function refreshBlockPreview(): void
+    {
+        cache()->put("preview_blocks_{$this->blockPreviewToken}", [
+            'content_id' => $this->record->id,
+            'blocks' => $this->data['blocks'] ?? [],
+        ], now()->addMinutes(30));
+
+        $this->dispatch('block-preview-updated');
     }
 
     protected function getHeaderActions(): array
