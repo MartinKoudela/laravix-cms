@@ -2,10 +2,16 @@
 
 namespace App\Support;
 
+use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Builder\Block;
+use Filament\Forms\Components\Field;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class BlockDefinition
 {
@@ -40,6 +46,122 @@ class BlockDefinition
     public function nestable(bool $nestable): static
     {
         return new static($this->key, $this->label, $this->icon, $this->schema, $nestable);
+    }
+
+    /** @return array<int, array{key: string, label: string, type: string, options: array, fields?: array}> */
+    public function toEditorFields(): array
+    {
+        $schema = is_callable($this->schema) ? ($this->schema)() : $this->schema;
+        $fields = [];
+
+        foreach ($schema as $component) {
+            if ($component instanceof Builder) {
+                continue;
+            }
+
+            if ($component instanceof Repeater) {
+                $fields[] = $this->repeaterToField($component);
+
+                continue;
+            }
+
+            if (! $component instanceof Field) {
+                continue;
+            }
+
+            $fields[] = $this->fieldToMeta($component);
+        }
+
+        return $fields;
+    }
+
+    /** @return array{key: string, label: string, type: string, options: array} */
+    private function fieldToMeta(Field $component): array
+    {
+        try {
+            $ref = new \ReflectionObject($component);
+            $prop = $ref->getProperty('label');
+            $raw = $prop->getValue($component);
+            $label = $raw instanceof \Closure ? $raw() : ($raw ?? ucfirst($component->getName()));
+            $label = is_string($label) ? $label : ucfirst($component->getName());
+        } catch (\Throwable) {
+            $label = ucfirst($component->getName());
+        }
+
+        $type = 'text';
+        $options = [];
+
+        if ($component instanceof RichEditor) {
+            $type = 'richtext';
+        } elseif ($component instanceof Textarea) {
+            $type = 'textarea';
+        } elseif ($component instanceof Select) {
+            if (str_ends_with($component->getName(), '_id')) {
+                $type = 'image';
+            } else {
+                $type = 'select';
+                try {
+                    $opts = $component->getOptions();
+                    $options = is_callable($opts) ? $opts() : ($opts ?? []);
+                } catch (\Throwable) {
+                    $options = [];
+                }
+            }
+        }
+
+        return [
+            'key' => $component->getName(),
+            'label' => (string) $label,
+            'type' => $type,
+            'options' => $options,
+        ];
+    }
+
+    /** @return array{key: string, label: string, type: 'repeater', options: array, fields: array} */
+    private function repeaterToField(Repeater $component): array
+    {
+        try {
+            $label = $component->getLabel();
+            $label = is_callable($label) ? $label() : ($label ?? ucfirst($component->getName()));
+        } catch (\Throwable) {
+            $label = ucfirst($component->getName());
+        }
+
+        $subFields = [];
+
+        try {
+            $children = $component->getDefaultChildComponents();
+
+            if ($children instanceof Schema) {
+                $children = $children->getComponents();
+            }
+        } catch (\Throwable) {
+            $children = [];
+        }
+
+        foreach ($children as $child) {
+            if (! $child instanceof Field) {
+                continue;
+            }
+            try {
+                $subFields[] = $this->fieldToMeta($child);
+            } catch (\Throwable) {
+                $subFields[] = [
+                    'key' => $child->getName(),
+                    'label' => ucfirst($child->getName()),
+                    'type' => 'text',
+                    'options' => [],
+                ];
+            }
+        }
+
+        return [
+            'key' => $component->getName(),
+            'label' => (string) $label,
+            'type' => 'repeater',
+            'options' => [],
+            'fields' => $subFields,
+        ];
     }
 
     public function toBlock(): Block
