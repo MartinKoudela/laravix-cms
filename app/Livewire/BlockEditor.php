@@ -2,15 +2,18 @@
 
 namespace App\Livewire;
 
+use App\Models\Content;
 use Livewire\Component;
 
 class BlockEditor extends Component
 {
     public int $contentId;
-    public string $previewToken;
-    public array $blocks = [];
-    public ?int $editingIndex = null;
 
+    public string $previewToken;
+
+    public array $blocks = [];
+
+    public ?int $editingIndex = null;
 
     public function render()
     {
@@ -21,7 +24,7 @@ class BlockEditor extends Component
     {
         $this->contentId = $contentId;
         $this->previewToken = $previewToken;
-        $this->blocks = \App\Models\Content::find($contentId)?->blocks ?? [];
+        $this->blocks = Content::find($contentId)?->blocks ?? [];
 
     }
 
@@ -47,6 +50,7 @@ class BlockEditor extends Component
     public function reorderBlocks(array $order)
     {
 
+        $reordered = [];
         foreach ($order as $index) {
             $reordered[] = $this->blocks[$index];
         }
@@ -69,18 +73,18 @@ class BlockEditor extends Component
 
     public function save()
     {
-        \App\Models\Content::find($this->contentId)->update(['blocks' => $this->blocks]);
+        Content::find($this->contentId)->update(['blocks' => $this->blocks]);
         $this->dispatch('blocks-saved');
 
     }
 
     private function refreshPreview(): void
     {
-        cache()->put("preview_blocks_{$this->previewToken}", [
+        cache()->put('preview_blocks_'.$this->previewToken, [
+            'content_id' => $this->contentId,
             'blocks' => $this->blocks,
         ], now()->addMinutes(30));
 
         $this->dispatch('block-preview-updated');
     }
-
 }
