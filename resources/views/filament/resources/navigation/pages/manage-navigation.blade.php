@@ -62,8 +62,8 @@
                 previewTimer = setTimeout(function () {
                     const header = document.getElementById('nav-preview-header-iframe');
                     const footer = document.getElementById('nav-preview-footer-iframe');
-                    if (header) header.contentWindow.location.reload();
-                    if (footer) footer.contentWindow.location.reload();
+                    if (header) header.src = header.src;
+                    if (footer) footer.src = footer.src;
                 }, 300);
             });
         });

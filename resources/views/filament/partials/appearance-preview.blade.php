@@ -28,7 +28,7 @@
                 clearTimeout(timer);
                 timer = setTimeout(function () {
                     const iframe = document.getElementById('appearance-preview-iframe');
-                    if (iframe) iframe.contentWindow.location.reload();
+                    if (iframe) iframe.src = iframe.src;
                 }, 300);
             });
         });
