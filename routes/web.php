@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CmsController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\PreviewController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,8 +12,11 @@ Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 Route::get('/invitation/{token}', [InvitationController::class, 'show'])->name('invitation.accept');
 Route::post('/invitation/{token}', [InvitationController::class, 'accept'])->name('invitation.accept.submit');
 
-Route::get('/__nav-preview/{token}', [CmsController::class, 'navPreview'])->name('nav.preview');
-Route::get('/__appearance-preview/{token}', [CmsController::class, 'appearancePreview'])->name('appearance.preview');
+Route::prefix('/__preview')->group(function () {
+    Route::get('/nav/{token}', [PreviewController::class, 'nav'])->name('nav.preview');
+    Route::get('/appearance/{token}', [PreviewController::class, 'appearance'])->name('appearance.preview');
+    Route::get('/blocks/{token}', [PreviewController::class, 'blocks'])->name('block.preview');
+});
 
 Route::get('/{slug?}', [CmsController::class, 'show'])
     ->where('slug', '.*')
