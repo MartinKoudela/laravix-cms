@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,9 +12,22 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
 #[Fillable(['name', 'domain', 'theme', 'navigations'])]
-class Site extends Model
+class Site extends Model implements HasAvatar
 {
     use HasFactory, LogsActivity;
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $faviconId = $this->settings()
+            ->where('key', 'favicon')
+            ->value('value');
+
+        if (! $faviconId) {
+            return null;
+        }
+
+        return $this->media()->find($faviconId)?->url;
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

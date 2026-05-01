@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->renderHook('panels::body.end', fn () => new HtmlString(app(Vite::class)('resources/js/filament/admin/app.js')))
+            ->renderHook('panels::body.end', fn() => new HtmlString(app(Vite::class)('resources/js/filament/admin/app.js')))
             ->login()
             ->brandName('Laravix CMS')
             ->brandLogo(asset('laravix-logo-black.svg'))
@@ -57,8 +57,8 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
             ])
             ->navigationGroups([
-                'Content' => NavigationGroup::make(fn () => __('Content')),
-                'Management' => NavigationGroup::make(fn () => __('Management')),
+                'Content' => NavigationGroup::make(fn() => __('Content')),
+                'Management' => NavigationGroup::make(fn() => __('Management')),
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -76,11 +76,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 EasyFooterPlugin::make()
-                    ->withSentence(new HtmlString('<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v'.config('app.version'))),
-                //                    ->withLinks([
-                //                        ['title' => 'Website', 'url' => 'https://laravix.com'],
-                //                        ['title' => 'Privacy Policy', 'url' => 'https://laravix.com/privacy-policy']
-                //                    ]),
+                    ->withSentence(new HtmlString(
+                        '<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v' . config('app.version')
+                    ))
+                    ->withLinks([
+                        ['title' => 'Website', 'url' => 'https://laravix.com'],
+                        ['title' => 'Docs', 'url' => 'https://laravix.com/docs'],
+                        ['title' => 'Contact', 'url' => 'https://laravix.com/contact'],
+                    ]),
             ]);
     }
 }
