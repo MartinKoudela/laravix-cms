@@ -6,6 +6,7 @@ use App\Filament\Resources\Contents\Pages\CreateContent;
 use App\Filament\Resources\Contents\Pages\EditContent;
 use App\Filament\Resources\Contents\Pages\ListContents;
 use App\Filament\Resources\Contents\RelationManagers\FieldsRelationManager;
+use App\Filament\Resources\Contents\RelationManagers\RevisionsRelationManager;
 use App\Filament\Resources\Contents\Schemas\ContentForm;
 use App\Filament\Resources\Contents\Tables\ContentsTable;
 use App\Models\Content;
@@ -49,6 +50,7 @@ class ContentResource extends Resource
     {
         return [
             FieldsRelationManager::class,
+            RevisionsRelationManager::class,
         ];
     }
 

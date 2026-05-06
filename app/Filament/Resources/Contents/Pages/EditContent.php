@@ -138,7 +138,20 @@ class EditContent extends EditRecord
 
         $cached = cache()->get("preview_blocks_{$this->blockPreviewToken}");
         if ($cached && array_key_exists('blocks', $cached)) {
-            $this->record->update(['blocks' => $cached['blocks']]);
+            $this->record->updateQuietly(['blocks' => $cached['blocks']]);
         }
+
+        $this->record->revisions()->create([
+            'created_by' => auth()->id(),
+            'data' => [
+                'title' => $this->record->title,
+                'slug' => $this->record->slug,
+                'status' => $this->record->status->value,
+                'is_homepage' => $this->record->is_homepage,
+                'published_at' => $this->record->published_at,
+                'blocks' => $this->record->fresh()->blocks,
+                'fields' => $this->record->fields()->pluck('value', 'key')->toArray(),
+            ],
+        ]);
     }
 }
