@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ContentStatus;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,7 +14,9 @@ use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\ContentObserver;
 
+#[ObservedBy(ContentObserver::class)]
 #[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'blocks', 'status', 'published_at', 'created_by'])]
 class Content extends Model
 {
@@ -55,4 +58,10 @@ class Content extends Model
     {
         return $this->hasMany(ContentField::class);
     }
+
+    public function revisions(): HasMany
+    {
+        return $this->hasMany(ContentRevision::class)->latest();
+    }
+
 }
