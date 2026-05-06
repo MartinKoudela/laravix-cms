@@ -78,22 +78,20 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 RevivePlugin::make()
                     ->authorize(fn () => auth()->user()?->isAdmin())
-                    ->navigationGroup('Settings')
+                    ->navigationGroup( __('Management'))
                     ->navigationIcon('heroicon-o-archive-box-arrow-down')
-                    ->activeNavigationIcon('heroicon-o-archive-box-arrow-down')
                     ->navigationSort(1)
-                    ->navigationLabel('Custom Label')
-                    ->title('Custom Title')
-                    ->slug('custom-slug'),
+                    ->navigationLabel(fn () => __('Bin'))
+                    ->title(fn () => __('Bin')),
 
                 EasyFooterPlugin::make()
                     ->withSentence(new HtmlString(
                         '<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v' . config('app.version')
                     ))
                     ->withLinks([
-                        ['title' => 'Website', 'url' => 'https://laravix.com'],
-                        ['title' => 'Docs', 'url' => 'https://laravix.com/docs'],
-                        ['title' => 'Contact', 'url' => 'https://laravix.com/contact'],
+                        ['title' => __('Website'), 'url' => 'https://laravix.com'],
+                        ['title' => __('Docs'), 'url' => 'https://laravix.com/docs'],
+                        ['title' => __('Contact'), 'url' => 'https://laravix.com/contact'],
                     ]),
             ]);
     }

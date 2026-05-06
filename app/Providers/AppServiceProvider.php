@@ -174,7 +174,7 @@ class AppServiceProvider extends ServiceProvider
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh'])
+                ->locales(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh_CN'])
                 ->flags([
                     'en' => 'https://flagcdn.com/gb.svg',
                     'cs' => 'https://flagcdn.com/cz.svg',
@@ -192,12 +192,12 @@ class AppServiceProvider extends ServiceProvider
                     'sv' => 'https://flagcdn.com/se.svg',
                     'tr' => 'https://flagcdn.com/tr.svg',
                     'ja' => 'https://flagcdn.com/jp.svg',
-                    'zh' => 'https://flagcdn.com/cn.svg',
+                    'zh_CN' => 'https://flagcdn.com/cn.svg',
                 ])
                 ->circular()
                 ->nativeLabel()
                 ->visible(insidePanels: true, outsidePanels: true)
-                ->userPreferredLocale(fn () => request()->getPreferredLanguage(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh']));
+                ->userPreferredLocale(fn () => request()->getPreferredLanguage(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh_CN']));
         });
     }
 }

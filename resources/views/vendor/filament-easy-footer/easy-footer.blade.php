@@ -99,7 +99,7 @@
                 <li>
                     <a href="{{ $link['url'] }}"
                        class="text-primary-600 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300"
-                       target="_blank">{{ $link['title'] }}</a>
+                       target="_blank">{{ __($link['title']) }}</a>
                 </li>
             @endforeach
         </ul>
