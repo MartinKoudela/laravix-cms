@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Promethys\Revive\Concerns\Recyclable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
@@ -13,7 +15,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 #[Fillable(['site_id', 'name', 'path', 'disk', 'mime_type', 'size', 'created_by'])]
 class Media extends Model
 {
-    use LogsActivity, HasFactory;
+    use LogsActivity, HasFactory, SoftDeletes, Recyclable;
 
     public function getActivitylogOptions(): LogOptions
     {

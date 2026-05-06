@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35e39cda61c7b0149751025de48b6e3b",
+    "content-hash": "98d16d5f46d9e3f8c9cbc5f8f63ae547",
     "packages": [
         {
             "name": "bezhansalleh/filament-language-switch",
@@ -4344,6 +4344,90 @@
                 "source": "https://github.com/antonioribeiro/google2fa-qrcode/tree/v3.0.0"
             },
             "time": "2021-08-15T12:53:48+00:00"
+        },
+        {
+            "name": "promethys/revive",
+            "version": "3.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Promethys/revive.git",
+                "reference": "67047429e9d6c9fd964d366606c92a5d0d740566"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Promethys/revive/zipball/67047429e9d6c9fd964d366606c92a5d0d740566",
+                "reference": "67047429e9d6c9fd964d366606c92a5d0d740566",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^5.0",
+                "filament/forms": "^5.0",
+                "filament/tables": "^5.0",
+                "illuminate/contracts": "^13.0|^12.0|^11.0",
+                "illuminate/database": "*",
+                "illuminate/support": "*",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.15.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.0",
+                "nunomaduro/collision": "^8.1",
+                "orchestra/testbench": "^11.0|^10.0|^9.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-arch": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan-deprecation-rules": "^2.0",
+                "phpstan/phpstan-phpunit": "^2.0",
+                "spatie/laravel-ray": "^1.26"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Revive": "Promethys\\Revive\\Facades\\Revive"
+                    },
+                    "providers": [
+                        "Promethys\\Revive\\ReviveServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Promethys\\Revive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ilainiriko Tambaza",
+                    "email": "ilainiriko.tambaza@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A 'RecycleBin' page where users can restore or delete permanently soft-deleted models.",
+            "homepage": "https://github.com/Promethys/revive",
+            "keywords": [
+                "Promethys",
+                "RecycleBin",
+                "filament",
+                "laravel",
+                "revive"
+            ],
+            "support": {
+                "issues": "https://github.com/Promethys/revive/issues",
+                "source": "https://github.com/Promethys/revive"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Promethys",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-04-25T13:35:03+00:00"
         },
         {
             "name": "psr/clock",
@@ -11740,5 +11824,5 @@
         "ext-fileinfo": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

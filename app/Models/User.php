@@ -35,6 +35,13 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         return $this->is_super_admin || $this->sites()->exists();
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->is_super_admin || $this->sites()
+                ->wherePivot('role', SiteRole::ADMIN)
+                ->exists();
+    }
+
     public function getTenants(Panel $panel): Collection
     {
         if ($this->is_super_admin) {

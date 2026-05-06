@@ -8,18 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
+use Promethys\Revive\Concerns\Recyclable;
 
 #[Fillable(['site_id', 'type', 'name', 'slug', 'parent_id'])]
 class Taxonomy extends Model
 {
-    use LogsActivity, HasFactory;
+    use LogsActivity, HasFactory, SoftDeletes, Recyclable;
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logFillable()->logOnlyDirty()
-            ->useLogName('site-'.$this->site_id);
+            ->useLogName('site-' . $this->site_id);
 
     }
 

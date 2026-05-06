@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
+use Promethys\Revive\Concerns\Recyclable;
 
 #[Fillable(['name', 'domain', 'theme', 'navigations'])]
 class Site extends Model implements HasAvatar
 {
-    use HasFactory, LogsActivity;
+    use LogsActivity, HasFactory, SoftDeletes, Recyclable;
 
     public function getFilamentAvatarUrl(): ?string
     {
