@@ -1,58 +1,293 @@
-<p align="center"><a href="https://laravix.com" target="_blank"><img src="/public/laravix-logo-white.png" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/laravix-logo-white.svg">
+    <img src="public/laravix-logo-black.svg" width="360" alt="Laravix CMS">
+  </picture>
 </p>
 
-## About Laravel
+<p align="center">
+  <strong>Multi-tenant CMS built on Laravel and Filament</strong>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <a href="https://github.com/laravix/laravix-cms/commits/main">
+    <img src="https://img.shields.io/github/last-commit/laravix/laravix-cms?style=flat-square&color=6366f1" alt="Last Commit">
+  </a>
+  <a href="https://github.com/laravix/laravix-cms/commits/main">
+    <img src="https://img.shields.io/github/commit-activity/m/laravix/laravix-cms?style=flat-square&color=6366f1" alt="Commit Activity">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-AGPL_3.0-6366f1?style=flat-square" alt="License">
+  </a>
+  <a href="https://laravix.com">
+    <img src="https://img.shields.io/badge/Website-laravix.com-6366f1?style=flat-square" alt="laravix.com">
+  </a>
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<p align="center">
+  <img src="https://img.shields.io/badge/PHP-8.4-777BB4?style=flat-square&logo=php&logoColor=white" alt="PHP 8.4">
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=flat-square&logo=laravel&logoColor=white" alt="Laravel 13">
+  <img src="https://img.shields.io/badge/Filament-5-f59e0b?style=flat-square" alt="Filament 5">
+  <img src="https://img.shields.io/badge/Livewire-4-4e56a6?style=flat-square" alt="Livewire 4">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4">
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 8">
+  <img src="https://img.shields.io/badge/MySQL-8.4-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL 8.4">
+  <img src="https://img.shields.io/badge/Tested_with-Pest_4-CA3933?style=flat-square" alt="Pest 4">
+</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Overview
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Laravix CMS is a **multi-tenant** content management system. Each site is a fully isolated tenant with its own content, users, roles, navigation, settings, and theme — all managed from a single Filament admin panel.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Core capabilities:**
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- Multi-site tenancy with per-site roles
+- Visual block editor with live preview
+- Hierarchical taxonomies, media management, redirects
+- Email-based user invitations
+- Content scheduling, revisions, and activity logging
+- Auto-generated sitemaps and robots.txt
+- Themeable frontend with Blade
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Requirements
+
+| Dependency | Version |
+|------------|---------|
+| PHP        | 8.4+    |
+| MySQL      | 8.4+    |
+| Node.js    | 20+     |
+| Composer   | 2+      |
+| Docker     | Latest  |
+
+---
+
+## Installation
 
 ```bash
-composer require laravel/boost --dev
+git clone https://github.com/laravix/laravix-cms.git
+cd laravix-cms
 
-php artisan boost:install
+composer install
+cp .env.example .env
+
+vendor/bin/sail up -d
+vendor/bin/sail artisan key:generate
+vendor/bin/sail artisan migrate --seed
+vendor/bin/sail npm install
+vendor/bin/sail npm run build
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+The admin panel is at **http://localhost/admin**.
 
-## Contributing
+### Default credentials
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Role    | Email               | Password   |
+|---------|---------------------|------------|
+| Admin   | admin@example.com   | `example_` |
+| Manager | manager@example.com | `example_` |
+| User    | user@example.com    | `example_` |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Development
 
-## Security Vulnerabilities
+Start all services (server, queue worker, log tail, Vite HMR) with a single command:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+vendor/bin/sail up -d
+vendor/bin/sail composer run dev
+```
+
+| Service | URL                        |
+|---------|----------------------------|
+| App     | http://localhost           |
+| Admin   | http://localhost/admin     |
+| Mailpit | http://localhost:8025      |
+
+---
+
+## Architecture
+
+```
+app/
+├── Blocks/          # Block definitions (Hero, Text, Cards, …)
+├── Console/         # Artisan commands
+├── Enums/           # ContentStatus, FieldType, SiteRole, …
+├── Filament/        # Admin panel resources, pages, widgets
+├── Http/            # Controllers, middleware
+├── Livewire/        # Interactive components (BlockEditor)
+├── Mail/            # Mailable classes
+├── Models/          # Eloquent models
+├── Policies/        # Authorization policies
+├── Services/        # ContentResolver, SeoBuilder, SiteResolver, …
+└── Support/         # Shared helpers
+
+themes/              # Frontend themes (Blade views + theme.json)
+```
+
+---
+
+## Features
+
+### Multi-tenancy
+
+Each **Site** is a fully isolated tenant. Users are assigned per-site roles:
+
+| Role      | Description                              |
+|-----------|------------------------------------------|
+| `admin`   | Full access to site content and settings |
+| `manager` | Manage content, no settings access       |
+| `user`    | Read-only access                         |
+
+Super admins have access across all sites.
+
+### Content
+
+| Property   | Options                                        |
+|------------|------------------------------------------------|
+| Type       | `page`, `post`, `archive`                      |
+| Status     | `draft`, `published`, `scheduled`, `archived`  |
+
+- Scheduled publishing via `cms:publish-scheduled` (registered in scheduler)
+- Full revision history via [promethys/revive](https://github.com/promethys/revive)
+- Custom fields per content record
+- SEO metadata, JSON-LD, Open Graph support
+
+### Block Editor
+
+Visual block-based content builder with real-time split-screen preview.
+
+| Block         | Description                         |
+|---------------|-------------------------------------|
+| `Hero`        | Full-width hero with heading and CTA |
+| `Text`        | Rich text content                   |
+| `Cards`       | Card grid                           |
+| `Columns`     | Multi-column layout                 |
+| `Button`      | CTA button                          |
+| `ButtonGroup` | Row of multiple buttons             |
+| `Divider`     | Horizontal separator                |
+
+### Other Features
+
+| Feature             | Description                                                        |
+|---------------------|--------------------------------------------------------------------|
+| Media               | File upload, hero images, block media, disk-based storage          |
+| Navigation          | Header and footer nav per site with live admin preview             |
+| Taxonomies          | Hierarchical, site-scoped, with unique slug enforcement            |
+| Redirects           | 301/302 redirect rules per site                                    |
+| User Invitations    | Email invitation with role assignment                              |
+| Activity Log        | Full audit trail (Spatie Activity Log) scoped per site             |
+| Sitemap & Robots    | Auto-generated, tenant-aware `sitemap.xml` and `robots.txt`       |
+
+---
+
+## Themes
+
+Themes live in `/themes/{name}/` and consist of Blade views and a `theme.json` manifest. View namespaces are auto-registered as `themes.{name}::*`.
+
+```
+themes/default/
+├── theme.json
+└── views/
+    ├── layouts/app.blade.php
+    ├── default.blade.php
+    ├── page/show.blade.php
+    ├── post/show.blade.php
+    ├── archive/show.blade.php
+    └── blocks/
+        ├── hero.blade.php
+        ├── text.blade.php
+        └── …
+```
+
+To create a new theme, duplicate an existing theme folder and update `theme.json`:
+
+```json
+{
+    "name": "My Theme",
+    "description": "A custom Laravix theme"
+}
+```
+
+---
+
+## Custom Blocks
+
+Create a block class in `app/Blocks/`:
+
+```php
+class QuoteBlock extends Block
+{
+    public static function getName(): string
+    {
+        return 'quote';
+    }
+
+    public static function getSchema(): array
+    {
+        return [
+            Textarea::make('text')->required(),
+            TextInput::make('author'),
+        ];
+    }
+}
+```
+
+Register it in `AppServiceProvider`:
+
+```php
+BlockRegistry::register(QuoteBlock::class);
+```
+
+Add the Blade partial in your theme at `themes/{name}/views/blocks/quote.blade.php`.
+
+---
+
+## Testing
+
+```bash
+# Run the full test suite
+vendor/bin/sail artisan test --compact
+
+# Filter by test name
+vendor/bin/sail artisan test --compact --filter=SiteScopingTest
+```
+
+Tests are written in [Pest 4](https://pestphp.com). New features should be covered by feature tests in `tests/Feature/`.
+
+---
+
+## Code Style
+
+```bash
+vendor/bin/sail bin pint --dirty
+```
+
+[Laravel Pint](https://laravel.com/docs/pint) is configured and enforced. Run it before every commit.
+
+---
+
+## Environment Variables
+
+Key variables beyond standard Laravel defaults:
+
+| Variable       | Description                       | Default         |
+|----------------|-----------------------------------|-----------------|
+| `APP_VERSION`  | Version shown in the admin footer | `1.0.0`         |
+| `APP_TIMEZONE` | Default application timezone      | `Europe/Prague` |
+
+---
+
+## Author
+
+**Martin Koudela** — [martinkoudela.com](https://martinkoudela.com) · [martin@martinkoudela.com](mailto:martin@martinkoudela.com)
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Laravix CMS is open-source software licensed under the [GNU Affero General Public License v3.0](LICENSE).
