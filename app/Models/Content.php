@@ -60,4 +60,9 @@ class Content extends Model
     {
         return $this->hasMany(ContentRevision::class)->latest();
     }
+
+    public function redirects(): HasMany
+    {
+        return $this->hasMany(Redirect::class);
+    }
 }
