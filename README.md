@@ -10,11 +10,11 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/laravix/laravix-cms/commits/main">
-    <img src="https://img.shields.io/github/last-commit/laravix/laravix-cms?style=flat-square&color=6366f1" alt="Last Commit">
+  <a href="https://github.com/MartinKoudela/laravix-cms/commits/main">
+    <img src="https://img.shields.io/github/last-commit/MartinKoudela/laravix-cms?style=flat-square&color=6366f1" alt="Last Commit">
   </a>
-  <a href="https://github.com/laravix/laravix-cms/commits/main">
-    <img src="https://img.shields.io/github/commit-activity/m/laravix/laravix-cms?style=flat-square&color=6366f1" alt="Commit Activity">
+  <a href="https://github.com/MartinKoudela/laravix-cms/commits/main">
+    <img src="https://img.shields.io/github/commit-activity/m/MartinKoudela/laravix-cms?style=flat-square&color=6366f1" alt="Commit Activity">
   </a>
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/License-AGPL_3.0-6366f1?style=flat-square" alt="License">
@@ -32,7 +32,7 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4">
   <img src="https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite 8">
   <img src="https://img.shields.io/badge/MySQL-8.4-4479A1?style=flat-square&logo=mysql&logoColor=white" alt="MySQL 8.4">
-  <img src="https://img.shields.io/badge/Tested_with-Pest_4-CA3933?style=flat-square" alt="Pest 4">
+  <img src="https://img.shields.io/badge/Tested_with-Pest_4_&&_Docker_Sail-CA3933?style=flat-square" alt="Pest 4">
 </p>
 
 ---
