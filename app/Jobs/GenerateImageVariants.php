@@ -7,6 +7,8 @@ use App\Models\Media;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\JpegEncoder;
 use Intervention\Image\ImageManager;
 
 class GenerateImageVariants implements ShouldQueue
@@ -24,7 +26,7 @@ class GenerateImageVariants implements ShouldQueue
         }
 
         $original = Storage::disk($this->media->disk)->get($this->media->path);
-        $manager = ImageManager::gd();
+        $manager = new ImageManager(new Driver);
         $variants = [];
 
         foreach (ImageVariant::cases() as $variant) {
@@ -32,7 +34,7 @@ class GenerateImageVariants implements ShouldQueue
                 continue;
             }
 
-            $image = $manager->read($original);
+            $image = $manager->decode($original);
 
             if ($variant === ImageVariant::THUMBNAIL) {
                 $image->cover($variant->width(), $variant->height());
@@ -41,7 +43,7 @@ class GenerateImageVariants implements ShouldQueue
             }
 
             $path = 'variants/'.$variant->value.'/'.basename($this->media->path);
-            Storage::disk($this->media->disk)->put($path, $image->toJpeg());
+            Storage::disk($this->media->disk)->put($path, (string) $image->encode(new JpegEncoder(quality: 85)));
 
             $variants[$variant->value] = $path;
         }

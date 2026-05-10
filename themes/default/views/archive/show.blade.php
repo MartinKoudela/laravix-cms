@@ -2,6 +2,7 @@
 
 @section('content')
     @php
+        use App\Enums\ImageVariant;
         $fields = $content->fields->keyBy('key');
         $heroImageId = $fields->get('hero_image')?->value;
         $heroMedia = $heroImageId ? ($mediaMap[$heroImageId] ?? null) : null;
@@ -9,7 +10,7 @@
 
     @if ($heroMedia)
         <div class="w-full h-64 sm:h-80 overflow-hidden bg-gray-100">
-            <img src="{{ $heroMedia->url }}" alt="{{ $heroMedia->name }}"
+            <img src="{{ $heroMedia->variantUrl(ImageVariant::LARGE) }}" alt="{{ $heroMedia->name }}"
                  class="w-full h-full object-cover">
         </div>
     @endif
@@ -30,7 +31,7 @@
                        class="group block rounded-xl overflow-hidden border border-gray-100 hover:shadow-md transition">
                         @if ($postHero)
                             <div class="h-48 overflow-hidden bg-gray-100">
-                                <img src="{{ $postHero->url }}" alt="{{ $postHero->name }}"
+                                <img src="{{ $postHero->variantUrl(ImageVariant::MEDIUM) }}" alt="{{ $postHero->name }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             </div>
                         @else

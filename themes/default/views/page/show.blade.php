@@ -2,6 +2,7 @@
 
 @section('content')
     @php
+        use App\Enums\ImageVariant;
         $fields = $content->fields->keyBy('key');
         $body = $fields->get('body')?->value;
         $excerpt = $fields->get('excerpt')?->value;
@@ -21,7 +22,7 @@
         {{-- Classic EAV mode --}}
         @if ($heroMedia)
             <div class="w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-gray-100">
-                <img src="{{ $heroMedia->url }}" alt="{{ $heroMedia->name }}"
+                <img src="{{ $heroMedia->variantUrl(ImageVariant::LARGE) }}" alt="{{ $heroMedia->name }}"
                      class="w-full h-full object-cover">
             </div>
         @endif

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    @php use App\Enums\ImageVariant; @endphp
     @if($faviconMedia)
-        <link rel="icon" href="{{ $faviconMedia->url }}">
+        <link rel="icon" href="{{ $faviconMedia->variantUrl(ImageVariant::FAVICON) }}">
     @endif
 
     <title>{{ $seo['title'] }} – {{ $settings->get('site_name', $site->name) }}</title>
@@ -95,7 +96,7 @@
             <div class="flex items-center justify-between h-16">
                 <a href="/" class="flex items-center hover:opacity-80 transition-opacity">
                     @if($logoMedia)
-                        <img src="{{ $logoMedia->url }}" alt="{{ $settings->get('site_name', $site->name) }}" class="h-8 w-auto">
+                        <img src="{{ $logoMedia->variantUrl(ImageVariant::FULL) }}" alt="{{ $settings->get('site_name', $site->name) }}" class="h-8 w-auto">
                     @else
                         <span class="text-xl font-bold text-gray-900">{{ $settings->get('site_name', $site->name) }}</span>
                     @endif
@@ -159,7 +160,7 @@
         $mainStyle = collect([
             $appearance->get('color') ? 'background-color:'.$appearance->get('color') : null,
             $appearance->get('text_color') ? 'color:'.$appearance->get('text_color') : null,
-            $bgMedia ? 'background-image:url('.$bgMedia->url.');background-size:cover;background-position:center' : null,
+            $bgMedia ? 'background-image:url('.$bgMedia->variantUrl(ImageVariant::LARGE).');background-size:cover;background-position:center' : null,
         ])->filter()->implode(';');
 
         $layoutClass = match($appearance->get('layout')) {

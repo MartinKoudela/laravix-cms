@@ -11,7 +11,7 @@
 
     @if ($heroMedia)
         <div class="w-full h-64 overflow-hidden bg-gray-100">
-            <img src="{{ $heroMedia->url }}" alt="{{ $heroMedia->name }}" class="w-full h-full object-cover">
+            <img src="{{ $heroMedia->variantUrl(\App\Enums\ImageVariant::LARGE) }}" alt="{{ $heroMedia->name }}" class="w-full h-full object-cover">
         </div>
     @endif
 

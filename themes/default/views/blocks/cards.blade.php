@@ -1,4 +1,5 @@
 @php
+    use App\Enums\ImageVariant;
     $paddingMap = ['none' => 'py-0', 'sm' => 'py-4', 'md' => 'py-8', 'lg' => 'py-16'];
     $paddingClass = $paddingMap[$padding ?? 'md'] ?? 'py-8';
 @endphp
@@ -16,7 +17,7 @@
                     @endphp
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                         @if ($cardMedia)
-                            <img src="{{ $cardMedia->url }}" alt="{{ $cardMedia->name }}"
+                            <img src="{{ $cardMedia->variantUrl(ImageVariant::MEDIUM) }}" alt="{{ $cardMedia->name }}"
                                  class="w-full h-48 object-cover">
                         @endif
                         <div class="p-5">

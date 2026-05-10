@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Services;
+
+use App\Enums\ImageVariant;
 use App\Models\Content;
 use App\Models\Media;
 use Illuminate\Support\Collection;
 
 class SeoBuilder
 {
-
     public function build(Collection $contentFields, Collection $settings, Content $content, ?Media $ogMedia): array
     {
         return [
@@ -16,7 +17,7 @@ class SeoBuilder
                     ?: $content->title,
             'description' => $contentFields->get('meta_description')
                 ?: $settings->get('meta_description'),
-            'og_image_url' => $ogMedia?->url,
+            'og_image_url' => $ogMedia?->variantUrl(ImageVariant::OG),
             'noindex' => (bool) $contentFields->get('noindex'),
             'canonical' => url($content->is_homepage ? '/' : '/'.$content->slug),
         ];
