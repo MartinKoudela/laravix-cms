@@ -284,7 +284,7 @@ Key variables beyond standard Laravel defaults:
 
 ## Author
 
-**Martin Koudela** — [martinkoudela.com](https://martinkoudela.com) · [martin@martinkoudela.com](mailto:martin@martinkoudela.com)
+**Martin Koudela** — [martinkoudela.com](https://martinkoudela.com) · [mk@martinkoudela.com](mailto:martin@martinkoudela.com)
 
 ---
 

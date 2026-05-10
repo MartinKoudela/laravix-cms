@@ -41,7 +41,7 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('favicon.ico'))
             ->darkModeBrandLogo(asset('laravix-logo-white.svg'))
             ->brandLogoHeight('3rem')
-            ->sidebarFullyCollapsibleOnDesktop()
+            ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'primary' => Color::hex('#ff0465'),
                 'gray' => Color::Zinc,
