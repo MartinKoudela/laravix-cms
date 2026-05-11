@@ -73,6 +73,10 @@ class SettingComponentFactory
             $component->maxLength($definition->config['maxLength']);
         }
 
+        if (isset($definition->config['placeholder'])) {
+            $component->placeholder($definition->config['placeholder']);
+        }
+
         return $component;
     }
 

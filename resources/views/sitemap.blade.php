@@ -5,6 +5,7 @@
         <loc>{{ url($content->is_homepage ? '/' : '/'.$content->slug) }}</loc>
         <lastmod>{{ $content->updated_at->toAtomString() }}</lastmod>
         <changefreq>weekly</changefreq>
+        <priority>{{ $content->is_homepage ? '1.0' : '0.8' }}</priority>
     </url>
     @endforeach
 </urlset>

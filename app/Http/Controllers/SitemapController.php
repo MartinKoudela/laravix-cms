@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\Setting;
 use App\Models\Site;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -44,12 +45,14 @@ class SitemapController extends Controller
         $host = $request->getHost();
         $site = Site::where('domain', $host)->first();
 
-        $sitemapUrl = $site ? url('/sitemap.xml') : null;
+        $customContent = $site
+            ? Setting::where('site_id', $site->id)->where('key', 'robots_txt')->value('value')
+            : null;
 
-        $content = "User-agent: *\nAllow: /\n";
-
-        if ($sitemapUrl) {
-            $content .= "\nSitemap: {$sitemapUrl}\n";
+        if ($customContent) {
+            $content = rtrim($customContent)."\n\nSitemap: ".url('/sitemap.xml')."\n";
+        } else {
+            $content = "User-agent: *\nAllow: /\n\nSitemap: ".url('/sitemap.xml')."\n";
         }
 
         return response($content, 200, ['Content-Type' => 'text/plain']);

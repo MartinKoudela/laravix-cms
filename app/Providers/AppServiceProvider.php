@@ -130,6 +130,12 @@ class AppServiceProvider extends ServiceProvider
                 ->label('Google Site Verification')
                 ->group('SEO')
                 ->hint('Paste the content value from the Google Search Console meta tag.'),
+            SettingDefinition::make('robots_txt')
+                ->type(FieldType::TEXTAREA)
+                ->label('robots.txt')
+                ->group('SEO')
+                ->hint('Leave empty for default (Allow all). Sitemap URL is always appended automatically.')
+                ->config(['placeholder' => "User-agent: *\nAllow: /\n\nUser-agent: GPTBot\nDisallow: /"]),
             SettingDefinition::make('twitter_url')
                 ->type(FieldType::URL)
                 ->label('X / Twitter')
