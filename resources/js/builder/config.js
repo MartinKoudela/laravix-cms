@@ -1,5 +1,12 @@
 import grapesjsPresetWebpage from 'grapesjs-preset-webpage';
-import { FONT_AWESOME_CSS } from './constants';
+import { FONT_AWESOME_CSS, GOOGLE_FONTS } from './constants';
+
+const FONT_OPTIONS = [
+    { value: 'inherit',   name: '— Zdědit —' },
+    ...GOOGLE_FONTS.map(f => ({ value: `'${f}', sans-serif`, name: f })),
+    { value: 'serif',     name: 'Serif' },
+    { value: 'monospace', name: 'Monospace' },
+];
 
 export function buildConfig({ canvasCss, mediaItems }) {
     return {
@@ -146,7 +153,7 @@ export function buildConfig({ canvasCss, mediaItems }) {
                     name: 'Typografie',
                     open: false,
                     properties: [
-                        { label: 'Font', property: 'font-family', type: 'font-family-picker' },
+                        { label: 'Font', property: 'font-family', type: 'select', options: FONT_OPTIONS },
                         { property: 'font-size',      label: 'Velikost',      type: 'integer', units: ['px', 'rem', 'em', '%', 'vw'] },
                         {
                             label: 'Tučnost',
