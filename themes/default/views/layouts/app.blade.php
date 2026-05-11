@@ -162,19 +162,10 @@
             $appearance->get('text_color') ? 'color:'.$appearance->get('text_color') : null,
             $bgMedia ? 'background-image:url('.$bgMedia->variantUrl(ImageVariant::LARGE).');background-size:cover;background-position:center' : null,
         ])->filter()->implode(';');
-
-        $layoutClass = match($appearance->get('layout')) {
-            'boxed'         => 'max-w-4xl mx-auto',
-            'sidebar-left'  => 'max-w-6xl mx-auto grid grid-cols-[240px_1fr] gap-8',
-            'sidebar-right' => 'max-w-6xl mx-auto grid grid-cols-[1fr_240px] gap-8',
-            default         => 'w-full',
-        };
     @endphp
     <main class="flex-1 {{ $appearance->get('custom_css_class') }}"
           @if($mainStyle) style="{{ $mainStyle }}" @endif>
-        <div class="{{ $layoutClass }}">
-            @yield('content')
-        </div>
+        @yield('content')
     </main>
 
     {{-- Footer --}}
