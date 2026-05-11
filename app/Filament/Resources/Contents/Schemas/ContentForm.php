@@ -54,7 +54,7 @@ class ContentForm
                                             ->maxLength(255)
                                             ->key('slug')
                                             ->prefix('/')
-                                            ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, callable $get) => $rule->where('site_id', $get('site_id')))
+                                            ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule) => $rule->where('site_id', filament()->getTenant()?->id))
                                             ->helperText(__('common.must_be_unique')),
                                         Toggle::make('is_homepage')
                                             ->label(__('content.messages.set_as_homepage'))
@@ -149,8 +149,7 @@ class ContentForm
                             ->schema([
                                 View::make('filament.partials.block-builder')
                                     ->viewData(fn ($livewire) => [
-                                        'contentId' => $livewire->record?->id,
-                                        'previewToken' => $livewire->blockPreviewToken ?? '',
+                                        'record' => $livewire->record,
                                     ])
                                     ->columnSpanFull(),
                             ]),

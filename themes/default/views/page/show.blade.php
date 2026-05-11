@@ -12,14 +12,15 @@
         $hasBlocks = !empty($content->blocks);
     @endphp
 
-    @if ($hasBlocks)
-        {{-- Builder mode --}}
+    @if ($content->grapesjs_html)
+        {!! $content->grapesjs_html !!}
+
+    @elseif ($hasBlocks)
 
         @foreach ($content->blocks as $block)
             @include("themes.default::blocks.{$block['type']}", array_merge($block['data'] ?? [], ['mediaMap' => $mediaMap]))
         @endforeach
     @else
-        {{-- Classic EAV mode --}}
         @if ($heroMedia)
             <div class="w-full h-64 sm:h-80 md:h-96 overflow-hidden bg-gray-100">
                 <img src="{{ $heroMedia->variantUrl(ImageVariant::LARGE) }}" alt="{{ $heroMedia->name }}"

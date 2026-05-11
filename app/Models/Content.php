@@ -14,7 +14,7 @@ use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'blocks', 'status', 'published_at', 'created_by'])]
+#[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'blocks', 'grapesjs_data', 'grapesjs_html', 'status', 'published_at', 'created_by'])]
 class Content extends Model
 {
     use HasFactory, LogsActivity, Recyclable, SoftDeletes;
