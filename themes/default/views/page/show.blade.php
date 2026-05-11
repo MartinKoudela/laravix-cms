@@ -13,7 +13,12 @@
     @endphp
 
     @if ($content->grapesjs_html)
-        {!! $content->grapesjs_html !!}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <style>
+            .gjs-content *, .gjs-content *::before, .gjs-content *::after { box-sizing: border-box; }
+            .gjs-content img, .gjs-content video, .gjs-content iframe { max-width: 100%; }
+        </style>
+        <div class="gjs-content">{!! $content->grapesjs_html !!}</div>
 
     @elseif ($hasBlocks)
 

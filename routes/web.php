@@ -24,7 +24,12 @@ Route::middleware(['auth'])->group(function () {
         ->name('builder.edit');
     Route::post('/admin/{site}/contents/{content}/builder', [BuilderController::class, 'save'])
         ->name('builder.save');
+    Route::post('/admin/{site}/builder/upload', [BuilderController::class, 'upload'])
+        ->name('builder.upload');
 });
+
+Route::post('/builder/{site}/contact', [BuilderController::class, 'contact'])
+    ->name('builder.contact');
 
 Route::get('/{slug?}', [CmsController::class, 'show'])
     ->where('slug', '.*')

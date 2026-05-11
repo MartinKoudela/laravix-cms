@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "grapesjs": "^0.22.16",
+        "grapesjs-preset-webpage": "^1.0.3",
         "sortablejs": "^1.15.7",
         "split.js": "^1.6.5"
     }
