@@ -14,24 +14,24 @@ class HeroBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('hero')
-            ->label('Hero')
+            ->label('blocks.types.hero')
             ->icon('heroicon-o-photo')
             ->schema(fn () => [
-                TextInput::make('heading')->label(fn () => __('Heading'))->columnSpanFull(),
-                Textarea::make('subheading')->label(fn () => __('Subheading'))->columnSpanFull(),
-                FieldComponentFactory::mediaSelect('image_id', __('Image')),
+                TextInput::make('heading')->label(fn () => __('common.heading'))->columnSpanFull(),
+                Textarea::make('subheading')->label(fn () => __('blocks.fields.subheading'))->columnSpanFull(),
+                FieldComponentFactory::mediaSelect('image_id', __('common.image')),
                 Repeater::make('buttons')
-                    ->label(fn () => __('Buttons'))
+                    ->label(fn () => __('blocks.fields.buttons'))
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('label')->label(fn () => __('Label')),
-                        TextInput::make('href')->label(fn () => __('URL')),
+                        TextInput::make('label')->label(fn () => __('common.label')),
+                        TextInput::make('href')->label(fn () => __('common.url')),
                         Select::make('variant')
-                            ->label(fn () => __('Variant'))
+                            ->label(fn () => __('blocks.fields.variant'))
                             ->options(fn () => [
-                                'primary' => __('Primary'),
-                                'secondary' => __('Secondary'),
-                                'outline' => __('Outline'),
+                                'primary' => __('blocks.styles.primary'),
+                                'secondary' => __('blocks.styles.secondary'),
+                                'outline' => __('blocks.styles.outline'),
                             ]),
                     ]),
             ]);

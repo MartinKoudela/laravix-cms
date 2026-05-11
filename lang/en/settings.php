@@ -1,0 +1,49 @@
+<?php
+
+return [
+    'singular' => 'setting',
+    'plural' => 'settings',
+    'tabs' => [
+        'general' => 'General',
+        'seo' => 'SEO',
+        'social' => 'Social',
+    ],
+    'fields' => [
+        'site_name' => 'Site Name',
+        'site_description' => 'Site Description',
+        'site_logo' => 'Site Logo',
+        'favicon' => 'Favicon',
+        'locale' => 'Locale',
+        'contact_email' => 'Contact Email',
+        'meta_title' => 'Meta Title',
+        'meta_description' => 'Meta Description',
+        'og_image' => 'OG Image',
+        'google_verification' => 'Google Site Verification',
+        'robots_txt' => 'robots.txt',
+        'twitter' => 'X / Twitter',
+        'linkedin' => 'LinkedIn',
+        'facebook' => 'Facebook',
+        'instagram' => 'Instagram',
+        'github' => 'GitHub',
+    ],
+    'hints' => [
+        'setting_key' => 'Unique setting key, e.g. "site_name", "google_analytics", "logo".',
+        'setting_value' => 'The value for this setting.',
+        'logo' => 'Displayed in the header and footer.',
+        'favicon' => 'Browser tab icon. Recommended: 32×32 or 64×64 PNG.',
+        'locale' => 'Language code used in <html lang="">. E.g. en, cs, de, fr.',
+        'contact_email' => 'Used in contact forms and transactional emails.',
+        'meta_title' => 'Default page title used when no content-level title is set.',
+        'meta_description' => 'Default meta description (up to 160 characters).',
+        'og_image' => 'Default Open Graph image for social sharing.',
+        'google_verification' => 'Paste the content value from the Google Search Console meta tag.',
+        'robots_txt' => 'Leave empty for default (Allow all). Sitemap URL is always appended automatically.',
+    ],
+    'actions' => [
+        'save' => 'Save Settings',
+        'manage' => 'Manage Settings',
+    ],
+    'messages' => [
+        'saved' => 'Settings saved',
+    ],
+];

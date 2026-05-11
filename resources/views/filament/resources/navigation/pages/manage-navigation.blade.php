@@ -8,7 +8,7 @@
                 <div class="w-3 h-3 rounded-full bg-green-400"></div>
             </div>
             <div class="flex-1 bg-white dark:bg-gray-700 rounded-md px-3 py-1 text-xs text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-gray-600">
-                {{ $site?->domain ?? 'example.com' }} — {{ __('Header Navigation') }}
+                {{ $site?->domain ?? 'example.com' }} — {{ __('navigation.labels.header') }}
             </div>
         </div>
         <iframe
@@ -29,7 +29,7 @@
                 <div class="w-3 h-3 rounded-full bg-green-400"></div>
             </div>
             <div class="flex-1 bg-white dark:bg-gray-700 rounded-md px-3 py-1 text-xs text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-gray-600">
-                {{ $site?->domain ?? 'example.com' }} — {{ __('Footer Navigation') }}
+                {{ $site?->domain ?? 'example.com' }} — {{ __('navigation.labels.footer') }}
             </div>
         </div>
         <iframe

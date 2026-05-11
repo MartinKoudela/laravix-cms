@@ -11,17 +11,17 @@ class ButtonBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('button')
-            ->label('Button')
+            ->label('blocks.types.button')
             ->icon('heroicon-o-cursor-arrow-rays')
             ->schema(fn () => [
-                TextInput::make('label')->label(fn () => __('Label')),
-                TextInput::make('url')->label(fn () => __('URL'))->url(),
+                TextInput::make('label')->label(fn () => __('common.label')),
+                TextInput::make('url')->label(fn () => __('common.url'))->url(),
                 Select::make('style')
-                    ->label(fn () => __('Style'))
+                    ->label(fn () => __('blocks.fields.style'))
                     ->options(fn () => [
-                        'primary' => __('Primary'),
-                        'secondary' => __('Secondary'),
-                        'outline' => __('Outline'),
+                        'primary' => __('blocks.styles.primary'),
+                        'secondary' => __('blocks.styles.secondary'),
+                        'outline' => __('blocks.styles.outline'),
                     ])
                     ->default('primary'),
             ]);

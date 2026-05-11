@@ -28,7 +28,7 @@ class MediaTable
                         ->grow(false),
                     Stack::make([
                         TextColumn::make('name')
-                            ->label(__('Title'))
+                            ->label(__('common.title'))
                             ->weight(FontWeight::Medium)
                             ->searchable()
                             ->sortable(),
@@ -39,7 +39,7 @@ class MediaTable
                     ]),
                     Stack::make([
                         TextColumn::make('size')
-                            ->label(__('Size'))
+                            ->label(__('common.size'))
                             ->formatStateUsing(fn (int $state): string => number_format($state / 1024, 1).' KB')
                             ->color('gray')
                             ->sortable(),

@@ -18,12 +18,12 @@ class SiteResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('site');
+        return __('sites.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('sites');
+        return __('sites.plural');
     }
 
     protected static ?string $model = Site::class;

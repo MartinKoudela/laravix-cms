@@ -14,17 +14,17 @@ class CardsBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('cards')
-            ->label('Cards')
+            ->label('blocks.types.cards')
             ->icon('heroicon-o-squares-2x2')
             ->nestable(false)
             ->schema(fn () => [
-                TextInput::make('heading')->label(fn () => __('Heading'))->columnSpanFull(),
+                TextInput::make('heading')->label(fn () => __('common.heading'))->columnSpanFull(),
                 Repeater::make('items')
-                    ->label(fn () => __('Cards'))
+                    ->label(fn () => __('blocks.fields.cards'))
                     ->schema([
-                        TextInput::make('title')->label(fn () => __('Title')),
-                        FieldComponentFactory::mediaSelect('image_id', __('Image')),
-                        TextInput::make('link')->label(fn () => __('Link'))->url(),
+                        TextInput::make('title')->label(fn () => __('common.title')),
+                        FieldComponentFactory::mediaSelect('image_id', __('common.image')),
+                        TextInput::make('link')->label(fn () => __('common.link'))->url(),
                         Builder::make('blocks')
                             ->blocks(BlockRegistry::toNestableBlocks())
                             ->collapsible()

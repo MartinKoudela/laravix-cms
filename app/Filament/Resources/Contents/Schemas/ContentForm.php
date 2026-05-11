@@ -25,8 +25,8 @@ class ContentForm
     public static function configure(Schema $schema): Schema
     {
         $grouped = FieldRegistry::grouped();
-        $seoDefinitions = $grouped['SEO'] ?? [];
-        $contentGroups = array_filter($grouped, fn (string $key) => $key !== 'SEO', ARRAY_FILTER_USE_KEY);
+        $seoDefinitions = $grouped['content.sections.seo_group'] ?? [];
+        $contentGroups = array_filter($grouped, fn (string $key) => $key !== 'content.sections.seo_group', ARRAY_FILTER_USE_KEY);
         $appearanceDefinitions = AppearanceRegistry::forContentType(null);
 
         return $schema
@@ -34,13 +34,13 @@ class ContentForm
                 Tabs::make()
                     ->columnSpanFull()
                     ->tabs([
-                        Tab::make(__('Content'))
+                        Tab::make(__('content.sections.content'))
                             ->schema([
-                                Section::make(__('General'))
+                                Section::make(__('common.general'))
                                     ->columns(2)
                                     ->schema([
                                         TextInput::make('title')
-                                            ->label(__('Title'))
+                                            ->label(__('common.title'))
                                             ->required()
                                             ->maxLength(255)
                                             ->live(debounce: 500)
@@ -49,16 +49,16 @@ class ContentForm
                                             )
                                             ->columnSpanFull(),
                                         TextInput::make('slug')
-                                            ->label(__('Slug'))
+                                            ->label(__('common.slug'))
                                             ->required()
                                             ->maxLength(255)
                                             ->key('slug')
                                             ->prefix('/')
                                             ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, callable $get) => $rule->where('site_id', $get('site_id')))
-                                            ->helperText(__('Must be unique per site.')),
+                                            ->helperText(__('common.must_be_unique')),
                                         Toggle::make('is_homepage')
-                                            ->label(__('Set as homepage'))
-                                            ->helperText(__('Only one content per site can be the homepage.'))
+                                            ->label(__('content.messages.set_as_homepage'))
+                                            ->helperText(__('content.messages.only_one_homepage'))
                                             ->columnSpanFull()
                                             ->hidden(function (?Content $record): bool {
                                                 if ($record?->is_homepage) {
@@ -76,22 +76,22 @@ class ContentForm
                                                     ->exists();
                                             }),
                                     ]),
-                                Section::make(__('Publishing'))
+                                Section::make(__('content.sections.publishing'))
                                     ->columns(2)
                                     ->schema([
                                         Select::make('type')
-                                            ->label(__('Type'))
+                                            ->label(__('common.type'))
                                             ->required()
                                             ->options([
-                                                'page' => __('Page'),
-                                                'post' => __('Post'),
-                                                'archive' => __('Archive'),
+                                                'page' => __('content.types.page'),
+                                                'post' => __('content.types.post'),
+                                                'archive' => __('content.types.archive'),
                                             ])
                                             ->default('page')
                                             ->disabled(fn ($record) => $record !== null)
                                             ->dehydrated(),
                                         Select::make('status')
-                                            ->label(__('Status'))
+                                            ->label(__('common.status'))
                                             ->required()
                                             ->options(collect(ContentStatus::cases())->mapWithKeys(
                                                 fn (ContentStatus $case) => [$case->value => $case->name]
@@ -101,10 +101,10 @@ class ContentForm
                                         DateTimePicker::make('published_at')
                                             ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
                                     ]),
-                                Section::make(__('Taxonomies'))
+                                Section::make(__('content.sections.taxonomies'))
                                     ->schema([
                                         Select::make('taxonomies')
-                                            ->label(__('Taxonomies'))
+                                            ->label(__('content.sections.taxonomies'))
                                             ->relationship('taxonomies', 'name')
                                             ->multiple()
                                             ->searchable()
@@ -124,7 +124,7 @@ class ContentForm
                                     array_values($contentGroups),
                                 ),
                             ]),
-                        Tab::make(__('SEO'))
+                        Tab::make(__('common.seo'))
                             ->schema([
                                 Section::make()
                                     ->columns(2)
@@ -133,7 +133,7 @@ class ContentForm
                                         $seoDefinitions,
                                     )),
                             ]),
-                        Tab::make(__('Appearance'))
+                        Tab::make(__('common.appearance'))
                             ->schema([
                                 View::make('filament.partials.appearance-preview')
                                     ->viewData(fn ($livewire) => ['token' => $livewire->appearancePreviewToken ?? '']),
@@ -144,7 +144,7 @@ class ContentForm
                                         $appearanceDefinitions,
                                     )),
                             ]),
-                        Tab::make(__('Builder'))
+                        Tab::make(__('content.sections.builder'))
                             ->hidden(fn (Get $get): bool => $get('type') !== 'page')
                             ->schema([
                                 View::make('filament.partials.block-builder')

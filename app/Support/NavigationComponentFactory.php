@@ -19,12 +19,12 @@ class NavigationComponentFactory
             ->label(fn () => __($definition->label))
             ->schema([
                 TextInput::make('label')
-                    ->label(fn () => __('Label'))
+                    ->label(fn () => __('common.label'))
                     ->required()
                     ->live(debounce: 500)
                     ->columnSpanFull(),
                 Select::make('content_id')
-                    ->label(fn () => __('Page'))
+                    ->label(fn () => __('content.types.page'))
                     ->options(fn () => Content::query()
                         ->where('site_id', filament()->getTenant()?->id)
                         ->whereIn('type', ['page', 'archive'])
@@ -43,33 +43,33 @@ class NavigationComponentFactory
                             $set('url', $content->is_homepage ? '/' : '/'.$content->slug);
                         }
                     })
-                    ->placeholder(fn () => __('Or enter a URL manually'))
+                    ->placeholder(fn () => __('navigation.labels.url_manual'))
                     ->nullable(),
                 TextInput::make('url')
-                    ->label(fn () => __('URL'))
+                    ->label(fn () => __('common.url'))
                     ->live(debounce: 500)
                     ->nullable(),
                 Select::make('target')
-                    ->label(fn () => __('Target'))
+                    ->label(fn () => __('navigation.labels.target'))
                     ->options([
-                        '_self' => __('Same tab'),
-                        '_blank' => __('New tab'),
+                        '_self' => __('navigation.options.same_tab'),
+                        '_blank' => __('navigation.options.new_tab'),
                     ])
                     ->default('_self'),
-                static::mediaSelect('image_id', __('Image')),
+                static::mediaSelect('image_id', __('common.image')),
                 Textarea::make('description')
-                    ->label(fn () => __('Description'))
+                    ->label(fn () => __('common.description'))
                     ->rows(2)
                     ->columnSpanFull(),
                 Repeater::make('children')
-                    ->label(fn () => __('Submenu'))
+                    ->label(fn () => __('navigation.labels.submenu'))
                     ->schema([
                         TextInput::make('label')
-                            ->label(fn () => __('Label'))
+                            ->label(fn () => __('common.label'))
                             ->nullable()
                             ->columnSpanFull(),
                         Select::make('content_id')
-                            ->label(fn () => __('Page'))
+                            ->label(fn () => __('content.types.page'))
                             ->options(fn () => Content::query()
                                 ->where('site_id', filament()->getTenant()?->id)
                                 ->whereIn('type', ['page', 'archive'])
@@ -88,22 +88,22 @@ class NavigationComponentFactory
                                     $set('url', $content->is_homepage ? '/' : '/'.$content->slug);
                                 }
                             })
-                            ->placeholder(fn () => __('Or enter a URL manually'))
+                            ->placeholder(fn () => __('navigation.labels.url_manual'))
                             ->nullable(),
                         TextInput::make('url')
-                            ->label(fn () => __('URL'))
+                            ->label(fn () => __('common.url'))
                             ->nullable(),
                         Select::make('target')
-                            ->label(fn () => __('Target'))
+                            ->label(fn () => __('navigation.labels.target'))
                             ->options([
-                                '_self' => __('Same tab'),
-                                '_blank' => __('New tab'),
+                                '_self' => __('navigation.options.same_tab'),
+                                '_blank' => __('navigation.options.new_tab'),
                             ])
                             ->nullable()
                             ->default('_self'),
-                        static::mediaSelect('image_id', __('Image')),
+                        static::mediaSelect('image_id', __('common.image')),
                         Textarea::make('description')
-                            ->label(fn () => __('Description'))
+                            ->label(fn () => __('common.description'))
                             ->rows(2)
                             ->columnSpanFull(),
                     ])

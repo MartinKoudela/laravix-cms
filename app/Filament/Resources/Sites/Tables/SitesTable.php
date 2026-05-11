@@ -15,28 +15,28 @@ class SitesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('Title'))
+                    ->label(__('common.title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('domain')
-                    ->label(__('Domain'))
+                    ->label(__('common.domain'))
                     ->searchable()
                     ->url(fn ($record) => 'https://'.$record->domain)
                     ->openUrlInNewTab(),
                 TextColumn::make('theme')
-                    ->label(__('Theme'))
+                    ->label(__('common.theme'))
                     ->badge()
                     ->sortable(),
                 TextColumn::make('users_count')
-                    ->label(__('Users'))
+                    ->label(__('sites.fields.users_count'))
                     ->counts('users')
                     ->sortable(),
                 TextColumn::make('contents_count')
-                    ->label(__('Contents'))
+                    ->label(__('sites.fields.contents_count'))
                     ->counts('contents')
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label(__('Created at'))
+                    ->label(__('common.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

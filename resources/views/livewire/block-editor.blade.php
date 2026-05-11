@@ -16,7 +16,7 @@
     @if($editingIndex === null)
         {{-- LIST VIEW --}}
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
-            <h3 style="font-size:0.875rem; font-weight:600; color:#374151;">{{ __('Blocks') }}</h3>
+            <h3 style="font-size:0.875rem; font-weight:600; color:#374151;">{{ __('blocks.actions.blocks') }}</h3>
 
             <div x-data="{ open: false }" style="position:relative;">
                 <button
@@ -25,7 +25,7 @@
                     style="display:inline-flex; align-items:center; gap:0.375rem; padding:0.375rem 0.875rem; font-size:0.8125rem; font-weight:500; border-radius:0.5rem; background:var(--color-primary-600, #2563eb); color:#fff; border:none; cursor:pointer;"
                 >
                     <svg style="width:0.875rem;height:0.875rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    {{ __('Add Block') }}
+                    {{ __('blocks.actions.add_block') }}
                     <svg style="width:0.75rem;height:0.75rem;transition:transform 0.15s;" :style="open ? 'transform:rotate(180deg)' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
 
@@ -50,7 +50,7 @@
                             {{ __($bt['label']) }}
                         </button>
                     @empty
-                        <p style="padding:0.75rem; font-size:0.8125rem; color:#9ca3af;">{{ __('No block types registered.') }}</p>
+                        <p style="padding:0.75rem; font-size:0.8125rem; color:#9ca3af;">{{ __('blocks.messages.no_types') }}</p>
                     @endforelse
                 </div>
             </div>
@@ -59,7 +59,7 @@
         @if(empty($blocks))
             <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:4rem 1rem; color:#9ca3af;">
                 <svg style="width:2.5rem;height:2.5rem;margin-bottom:0.75rem;opacity:0.4;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                <p style="font-size:0.875rem;">{{ __('No blocks yet. Add your first block above.') }}</p>
+                <p style="font-size:0.875rem;">{{ __('blocks.messages.no_blocks') }}</p>
             </div>
         @else
             <div
@@ -131,7 +131,7 @@
                 style="display:inline-flex; align-items:center; gap:0.375rem; font-size:0.875rem; color:#6b7280; background:transparent; border:none; cursor:pointer; padding:0;"
             >
                 <svg style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                {{ __('Back') }}
+                {{ __('blocks.actions.back') }}
             </button>
             <span style="font-size:0.875rem; font-weight:600; color:#374151; text-transform:capitalize;">
                 @php $def = \App\Support\BlockRegistry::all()[$blocks[$editingIndex]['type'] ?? ''] ?? null; @endphp
@@ -156,12 +156,12 @@
                             <button type="button"
                                 wire:click="$set('blocks.{{ $editingIndex }}.data.{{ $field['key'] }}', null)"
                                 style="font-size:0.75rem;color:#9ca3af;background:transparent;border:none;cursor:pointer;"
-                            >{{ __('Remove') }}</button>
+                            >{{ __('blocks.actions.remove') }}</button>
                         </div>
                     @endif
 
                     @if(empty($mediaItems))
-                        <p style="font-size:0.8125rem;color:#9ca3af;padding:0.75rem;background:#f9fafb;border-radius:0.5rem;text-align:center;">{{ __('No media uploaded yet.') }}</p>
+                        <p style="font-size:0.8125rem;color:#9ca3af;padding:0.75rem;background:#f9fafb;border-radius:0.5rem;text-align:center;">{{ __('media.messages.no_media') }}</p>
                     @else
                         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.375rem;max-height:14rem;overflow-y:auto;padding:0.25rem;">
                             @foreach($mediaItems as $media)
@@ -210,7 +210,7 @@
                                                 </div>
                                             @endif
                                             @if(empty($mediaItems))
-                                                <p style="font-size:0.75rem;color:#9ca3af;">{{ __('No media uploaded yet.') }}</p>
+                                                <p style="font-size:0.75rem;color:#9ca3af;">{{ __('media.messages.no_media') }}</p>
                                             @else
                                                 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.25rem;max-height:8rem;overflow-y:auto;">
                                                     @foreach($mediaItems as $media)
@@ -247,7 +247,7 @@
                                 @endforeach
                             </div>
                         @empty
-                            <p style="font-size:0.8125rem; color:#9ca3af; padding:0.625rem 0;">{{ __('No items yet.') }}</p>
+                            <p style="font-size:0.8125rem; color:#9ca3af; padding:0.625rem 0;">{{ __('blocks.messages.no_items') }}</p>
                         @endforelse
                         <button
                             type="button"
@@ -257,7 +257,7 @@
                             onmouseleave="this.style.borderColor='#d1d5db';this.style.color='#6b7280'"
                         >
                             <svg style="width:0.875rem;height:0.875rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                            {{ __('Add') }} {{ $field['label'] }}
+                            {{ __('blocks.actions.add') }} {{ $field['label'] }}
                         </button>
                     </div>
 
@@ -288,33 +288,33 @@
                 @endif
             </div>
         @empty
-            <p style="font-size:0.875rem; color:#9ca3af;">{{ __('This block has no configurable fields.') }}</p>
+            <p style="font-size:0.875rem; color:#9ca3af;">{{ __('blocks.messages.no_fields') }}</p>
         @endforelse
 
         <details style="margin-top:1.5rem;">
             <summary style="font-size:0.75rem; font-weight:500; color:#9ca3af; cursor:pointer; user-select:none; list-style:none; display:flex; align-items:center; gap:0.375rem;">
                 <svg style="width:0.875rem;height:0.875rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
-                {{ __('Block Settings') }}
+                {{ __('blocks.settings.title') }}
             </summary>
             <div style="margin-top:1rem; display:flex; flex-direction:column; gap:1rem; padding-top:1rem; border-top:1px solid #f3f4f6;">
                 <div>
-                    <label style="display:block; font-size:0.75rem; font-weight:500; color:#6b7280; margin-bottom:0.375rem;">{{ __('CSS Class') }}</label>
+                    <label style="display:block; font-size:0.75rem; font-weight:500; color:#6b7280; margin-bottom:0.375rem;">{{ __('blocks.settings.css_class') }}</label>
                     <input type="text" wire:model.blur="blocks.{{ $editingIndex }}.data.css_class"
                         style="width:100%; padding:0.5rem 0.75rem; border:1px solid #d1d5db; border-radius:0.5rem; font-size:0.875rem; color:#111827; box-sizing:border-box;">
                 </div>
                 <div>
-                    <label style="display:block; font-size:0.75rem; font-weight:500; color:#6b7280; margin-bottom:0.375rem;">{{ __('Padding') }}</label>
+                    <label style="display:block; font-size:0.75rem; font-weight:500; color:#6b7280; margin-bottom:0.375rem;">{{ __('blocks.settings.padding') }}</label>
                     <select wire:model.live="blocks.{{ $editingIndex }}.data.padding"
                         style="width:100%; padding:0.5rem 0.75rem; border:1px solid #d1d5db; border-radius:0.5rem; font-size:0.875rem; background:#fff; color:#111827;">
                         <option value="">—</option>
-                        <option value="none">{{ __('None') }}</option>
-                        <option value="sm">{{ __('Small') }}</option>
-                        <option value="md">{{ __('Medium') }}</option>
-                        <option value="lg">{{ __('Large') }}</option>
+                        <option value="none">{{ __('blocks.padding.none') }}</option>
+                        <option value="sm">{{ __('blocks.padding.small') }}</option>
+                        <option value="md">{{ __('blocks.padding.medium') }}</option>
+                        <option value="lg">{{ __('blocks.padding.large') }}</option>
                     </select>
                 </div>
                 <div>
-                    <label style="display:block; font-size:0.75rem; font-weight:500; color:#6b7280; margin-bottom:0.375rem;">{{ __('Background Color') }}</label>
+                    <label style="display:block; font-size:0.75rem; font-weight:500; color:#6b7280; margin-bottom:0.375rem;">{{ __('blocks.settings.background_color') }}</label>
                     <input type="color" wire:model.live="blocks.{{ $editingIndex }}.data.background_color"
                         style="width:100%; height:40px; padding:2px 4px; border:1px solid #d1d5db; border-radius:0.5rem; cursor:pointer;">
                 </div>

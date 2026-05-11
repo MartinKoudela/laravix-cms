@@ -22,7 +22,7 @@ class ManageSettings extends Page
 
     public function getTitle(): string
     {
-        return __('Manage Settings');
+        return __('settings.actions.manage');
     }
 
     public ?array $data = [];
@@ -75,7 +75,7 @@ class ManageSettings extends Page
         }
 
         Notification::make()
-            ->title(__('Settings saved'))
+            ->title(__('settings.messages.saved'))
             ->success()
             ->send();
     }
@@ -84,7 +84,7 @@ class ManageSettings extends Page
     {
         return [
             Action::make('save')
-                ->label(__('Save Settings'))
+                ->label(__('settings.actions.save'))
                 ->action('save'),
         ];
     }

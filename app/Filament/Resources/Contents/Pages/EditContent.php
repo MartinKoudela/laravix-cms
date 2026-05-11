@@ -74,7 +74,7 @@ class EditContent extends EditRecord
     {
         return [
             Action::make('preview')
-                ->label(__('Preview'))
+                ->label(__('common.preview'))
                 ->icon(Heroicon::OutlinedEye)
                 ->color('gray')
                 ->url(function (): string {

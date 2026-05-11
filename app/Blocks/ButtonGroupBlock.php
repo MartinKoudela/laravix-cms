@@ -12,20 +12,20 @@ class ButtonGroupBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('button_group')
-            ->label('Button Group')
+            ->label('blocks.types.button_group')
             ->icon('heroicon-o-cursor-arrow-rays')
             ->schema(fn () => [
                 Repeater::make('buttons')
-                    ->label(fn () => __('Buttons'))
+                    ->label(fn () => __('blocks.fields.buttons'))
                     ->schema([
-                        TextInput::make('label')->label(fn () => __('Label')),
-                        TextInput::make('url')->label(fn () => __('URL'))->url(),
+                        TextInput::make('label')->label(fn () => __('common.label')),
+                        TextInput::make('url')->label(fn () => __('common.url'))->url(),
                         Select::make('style')
-                            ->label(fn () => __('Style'))
+                            ->label(fn () => __('blocks.fields.style'))
                             ->options(fn () => [
-                                'primary' => __('Primary'),
-                                'secondary' => __('Secondary'),
-                                'outline' => __('Outline'),
+                                'primary' => __('blocks.styles.primary'),
+                                'secondary' => __('blocks.styles.secondary'),
+                                'outline' => __('blocks.styles.outline'),
                             ])
                             ->default('primary'),
                     ])

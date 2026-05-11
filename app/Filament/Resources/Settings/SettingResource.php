@@ -14,12 +14,12 @@ class SettingResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('setting');
+        return __('settings.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('settings');
+        return __('settings.plural');
     }
 
     protected static ?string $model = Setting::class;

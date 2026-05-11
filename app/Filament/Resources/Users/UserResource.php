@@ -22,12 +22,12 @@ class UserResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('user');
+        return __('users.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('users');
+        return __('users.plural');
     }
 
     protected static ?string $model = User::class;

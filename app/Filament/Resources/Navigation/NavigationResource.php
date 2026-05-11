@@ -13,12 +13,12 @@ class NavigationResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('navigation');
+        return __('navigation.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('navigation');
+        return __('navigation.singular');
     }
 
     protected static ?string $model = Site::class;

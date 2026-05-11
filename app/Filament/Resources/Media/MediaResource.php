@@ -18,12 +18,12 @@ class MediaResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('media');
+        return __('media.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('medias');
+        return __('media.plural');
     }
 
     protected static ?string $model = Media::class;

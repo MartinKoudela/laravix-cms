@@ -1,0 +1,49 @@
+<?php
+
+return [
+    'singular' => 'nastavení',
+    'plural' => 'nastavení',
+    'tabs' => [
+        'general' => 'Obecné',
+        'seo' => 'SEO',
+        'social' => 'Sociální sítě',
+    ],
+    'fields' => [
+        'site_name' => 'Název webu',
+        'site_description' => 'Popis webu',
+        'site_logo' => 'Logo webu',
+        'favicon' => 'Favicon',
+        'locale' => 'Jazyk',
+        'contact_email' => 'Kontaktní e-mail',
+        'meta_title' => 'Meta název',
+        'meta_description' => 'Meta popis',
+        'og_image' => 'OG obrázek',
+        'google_verification' => 'Google ověření',
+        'twitter' => 'X / Twitter',
+        'linkedin' => 'LinkedIn',
+        'facebook' => 'Facebook',
+        'instagram' => 'Instagram',
+        'github' => 'GitHub',
+        'robots_txt' => 'robots.txt',
+    ],
+    'actions' => [
+        'save' => 'Uložit nastavení',
+        'manage' => 'Správa nastavení',
+    ],
+    'messages' => [
+        'saved' => 'Nastavení uloženo',
+    ],
+    'hints' => [
+        'logo' => 'Zobrazeno v hlavičce a patičce.',
+        'setting_key' => 'Unique setting key, e.g. "site_name", "google_analytics", "logo".',
+        'setting_value' => 'The value for this setting.',
+        'favicon' => 'Ikona záložky prohlížeče. Doporučeno: 32×32 nebo 64×64 PNG.',
+        'contact_email' => 'Používá se v kontaktních formulářích a transakčních e-mailech.',
+        'meta_title' => 'Výchozí název stránky, pokud není nastaven název na úrovni obsahu.',
+        'meta_description' => 'Výchozí meta popis (až 160 znaků).',
+        'og_image' => 'Výchozí Open Graph obrázek pro sdílení na sociálních sítích.',
+        'locale' => 'Kód jazyka použitý v <html lang="">. Např. en, cs, de, fr.',
+        'google_verification' => 'Vložte hodnotu atributu content z meta tagu Google Search Console.',
+        'robots_txt' => 'Ponechte prázdné pro výchozí nastavení (Vše povoleno). URL sitemapy je vždy přidána automaticky.',
+    ],
+];

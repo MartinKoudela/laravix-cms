@@ -4,7 +4,6 @@ namespace App\Filament\Resources\Contents\Tables;
 
 use App\Enums\ContentStatus;
 use App\Filament\Actions\PreviewAction;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -21,25 +20,25 @@ class ContentsTable
             ->columnToggleFormMaxHeight('400px')
             ->columns([
                 TextColumn::make('title')
-                    ->label(__('Title'))
+                    ->label(__('common.title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('slug')
-                    ->label(__('Slug'))
+                    ->label(__('common.slug'))
                     ->prefix('/')
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('site.name')
-                    ->label(__('Site'))
+                    ->label(__('common.site'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('type')
-                    ->label(__('Type'))
+                    ->label(__('common.type'))
                     ->badge()
                     ->sortable(),
                 TextColumn::make('status')
-                    ->label(__('Status'))
+                    ->label(__('common.status'))
                     ->badge()
                     ->color(fn (ContentStatus $state): string => match ($state) {
                         ContentStatus::PUBLISHED => 'success',
@@ -49,22 +48,22 @@ class ContentsTable
                     ->formatStateUsing(fn (ContentStatus $state): string => $state->value)
                     ->sortable(),
                 IconColumn::make('is_homepage')
-                    ->label(__('Homepage'))
+                    ->label(__('common.homepage'))
                     ->boolean()
                     ->trueColor('success')
                     ->falseColor('gray')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('author.name')
-                    ->label(__('Author'))
+                    ->label(__('common.author'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
+                    ->label(__('common.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('published_at')
-                    ->label(__('Published at'))
+                    ->label(__('common.published_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -77,8 +76,8 @@ class ContentsTable
                     )),
                 SelectFilter::make('type')
                     ->options([
-                        'page' => __('Page'),
-                        'post' => __('Post'),
+                        'page' => __('content.types.page'),
+                        'post' => __('content.types.post'),
                     ]),
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),

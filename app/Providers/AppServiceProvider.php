@@ -34,42 +34,43 @@ class AppServiceProvider extends ServiceProvider
     {
 
         FieldRegistry::content([
-            FieldDefinition::make('body')->type(FieldType::RICH_TEXT)->label('Body'),
-            FieldDefinition::make('hero_image')->type(FieldType::IMAGE)->label('Hero Image'),
-            FieldDefinition::make('excerpt')->type(FieldType::TEXTAREA)->label('Excerpt'),
+            FieldDefinition::make('body')->type(FieldType::RICH_TEXT)->label('content.fields.body'),
+            FieldDefinition::make('hero_image')->type(FieldType::IMAGE)->label('content.fields.hero_image'),
+            FieldDefinition::make('excerpt')->type(FieldType::TEXTAREA)->label('content.fields.excerpt'),
 
             FieldDefinition::make('meta_title')
-                ->label('Meta Title')
-                ->group('SEO')
-                ->hint('Overrides the site-wide default when set.'),
+                ->label('content.fields.meta_title')
+                ->group('content.sections.seo_group')
+                ->hint('content.hints.meta_title'),
             FieldDefinition::make('meta_description')
                 ->type(FieldType::TEXTAREA)
-                ->label('Meta Description')
-                ->group('SEO')
-                ->hint('Up to 160 characters. Overrides the site-wide default.'),
+                ->label('content.fields.meta_description')
+                ->group('content.sections.seo_group')
+                ->hint('content.hints.meta_description'),
             FieldDefinition::make('og_image')
                 ->type(FieldType::IMAGE)
-                ->label('OG Image')
-                ->group('SEO')
-                ->hint('Overrides the site-wide OG image for this page.'),
+                ->label('content.fields.og_image')
+                ->group('content.sections.seo_group')
+                ->hint('content.hints.og_image'),
             FieldDefinition::make('noindex')
                 ->type(FieldType::BOOLEAN)
-                ->label('Hide from search engines')
-                ->group('SEO'),
+                ->label('content.fields.noindex')
+                ->group('content.sections.seo_group'),
         ]);
+
         AppearanceRegistry::content([
             AppearanceDefinition::make('color')
                 ->type(FieldType::COLOR)
-                ->label('Background Color'),
+                ->label('blocks.settings.background_color'),
             AppearanceDefinition::make('text_color')
                 ->type(FieldType::COLOR)
-                ->label('Text Color'),
+                ->label('blocks.settings.text_color'),
             AppearanceDefinition::make('background_image')
                 ->type(FieldType::IMAGE)
-                ->label('Background Image'),
+                ->label('blocks.settings.background_image'),
             AppearanceDefinition::make('layout')
                 ->type(FieldType::SELECT)
-                ->label('Layout')
+                ->label('blocks.settings.layout')
                 ->config(['options' => [
                     'full-width' => 'Full Width',
                     'boxed' => 'Boxed',
@@ -77,85 +78,85 @@ class AppServiceProvider extends ServiceProvider
                     'sidebar-right' => 'Sidebar Right',
                 ]]),
             AppearanceDefinition::make('custom_css_class')
-                ->label('Custom CSS Class')
-                ->hint('Applied to the page wrapper element.'),
+                ->label('blocks.settings.custom_css_class')
+                ->hint('blocks.settings.custom_css_class_hint'),
         ]);
 
         SettingRegistry::register([
             SettingDefinition::make('site_name')
-                ->label('Site Name')
-                ->group('General')
+                ->label('settings.fields.site_name')
+                ->group('settings.tabs.general')
                 ->required(),
             SettingDefinition::make('site_description')
                 ->type(FieldType::TEXTAREA)
-                ->label('Site Description')
-                ->group('General'),
+                ->label('settings.fields.site_description')
+                ->group('settings.tabs.general'),
             SettingDefinition::make('logo')
                 ->type(FieldType::IMAGE)
-                ->label('Site Logo')
-                ->group('General')
-                ->hint('Displayed in the header and footer.'),
+                ->label('settings.fields.site_logo')
+                ->group('settings.tabs.general')
+                ->hint('settings.hints.logo'),
             SettingDefinition::make('favicon')
                 ->type(FieldType::IMAGE)
-                ->label('Favicon')
-                ->group('General')
-                ->hint('Browser tab icon. Recommended: 32×32 or 64×64 PNG.'),
+                ->label('settings.fields.favicon')
+                ->group('settings.tabs.general')
+                ->hint('settings.hints.favicon'),
             SettingDefinition::make('locale')
-                ->label('Locale')
-                ->group('General')
+                ->label('settings.fields.locale')
+                ->group('settings.tabs.general')
                 ->default('en')
-                ->hint('Language code used in <html lang="">. E.g. en, cs, de, fr.'),
+                ->hint('settings.hints.locale'),
             SettingDefinition::make('contact_email')
-                ->label('Contact Email')
-                ->group('General')
-                ->hint('Used in contact forms and transactional emails.')
+                ->label('settings.fields.contact_email')
+                ->group('settings.tabs.general')
+                ->hint('settings.hints.contact_email')
                 ->config(['email' => true]),
 
             SettingDefinition::make('meta_title')
-                ->label('Meta Title')
-                ->group('SEO')
-                ->hint('Default page title used when no content-level title is set.'),
+                ->label('settings.fields.meta_title')
+                ->group('settings.tabs.seo')
+                ->hint('settings.hints.meta_title'),
             SettingDefinition::make('meta_description')
                 ->type(FieldType::TEXTAREA)
-                ->label('Meta Description')
-                ->group('SEO')
-                ->hint('Default meta description (up to 160 characters).')
+                ->label('settings.fields.meta_description')
+                ->group('settings.tabs.seo')
+                ->hint('settings.hints.meta_description')
                 ->config(['maxLength' => 160]),
             SettingDefinition::make('og_image')
                 ->type(FieldType::IMAGE)
-                ->label('OG Image')
-                ->group('SEO')
-                ->hint('Default Open Graph image for social sharing.'),
+                ->label('settings.fields.og_image')
+                ->group('settings.tabs.seo')
+                ->hint('settings.hints.og_image'),
             SettingDefinition::make('google_site_verification')
-                ->label('Google Site Verification')
-                ->group('SEO')
-                ->hint('Paste the content value from the Google Search Console meta tag.'),
+                ->label('settings.fields.google_verification')
+                ->group('settings.tabs.seo')
+                ->hint('settings.hints.google_verification'),
             SettingDefinition::make('robots_txt')
                 ->type(FieldType::TEXTAREA)
-                ->label('robots.txt')
-                ->group('SEO')
-                ->hint('Leave empty for default (Allow all). Sitemap URL is always appended automatically.')
+                ->label('settings.fields.robots_txt')
+                ->group('settings.tabs.seo')
+                ->hint('settings.hints.robots_txt')
                 ->config(['placeholder' => "User-agent: *\nAllow: /\n\nUser-agent: GPTBot\nDisallow: /"]),
             SettingDefinition::make('twitter_url')
                 ->type(FieldType::URL)
-                ->label('X / Twitter')
-                ->group('Social'),
+                ->label('settings.fields.twitter')
+                ->group('settings.tabs.social'),
             SettingDefinition::make('linkedin_url')
                 ->type(FieldType::URL)
-                ->label('LinkedIn')
-                ->group('Social'),
+                ->label('settings.fields.linkedin')
+                ->group('settings.tabs.social'),
             SettingDefinition::make('facebook_url')
                 ->type(FieldType::URL)
-                ->label('Facebook')
-                ->group('Social'),
+                ->label('settings.fields.facebook')
+                ->group('settings.tabs.social'),
             SettingDefinition::make('instagram_url')
                 ->type(FieldType::URL)
-                ->label('Instagram')
-                ->group('Social'),
+                ->label('settings.fields.instagram')
+                ->group('settings.tabs.social'),
             SettingDefinition::make('github_url')
                 ->type(FieldType::URL)
-                ->label('GitHub')
-                ->group('Social'),
+                ->label('settings.fields.github')
+                ->group('settings.tabs.social'),
         ]);
 
         BlockRegistry::register(
@@ -169,8 +170,8 @@ class AppServiceProvider extends ServiceProvider
         );
 
         NavigationRegistry::register(
-            NavigationDefinition::make('header')->label('Header Navigation'),
-            NavigationDefinition::make('footer')->label('Footer Navigation'),
+            NavigationDefinition::make('header')->label('navigation.labels.header'),
+            NavigationDefinition::make('footer')->label('navigation.labels.footer'),
         );
 
         foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) as $themePath) {

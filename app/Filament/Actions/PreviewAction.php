@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class PreviewAction extends Action
 {
-
     public static function getDefaultName(): ?string
     {
         return 'preview';
@@ -20,7 +19,7 @@ class PreviewAction extends Action
     {
         parent::setUp();
 
-        $this->label(__('Preview'));
+        $this->label(__('common.preview'));
 
         $this->tableIcon(FilamentIcon::resolve(ActionsIconAlias::VIEW_ACTION) ?? Heroicon::Eye);
 
@@ -29,7 +28,7 @@ class PreviewAction extends Action
 
             $slug = $record->is_homepage ? '' : ltrim($record->slug, '/');
 
-            return 'https://' . $record->site->domain . '/' . $slug;
+            return 'https://'.$record->site->domain.'/'.$slug;
         }, shouldOpenInNewTab: true);
     }
 }

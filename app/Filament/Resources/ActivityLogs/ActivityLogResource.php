@@ -18,12 +18,12 @@ class ActivityLogResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('activity log');
+        return __('activity.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('activity logs');
+        return __('activity.plural');
     }
 
     protected static ?string $model = Activity::class;

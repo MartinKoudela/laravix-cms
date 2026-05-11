@@ -175,21 +175,21 @@ class BlockDefinition
 
                 return [
                     ...$schema,
-                    Section::make(fn () => __('Block Settings'))
+                    Section::make(fn () => __('blocks.settings.title'))
                         ->collapsed()
                         ->schema([
                             TextInput::make('css_class')
-                                ->label(fn () => __('CSS Class')),
+                                ->label(fn () => __('blocks.settings.css_class')),
                             Select::make('padding')
-                                ->label(fn () => __('Padding'))
+                                ->label(fn () => __('blocks.settings.padding'))
                                 ->options(fn () => [
-                                    'none' => __('None'),
-                                    'sm' => __('Small'),
-                                    'md' => __('Medium'),
-                                    'lg' => __('Large'),
+                                    'none' => __('blocks.padding.none'),
+                                    'sm' => __('blocks.padding.small'),
+                                    'md' => __('blocks.padding.medium'),
+                                    'lg' => __('blocks.padding.large'),
                                 ]),
                             TextInput::make('background_color')
-                                ->label(fn () => __('Background Color'))
+                                ->label(fn () => __('blocks.settings.background_color'))
                                 ->type('color'),
                         ]),
                 ];

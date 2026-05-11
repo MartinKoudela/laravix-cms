@@ -9,7 +9,7 @@ class DividerBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('divider')
-            ->label('Divider')
+            ->label('blocks.types.divider')
             ->icon('heroicon-o-minus')
             ->schema([]);
     }

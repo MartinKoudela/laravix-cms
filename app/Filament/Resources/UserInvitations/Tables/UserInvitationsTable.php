@@ -17,11 +17,11 @@ class UserInvitationsTable
             ->columnToggleFormMaxHeight('200px')
             ->columns([
                 TextColumn::make('email')
-                    ->label(__('E-mail'))
+                    ->label(__('common.email'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('role')
-                    ->label(__('Role'))
+                    ->label(__('common.role'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         SiteRole::ADMIN->value => 'warning',
@@ -29,16 +29,16 @@ class UserInvitationsTable
                         default => 'gray',
                     }),
                 TextColumn::make('accepted_at')
-                    ->label(__('Status'))
+                    ->label(__('common.status'))
                     ->badge()
-                    ->getStateUsing(fn ($record): string => $record->accepted_at ? __('Accepted') : __('Pending'))
-                    ->color(fn (string $state): string => $state === __('Accepted') ? 'success' : 'gray'),
+                    ->getStateUsing(fn ($record): string => $record->accepted_at ? __('invitations.statuses.accepted') : __('invitations.statuses.pending'))
+                    ->color(fn (string $state): string => $state === __('invitations.statuses.accepted') ? 'success' : 'gray'),
                 TextColumn::make('invitedBy.name')
-                    ->label(__('Invited by'))
+                    ->label(__('invitations.fields.invited_by'))
                     ->sortable()
                     ->toggleable(),
                 TextColumn::make('expires_at')
-                    ->label(__('Expires'))
+                    ->label(__('invitations.fields.expires'))
                     ->dateTime()
                     ->sortable()
                     ->color(fn ($state): string => $state?->isPast() ? 'danger' : 'gray'),

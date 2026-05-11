@@ -11,11 +11,11 @@ class TextBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('text')
-            ->label('Text')
+            ->label('blocks.types.text')
             ->icon('heroicon-o-document-text')
             ->schema(fn () => [
-                TextInput::make('heading')->label(fn () => __('Heading'))->columnSpanFull(),
-                RichEditor::make('content')->label(fn () => __('Content'))->columnSpanFull(),
+                TextInput::make('heading')->label(fn () => __('common.heading'))->columnSpanFull(),
+                RichEditor::make('content')->label(fn () => __('common.content'))->columnSpanFull(),
             ]);
     }
 }

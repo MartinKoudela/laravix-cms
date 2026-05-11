@@ -23,11 +23,13 @@ class FieldsRelationManager extends RelationManager
         return $schema
             ->components([
                 TextInput::make('key')
+                    ->label(__('common.key'))
                     ->required()
                     ->maxLength(255)
-                    ->helperText('Unique identifier for this field, e.g. "price", "stock", "subtitle".'),
+                    ->helperText(__('content.hints.field_key')),
                 Textarea::make('value')
-                    ->helperText('The value for this field. Plugins may use this data to extend content functionality.')
+                    ->label(__('common.value'))
+                    ->helperText(__('content.hints.field_value'))
                     ->columnSpanFull(),
             ]);
     }

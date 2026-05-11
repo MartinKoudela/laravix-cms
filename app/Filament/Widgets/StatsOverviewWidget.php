@@ -16,17 +16,17 @@ class StatsOverviewWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make(__('Sites'), Site::count())
-                ->description(__('Total managed sites'))
+            Stat::make(__('sites.stats.title'), Site::count())
+                ->description(__('sites.stats.total'))
                 ->color('primary'),
-            Stat::make(__('Published'), Content::where('status', ContentStatus::PUBLISHED->value)->count())
-                ->description(__('Published pages & posts'))
+            Stat::make(__('content.stats.published'), Content::where('status', ContentStatus::PUBLISHED->value)->count())
+                ->description(__('content.stats.published_description'))
                 ->color('success'),
-            Stat::make(__('Drafts'), Content::where('status', ContentStatus::DRAFT->value)->count())
-                ->description(__('Awaiting publication'))
+            Stat::make(__('content.stats.drafts'), Content::where('status', ContentStatus::DRAFT->value)->count())
+                ->description(__('content.stats.awaiting'))
                 ->color('warning'),
-            Stat::make(__('Media files'), Media::count())
-                ->description(__('Uploaded files'))
+            Stat::make(__('media.stats.files'), Media::count())
+                ->description(__('media.stats.uploaded'))
                 ->color('gray'),
         ];
     }

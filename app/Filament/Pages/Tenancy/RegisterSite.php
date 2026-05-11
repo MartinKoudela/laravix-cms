@@ -22,7 +22,7 @@ class RegisterSite extends RegisterTenant
 
     public static function getLabel(): string
     {
-        return __('Create Site');
+        return __('sites.actions.create');
     }
 
     public function form(Schema $schema): Schema
@@ -30,18 +30,18 @@ class RegisterSite extends RegisterTenant
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label(__('Title'))
+                    ->label(__('common.title'))
                     ->required()
                     ->maxLength(255)
-                    ->helperText(__('The public name of the website.')),
+                    ->helperText(__('sites.messages.public_name')),
                 TextInput::make('domain')
-                    ->label(__('Domain'))
+                    ->label(__('common.domain'))
                     ->required()
                     ->maxLength(255)
                     ->placeholder('example.com')
                     ->unique(table: 'sites', column: 'domain'),
                 Select::make('theme')
-                    ->label(__('Theme'))
+                    ->label(__('common.theme'))
                     ->required()
                     ->default('default')
                     ->options(Site::availableThemes()),

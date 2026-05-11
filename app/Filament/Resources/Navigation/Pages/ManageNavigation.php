@@ -19,7 +19,7 @@ class ManageNavigation extends Page
 
     public function getTitle(): string
     {
-        return __('Manage Navigation');
+        return __('navigation.actions.manage');
     }
 
     public ?array $headerData = [];
@@ -53,7 +53,7 @@ class ManageNavigation extends Page
         $this->previewToken = md5($this->site->id.'-'.auth()->id().'-nav-preview');
 
         cache()->put("preview_nav_{$this->previewToken}", [
-            'site_id'     => $this->site->id,
+            'site_id' => $this->site->id,
             'navigations' => array_merge(
                 $this->headerData['navigations'] ?? [],
                 $this->footerData['navigations'] ?? [],
@@ -100,7 +100,7 @@ class ManageNavigation extends Page
         $this->refreshPreview();
 
         Notification::make()
-            ->title(__('Navigation saved'))
+            ->title(__('navigation.messages.saved'))
             ->success()
             ->send();
     }
@@ -109,7 +109,7 @@ class ManageNavigation extends Page
     {
         return [
             Action::make('save')
-                ->label(__('Save Navigation'))
+                ->label(__('navigation.actions.save'))
                 ->action('save'),
         ];
     }

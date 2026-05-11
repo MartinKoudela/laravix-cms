@@ -17,27 +17,27 @@ class TaxonomiesTable
             ->columnToggleFormMaxHeight('400')
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('Title'))
+                    ->label(__('common.title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
-                    ->label(__('Type'))
+                    ->label(__('common.type'))
                     ->badge()
                     ->sortable(),
                 TextColumn::make('site.name')
-                    ->label(__('Site'))
+                    ->label(__('common.site'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('parent.name')
-                    ->label(__('Parent'))
+                    ->label(__('common.parent'))
                     ->searchable()
                     ->placeholder('—'),
                 TextColumn::make('slug')
-                    ->label(__('Slug'))
+                    ->label(__('common.slug'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
-                    ->label(__('Created at'))
+                    ->label(__('common.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -45,8 +45,8 @@ class TaxonomiesTable
             ->filters([
                 SelectFilter::make('type')
                     ->options([
-                        'category' => __('Category'),
-                        'tag' => __('Tag'),
+                        'category' => __('taxonomy.types.category'),
+                        'tag' => __('taxonomy.types.tag'),
                     ]),
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),

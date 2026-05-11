@@ -18,12 +18,12 @@ class TaxonomyResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('taxonomy');
+        return __('taxonomy.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('taxonomies');
+        return __('taxonomy.plural');
     }
 
     protected static ?string $model = Taxonomy::class;

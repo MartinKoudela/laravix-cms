@@ -17,7 +17,7 @@ class LatestContentWidget extends BaseWidget
 
     public function getTableHeading(): string
     {
-        return __('Recent Content');
+        return __('content.stats.recent');
     }
 
     protected int|string|array $columnSpan = 'full';
@@ -33,16 +33,16 @@ class LatestContentWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('title')
-                    ->label(__('Title'))
+                    ->label(__('common.title'))
                     ->searchable(),
                 TextColumn::make('site.name')
-                    ->label(__('Site'))
+                    ->label(__('common.site'))
                     ->sortable(),
                 TextColumn::make('type')
-                    ->label(__('Type'))
+                    ->label(__('common.type'))
                     ->badge(),
                 TextColumn::make('status')
-                    ->label(__('Status'))
+                    ->label(__('common.status'))
                     ->badge()
                     ->color(fn (ContentStatus $state): string => match ($state) {
                         ContentStatus::PUBLISHED => 'success',
@@ -51,7 +51,7 @@ class LatestContentWidget extends BaseWidget
                     })
                     ->formatStateUsing(fn (ContentStatus $state): string => $state->value),
                 TextColumn::make('updated_at')
-                    ->label(__('Updated at'))
+                    ->label(__('common.updated_at'))
                     ->dateTime()
                     ->sortable(),
             ])

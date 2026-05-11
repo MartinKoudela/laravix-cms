@@ -23,11 +23,13 @@ class SettingsRelationManager extends RelationManager
         return $schema
             ->components([
                 TextInput::make('key')
+                    ->label(__('common.key'))
                     ->required()
                     ->maxLength(255)
-                    ->helperText('Unique setting key, e.g. "site_name", "google_analytics", "logo".'),
+                    ->helperText(__('settings.hints.setting_key')),
                 Textarea::make('value')
-                    ->helperText('The value for this setting.')
+                    ->label(__('common.value'))
+                    ->helperText(__('settings.hints.setting_value'))
                     ->columnSpanFull(),
             ]);
     }

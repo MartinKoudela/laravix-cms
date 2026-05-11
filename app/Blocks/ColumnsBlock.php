@@ -13,17 +13,17 @@ class ColumnsBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('columns')
-            ->label('Columns')
+            ->label('blocks.types.columns')
             ->icon('heroicon-o-view-columns')
             ->nestable(false)
             ->schema(fn () => [
                 Select::make('columns_count')
-                    ->label(fn () => __('Number of Columns'))
+                    ->label(fn () => __('blocks.fields.number_of_columns'))
                     ->options(fn () => ['2' => '2', '3' => '3', '4' => '4'])
                     ->default('2')
                     ->required(),
                 Repeater::make('columns')
-                    ->label(fn () => __('Columns'))
+                    ->label(fn () => __('blocks.fields.columns'))
                     ->schema([
                         Builder::make('blocks')
                             ->blocks(BlockRegistry::toNestableBlocks())

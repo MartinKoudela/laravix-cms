@@ -1,6 +1,6 @@
 @if(!$contentId)
     <div style="display:flex; align-items:center; justify-content:center; padding:3rem; color:#9ca3af; font-size:0.875rem;">
-        {{ __('Save the content first to use the block builder.') }}
+        {{ __('content.messages.save_first_for_builder') }}
     </div>
 @else
 <div id="block-builder-wrap" style="display:flex; height:calc(100vh - 200px); gap:0; overflow:hidden; width:100%;">

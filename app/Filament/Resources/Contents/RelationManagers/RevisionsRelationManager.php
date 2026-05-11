@@ -18,18 +18,18 @@ class RevisionsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('created_at')
             ->columns([
-                TextColumn::make('created_at')->dateTime()->sortable()->label('Date'),
-                TextColumn::make('author.name')->label('Author')->default('—'),
-                TextColumn::make('title')->label('Title')
+                TextColumn::make('created_at')->dateTime()->sortable()->label(__('common.date')),
+                TextColumn::make('author.name')->label(__('common.author'))->default('—'),
+                TextColumn::make('title')->label(__('common.title'))
                     ->getStateUsing(fn ($record) => $record->data['title'] ?? '—'),
-                TextColumn::make('status')->label('Status')
+                TextColumn::make('status')->label(__('common.status'))
                     ->getStateUsing(fn ($record) => $record->data['status'] ?? '—')
                     ->badge(),
             ])
             ->headerActions([])
             ->recordActions([
                 Action::make('revert')
-                    ->label('Revert')
+                    ->label(__('content.actions.revert'))
                     ->icon('heroicon-o-arrow-uturn-left')
                     ->color('warning')
                     ->requiresConfirmation()

@@ -21,12 +21,12 @@ class ContentResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('content');
+        return __('content.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('contents');
+        return __('content.plural');
     }
 
     protected static ?string $model = Content::class;

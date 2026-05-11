@@ -34,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
-            ->renderHook('panels::body.end', fn() => new HtmlString(app(Vite::class)('resources/js/filament/admin/app.js')))
+            ->renderHook('panels::body.end', fn () => new HtmlString(app(Vite::class)('resources/js/filament/admin/app.js')))
             ->login()
             ->brandName('Laravix CMS')
             ->brandLogo(asset('laravix-logo-black.svg'))
@@ -58,8 +58,8 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
             ])
             ->navigationGroups([
-                'Content' => NavigationGroup::make(fn() => __('Content')),
-                'Management' => NavigationGroup::make(fn() => __('Management')),
+                'Content' => NavigationGroup::make(fn () => __('panel.groups.content')),
+                'Management' => NavigationGroup::make(fn () => __('panel.groups.management')),
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -78,20 +78,20 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 RevivePlugin::make()
                     ->authorize(fn () => auth()->user()?->isAdmin())
-                    ->navigationGroup( __('Management'))
+                    ->navigationGroup(__('panel.groups.management'))
                     ->navigationIcon('heroicon-o-archive-box-arrow-down')
                     ->navigationSort(1)
-                    ->navigationLabel(fn () => __('Bin'))
-                    ->title(fn () => __('Bin')),
+                    ->navigationLabel(fn () => __('panel.bin'))
+                    ->title(fn () => __('panel.bin')),
 
                 EasyFooterPlugin::make()
                     ->withSentence(new HtmlString(
-                        '<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v' . config('app.version')
+                        '<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v'.config('app.version')
                     ))
                     ->withLinks([
-                        ['title' => __('Website'), 'url' => 'https://laravix.com'],
-                        ['title' => __('Docs'), 'url' => 'https://laravix.com/docs'],
-                        ['title' => __('Contact'), 'url' => 'https://laravix.com/contact'],
+                        ['title' => __('panel.footer.website'), 'url' => 'https://laravix.com'],
+                        ['title' => __('panel.footer.docs'), 'url' => 'https://laravix.com/docs'],
+                        ['title' => __('panel.footer.contact'), 'url' => 'https://laravix.com/contact'],
                     ]),
             ]);
     }

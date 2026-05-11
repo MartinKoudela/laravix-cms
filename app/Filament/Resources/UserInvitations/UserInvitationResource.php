@@ -18,12 +18,12 @@ class UserInvitationResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('invitation');
+        return __('invitations.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('invitations');
+        return __('invitations.plural');
     }
 
     protected static ?string $model = UserInvitation::class;
