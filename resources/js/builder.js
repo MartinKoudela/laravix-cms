@@ -2,7 +2,6 @@ import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 
 import { buildConfig }       from './builder/config';
-import { setupDevicePanel }  from './builder/devices';
 import { preloadFonts, setupStyleManager } from './builder/styles';
 import { setupMediaTrait }   from './builder/media';
 import { registerComponents } from './builder/components';
@@ -25,7 +24,6 @@ preloadFonts();
 
 const editor = grapesjs.init(buildConfig({ canvasCss, mediaItems }));
 
-setupDevicePanel(editor);
 setupStyleManager(editor);
 setupMediaTrait(editor, { mediaItems, csrfToken, uploadUrl });
 registerComponents(editor);

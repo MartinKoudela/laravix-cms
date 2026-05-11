@@ -17,7 +17,7 @@ export function buildConfig({ canvasCss, mediaItems }) {
             devices: [
                 { name: 'Desktop', width: '' },
                 { name: 'Tablet',  width: '768px', widthMedia: '1024px' },
-                { name: 'Mobile',  width: '390px', widthMedia: '768px' },
+                { name: 'Mobile portrait', width: '390px', widthMedia: '768px' },
             ],
         },
         assetManager: {
