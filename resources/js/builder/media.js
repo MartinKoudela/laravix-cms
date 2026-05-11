@@ -105,17 +105,25 @@ export function setupMediaTrait(editor, { mediaItems, csrfToken, uploadUrl }) {
 
                 const formData = new FormData();
                 formData.append('file', file);
-                formData.append('_token', csrfToken);
 
                 try {
-                    const res = await fetch(uploadUrl, { method: 'POST', body: formData });
-                    if (!res.ok) throw new Error();
-                    const data = await res.json();
+                    const res = await fetch(uploadUrl, {
+                        method: 'POST',
+                        headers: { 'X-CSRF-TOKEN': csrfToken, 'Accept': 'application/json' },
+                        body: formData,
+                    });
+                    const text = await res.text();
+                    if (!res.ok) {
+                        let msg = `HTTP ${res.status}`;
+                        try { const j = JSON.parse(text); msg = j?.message || j?.errors?.file?.[0] || msg; } catch {}
+                        throw new Error(msg);
+                    }
+                    const data = JSON.parse(text);
                     urlInput.value = data.src;
                     trait.setValue(data.src);
                     mediaItems.push({ id: data.id, src: data.src, name: data.name, type: data.type });
-                } catch {
-                    alert('Nahrávání selhalo. Zkuste to znovu.');
+                } catch (err) {
+                    alert(`Nahrávání selhalo: ${err.message}`);
                 } finally {
                     btnUpload.disabled = false;
                     btnUpload.innerHTML = '<i class="fa-solid fa-upload"></i> Nahrát';

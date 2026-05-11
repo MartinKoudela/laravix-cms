@@ -78,7 +78,7 @@ class BuilderController extends Controller
         abort_unless($site->users()->where('user_id', auth()->id())->exists(), 403);
 
         $request->validate([
-            'file' => ['required', 'file', 'max:20480', 'mimes:jpg,jpeg,png,gif,webp,svg,mp4,webm,mov,avi'],
+            'file' => ['required', 'file', 'max:524288', 'mimes:jpg,jpeg,png,gif,webp,svg,mp4,webm,mov,avi'],
         ]);
 
         $file = $request->file('file');

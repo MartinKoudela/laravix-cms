@@ -54,6 +54,7 @@
             id="gjs"
             data-project-data="{{ $content->grapesjs_data ?? '' }}"
             data-save-url="{{ route('builder.save', [$site, $content]) }}"
+            data-upload-url="{{ route('builder.upload', $site) }}"
             data-csrf="{{ csrf_token() }}"
             data-canvas-css="{{ Vite::asset('resources/css/app.css') }}"
             data-media-items="{{ json_encode($mediaItems) }}"

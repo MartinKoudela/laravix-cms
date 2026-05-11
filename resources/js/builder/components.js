@@ -162,14 +162,18 @@ export function registerComponents(editor) {
                 this.on('change:videoSrc change:videoControls change:videoAutoplay change:videoMuted change:videoLoop', this.syncAttrs);
             },
             syncAttrs() {
-                const attrs = { 'data-gjs-type': 'mp4-video', preload: 'metadata' };
                 const src = this.get('videoSrc') || '';
-                if (src) attrs.src = src;
-                if (this.get('videoControls')) { attrs.controls = 'controls'; } else { delete attrs.controls; }
-                if (this.get('videoAutoplay')) attrs.autoplay = 'autoplay';
-                if (this.get('videoMuted'))    attrs.muted    = 'muted';
-                if (this.get('videoLoop'))     attrs.loop     = 'loop';
-                this.addAttributes(attrs);
+                const toAdd = { 'data-gjs-type': 'mp4-video', preload: 'metadata' };
+                const toRemove = [];
+
+                if (src) { toAdd.src = src; } else { toRemove.push('src'); }
+                if (this.get('videoControls')) { toAdd.controls = 'controls'; } else { toRemove.push('controls'); }
+                if (this.get('videoAutoplay')) { toAdd.autoplay = 'autoplay'; } else { toRemove.push('autoplay'); }
+                if (this.get('videoMuted'))    { toAdd.muted    = 'muted';    } else { toRemove.push('muted'); }
+                if (this.get('videoLoop'))     { toAdd.loop     = 'loop';     } else { toRemove.push('loop'); }
+
+                this.addAttributes(toAdd);
+                if (toRemove.length) this.removeAttributes(toRemove);
             },
         },
         view: {
@@ -190,7 +194,7 @@ export function registerComponents(editor) {
             },
             init() {
                 this.on('change:embedCode', () => {
-                    this.components(this.get('embedCode') || '<!-- Vložte HTML kód -->');
+                    this.components(this.get('embedCode') || '');
                 });
             },
         },
