@@ -37,8 +37,11 @@ export function buildConfig({ canvasCss, mediaItems }) {
         storageManager: false,
         undoManager: { trackChanges: true },
         canvas: {
-            styles: [canvasCss, FONT_AWESOME_CSS],
-            scripts: ['https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js'],
+            styles: [canvasCss, FONT_AWESOME_CSS, 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'],
+            scripts: [
+                'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js',
+                'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+            ],
             customBadgeLabel: (component) => component.getName(),
         },
         deviceManager: {

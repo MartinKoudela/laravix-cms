@@ -1,4 +1,4 @@
-import { GOOGLE_FONTS } from './constants';
+import {GOOGLE_FONTS} from './constants';
 
 export function preloadFonts() {
     const link = document.createElement('link');
@@ -9,13 +9,15 @@ export function preloadFonts() {
 
 export function setupStyleManager(editor) {
     editor.StyleManager.addType('integer', {
-        create({ change }) {
+        create({change}) {
             const wrap = document.createElement('div');
             wrap.style.cssText = 'display:flex;align-items:center;gap:6px;';
 
             const slider = document.createElement('input');
             slider.type = 'range';
-            slider.min = '0'; slider.max = '500'; slider.step = '1';
+            slider.min = '0';
+            slider.max = '500';
+            slider.step = '1';
             slider.style.cssText = 'flex:1;min-width:0;cursor:pointer;accent-color:#2563eb;height:4px;';
 
             const input = document.createElement('input');
@@ -35,30 +37,36 @@ export function setupStyleManager(editor) {
             wrap.append(slider, input);
             return wrap;
         },
-        update({ value, el, property }) {
+        update({value, el, property}) {
             const slider = el.querySelector('input[type="range"]');
-            const input  = el.querySelector('input[type="number"]');
+            const input = el.querySelector('input[type="number"]');
             if (!slider || !input) return;
 
-            const num  = parseFloat(value) || 0;
+            const num = parseFloat(value) || 0;
             const unit = property?.getUnit?.() ?? 'px';
 
             if (unit === 'rem' || unit === 'em') {
-                slider.min = '0'; slider.max = '20'; slider.step = '0.1';
+                slider.min = '0';
+                slider.max = '20';
+                slider.step = '0.1';
             } else if (unit === '%' || unit === 'vw' || unit === 'vh') {
-                slider.min = '0'; slider.max = '100'; slider.step = '1';
+                slider.min = '0';
+                slider.max = '100';
+                slider.step = '1';
             } else {
-                slider.min = '0'; slider.max = '500'; slider.step = '1';
+                slider.min = '0';
+                slider.max = '500';
+                slider.step = '1';
             }
 
             if (num > parseFloat(slider.max)) slider.max = String(Math.ceil(num * 1.5));
 
             slider.value = num;
-            input.value  = num;
+            input.value = num;
         },
     });
 
-    editor.on('style:property:update', ({ property }) => {
+    editor.on('style:property:update', ({property}) => {
         if (property.getId() !== 'font-family') return;
         const val = property.getValue();
         const match = val.match(/'([^']+)'/);

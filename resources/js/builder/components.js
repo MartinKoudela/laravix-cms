@@ -181,6 +181,57 @@ export function registerComponents(editor) {
         },
     });
 
+    editor.Components.addType('map-embed', {
+        isComponent: (el) => el.dataset?.gjsType === 'map-embed',
+        model: {
+            defaults: {
+                tagName: 'div',
+                name: 'Mapa',
+                droppable: false,
+                mapAddress: '',
+                mapZoom: '15',
+                traits: [
+                    {
+                        type: 'text',
+                        name: 'mapAddress',
+                        label: 'Adresa / název místa',
+                        placeholder: 'Praha, Václavské náměstí 1',
+                        changeProp: true,
+                    },
+                    {
+                        type: 'select',
+                        name: 'mapZoom',
+                        label: 'Přiblížení',
+                        changeProp: true,
+                        options: [
+                            { value: '10', name: 'Město' },
+                            { value: '13', name: 'Čtvrť' },
+                            { value: '15', name: 'Ulice (výchozí)' },
+                            { value: '17', name: 'Budova' },
+                            { value: '19', name: 'Detail' },
+                        ],
+                    },
+                ],
+            },
+            init() {
+                this.on('change:mapAddress change:mapZoom', this.syncMap);
+            },
+            syncMap() {
+                const address = this.get('mapAddress');
+                if (!address) return;
+                const src = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&output=embed&z=${this.get('mapZoom') || 15}`;
+                this.components().each(c => {
+                    if (c.get('tagName') === 'iframe') {
+                        c.addAttributes({ src });
+                    }
+                });
+            },
+        },
+        view: {
+            onRender() { this.el.setAttribute('data-gjs-type', 'map-embed'); },
+        },
+    });
+
     editor.Components.addType('html-embed', {
         isComponent: (el) => el.dataset?.gjsType === 'html-embed',
         model: {

@@ -1,19 +1,54 @@
 export function setupCanvas(editor, { contactUrl, csrfToken }) {
     editor.on('canvas:frame:load', () => {
         const win = editor.Canvas.getWindow();
-        win?.AOS?.init?.({ once: true });
-
         const canvasDoc = editor.Canvas.getDocument();
         if (!canvasDoc) return;
 
+        win?.AOS?.init?.({ once: true });
         attachContactFormHandler(canvasDoc, { contactUrl, csrfToken });
 
         if (!canvasDoc.getElementById('builder-base')) {
             const style = canvasDoc.createElement('style');
             style.id = 'builder-base';
-            style.textContent = `*, *::before, *::after { box-sizing: border-box; } img, video, iframe { max-width: 100%; }`;
+            style.textContent = [
+                '*, *::before, *::after { box-sizing: border-box; }',
+                'img, video, iframe { max-width: 100%; }',
+                'details > summary { list-style: none; }',
+                'details > summary::-webkit-details-marker { display: none; }',
+                '.faq-chevron { transition: transform .2s ease; }',
+                'details[open] .faq-chevron { transform: rotate(180deg); }',
+            ].join(' ');
             canvasDoc.head.appendChild(style);
         }
+
+        initSwipers(canvasDoc, win);
+    });
+
+    let swiperTimer;
+    editor.on('component:add', () => {
+        clearTimeout(swiperTimer);
+        swiperTimer = setTimeout(() => {
+            initSwipers(editor.Canvas.getDocument(), editor.Canvas.getWindow());
+        }, 200);
+    });
+}
+
+function initSwipers(doc, win) {
+    if (!doc || !win?.Swiper) return;
+    doc.querySelectorAll('.swiper:not(.swiper-initialized)').forEach(el => {
+        let breakpoints;
+        try { breakpoints = el.dataset.breakpoints ? JSON.parse(el.dataset.breakpoints) : undefined; } catch {}
+
+        new win.Swiper(el, {
+            loop:          el.dataset.loop === 'true',
+            centeredSlides: el.dataset.centered === 'true',
+            slidesPerView: el.dataset.perView === 'auto' ? 'auto' : (parseFloat(el.dataset.perView) || 1),
+            spaceBetween:  parseInt(el.dataset.gap) || 0,
+            autoplay:      el.dataset.autoplay ? { delay: parseInt(el.dataset.autoplay), disableOnInteraction: false } : false,
+            pagination:    el.querySelector('.swiper-pagination') ? { el: el.querySelector('.swiper-pagination'), clickable: true } : false,
+            navigation:    el.querySelector('.swiper-button-next') ? { nextEl: el.querySelector('.swiper-button-next'), prevEl: el.querySelector('.swiper-button-prev') } : false,
+            breakpoints,
+        });
     });
 }
 
