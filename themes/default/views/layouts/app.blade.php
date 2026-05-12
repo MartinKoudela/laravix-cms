@@ -85,7 +85,7 @@
     @endphp
     <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
 
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    @vite('resources/css/app.css')
     @stack('head')
 </head>
 <body class="h-full bg-white text-gray-900 antialiased flex flex-col min-h-screen">

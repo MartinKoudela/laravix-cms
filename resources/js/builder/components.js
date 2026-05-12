@@ -253,4 +253,19 @@ export function registerComponents(editor) {
             onRender() { this.el.setAttribute('data-gjs-type', 'html-embed'); },
         },
     });
+
+    editor.DomComponents.addType('default', {
+        model: {
+            defaults: {
+                resizable: {
+                    handles: ['tl', 'tc', 'tr', 'cl', 'cr', 'bl', 'bc', 'br'],
+                    currentUnit: 1,
+                    unitWidth: 'px',
+                    unitHeight: 'px',
+                    minDim: 10,
+                    step: 1,
+                },
+            },
+        },
+    });
 }
