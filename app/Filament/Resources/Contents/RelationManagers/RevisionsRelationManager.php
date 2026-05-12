@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\Contents\RelationManagers;
 
+use App\Models\ContentRevision;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\DB;
 
 class RevisionsRelationManager extends RelationManager
 {
@@ -17,14 +19,20 @@ class RevisionsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('created_at')
+            ->modifyQueryUsing(fn ($query) => $query->select([
+                'id',
+                'content_id',
+                'created_by',
+                'created_at',
+                'updated_at',
+                DB::raw("JSON_UNQUOTE(JSON_EXTRACT(data, '$.title')) as revision_title"),
+                DB::raw("JSON_UNQUOTE(JSON_EXTRACT(data, '$.status')) as revision_status"),
+            ]))
             ->columns([
                 TextColumn::make('created_at')->dateTime()->sortable()->label(__('common.date')),
                 TextColumn::make('author.name')->label(__('common.author'))->default('—'),
-                TextColumn::make('title')->label(__('common.title'))
-                    ->getStateUsing(fn ($record) => $record->data['title'] ?? '—'),
-                TextColumn::make('status')->label(__('common.status'))
-                    ->getStateUsing(fn ($record) => $record->data['status'] ?? '—')
-                    ->badge(),
+                TextColumn::make('revision_title')->label(__('common.title'))->default('—'),
+                TextColumn::make('revision_status')->label(__('common.status'))->badge()->default('—'),
             ])
             ->headerActions([])
             ->recordActions([
@@ -34,6 +42,7 @@ class RevisionsRelationManager extends RelationManager
                     ->color('warning')
                     ->requiresConfirmation()
                     ->action(function ($record, $livewire) {
+                        $record = ContentRevision::find($record->id);
                         $content = $record->content;
                         $data = $record->data;
 
