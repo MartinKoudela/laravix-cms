@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Nastavit jako úvodní stránku',
         'only_one_homepage' => 'Pouze jeden obsah na webu může být úvodní stránka.',
+        'save_first_for_builder' => 'Nejdříve uložte obsah, aby bylo možné používat blokový stavitel.',
+        'builder_has_content' => 'Stránka má uložený obsah z builderu.',
+        'builder_no_content' => 'Stránka zatím nemá žádný obsah z builderu.',
     ],
     'types' => [
         'page' => 'Stránka',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Vrátit',
+        'open_builder' => 'Otevřít Builder',
     ],
 ];

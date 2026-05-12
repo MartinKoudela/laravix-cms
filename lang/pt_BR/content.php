@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Definir como página inicial',
         'only_one_homepage' => 'Apenas um conteúdo por site pode ser a página inicial.',
+        'save_first_for_builder' => 'Salve o conteúdo primeiro para usar o construtor de blocos.',
+        'builder_has_content' => 'A página tem conteúdo salvo do builder.',
+        'builder_no_content' => 'A página ainda não tem conteúdo do builder.',
     ],
     'types' => [
         'page' => 'Página',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Reverter',
+        'open_builder' => 'Abrir Builder',
     ],
 ];

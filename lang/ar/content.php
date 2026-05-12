@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'تعيين كصفحة رئيسية',
         'only_one_homepage' => 'يمكن لمحتوى واحد فقط في كل موقع أن يكون الصفحة الرئيسية.',
+        'save_first_for_builder' => 'احفظ المحتوى أولاً لاستخدام منشئ الكتل.',
+        'builder_has_content' => 'تحتوي الصفحة على محتوى محفوظ من المنشئ.',
+        'builder_no_content' => 'لا تحتوي الصفحة على محتوى من المنشئ بعد.',
     ],
     'types' => [
         'page' => 'صفحة',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'استعادة',
+        'open_builder' => 'فتح المنشئ',
     ],
 ];

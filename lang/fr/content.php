@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Définir comme page d\'accueil',
         'only_one_homepage' => 'Un seul contenu par site peut être la page d\'accueil.',
+        'save_first_for_builder' => 'Enregistrez d\'abord le contenu pour utiliser le builder.',
+        'builder_has_content' => 'La page a du contenu enregistré depuis le builder.',
+        'builder_no_content' => 'La page n\'a pas encore de contenu depuis le builder.',
     ],
     'types' => [
         'page' => 'Page',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Rétablir',
+        'open_builder' => 'Ouvrir le Builder',
     ],
 ];

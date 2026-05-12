@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Ana sayfa olarak ayarla',
         'only_one_homepage' => 'Her sitede yalnızca bir içerik ana sayfa olabilir.',
+        'save_first_for_builder' => 'Blok oluşturucuyu kullanmak için önce içeriği kaydedin.',
+        'builder_has_content' => 'Sayfanın oluşturucudan kaydedilmiş içeriği var.',
+        'builder_no_content' => 'Sayfanın henüz oluşturucudan içeriği yok.',
     ],
     'types' => [
         'page' => 'Sayfa',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Geri Al',
+        'open_builder' => 'Oluşturucuyu Aç',
     ],
 ];

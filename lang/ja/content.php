@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'ホームページに設定',
         'only_one_homepage' => 'サイトごとにホームページに設定できるコンテンツは1つだけです。',
+        'save_first_for_builder' => 'ブロックビルダーを使用するには、先にコンテンツを保存してください。',
+        'builder_has_content' => 'このページにはビルダーの保存済みコンテンツがあります。',
+        'builder_no_content' => 'このページにはまだビルダーのコンテンツがありません。',
     ],
     'types' => [
         'page' => 'ページ',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => '元に戻す',
+        'open_builder' => 'ビルダーを開く',
     ],
 ];

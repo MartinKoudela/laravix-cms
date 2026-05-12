@@ -9,9 +9,9 @@
         </svg>
 
         @if($record->grapesjs_data)
-            <p style="font-size:0.875rem;color:#6b7280;margin:0;">Stránka má uložený obsah z builderu.</p>
+            <p style="font-size:0.875rem;color:#6b7280;margin:0;">{{ __('content.messages.builder_has_content') }}</p>
         @else
-            <p style="font-size:0.875rem;color:#6b7280;margin:0;">Stránka zatím nemá žádný obsah z builderu.</p>
+            <p style="font-size:0.875rem;color:#6b7280;margin:0;">{{ __('content.messages.builder_no_content') }}</p>
         @endif
 
         <a
@@ -24,7 +24,7 @@
             <svg style="width:1rem;height:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
             </svg>
-            Otevřít Builder
+            {{ __('content.actions.open_builder') }}
         </a>
     </div>
 @endif

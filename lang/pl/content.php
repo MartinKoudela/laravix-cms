@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Ustaw jako stronę główną',
         'only_one_homepage' => 'Tylko jedna treść na witrynę może być stroną główną.',
+        'save_first_for_builder' => 'Najpierw zapisz treść, aby użyć kreatora bloków.',
+        'builder_has_content' => 'Strona ma zapisaną zawartość z buildera.',
+        'builder_no_content' => 'Strona nie ma jeszcze zawartości z buildera.',
     ],
     'types' => [
         'page' => 'Strona',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Przywróć',
+        'open_builder' => 'Otwórz Builder',
     ],
 ];

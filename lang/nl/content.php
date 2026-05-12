@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Instellen als startpagina',
         'only_one_homepage' => 'Slechts één inhoud per website kan de startpagina zijn.',
+        'save_first_for_builder' => 'Sla eerst de inhoud op om de blokbouwer te gebruiken.',
+        'builder_has_content' => 'De pagina heeft opgeslagen inhoud van de builder.',
+        'builder_no_content' => 'De pagina heeft nog geen inhoud van de builder.',
     ],
     'types' => [
         'page' => 'Pagina',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Terugzetten',
+        'open_builder' => 'Builder openen',
     ],
 ];

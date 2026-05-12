@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => '设为首页',
         'only_one_homepage' => '每个站点只能有一个内容作为首页。',
+        'save_first_for_builder' => '请先保存内容以使用块构建器。',
+        'builder_has_content' => '该页面有来自构建器的已保存内容。',
+        'builder_no_content' => '该页面尚未有来自构建器的内容。',
     ],
     'types' => [
         'page' => '页面',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => '恢复',
+        'open_builder' => '打开构建器',
     ],
 ];

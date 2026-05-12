@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Setează ca pagină principală',
         'only_one_homepage' => 'Doar un conținut per site poate fi pagina principală.',
+        'save_first_for_builder' => 'Salvați mai întâi conținutul pentru a folosi constructorul de blocuri.',
+        'builder_has_content' => 'Pagina are conținut salvat din builder.',
+        'builder_no_content' => 'Pagina nu are încă conținut din builder.',
     ],
     'types' => [
         'page' => 'Pagină',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Revenire',
+        'open_builder' => 'Deschide Builder',
     ],
 ];

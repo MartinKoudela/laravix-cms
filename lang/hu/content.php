@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Beállítás főoldalként',
         'only_one_homepage' => 'Csak egy tartalom lehet főoldal webhelyenként.',
+        'save_first_for_builder' => 'Először mentse el a tartalmat a blokkszerkesztő használatához.',
+        'builder_has_content' => 'Az oldalnak van mentett tartalma a builderből.',
+        'builder_no_content' => 'Az oldalnak még nincs tartalma a builderből.',
     ],
     'types' => [
         'page' => 'Oldal',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Visszaállítás',
+        'open_builder' => 'Builder megnyitása',
     ],
 ];

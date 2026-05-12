@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => 'Ange som startsida',
         'only_one_homepage' => 'Endast ett innehåll per webbplats kan vara startsida.',
+        'save_first_for_builder' => 'Spara innehållet först för att använda blockbyggaren.',
+        'builder_has_content' => 'Sidan har sparat innehåll från buildern.',
+        'builder_no_content' => 'Sidan har inget innehåll från buildern än.',
     ],
     'types' => [
         'page' => 'Sida',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => 'Återställ',
+        'open_builder' => 'Öppna Builder',
     ],
 ];

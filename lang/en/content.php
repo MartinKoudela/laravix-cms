@@ -33,11 +33,14 @@ return [
     ],
     'actions' => [
         'revert' => 'Revert',
+        'open_builder' => 'Open Builder',
     ],
     'messages' => [
         'set_as_homepage' => 'Set as homepage',
         'only_one_homepage' => 'Only one content per site can be the homepage.',
         'save_first_for_builder' => 'Save the content first to use the block builder.',
+        'builder_has_content' => 'The page has saved content from the builder.',
+        'builder_no_content' => 'The page has no builder content yet.',
     ],
     'stats' => [
         'recent' => 'Recent Content',

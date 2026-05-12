@@ -28,6 +28,9 @@ return [
     'messages' => [
         'set_as_homepage' => '홈페이지로 설정',
         'only_one_homepage' => '사이트당 하나의 콘텐츠만 홈페이지가 될 수 있습니다.',
+        'save_first_for_builder' => '블록 빌더를 사용하려면 먼저 콘텐츠를 저장하세요.',
+        'builder_has_content' => '페이지에 빌더의 저장된 콘텐츠가 있습니다.',
+        'builder_no_content' => '페이지에 아직 빌더 콘텐츠가 없습니다.',
     ],
     'types' => [
         'page' => '페이지',
@@ -43,5 +46,6 @@ return [
     ],
     'actions' => [
         'revert' => '되돌리기',
+        'open_builder' => '빌더 열기',
     ],
 ];
