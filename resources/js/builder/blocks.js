@@ -8,8 +8,8 @@ export function registerBlocks(editor) {
 
 
     bm.add('hero', {
-        label: 'Hero',
-        category: 'Sekce',
+        label: 'Hero – text',
+        category: 'Hero',
         media: faIcon('fa-house-chimney'),
         content: `
         <section style="padding:80px 24px;text-align:center;background:#f9fafb;">
@@ -26,8 +26,8 @@ export function registerBlocks(editor) {
     });
 
     bm.add('hero-image', {
-        label: 'Hero + Foto',
-        category: 'Sekce',
+        label: 'Hero + Fotografie',
+        category: 'Hero',
         media: faIcon('fa-image'),
         content: `
         <section style="padding:80px 24px;background:#f9fafb;">
@@ -44,9 +44,25 @@ export function registerBlocks(editor) {
         </section>`,
     });
 
+    bm.add('video-hero', {
+        label: 'Hero s videem',
+        category: 'Hero',
+        media: faIcon('fa-circle-play'),
+        content: `
+        <section style="position:relative;min-height:500px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;">
+            <video data-gjs-type="mp4-video" autoplay muted loop playsinline preload="metadata" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.5;"></video>
+            <div style="position:relative;z-index:1;text-align:center;padding:40px 24px;max-width:720px;">
+                <h1 style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 16px;line-height:1.15;">Nadpis s video pozadím</h1>
+                <p style="font-size:1.25rem;color:rgba(255,255,255,.8);margin:0 0 36px;line-height:1.7;">Stručný popis nebo výzva k akci.</p>
+                <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:#fff;color:#111827;border:2px solid #fff;">Začít</a>
+            </div>
+        </section>`,
+    });
+
+
     bm.add('text', {
-        label: 'Text',
-        category: 'Sekce',
+        label: 'Textová sekce',
+        category: 'Obsah',
         media: faIcon('fa-align-left'),
         content: `
         <section style="padding:64px 24px;">
@@ -57,39 +73,9 @@ export function registerBlocks(editor) {
         </section>`,
     });
 
-    bm.add('cards', {
-        label: 'Karty',
-        category: 'Sekce',
-        media: faIcon('fa-table-cells-large'),
-        content: `
-        <section style="padding:64px 24px;background:#f9fafb;">
-            <div style="max-width:1100px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Sekce karet</h2>
-                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 40px;">Popis sekce.</p>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
-                    <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
-                        <div style="width:48px;height:48px;background:#eff6ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-bolt" style="color:#2563eb;font-size:1.25rem;"></i></div>
-                        <h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Funkce 1</h3>
-                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis funkce.</p>
-                    </div>
-                    <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
-                        <div style="width:48px;height:48px;background:#f0fdf4;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-shield-halved" style="color:#16a34a;font-size:1.25rem;"></i></div>
-                        <h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Funkce 2</h3>
-                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis funkce.</p>
-                    </div>
-                    <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
-                        <div style="width:48px;height:48px;background:#fdf4ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-star" style="color:#9333ea;font-size:1.25rem;"></i></div>
-                        <h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Funkce 3</h3>
-                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis funkce.</p>
-                    </div>
-                </div>
-            </div>
-        </section>`,
-    });
-
     bm.add('columns', {
-        label: 'Sloupce',
-        category: 'Sekce',
+        label: 'Dva sloupce',
+        category: 'Obsah',
         media: faIcon('fa-columns'),
         content: `
         <section style="padding:64px 24px;">
@@ -106,51 +92,215 @@ export function registerBlocks(editor) {
         </section>`,
     });
 
-    bm.add('cta', {
-        label: 'CTA',
-        category: 'Sekce',
-        media: faIcon('fa-bullhorn'),
+    bm.add('cards', {
+        label: 'Funkce / Karty',
+        category: 'Obsah',
+        media: faIcon('fa-table-cells-large'),
         content: `
-        <section style="padding:80px 24px;background:#111827;text-align:center;">
-            <div style="max-width:600px;margin:0 auto;">
-                <h2 style="font-size:2.25rem;font-weight:800;color:#fff;margin:0 0 16px;">Výzva k akci</h2>
-                <p style="font-size:1.125rem;color:#9ca3af;margin:0 0 32px;line-height:1.7;">Krátký přesvědčivý text.</p>
-                <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-                    <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:#fff;color:#111827;border:2px solid #fff;">Začít</a>
-                    <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:transparent;color:#fff;border:2px solid #4b5563;">Kontakt</a>
+        <section style="padding:64px 24px;background:#f9fafb;">
+            <div style="max-width:1100px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Co nabízíme</h2>
+                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 40px;">Stručný popis výhod nebo funkcí produktu.</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
+                    <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
+                        <div style="width:48px;height:48px;background:#eff6ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-bolt" style="color:#2563eb;font-size:1.25rem;"></i></div>
+                        <h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Rychlost</h3>
+                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis funkce nebo výhody.</p>
+                    </div>
+                    <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
+                        <div style="width:48px;height:48px;background:#f0fdf4;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-shield-halved" style="color:#16a34a;font-size:1.25rem;"></i></div>
+                        <h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Bezpečnost</h3>
+                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis funkce nebo výhody.</p>
+                    </div>
+                    <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
+                        <div style="width:48px;height:48px;background:#fdf4ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-star" style="color:#9333ea;font-size:1.25rem;"></i></div>
+                        <h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Kvalita</h3>
+                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis funkce nebo výhody.</p>
+                    </div>
                 </div>
             </div>
         </section>`,
     });
 
+    bm.add('steps', {
+        label: 'Kroky procesu',
+        category: 'Obsah',
+        media: faIcon('fa-list-ol'),
+        content: `
+        <section style="padding:64px 24px;">
+            <div style="max-width:900px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Jak to funguje</h2>
+                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 48px;">Tři jednoduché kroky k výsledku.</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;">
+                    <div style="text-align:center;">
+                        <div style="width:56px;height:56px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.25rem;font-weight:700;color:#2563eb;">1</div>
+                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Registrace</h3>
+                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Vytvořte si účet za 30 sekund.</p>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="width:56px;height:56px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.25rem;font-weight:700;color:#2563eb;">2</div>
+                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Nastavení</h3>
+                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Přizpůsobte si prostředí.</p>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="width:56px;height:56px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.25rem;font-weight:700;color:#2563eb;">3</div>
+                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Spuštění</h3>
+                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Publikujte a sledujte výsledky.</p>
+                    </div>
+                </div>
+            </div>
+        </section>`,
+    });
+
+    bm.add('stats', {
+        label: 'Čísla a statistiky',
+        category: 'Obsah',
+        media: faIcon('fa-chart-bar'),
+        content: `
+        <section style="padding:64px 24px;background:#111827;">
+            <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;text-align:center;">
+                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">10 000+</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Spokojených zákazníků</p></div>
+                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">99,9 %</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Dostupnost služby</p></div>
+                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">50+</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Zemí světa</p></div>
+                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">24 / 7</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Zákaznická podpora</p></div>
+            </div>
+        </section>`,
+    });
+
+
+    bm.add('gallery', {
+        label: 'Fotogalerie',
+        category: 'Média',
+        media: faIcon('fa-images'),
+        content: `
+        <section style="padding:64px 24px;">
+            <div style="max-width:1100px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Galerie</h2>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+                    <img src="https://placehold.co/600x400?text=1" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
+                    <img src="https://placehold.co/600x400?text=2" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
+                    <img src="https://placehold.co/600x400?text=3" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
+                    <img src="https://placehold.co/600x400?text=4" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
+                    <img src="https://placehold.co/600x400?text=5" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
+                    <img src="https://placehold.co/600x400?text=6" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
+                </div>
+            </div>
+        </section>`,
+    });
+
+    bm.add('gallery-slider', {
+        label: 'Galerie – Slider',
+        category: 'Média',
+        media: faIcon('fa-film'),
+        content: `
+        <section style="padding:64px 24px;">
+            <div style="max-width:1100px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Galerie</h2>
+                <div class="swiper" data-loop="true" data-per-view="auto" data-gap="16" data-centered="true" style="overflow:hidden;padding-bottom:44px;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=1" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
+                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=2" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
+                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=3" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
+                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=4" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
+                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=5" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>`,
+    });
+
+    bm.add('cards-slider', {
+        label: 'Karty – Slider',
+        category: 'Média',
+        media: faIcon('fa-table-cells-large'),
+        content: `
+        <section style="padding:64px 24px;background:#f9fafb;">
+            <div style="max-width:1100px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Karty</h2>
+                <div class="swiper" data-loop="true" data-gap="24" data-breakpoints='{"0":{"slidesPerView":1},"640":{"slidesPerView":2},"1024":{"slidesPerView":3}}' style="overflow:hidden;padding-bottom:44px;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#eff6ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-bolt" style="color:#2563eb;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 1</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#f0fdf4;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-shield-halved" style="color:#16a34a;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 2</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#fdf4ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-star" style="color:#9333ea;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 3</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#fff7ed;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-rocket" style="color:#ea580c;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 4</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#fef2f2;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-heart" style="color:#dc2626;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 5</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>`,
+    });
+
+    bm.add('video-youtube', {
+        label: 'YouTube video',
+        category: 'Média',
+        media: faIcon('fa-brands fa-youtube'),
+        content: `
+        <section style="padding:64px 24px;background:#f9fafb;">
+            <div style="max-width:800px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 32px;">Video</h2>
+                <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+                    <iframe data-gjs-type="youtube-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" frameborder="0" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                </div>
+            </div>
+        </section>`,
+    });
+
+    bm.add('video-embed', {
+        label: 'Video (MP4)',
+        category: 'Média',
+        media: faIcon('fa-clapperboard'),
+        content: `
+        <section style="padding:64px 24px;">
+            <div style="max-width:800px;margin:0 auto;">
+                <video data-gjs-type="mp4-video" controls preload="metadata" style="width:100%;border-radius:12px;display:block;"></video>
+            </div>
+        </section>`,
+    });
+
+    bm.add('map', {
+        label: 'Mapa',
+        category: 'Média',
+        media: faIcon('fa-map-location-dot'),
+        content: `
+        <section style="padding:64px 24px;">
+            <div data-gjs-type="map-embed" style="max-width:1100px;margin:0 auto;border-radius:12px;overflow:hidden;height:420px;">
+                <iframe src="https://maps.google.com/maps?q=Praha&output=embed&z=13" width="100%" height="100%" style="border:none;display:block;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>`,
+    });
+
+
     bm.add('testimonials', {
-        label: 'Recenze',
-        category: 'Sekce',
+        label: 'Recenze zákazníků',
+        category: 'Sociální důkaz',
         media: faIcon('fa-comments'),
         content: `
         <section style="padding:64px 24px;background:#f9fafb;">
             <div style="max-width:1100px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Co říkají zákazníci</h2>
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Co říkají zákazníci</h2>
+                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 40px;">Přečtěte si zkušenosti lidí, kteří nám důvěřují.</p>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
                     <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
                         <div style="display:flex;gap:2px;margin:0 0 16px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div>
-                        <p style="font-size:.9375rem;color:#374151;line-height:1.7;margin:0 0 20px;">"Skvělý produkt, doporučuji všem."</p>
+                        <p style="font-size:.9375rem;color:#374151;line-height:1.7;margin:0 0 20px;font-style:italic;">"Skvělý produkt, doporučuji všem."</p>
                         <div style="display:flex;align-items:center;gap:12px;">
                             <div style="width:40px;height:40px;border-radius:50%;background:#e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div>
-                            <div><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Jan Novák</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">CEO, Firma</p></div>
+                            <div><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Jan Novák</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">CEO, Firma s.r.o.</p></div>
                         </div>
                     </div>
                     <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
                         <div style="display:flex;gap:2px;margin:0 0 16px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div>
-                        <p style="font-size:.9375rem;color:#374151;line-height:1.7;margin:0 0 20px;">"Úžasná podpora a snadné použití."</p>
+                        <p style="font-size:.9375rem;color:#374151;line-height:1.7;margin:0 0 20px;font-style:italic;">"Úžasná podpora a snadné použití."</p>
                         <div style="display:flex;align-items:center;gap:12px;">
                             <div style="width:40px;height:40px;border-radius:50%;background:#e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div>
-                            <div><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Petra Svobodová</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">Designérka</p></div>
+                            <div><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Petra Svobodová</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">Freelance designérka</p></div>
                         </div>
                     </div>
                     <div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
                         <div style="display:flex;gap:2px;margin:0 0 16px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div>
-                        <p style="font-size:.9375rem;color:#374151;line-height:1.7;margin:0 0 20px;">"Nejlepší investice tohoto roku."</p>
+                        <p style="font-size:.9375rem;color:#374151;line-height:1.7;margin:0 0 20px;font-style:italic;">"Nejlepší investice tohoto roku."</p>
                         <div style="display:flex;align-items:center;gap:12px;">
                             <div style="width:40px;height:40px;border-radius:50%;background:#e5e7eb;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div>
                             <div><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Martin Dvořák</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">Podnikatel</p></div>
@@ -161,19 +311,77 @@ export function registerBlocks(editor) {
         </section>`,
     });
 
-    bm.add('faq', {
-        label: 'FAQ',
-        category: 'Sekce',
-        media: faIcon('fa-circle-question'),
+    bm.add('testimonials-slider', {
+        label: 'Recenze – Slider',
+        category: 'Sociální důkaz',
+        media: faIcon('fa-quote-left'),
+        content: `
+        <section style="padding:64px 24px;background:#f9fafb;">
+            <div style="max-width:760px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Co říkají zákazníci</h2>
+                <div class="swiper" data-loop="true" data-autoplay="4000" style="overflow:hidden;padding-bottom:44px;">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center;"><div style="display:flex;gap:2px;justify-content:center;margin:0 0 20px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div><p style="font-size:1.125rem;color:#374151;line-height:1.7;margin:0 0 28px;font-style:italic;">"Skvělý produkt, doporučuji všem."</p><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><div style="width:44px;height:44px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div><div style="text-align:left;"><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Jan Novák</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">CEO, Firma s.r.o.</p></div></div></div></div>
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center;"><div style="display:flex;gap:2px;justify-content:center;margin:0 0 20px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div><p style="font-size:1.125rem;color:#374151;line-height:1.7;margin:0 0 28px;font-style:italic;">"Úžasná podpora a snadné použití."</p><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><div style="width:44px;height:44px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div><div style="text-align:left;"><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Petra Svobodová</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">Freelance designérka</p></div></div></div></div>
+                        <div class="swiper-slide"><div style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center;"><div style="display:flex;gap:2px;justify-content:center;margin:0 0 20px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div><p style="font-size:1.125rem;color:#374151;line-height:1.7;margin:0 0 28px;font-style:italic;">"Nejlepší investice tohoto roku."</p><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><div style="width:44px;height:44px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div><div style="text-align:left;"><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Martin Dvořák</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">Podnikatel</p></div></div></div></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>`,
+    });
+
+    bm.add('logo-bar', {
+        label: 'Loga partnerů',
+        category: 'Sociální důkaz',
+        media: faIcon('fa-building'),
+        content: `
+        <section style="padding:40px 24px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;">
+            <div style="max-width:960px;margin:0 auto;">
+                <p style="font-size:.875rem;font-weight:500;color:#9ca3af;text-align:center;margin:0 0 28px;text-transform:uppercase;letter-spacing:.08em;">Důvěřují nám</p>
+                <div style="display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;">
+                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma A</span>
+                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma B</span>
+                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma C</span>
+                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma D</span>
+                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma E</span>
+                </div>
+            </div>
+        </section>`,
+    });
+
+    bm.add('team', {
+        label: 'Tým',
+        category: 'Sociální důkaz',
+        media: faIcon('fa-people-group'),
         content: `
         <section style="padding:64px 24px;">
-            <div style="max-width:720px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Časté dotazy</h2>
-                <div style="display:flex;flex-direction:column;">
-                    <div style="border-bottom:1px solid #e5e7eb;padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Jak mohu začít?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Stačí se registrovat a ihned začít.</p></div>
-                    <div style="border-bottom:1px solid #e5e7eb;padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Je zde bezplatná verze?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Ano, nabízíme bezplatný plán.</p></div>
-                    <div style="border-bottom:1px solid #e5e7eb;padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Jak funguje podpora?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Podpora přes email v pracovní dny.</p></div>
-                    <div style="padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Mohu kdykoliv zrušit?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Ano, bez smluvních závazků.</p></div>
+            <div style="max-width:1000px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Náš tým</h2>
+                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 40px;">Lidé, kteří stojí za projektem.</p>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;">
+                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Jan Novák</p><p style="font-size:.875rem;color:#6b7280;margin:0;">CEO &amp; Zakladatel</p></div>
+                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Petra Nová</p><p style="font-size:.875rem;color:#6b7280;margin:0;">CTO</p></div>
+                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Karel Malý</p><p style="font-size:.875rem;color:#6b7280;margin:0;">Lead Developer</p></div>
+                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Jana Veselá</p><p style="font-size:.875rem;color:#6b7280;margin:0;">Head of Design</p></div>
+                </div>
+            </div>
+        </section>`,
+    });
+
+
+    bm.add('cta', {
+        label: 'Výzva k akci (CTA)',
+        category: 'Konverze',
+        media: faIcon('fa-bullhorn'),
+        content: `
+        <section style="padding:80px 24px;background:#111827;text-align:center;">
+            <div style="max-width:600px;margin:0 auto;">
+                <h2 style="font-size:2.25rem;font-weight:800;color:#fff;margin:0 0 16px;">Připraveni začít?</h2>
+                <p style="font-size:1.125rem;color:#9ca3af;margin:0 0 32px;line-height:1.7;">Přidejte se k tisícům spokojených zákazníků ještě dnes.</p>
+                <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+                    <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:#fff;color:#111827;border:2px solid #fff;">Začít zdarma</a>
+                    <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:transparent;color:#fff;border:2px solid #4b5563;">Kontaktovat nás</a>
                 </div>
             </div>
         </section>`,
@@ -181,13 +389,13 @@ export function registerBlocks(editor) {
 
     bm.add('pricing', {
         label: 'Ceník',
-        category: 'Sekce',
+        category: 'Konverze',
         media: faIcon('fa-tag'),
         content: `
         <section style="padding:64px 24px;background:#f9fafb;">
             <div style="max-width:1000px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Ceník</h2>
-                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 48px;">Vyberte plán, který vám vyhovuje.</p>
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Jednoduchý ceník</h2>
+                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 48px;">Vyberte plán, který vám vyhovuje. Bez skrytých poplatků.</p>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
                     <div style="background:#fff;border-radius:16px;padding:32px;border:1px solid #e5e7eb;">
                         <h3 style="font-size:.875rem;font-weight:600;color:#6b7280;margin:0 0 12px;text-transform:uppercase;letter-spacing:.05em;">Starter</h3>
@@ -218,77 +426,24 @@ export function registerBlocks(editor) {
                         <ul style="list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:10px;">
                             <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;"><i class="fa-solid fa-check" style="color:#16a34a;"></i> Neomezené weby</li>
                             <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;"><i class="fa-solid fa-check" style="color:#16a34a;"></i> SLA podpora</li>
-                            <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;"><i class="fa-solid fa-check" style="color:#16a34a;"></i> Custom integrace</li>
+                            <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;"><i class="fa-solid fa-check" style="color:#16a34a;"></i> Vlastní integrace</li>
                         </ul>
-                        <a href="#" style="display:block;text-align:center;padding:12px;background:#f9fafb;color:#111827;font-weight:600;border-radius:8px;text-decoration:none;border:1px solid #e5e7eb;">Kontaktovat</a>
+                        <a href="#" style="display:block;text-align:center;padding:12px;background:#f9fafb;color:#111827;font-weight:600;border-radius:8px;text-decoration:none;border:1px solid #e5e7eb;">Kontaktovat nás</a>
                     </div>
                 </div>
             </div>
         </section>`,
     });
 
-    bm.add('stats', {
-        label: 'Statistiky',
-        category: 'Sekce',
-        media: faIcon('fa-chart-bar'),
-        content: `
-        <section style="padding:64px 24px;background:#111827;">
-            <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;text-align:center;">
-                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">10K+</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Zákazníků</p></div>
-                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">99%</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Dostupnost</p></div>
-                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">50+</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Zemí světa</p></div>
-                <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">24/7</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Podpora</p></div>
-            </div>
-        </section>`,
-    });
-
-    bm.add('gallery', {
-        label: 'Galerie',
-        category: 'Sekce',
-        media: faIcon('fa-images'),
-        content: `
-        <section style="padding:64px 24px;">
-            <div style="max-width:1100px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Galerie</h2>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-                    <img src="https://placehold.co/600x400?text=1" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-                    <img src="https://placehold.co/600x400?text=2" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-                    <img src="https://placehold.co/600x400?text=3" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-                    <img src="https://placehold.co/600x400?text=4" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-                    <img src="https://placehold.co/600x400?text=5" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-                    <img src="https://placehold.co/600x400?text=6" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-                </div>
-            </div>
-        </section>`,
-    });
-
-    bm.add('team', {
-        label: 'Tým',
-        category: 'Sekce',
-        media: faIcon('fa-people-group'),
-        content: `
-        <section style="padding:64px 24px;">
-            <div style="max-width:1000px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Náš tým</h2>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;">
-                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Jan Novák</p><p style="font-size:.875rem;color:#6b7280;margin:0;">CEO &amp; Zakladatel</p></div>
-                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Petra Nová</p><p style="font-size:.875rem;color:#6b7280;margin:0;">CTO</p></div>
-                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Karel Malý</p><p style="font-size:.875rem;color:#6b7280;margin:0;">Lead Dev</p></div>
-                    <div style="text-align:center;"><img src="https://placehold.co/200x200?text=Foto" data-gjs-type="media-image" style="width:100px;height:100px;border-radius:50%;margin:0 auto 12px;display:block;object-fit:cover;" alt=""><p style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 4px;">Jana Veselá</p><p style="font-size:.875rem;color:#6b7280;margin:0;">Head of Design</p></div>
-                </div>
-            </div>
-        </section>`,
-    });
-
     bm.add('contact-form', {
-        label: 'Kontakt',
-        category: 'Sekce',
+        label: 'Kontaktní formulář',
+        category: 'Konverze',
         media: faIcon('fa-envelope'),
         content: `
         <section style="padding:64px 24px;background:#f9fafb;">
             <div style="max-width:560px;margin:0 auto;">
                 <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 8px;">Kontaktujte nás</h2>
-                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 36px;">Odpovídáme do 24 hodin.</p>
+                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 36px;">Odpovídáme do 24 hodin v pracovní dny.</p>
                 <form data-contact-form style="display:flex;flex-direction:column;gap:16px;">
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
                         <div><label style="display:block;font-size:.875rem;font-weight:500;color:#374151;margin:0 0 6px;">Jméno</label><input name="name" type="text" placeholder="Jan Novák" style="width:100%;padding:10px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:.9375rem;box-sizing:border-box;" required></div>
@@ -303,188 +458,46 @@ export function registerBlocks(editor) {
         </section>`,
     });
 
-    bm.add('video-youtube', {
-        label: 'YouTube video',
-        category: 'Sekce',
-        media: faIcon('fa-brands fa-youtube'),
-        content: `
-        <section style="padding:64px 24px;background:#f9fafb;">
-            <div style="max-width:800px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 32px;">Video</h2>
-                <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
-                    <iframe data-gjs-type="youtube-video" src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0" frameborder="0" allowfullscreen allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-                </div>
-            </div>
-        </section>`,
-    });
-
-    bm.add('video-embed', {
-        label: 'Video (MP4)',
-        category: 'Sekce',
-        media: faIcon('fa-film'),
-        content: `
-        <section style="padding:64px 24px;">
-            <div style="max-width:800px;margin:0 auto;">
-                <video data-gjs-type="mp4-video" controls preload="metadata" style="width:100%;border-radius:12px;display:block;"></video>
-            </div>
-        </section>`,
-    });
-
-    bm.add('video-hero', {
-        label: 'Video hero',
-        category: 'Sekce',
-        media: faIcon('fa-circle-play'),
-        content: `
-        <section style="position:relative;min-height:500px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;">
-            <video data-gjs-type="mp4-video" autoplay muted loop playsinline preload="metadata" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.5;"></video>
-            <div style="position:relative;z-index:1;text-align:center;padding:40px 24px;max-width:720px;">
-                <h1 style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 16px;line-height:1.15;">Nadpis s video pozadím</h1>
-                <p style="font-size:1.25rem;color:rgba(255,255,255,.8);margin:0 0 36px;line-height:1.7;">Stručný popis nebo výzva k akci.</p>
-                <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:#fff;color:#111827;border:2px solid #fff;">Začít</a>
-            </div>
-        </section>`,
-    });
-
-    bm.add('divider', {
-        label: 'Oddělovač',
-        category: 'Sekce',
-        media: faIcon('fa-minus'),
-        content: '<div style="padding:32px 24px;"><hr style="border:none;border-top:1px solid #e5e7eb;"></div>',
-    });
-
-    bm.add('gallery-slider', {
-        label: 'Galerie slider',
-        category: 'Sekce',
-        media: faIcon('fa-images'),
-        content: `
-        <section style="padding:64px 24px;">
-            <div style="max-width:1100px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Galerie</h2>
-                <div class="swiper" data-loop="true" data-per-view="auto" data-gap="16" data-centered="true" style="overflow:hidden;padding-bottom:44px;">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=1" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
-                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=2" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
-                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=3" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
-                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=4" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
-                        <div class="swiper-slide" style="width:380px;"><img src="https://placehold.co/760x500?text=5" data-gjs-type="media-image" style="width:100%;height:260px;object-fit:cover;border-radius:10px;display:block;" alt=""></div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </section>`,
-    });
-
-    bm.add('cards-slider', {
-        label: 'Karty slider',
-        category: 'Sekce',
-        media: faIcon('fa-table-cells-large'),
-        content: `
-        <section style="padding:64px 24px;background:#f9fafb;">
-            <div style="max-width:1100px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Karty</h2>
-                <div class="swiper" data-loop="true" data-gap="24" data-breakpoints='{"0":{"slidesPerView":1},"640":{"slidesPerView":2},"1024":{"slidesPerView":3}}' style="overflow:hidden;padding-bottom:44px;">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#eff6ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-bolt" style="color:#2563eb;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 1</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#f0fdf4;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-shield-halved" style="color:#16a34a;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 2</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#fdf4ff;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-star" style="color:#9333ea;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 3</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#fff7ed;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-rocket" style="color:#ea580c;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 4</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:12px;padding:28px;box-shadow:0 1px 4px rgba(0,0,0,.06);height:100%;"><div style="width:48px;height:48px;background:#fef2f2;border-radius:10px;margin:0 0 16px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-heart" style="color:#dc2626;font-size:1.25rem;"></i></div><h3 style="font-size:1.125rem;font-weight:600;color:#111827;margin:0 0 8px;">Karta 5</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Popis karty.</p></div></div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </section>`,
-    });
-
-    bm.add('testimonials-slider', {
-        label: 'Recenze slider',
-        category: 'Sekce',
-        media: faIcon('fa-comments'),
-        content: `
-        <section style="padding:64px 24px;background:#f9fafb;">
-            <div style="max-width:760px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Co říkají zákazníci</h2>
-                <div class="swiper" data-loop="true" data-autoplay="4000" style="overflow:hidden;padding-bottom:44px;">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center;"><div style="display:flex;gap:2px;justify-content:center;margin:0 0 20px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div><p style="font-size:1.125rem;color:#374151;line-height:1.7;margin:0 0 28px;font-style:italic;">"Skvělý produkt, doporučuji všem."</p><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><div style="width:44px;height:44px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div><div style="text-align:left;"><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Jan Novák</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">CEO, Firma</p></div></div></div></div>
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center;"><div style="display:flex;gap:2px;justify-content:center;margin:0 0 20px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div><p style="font-size:1.125rem;color:#374151;line-height:1.7;margin:0 0 28px;font-style:italic;">"Úžasná podpora a snadné použití."</p><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><div style="width:44px;height:44px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div><div style="text-align:left;"><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Petra Svobodová</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">Designérka</p></div></div></div></div>
-                        <div class="swiper-slide"><div style="background:#fff;border-radius:16px;padding:36px;box-shadow:0 1px 4px rgba(0,0,0,.06);text-align:center;"><div style="display:flex;gap:2px;justify-content:center;margin:0 0 20px;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i><i class="fa-solid fa-star" style="color:#f59e0b;"></i></div><p style="font-size:1.125rem;color:#374151;line-height:1.7;margin:0 0 28px;font-style:italic;">"Nejlepší investice tohoto roku."</p><div style="display:flex;align-items:center;justify-content:center;gap:12px;"><div style="width:44px;height:44px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-user" style="color:#9ca3af;"></i></div><div style="text-align:left;"><p style="font-size:.875rem;font-weight:600;color:#111827;margin:0;">Martin Dvořák</p><p style="font-size:.8125rem;color:#9ca3af;margin:0;">Podnikatel</p></div></div></div></div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </section>`,
-    });
-
-    bm.add('logo-bar', {
-        label: 'Loga / Partneři',
-        category: 'Sekce',
-        media: faIcon('fa-building'),
-        content: `
-        <section style="padding:40px 24px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;">
-            <div style="max-width:960px;margin:0 auto;">
-                <p style="font-size:.875rem;font-weight:500;color:#9ca3af;text-align:center;margin:0 0 28px;text-transform:uppercase;letter-spacing:.08em;">Důvěřují nám</p>
-                <div style="display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;">
-                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma A</span>
-                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma B</span>
-                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma C</span>
-                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma D</span>
-                    <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Firma E</span>
-                </div>
-            </div>
-        </section>`,
-    });
-
-    bm.add('steps', {
-        label: 'Kroky procesu',
-        category: 'Sekce',
-        media: faIcon('fa-list-ol'),
-        content: `
-        <section style="padding:64px 24px;">
-            <div style="max-width:900px;margin:0 auto;">
-                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 48px;">Jak to funguje</h2>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;">
-                    <div style="text-align:center;">
-                        <div style="width:56px;height:56px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.25rem;font-weight:700;color:#2563eb;">1</div>
-                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Registrace</h3>
-                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Vytvořte si účet za 30 sekund.</p>
-                    </div>
-                    <div style="text-align:center;">
-                        <div style="width:56px;height:56px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.25rem;font-weight:700;color:#2563eb;">2</div>
-                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Nastavení</h3>
-                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Přizpůsobte si prostředí.</p>
-                    </div>
-                    <div style="text-align:center;">
-                        <div style="width:56px;height:56px;background:#eff6ff;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.25rem;font-weight:700;color:#2563eb;">3</div>
-                        <h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Spuštění</h3>
-                        <p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.6;">Publikujte a sledujte výsledky.</p>
-                    </div>
-                </div>
-            </div>
-        </section>`,
-    });
-
     bm.add('newsletter', {
         label: 'Newsletter',
-        category: 'Sekce',
+        category: 'Konverze',
         media: faIcon('fa-at'),
         content: `
         <section style="padding:64px 24px;background:#eff6ff;">
             <div style="max-width:560px;margin:0 auto;text-align:center;">
                 <h2 style="font-size:2rem;font-weight:700;color:#111827;margin:0 0 12px;">Zůstaňte v obraze</h2>
-                <p style="font-size:1rem;color:#6b7280;margin:0 0 32px;line-height:1.7;">Novinky a tipy přímo do vašeho e-mailu. Žádný spam.</p>
+                <p style="font-size:1rem;color:#6b7280;margin:0 0 32px;line-height:1.7;">Novinky a tipy přímo do vašeho e-mailu. Žádný spam, odhlášení kdykoliv.</p>
                 <form data-contact-form style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
                     <input name="email" type="email" placeholder="vas@email.cz" required style="flex:1;min-width:220px;padding:12px 16px;border:1px solid #bfdbfe;border-radius:8px;font-size:.9375rem;background:#fff;box-sizing:border-box;">
                     <button type="submit" style="padding:12px 24px;background:#2563eb;color:#fff;font-weight:600;border:none;border-radius:8px;font-size:.9375rem;cursor:pointer;white-space:nowrap;">Přihlásit se</button>
                 </form>
-                <p style="font-size:.8125rem;color:#9ca3af;margin:12px 0 0;">Odhlášení kdykoliv jedním kliknutím.</p>
+            </div>
+        </section>`,
+    });
+
+
+    bm.add('faq', {
+        label: 'Časté dotazy (FAQ)',
+        category: 'Info & Nápověda',
+        media: faIcon('fa-circle-question'),
+        content: `
+        <section style="padding:64px 24px;">
+            <div style="max-width:720px;margin:0 auto;">
+                <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 12px;">Časté dotazy</h2>
+                <p style="font-size:1rem;color:#6b7280;text-align:center;margin:0 0 40px;">Odpovědi na nejčastější otázky zákazníků.</p>
+                <div style="display:flex;flex-direction:column;">
+                    <div style="border-bottom:1px solid #e5e7eb;padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Jak mohu začít?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Stačí se registrovat a ihned začít. Nevyžadujeme platební kartu.</p></div>
+                    <div style="border-bottom:1px solid #e5e7eb;padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Je zde bezplatná verze?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Ano, nabízíme bezplatný plán bez časového omezení.</p></div>
+                    <div style="border-bottom:1px solid #e5e7eb;padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Jak funguje zákaznická podpora?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Podpora přes email je dostupná v pracovní dny 9–17 hod.</p></div>
+                    <div style="padding:20px 0;"><h3 style="font-size:1rem;font-weight:600;color:#111827;margin:0 0 8px;">Mohu kdykoliv zrušit předplatné?</h3><p style="font-size:.9375rem;color:#6b7280;margin:0;line-height:1.7;">Ano, bez smluvních závazků a skrytých poplatků.</p></div>
+                </div>
             </div>
         </section>`,
     });
 
     bm.add('accordion', {
-        label: 'Akordeon',
-        category: 'Sekce',
+        label: 'Akordeon (interaktivní)',
+        category: 'Info & Nápověda',
         media: faIcon('fa-bars-staggered'),
         content: `
         <section style="padding:64px 24px;">
@@ -492,34 +505,29 @@ export function registerBlocks(editor) {
                 <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Časté dotazy</h2>
                 <details style="border-bottom:1px solid #e5e7eb;">
                     <summary style="padding:20px 0;font-size:1rem;font-weight:600;color:#111827;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;-webkit-appearance:none;"><span>Jak mohu začít?</span><i class="fa-solid fa-chevron-down faq-chevron"></i></summary>
-                    <p style="font-size:.9375rem;color:#6b7280;padding:0 0 20px;margin:0;line-height:1.7;">Stačí se registrovat a ihned začít používat všechny funkce.</p>
+                    <p style="font-size:.9375rem;color:#6b7280;padding:0 0 20px;margin:0;line-height:1.7;">Stačí se registrovat a ihned začít používat všechny funkce. Nevyžadujeme platební kartu.</p>
                 </details>
                 <details style="border-bottom:1px solid #e5e7eb;">
                     <summary style="padding:20px 0;font-size:1rem;font-weight:600;color:#111827;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;-webkit-appearance:none;"><span>Je zde bezplatná verze?</span><i class="fa-solid fa-chevron-down faq-chevron"></i></summary>
                     <p style="font-size:.9375rem;color:#6b7280;padding:0 0 20px;margin:0;line-height:1.7;">Ano, nabízíme bezplatný plán bez nutnosti zadávat platební kartu.</p>
                 </details>
                 <details style="border-bottom:1px solid #e5e7eb;">
-                    <summary style="padding:20px 0;font-size:1rem;font-weight:600;color:#111827;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;-webkit-appearance:none;"><span>Jak funguje podpora?</span><i class="fa-solid fa-chevron-down faq-chevron"></i></summary>
+                    <summary style="padding:20px 0;font-size:1rem;font-weight:600;color:#111827;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;-webkit-appearance:none;"><span>Jak funguje zákaznická podpora?</span><i class="fa-solid fa-chevron-down faq-chevron"></i></summary>
                     <p style="font-size:.9375rem;color:#6b7280;padding:0 0 20px;margin:0;line-height:1.7;">Podpora přes email je dostupná v pracovní dny 9–17 hod.</p>
                 </details>
                 <details>
-                    <summary style="padding:20px 0;font-size:1rem;font-weight:600;color:#111827;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;-webkit-appearance:none;"><span>Mohu kdykoliv zrušit?</span><i class="fa-solid fa-chevron-down faq-chevron"></i></summary>
+                    <summary style="padding:20px 0;font-size:1rem;font-weight:600;color:#111827;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;-webkit-appearance:none;"><span>Mohu kdykoliv zrušit předplatné?</span><i class="fa-solid fa-chevron-down faq-chevron"></i></summary>
                     <p style="font-size:.9375rem;color:#6b7280;padding:0 0 20px;margin:0;line-height:1.7;">Ano, bez smluvních závazků a skrytých poplatků.</p>
                 </details>
             </div>
         </section>`,
     });
 
-    bm.add('map', {
-        label: 'Mapa',
-        category: 'Sekce',
-        media: faIcon('fa-map-location-dot'),
-        content: `
-        <section style="padding:64px 24px;">
-            <div data-gjs-type="map-embed" style="max-width:1100px;margin:0 auto;border-radius:12px;overflow:hidden;height:420px;">
-                <iframe src="https://maps.google.com/maps?q=Praha&output=embed&z=13" width="100%" height="100%" style="border:none;display:block;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </section>`,
+    bm.add('divider', {
+        label: 'Oddělovač',
+        category: 'Info & Nápověda',
+        media: faIcon('fa-minus'),
+        content: '<div style="padding:32px 24px;"><hr style="border:none;border-top:1px solid #e5e7eb;"></div>',
     });
 
 
@@ -531,52 +539,45 @@ export function registerBlocks(editor) {
     });
 
     bm.add('image-block', {
-        label: 'Obrázek',
+        label: 'Obrázek (celá šířka)',
         category: 'Elementy',
         media: faIcon('fa-image'),
         content: '<img src="https://placehold.co/800x400?text=Obrázek" data-gjs-type="media-image" style="width:100%;height:auto;display:block;border-radius:8px;" alt="">',
     });
 
     bm.add('image-centered', {
-        label: 'Obrázek (střed)',
+        label: 'Obrázek (zarovnaný)',
         category: 'Elementy',
         media: faIcon('fa-expand'),
         content: '<div style="display:flex;justify-content:center;"><img src="https://placehold.co/400x300?text=Obrázek" data-gjs-type="media-image" style="width:400px;max-width:100%;height:auto;display:block;border-radius:8px;" alt=""></div>',
     });
 
     bm.add('icon-block', {
-        label: 'Ikona',
+        label: 'Ikona FA',
         category: 'Elementy',
         media: faIcon('fa-icons'),
         content: '<i class="fa-solid fa-star" style="font-size:2rem;color:#111827;display:block;"></i>',
     });
 
     bm.add('badge', {
-        label: 'Badge',
+        label: 'Štítek (Badge)',
         category: 'Elementy',
         media: faIcon('fa-certificate'),
         content: '<span style="display:inline-block;padding:4px 12px;background:#eff6ff;color:#2563eb;font-size:.8125rem;font-weight:600;border-radius:999px;">Novinka</span>',
     });
 
-    bm.add('html-embed-block', {
-        label: 'HTML embed',
+    bm.add('link-text', {
+        label: 'Textový odkaz',
         category: 'Elementy',
-        media: faIcon('fa-code'),
-        content: '<div data-gjs-type="html-embed" style="padding:16px;border:2px dashed #e5e7eb;border-radius:8px;text-align:center;color:#9ca3af;font-size:.875rem;"><!-- Klikni a vlož HTML kód --></div>',
+        media: faIcon('fa-link'),
+        content: '<a href="#" style="color:#2563eb;text-decoration:underline;font-size:1rem;cursor:pointer;">Klikněte zde</a>',
     });
 
     bm.add('spacer', {
-        label: 'Spacer',
+        label: 'Spacer (výška)',
         category: 'Elementy',
         media: faIcon('fa-up-down'),
         content: '<div style="height:80px;"></div>',
-    });
-
-    bm.add('link-text', {
-        label: 'Odkaz',
-        category: 'Elementy',
-        media: faIcon('fa-link'),
-        content: '<a href="#" style="color:#2563eb;text-decoration:underline;font-size:1rem;cursor:pointer;">Odkaz</a>',
     });
 
     bm.add('table', {
@@ -612,5 +613,12 @@ export function registerBlocks(editor) {
                 </tbody>
             </table>
         </div>`,
+    });
+
+    bm.add('html-embed-block', {
+        label: 'HTML kód',
+        category: 'Elementy',
+        media: faIcon('fa-code'),
+        content: '<div data-gjs-type="html-embed" style="padding:16px;border:2px dashed #e5e7eb;border-radius:8px;text-align:center;color:#9ca3af;font-size:.875rem;"><!-- Klikni a vlož vlastní HTML kód --></div>',
     });
 }
