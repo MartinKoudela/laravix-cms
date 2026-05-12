@@ -9,6 +9,8 @@ class ImageTransformationObserver
 {
     public function created(Media $media): void
     {
-        GenerateImageVariants::dispatch($media);
+        if (str_starts_with($media->mime_type, 'image/')) {
+           GenerateImageVariants::dispatch($media);
+        }
     }
 }
