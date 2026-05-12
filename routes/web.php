@@ -5,6 +5,7 @@ use App\Http\Controllers\CmsController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\PreviewController;
 use App\Http\Controllers\SitemapController;
+use BezhanSalleh\LanguageSwitch\Http\Middleware\SwitchLanguageLocale;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
@@ -19,7 +20,7 @@ Route::prefix('/__preview')->group(function () {
     Route::get('/blocks/{token}', [PreviewController::class, 'blocks'])->name('block.preview');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', SwitchLanguageLocale::class])->group(function () {
     Route::get('/admin/{site}/contents/{content}/builder', [BuilderController::class, 'edit'])
         ->name('builder.edit');
     Route::post('/admin/{site}/contents/{content}/builder', [BuilderController::class, 'save'])

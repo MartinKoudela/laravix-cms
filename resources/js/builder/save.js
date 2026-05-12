@@ -1,3 +1,5 @@
+import { t } from './trans';
+
 export function setupSave(editor, { saveUrl, csrfToken }) {
     let saving = false;
     const saveBtn    = document.getElementById('btn-save');
@@ -7,7 +9,7 @@ export function setupSave(editor, { saveUrl, csrfToken }) {
         if (saving) return;
         saving = true;
         saveBtn.disabled = true;
-        saveStatus.textContent = 'Ukládání…';
+        saveStatus.textContent = t('saving');
 
         try {
             const res = await fetch(saveUrl, {
@@ -24,10 +26,10 @@ export function setupSave(editor, { saveUrl, csrfToken }) {
             });
 
             if (!res.ok) throw new Error();
-            saveStatus.textContent = 'Uloženo';
+            saveStatus.textContent = t('saved');
             setTimeout(() => { saveStatus.textContent = ''; }, 2500);
         } catch {
-            saveStatus.textContent = 'Chyba při ukládání';
+            saveStatus.textContent = t('save_error');
         } finally {
             saving = false;
             saveBtn.disabled = false;

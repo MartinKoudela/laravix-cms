@@ -1,3 +1,5 @@
+import { t } from './trans';
+
 export function setupCanvas(editor, { contactUrl, csrfToken }) {
     editor.on('canvas:frame:load', () => {
         const win = editor.Canvas.getWindow();
@@ -79,12 +81,12 @@ function attachContactFormHandler(doc, { contactUrl, csrfToken }) {
             status.style.display = 'block';
             status.style.background = '#f0fdf4';
             status.style.color = '#15803d';
-            status.textContent = 'Zpráva odeslána. Brzy se ozveme!';
+            status.textContent = t('form_success');
         } catch {
             status.style.display = 'block';
             status.style.background = '#fef2f2';
             status.style.color = '#b91c1c';
-            status.textContent = 'Nastala chyba. Zkuste to prosím znovu.';
+            status.textContent = t('form_error');
         } finally {
             btn.disabled = false;
         }

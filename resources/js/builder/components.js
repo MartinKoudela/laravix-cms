@@ -1,3 +1,5 @@
+import { t } from './trans';
+
 export function registerComponents(editor) {
     editor.Components.addType('button-link', {
         isComponent: (el) => el.dataset?.gjsType === 'button-link',
@@ -7,34 +9,34 @@ export function registerComponents(editor) {
                 draggable: true,
                 droppable: false,
                 traits: [
-                    { type: 'text', name: 'content', label: 'Text tlačítka', changeProp: true },
+                    { type: 'text', name: 'content', label: t('trait_btn_content', 'Button text'), changeProp: true },
                     {
-                        type: 'select', name: 'variant', label: 'Styl', changeProp: true,
+                        type: 'select', name: 'variant', label: t('trait_btn_variant', 'Style'), changeProp: true,
                         options: [
                             { value: 'primary', name: 'Primary' },
                             { value: 'outline', name: 'Outline' },
                             { value: 'ghost',   name: 'Ghost' },
-                            { value: 'white',   name: 'Bílé' },
+                            { value: 'white',   name: t('trait_btn_white', 'White') },
                         ],
                     },
                     {
-                        type: 'select', name: 'size', label: 'Velikost', changeProp: true,
+                        type: 'select', name: 'size', label: t('trait_btn_size', 'Size'), changeProp: true,
                         options: [
-                            { value: 'sm', name: 'Malé' },
-                            { value: 'md', name: 'Střední' },
-                            { value: 'lg', name: 'Velké' },
-                            { value: 'xl', name: 'Extra velké' },
+                            { value: 'sm', name: t('trait_btn_sm', 'Small') },
+                            { value: 'md', name: t('trait_btn_md', 'Medium') },
+                            { value: 'lg', name: t('trait_btn_lg', 'Large') },
+                            { value: 'xl', name: t('trait_btn_xl', 'Extra large') },
                         ],
                     },
-                    { type: 'text', name: 'href',   label: 'URL odkazu' },
+                    { type: 'text', name: 'href',   label: t('trait_btn_href', 'URL') },
                     {
-                        type: 'select', name: 'target', label: 'Otevřít',
+                        type: 'select', name: 'target', label: t('trait_btn_target', 'Open'),
                         options: [
-                            { value: '_self',  name: 'Stejné okno' },
-                            { value: '_blank', name: 'Nové okno' },
+                            { value: '_self',  name: t('trait_target_self', 'Same window') },
+                            { value: '_blank', name: t('trait_target_blank', 'New window') },
                         ],
                     },
-                    { type: 'text', name: 'icon', label: 'FA ikona (fa-arrow-right)' },
+                    { type: 'text', name: 'icon', label: t('trait_btn_icon', 'FA icon (fa-arrow-right)') },
                 ],
             },
             init() {
@@ -43,7 +45,7 @@ export function registerComponents(editor) {
             updateStyles() {
                 const variant  = this.get('variant') || 'primary';
                 const size     = this.get('size')    || 'md';
-                const content  = this.get('content') || 'Tlačítko';
+                const content  = this.get('content') || t('trait_btn_content', 'Button');
                 const icon     = this.get('icon');
                 const padding  = { sm: '8px 18px', md: '12px 28px', lg: '16px 36px', xl: '18px 44px' }[size] || '12px 28px';
                 const fontSize = { sm: '0.8125rem', md: '0.9375rem', lg: '1rem', xl: '1.125rem' }[size] || '0.9375rem';
@@ -65,11 +67,11 @@ export function registerComponents(editor) {
         model: {
             defaults: {
                 traits: [
-                    { type: 'text',   name: 'src', label: 'URL obrázku' },
-                    { type: 'text',   name: 'alt', label: 'Alt text (SEO)' },
-                    { type: 'text',   name: 'title', label: 'Title' },
+                    { type: 'text',   name: 'src', label: t('trait_img_src', 'Image URL') },
+                    { type: 'text',   name: 'alt', label: t('trait_img_alt', 'Alt text (SEO)') },
+                    { type: 'text',   name: 'title', label: t('trait_img_title', 'Title') },
                     {
-                        type: 'select', name: 'object-fit', label: 'Object fit',
+                        type: 'select', name: 'object-fit', label: t('trait_img_fit', 'Object fit'),
                         options: [
                             { value: 'cover',   name: 'Cover' },
                             { value: 'contain', name: 'Contain' },
@@ -97,13 +99,13 @@ export function registerComponents(editor) {
                     {
                         type: 'text',
                         name: 'ytUrl',
-                        label: 'YouTube URL nebo ID videa',
+                        label: t('trait_yt_url', 'YouTube URL or video ID'),
                         placeholder: 'https://www.youtube.com/watch?v=...',
                         changeProp: true,
                     },
-                    { type: 'checkbox', name: 'ytAutoplay',  label: 'Autoplay',                   changeProp: true },
-                    { type: 'checkbox', name: 'ytControls',  label: 'Zobrazit ovládání',           changeProp: true },
-                    { type: 'checkbox', name: 'ytRel',       label: 'Doporučená videa na konci',   changeProp: true },
+                    { type: 'checkbox', name: 'ytAutoplay',  label: t('trait_yt_autoplay', 'Autoplay'),         changeProp: true },
+                    { type: 'checkbox', name: 'ytControls',  label: t('trait_yt_controls', 'Show controls'),    changeProp: true },
+                    { type: 'checkbox', name: 'ytRel',       label: t('trait_yt_rel', 'Related videos at end'), changeProp: true },
                 ],
             },
             init() {
@@ -147,15 +149,15 @@ export function registerComponents(editor) {
                     {
                         type: 'media-url',
                         name: 'videoSrc',
-                        label: 'Zdroj videa',
+                        label: t('trait_video_src', 'Video source'),
                         placeholder: 'https://example.com/video.mp4',
                         accept: 'video',
                         changeProp: true,
                     },
-                    { type: 'checkbox', name: 'videoControls', label: 'Ovládání', changeProp: true },
-                    { type: 'checkbox', name: 'videoAutoplay', label: 'Autoplay', changeProp: true },
-                    { type: 'checkbox', name: 'videoMuted',    label: 'Ztlumit',  changeProp: true },
-                    { type: 'checkbox', name: 'videoLoop',     label: 'Opakovat', changeProp: true },
+                    { type: 'checkbox', name: 'videoControls', label: t('trait_video_controls', 'Controls'), changeProp: true },
+                    { type: 'checkbox', name: 'videoAutoplay', label: t('trait_video_autoplay', 'Autoplay'), changeProp: true },
+                    { type: 'checkbox', name: 'videoMuted',    label: t('trait_video_muted', 'Mute'),       changeProp: true },
+                    { type: 'checkbox', name: 'videoLoop',     label: t('trait_video_loop', 'Loop'),        changeProp: true },
                 ],
             },
             init() {
@@ -186,7 +188,7 @@ export function registerComponents(editor) {
         model: {
             defaults: {
                 tagName: 'div',
-                name: 'Mapa',
+                name: 'Map',
                 droppable: false,
                 mapAddress: '',
                 mapZoom: '15',
@@ -194,21 +196,21 @@ export function registerComponents(editor) {
                     {
                         type: 'text',
                         name: 'mapAddress',
-                        label: 'Adresa / název místa',
-                        placeholder: 'Praha, Václavské náměstí 1',
+                        label: t('trait_map_address', 'Address / place name'),
+                        placeholder: t('trait_map_address_placeholder', 'Prague, Wenceslas Square 1'),
                         changeProp: true,
                     },
                     {
                         type: 'select',
                         name: 'mapZoom',
-                        label: 'Přiblížení',
+                        label: t('trait_map_zoom', 'Zoom'),
                         changeProp: true,
                         options: [
-                            { value: '10', name: 'Město' },
-                            { value: '13', name: 'Čtvrť' },
-                            { value: '15', name: 'Ulice (výchozí)' },
-                            { value: '17', name: 'Budova' },
-                            { value: '19', name: 'Detail' },
+                            { value: '10', name: t('trait_map_zoom_city', 'City') },
+                            { value: '13', name: t('trait_map_zoom_district', 'District') },
+                            { value: '15', name: t('trait_map_zoom_street', 'Street (default)') },
+                            { value: '17', name: t('trait_map_zoom_building', 'Building') },
+                            { value: '19', name: t('trait_map_zoom_detail', 'Detail') },
                         ],
                     },
                 ],
@@ -240,7 +242,7 @@ export function registerComponents(editor) {
                 name: 'HTML Embed',
                 droppable: false,
                 traits: [
-                    { type: 'textarea', name: 'embedCode', label: 'HTML kód', changeProp: true },
+                    { type: 'textarea', name: 'embedCode', label: t('trait_embed_code', 'HTML code'), changeProp: true },
                 ],
             },
             init() {

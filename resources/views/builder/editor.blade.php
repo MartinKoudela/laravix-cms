@@ -36,7 +36,7 @@
         <div id="topbar-left">
             <a href="{{ $backUrl }}" class="tb-back">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-                Zpět
+                {{ __('builder.back') }}
             </a>
             <span class="tb-title">{{ $content->title }}</span>
         </div>
@@ -44,7 +44,7 @@
             <span id="save-status"></span>
             <button id="btn-save">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Uložit
+                {{ __('builder.save') }}
             </button>
         </div>
     </div>
@@ -58,6 +58,7 @@
             data-csrf="{{ csrf_token() }}"
             data-canvas-css="{{ Vite::asset('resources/css/app.css') }}"
             data-media-items="{{ json_encode($mediaItems) }}"
+            data-trans="{{ json_encode(__('builder')) }}"
         ></div>
     </div>
 

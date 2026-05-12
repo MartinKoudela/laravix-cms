@@ -1,6 +1,7 @@
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css';
 
+import { setTrans }          from './builder/trans';
 import { buildConfig }       from './builder/config';
 import { preloadFonts, setupStyleManager } from './builder/styles';
 import { setupMediaTrait }   from './builder/media';
@@ -20,6 +21,7 @@ const mediaItems  = JSON.parse(el.dataset.mediaItems  || '[]');
 const contactUrl  = el.dataset.contactUrl;
 const uploadUrl   = el.dataset.uploadUrl;
 
+setTrans(JSON.parse(el.dataset.trans || '{}'));
 preloadFonts();
 
 const editor = grapesjs.init(buildConfig({ canvasCss, mediaItems }));

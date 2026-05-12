@@ -1,5 +1,6 @@
 import grapesjsPresetWebpage from 'grapesjs-preset-webpage';
 import { FONT_AWESOME_CSS, GOOGLE_FONTS } from './constants';
+import { t } from './trans';
 
 const DIR = {
     row:           `<i class="fa-solid fa-arrow-right"></i>`,
@@ -22,14 +23,14 @@ const AI = {
     stretch: `<i class="fa-solid fa-align-justify" style="${R90}"></i>`,
 };
 
-const FONT_OPTIONS = [
-    { value: 'inherit',   name: '— Zdědit —' },
-    ...GOOGLE_FONTS.map(f => ({ value: `'${f}', sans-serif`, name: f })),
-    { value: 'serif',     name: 'Serif' },
-    { value: 'monospace', name: 'Monospace' },
-];
-
 export function buildConfig({ canvasCss, mediaItems }) {
+    const FONT_OPTIONS = [
+        { value: 'inherit',   name: t('val_font_inherit', '— Inherit —') },
+        ...GOOGLE_FONTS.map(f => ({ value: `'${f}', sans-serif`, name: f })),
+        { value: 'serif',     name: t('val_font_serif', 'Serif') },
+        { value: 'monospace', name: t('val_font_monospace', 'Monospace') },
+    ];
+
     return {
         container: '#gjs',
         height: '100%',
@@ -54,13 +55,13 @@ export function buildConfig({ canvasCss, mediaItems }) {
         assetManager: {
             assets: mediaItems,
             upload: false,
-            noAssets: 'Žádná média — nahryjte soubory v sekci Média.',
+            noAssets: t('no_assets', 'No media — upload files in the Media section.'),
         },
         plugins: [grapesjsPresetWebpage],
         pluginsOpts: {
             [grapesjsPresetWebpage]: {
                 blocks: [],
-                modalImportTitle: 'Importovat HTML',
+                modalImportTitle: 'Import HTML',
                 modalImportLabel: '',
                 modalImportContent: '',
                 filestackOpts: null,
@@ -69,24 +70,24 @@ export function buildConfig({ canvasCss, mediaItems }) {
         styleManager: {
             sectors: [
                 {
-                    name: 'Rozložení',
+                    name: t('sector_layout', 'Layout'),
                     open: true,
                     properties: [
                         {
-                            label: 'Zobrazení',
+                            label: t('prop_display', 'Display'),
                             property: 'display',
                             type: 'select',
                             options: [
-                                { value: 'block',        name: 'Block' },
-                                { value: 'flex',         name: 'Flex' },
-                                { value: 'grid',         name: 'Grid' },
-                                { value: 'inline-block', name: 'Inline block' },
-                                { value: 'inline',       name: 'Inline' },
-                                { value: 'none',         name: 'Skryto' },
+                                { value: 'block',        name: t('val_block', 'Block') },
+                                { value: 'flex',         name: t('val_flex', 'Flex') },
+                                { value: 'grid',         name: t('val_grid', 'Grid') },
+                                { value: 'inline-block', name: t('val_inline_block', 'Inline block') },
+                                { value: 'inline',       name: t('val_inline', 'Inline') },
+                                { value: 'none',         name: t('val_none', 'Hidden') },
                             ],
                         },
                         {
-                            label: 'Směr',
+                            label: t('prop_direction', 'Direction'),
                             property: 'flex-direction',
                             type: 'radio',
                             requires: { display: ['flex'] },
@@ -98,93 +99,93 @@ export function buildConfig({ canvasCss, mediaItems }) {
                             ],
                         },
                         {
-                            label: 'Zarovnání X',
+                            label: t('prop_align_x', 'Align X'),
                             property: 'justify-content',
                             type: 'radio',
                             requires: { display: ['flex'] },
                             options: [
                                 { value: 'flex-start',    name: JC.start,   title: 'Start' },
-                                { value: 'center',        name: JC.center,  title: 'Střed' },
+                                { value: 'center',        name: JC.center,  title: 'Center' },
                                 { value: 'flex-end',      name: JC.end,     title: 'End' },
                                 { value: 'space-between', name: JC.between, title: 'Space between' },
                                 { value: 'space-around',  name: JC.around,  title: 'Space around' },
                             ],
                         },
                         {
-                            label: 'Zarovnání Y',
+                            label: t('prop_align_y', 'Align Y'),
                             property: 'align-items',
                             type: 'radio',
                             requires: { display: ['flex'] },
                             options: [
                                 { value: 'flex-start', name: AI.start,   title: 'Start' },
-                                { value: 'center',     name: AI.center,  title: 'Střed' },
+                                { value: 'center',     name: AI.center,  title: 'Center' },
                                 { value: 'flex-end',   name: AI.end,     title: 'End' },
                                 { value: 'stretch',    name: AI.stretch, title: 'Stretch' },
                             ],
                         },
                         {
-                            label: 'Zalamování',
+                            label: t('prop_wrap', 'Wrap'),
                             property: 'flex-wrap',
                             type: 'radio',
                             requires: { display: ['flex'] },
                             options: [
-                                { value: 'nowrap', name: 'Ne' },
-                                { value: 'wrap',   name: 'Ano' },
+                                { value: 'nowrap', name: t('val_no_wrap', 'No') },
+                                { value: 'wrap',   name: t('val_wrap', 'Yes') },
                             ],
                         },
-                        { property: 'gap',        label: 'Gap' },
-                        { property: 'width',      label: 'Šířka' },
-                        { property: 'max-width',  label: 'Max. šířka' },
-                        { property: 'min-height', label: 'Min. výška' },
+                        { property: 'gap',        label: t('prop_gap', 'Gap') },
+                        { property: 'width',      label: t('prop_width', 'Width') },
+                        { property: 'max-width',  label: t('prop_max_width', 'Max width') },
+                        { property: 'min-height', label: t('prop_min_height', 'Min height') },
                         {
                             property: 'overflow',
-                            label: 'Overflow',
+                            label: t('prop_overflow', 'Overflow'),
                             type: 'select',
                             options: [
-                                { value: 'visible', name: 'Visible' },
-                                { value: 'hidden',  name: 'Hidden' },
-                                { value: 'auto',    name: 'Auto' },
-                                { value: 'scroll',  name: 'Scroll' },
+                                { value: 'visible', name: t('val_visible', 'Visible') },
+                                { value: 'hidden',  name: t('val_hidden', 'Hidden') },
+                                { value: 'auto',    name: t('val_auto', 'Auto') },
+                                { value: 'scroll',  name: t('val_scroll', 'Scroll') },
                             ],
                         },
                     ],
                 },
                 {
-                    name: 'Odsazení',
+                    name: t('sector_spacing', 'Spacing'),
                     open: false,
                     properties: [
                         {
                             property: 'padding',
-                            label: 'Padding',
+                            label: t('prop_padding', 'Padding'),
                             type: 'composite',
                             properties: [
-                                { property: 'padding-top',    label: 'Nahoře', type: 'integer', units: ['px', 'rem', '%', 'em'] },
-                                { property: 'padding-right',  label: 'Vpravo', type: 'integer', units: ['px', 'rem', '%', 'em'] },
-                                { property: 'padding-bottom', label: 'Dole',   type: 'integer', units: ['px', 'rem', '%', 'em'] },
-                                { property: 'padding-left',   label: 'Vlevo',  type: 'integer', units: ['px', 'rem', '%', 'em'] },
+                                { property: 'padding-top',    label: t('prop_top', 'Top'),    type: 'integer', units: ['px', 'rem', '%', 'em'] },
+                                { property: 'padding-right',  label: t('prop_right', 'Right'), type: 'integer', units: ['px', 'rem', '%', 'em'] },
+                                { property: 'padding-bottom', label: t('prop_bottom', 'Bottom'), type: 'integer', units: ['px', 'rem', '%', 'em'] },
+                                { property: 'padding-left',   label: t('prop_left', 'Left'),  type: 'integer', units: ['px', 'rem', '%', 'em'] },
                             ],
                         },
                         {
                             property: 'margin',
-                            label: 'Margin',
+                            label: t('prop_margin', 'Margin'),
                             type: 'composite',
                             properties: [
-                                { property: 'margin-top',    label: 'Nahoře', type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
-                                { property: 'margin-right',  label: 'Vpravo', type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
-                                { property: 'margin-bottom', label: 'Dole',   type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
-                                { property: 'margin-left',   label: 'Vlevo',  type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
+                                { property: 'margin-top',    label: t('prop_top', 'Top'),    type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
+                                { property: 'margin-right',  label: t('prop_right', 'Right'), type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
+                                { property: 'margin-bottom', label: t('prop_bottom', 'Bottom'), type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
+                                { property: 'margin-left',   label: t('prop_left', 'Left'),  type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
                             ],
                         },
                     ],
                 },
                 {
-                    name: 'Typografie',
+                    name: t('sector_typography', 'Typography'),
                     open: false,
                     properties: [
-                        { label: 'Font', property: 'font-family', type: 'select', options: FONT_OPTIONS },
-                        { property: 'font-size',      label: 'Velikost',      type: 'integer', units: ['px', 'rem', 'em', '%', 'vw'] },
+                        { label: t('prop_font', 'Font'), property: 'font-family', type: 'select', options: FONT_OPTIONS },
+                        { property: 'font-size',      label: t('prop_font_size', 'Size'),           type: 'integer', units: ['px', 'rem', 'em', '%', 'vw'] },
                         {
-                            label: 'Tučnost',
+                            label: t('prop_font_weight', 'Weight'),
                             property: 'font-weight',
                             type: 'select',
                             options: [
@@ -197,91 +198,91 @@ export function buildConfig({ canvasCss, mediaItems }) {
                                 { value: '900', name: 'Black 900' },
                             ],
                         },
-                        { property: 'line-height',    label: 'Výška řádku',   type: 'integer', units: ['', 'px', 'em'] },
-                        { property: 'letter-spacing', label: 'Mezery písmen', type: 'integer', units: ['px', 'em'] },
-                        { property: 'color',          label: 'Barva textu',   type: 'color' },
+                        { property: 'line-height',    label: t('prop_line_height', 'Line height'),    type: 'integer', units: ['', 'px', 'em'] },
+                        { property: 'letter-spacing', label: t('prop_letter_spacing', 'Letter spacing'), type: 'integer', units: ['px', 'em'] },
+                        { property: 'color',          label: t('prop_color', 'Text color'),           type: 'color' },
                         {
-                            label: 'Zarovnání',
+                            label: t('prop_text_align', 'Alignment'),
                             property: 'text-align',
                             type: 'radio',
                             options: [
-                                { value: 'left',    name: 'Vlevo' },
-                                { value: 'center',  name: 'Střed' },
-                                { value: 'right',   name: 'Vpravo' },
-                                { value: 'justify', name: 'Do bloku' },
+                                { value: 'left',    name: t('val_left', 'Left') },
+                                { value: 'center',  name: t('val_center', 'Center') },
+                                { value: 'right',   name: t('val_right', 'Right') },
+                                { value: 'justify', name: t('val_justify', 'Justify') },
                             ],
                         },
                         {
-                            label: 'Transformace',
+                            label: t('prop_text_transform', 'Transform'),
                             property: 'text-transform',
                             type: 'select',
                             options: [
-                                { value: 'none',       name: 'Žádná' },
+                                { value: 'none',       name: t('val_none_transform', 'None') },
                                 { value: 'uppercase',  name: 'UPPERCASE' },
                                 { value: 'lowercase',  name: 'lowercase' },
                                 { value: 'capitalize', name: 'Capitalize' },
                             ],
                         },
                         {
-                            label: 'Dekorace',
+                            label: t('prop_text_decoration', 'Decoration'),
                             property: 'text-decoration',
                             type: 'select',
                             options: [
-                                { value: 'none',         name: 'Žádná' },
-                                { value: 'underline',    name: 'Podtržení' },
-                                { value: 'line-through', name: 'Přeškrtnutí' },
+                                { value: 'none',         name: t('val_no_decoration', 'None') },
+                                { value: 'underline',    name: t('val_underline', 'Underline') },
+                                { value: 'line-through', name: t('val_line_through', 'Strikethrough') },
                             ],
                         },
-                        { property: 'text-shadow', label: 'Stín textu' },
+                        { property: 'text-shadow', label: t('prop_text_shadow', 'Text shadow') },
                     ],
                 },
                 {
-                    name: 'Pozadí',
+                    name: t('sector_background', 'Background'),
                     open: false,
                     properties: [
-                        { property: 'background-color',    label: 'Barva pozadí',      type: 'color' },
-                        { property: 'background-image',    label: 'Obrázek / Gradient' },
+                        { property: 'background-color',    label: t('prop_bg_color', 'Background color'), type: 'color' },
+                        { property: 'background-image',    label: t('prop_bg_image', 'Image / Gradient') },
                         {
-                            label: 'Velikost pozadí',
+                            label: t('prop_bg_size', 'Background size'),
                             property: 'background-size',
                             type: 'select',
                             options: [
-                                { value: 'auto',    name: 'Auto' },
-                                { value: 'cover',   name: 'Cover' },
-                                { value: 'contain', name: 'Contain' },
+                                { value: 'auto',    name: t('val_bg_auto', 'Auto') },
+                                { value: 'cover',   name: t('val_bg_cover', 'Cover') },
+                                { value: 'contain', name: t('val_bg_contain', 'Contain') },
                             ],
                         },
-                        { property: 'background-position', label: 'Pozice pozadí' },
+                        { property: 'background-position', label: t('prop_bg_position', 'Background position') },
                         {
-                            label: 'Opakování',
+                            label: t('prop_bg_repeat', 'Repeat'),
                             property: 'background-repeat',
                             type: 'select',
                             options: [
-                                { value: 'no-repeat', name: 'Ne' },
-                                { value: 'repeat',    name: 'Opakovat' },
-                                { value: 'repeat-x',  name: 'Opakovat X' },
-                                { value: 'repeat-y',  name: 'Opakovat Y' },
+                                { value: 'no-repeat', name: t('val_no_repeat', 'No') },
+                                { value: 'repeat',    name: t('val_repeat', 'Repeat') },
+                                { value: 'repeat-x',  name: t('val_repeat_x', 'Repeat X') },
+                                { value: 'repeat-y',  name: t('val_repeat_y', 'Repeat Y') },
                             ],
                         },
                     ],
                 },
                 {
-                    name: 'Okraje & Stín',
+                    name: t('sector_borders', 'Borders & Shadow'),
                     open: false,
                     properties: [
-                        { property: 'border-radius', label: 'Zaoblení',    type: 'integer', units: ['px', 'rem', '%'] },
-                        { property: 'border',        label: 'Okraj' },
-                        { property: 'border-color',  label: 'Barva okraje', type: 'color' },
-                        { property: 'box-shadow',    label: 'Stín boxu' },
-                        { property: 'opacity',       label: 'Průhlednost', type: 'slider', min: 0, max: 1, step: 0.01 },
+                        { property: 'border-radius', label: t('prop_border_radius', 'Rounding'),    type: 'integer', units: ['px', 'rem', '%'] },
+                        { property: 'border',        label: t('prop_border', 'Border') },
+                        { property: 'border-color',  label: t('prop_border_color', 'Border color'), type: 'color' },
+                        { property: 'box-shadow',    label: t('prop_box_shadow', 'Box shadow') },
+                        { property: 'opacity',       label: t('prop_opacity', 'Opacity'),           type: 'slider', min: 0, max: 1, step: 0.01 },
                     ],
                 },
                 {
-                    name: 'Pozice',
+                    name: t('sector_position', 'Position'),
                     open: false,
                     properties: [
                         {
-                            label: 'Typ pozice',
+                            label: t('prop_position', 'Position type'),
                             property: 'position',
                             type: 'select',
                             options: [
@@ -292,22 +293,22 @@ export function buildConfig({ canvasCss, mediaItems }) {
                                 { value: 'sticky',   name: 'Sticky' },
                             ],
                         },
-                        { property: 'top',     label: 'Nahoře', type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'right',   label: 'Vpravo', type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'bottom',  label: 'Dole',   type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'left',    label: 'Vlevo',  type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'z-index', label: 'Z-index', type: 'integer' },
+                        { property: 'top',     label: t('prop_top', 'Top'),    type: 'integer', units: ['px', '%', 'rem'] },
+                        { property: 'right',   label: t('prop_right', 'Right'), type: 'integer', units: ['px', '%', 'rem'] },
+                        { property: 'bottom',  label: t('prop_bottom', 'Bottom'), type: 'integer', units: ['px', '%', 'rem'] },
+                        { property: 'left',    label: t('prop_left', 'Left'),  type: 'integer', units: ['px', '%', 'rem'] },
+                        { property: 'z-index', label: t('prop_z_index', 'Z-index'), type: 'integer' },
                     ],
                 },
                 {
-                    name: 'Transformace & Animace',
+                    name: t('sector_transform', 'Transform & Animations'),
                     open: false,
                     properties: [
-                        { property: 'transform',  label: 'Transform' },
-                        { property: 'transition', label: 'Transition' },
+                        { property: 'transform',  label: t('prop_transform', 'Transform') },
+                        { property: 'transition', label: t('prop_transition', 'Transition') },
                         {
                             property: 'cursor',
-                            label: 'Kurzor',
+                            label: t('prop_cursor', 'Cursor'),
                             type: 'select',
                             options: [
                                 { value: 'default',     name: 'Default' },
