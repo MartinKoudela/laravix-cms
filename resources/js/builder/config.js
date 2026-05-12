@@ -1,6 +1,27 @@
 import grapesjsPresetWebpage from 'grapesjs-preset-webpage';
 import { FONT_AWESOME_CSS, GOOGLE_FONTS } from './constants';
 
+const DIR = {
+    row:           `<i class="fa-solid fa-arrow-right"></i>`,
+    column:        `<i class="fa-solid fa-arrow-down"></i>`,
+    rowReverse:    `<i class="fa-solid fa-arrow-left"></i>`,
+    columnReverse: `<i class="fa-solid fa-arrow-up"></i>`,
+};
+const JC = {
+    start:   `<i class="fa-solid fa-align-left"></i>`,
+    center:  `<i class="fa-solid fa-align-center"></i>`,
+    end:     `<i class="fa-solid fa-align-right"></i>`,
+    between: `<i class="fa-solid fa-align-justify"></i>`,
+    around:  `<i class="fa-solid fa-grip-lines-vertical"></i>`,
+};
+const R90 = 'transform:rotate(-90deg);display:inline-block';
+const AI = {
+    start:   `<i class="fa-solid fa-align-left" style="${R90}"></i>`,
+    center:  `<i class="fa-solid fa-align-center" style="${R90}"></i>`,
+    end:     `<i class="fa-solid fa-align-right" style="${R90}"></i>`,
+    stretch: `<i class="fa-solid fa-align-justify" style="${R90}"></i>`,
+};
+
 const FONT_OPTIONS = [
     { value: 'inherit',   name: '— Zdědit —' },
     ...GOOGLE_FONTS.map(f => ({ value: `'${f}', sans-serif`, name: f })),
@@ -65,40 +86,44 @@ export function buildConfig({ canvasCss, mediaItems }) {
                             label: 'Směr',
                             property: 'flex-direction',
                             type: 'radio',
+                            requires: { display: ['flex'] },
                             options: [
-                                { value: 'row',            name: '→ Row' },
-                                { value: 'column',         name: '↓ Column' },
-                                { value: 'row-reverse',    name: '← Row rev.' },
-                                { value: 'column-reverse', name: '↑ Col. rev.' },
+                                { value: 'row',            name: DIR.row,           title: 'Row →' },
+                                { value: 'column',         name: DIR.column,        title: 'Column ↓' },
+                                { value: 'row-reverse',    name: DIR.rowReverse,    title: 'Row reverse ←' },
+                                { value: 'column-reverse', name: DIR.columnReverse, title: 'Column reverse ↑' },
                             ],
                         },
                         {
                             label: 'Zarovnání X',
                             property: 'justify-content',
                             type: 'radio',
+                            requires: { display: ['flex'] },
                             options: [
-                                { value: 'flex-start',    name: 'Start' },
-                                { value: 'center',        name: 'Střed' },
-                                { value: 'flex-end',      name: 'End' },
-                                { value: 'space-between', name: 'Between' },
-                                { value: 'space-around',  name: 'Around' },
+                                { value: 'flex-start',    name: JC.start,   title: 'Start' },
+                                { value: 'center',        name: JC.center,  title: 'Střed' },
+                                { value: 'flex-end',      name: JC.end,     title: 'End' },
+                                { value: 'space-between', name: JC.between, title: 'Space between' },
+                                { value: 'space-around',  name: JC.around,  title: 'Space around' },
                             ],
                         },
                         {
                             label: 'Zarovnání Y',
                             property: 'align-items',
                             type: 'radio',
+                            requires: { display: ['flex'] },
                             options: [
-                                { value: 'flex-start', name: 'Start' },
-                                { value: 'center',     name: 'Střed' },
-                                { value: 'flex-end',   name: 'End' },
-                                { value: 'stretch',    name: 'Stretch' },
+                                { value: 'flex-start', name: AI.start,   title: 'Start' },
+                                { value: 'center',     name: AI.center,  title: 'Střed' },
+                                { value: 'flex-end',   name: AI.end,     title: 'End' },
+                                { value: 'stretch',    name: AI.stretch, title: 'Stretch' },
                             ],
                         },
                         {
                             label: 'Zalamování',
                             property: 'flex-wrap',
                             type: 'radio',
+                            requires: { display: ['flex'] },
                             options: [
                                 { value: 'nowrap', name: 'Ne' },
                                 { value: 'wrap',   name: 'Ano' },
