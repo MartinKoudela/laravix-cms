@@ -14,14 +14,11 @@
     @if($seo['description'])
         <meta name="description" content="{{ $seo['description'] }}">
     @endif
-
     @if($seo['noindex'])
         <meta name="robots" content="noindex, nofollow">
     @endif
-
     <link rel="canonical" href="{{ $seo['canonical'] }}">
 
-    {{-- Open Graph --}}
     <meta property="og:title" content="{{ $seo['title'] }}">
     <meta property="og:type" content="{{ $content->type === 'post' ? 'article' : 'website' }}">
     <meta property="og:url" content="{{ $seo['canonical'] }}">
@@ -32,8 +29,6 @@
     @if($seo['og_image_url'])
         <meta property="og:image" content="{{ $seo['og_image_url'] }}">
     @endif
-
-    {{-- Twitter Card --}}
     <meta name="twitter:card" content="{{ $seo['og_image_url'] ? 'summary_large_image' : 'summary' }}">
     <meta name="twitter:title" content="{{ $seo['title'] }}">
     @if($seo['description'])
@@ -45,13 +40,10 @@
     @if($settings->get('twitter_url'))
         <meta name="twitter:site" content="{{ $settings->get('twitter_url') }}">
     @endif
-
-    {{-- Search Console verification --}}
     @if($settings->get('google_site_verification'))
         <meta name="google-site-verification" content="{{ $settings->get('google_site_verification') }}">
     @endif
 
-    {{-- JSON-LD --}}
     @php
         $sameAs = array_values(array_filter([
             $settings->get('twitter_url'),
@@ -60,61 +52,207 @@
             $settings->get('instagram_url'),
             $settings->get('github_url'),
         ]));
-
-        $organization = array_filter([
-            '@type' => 'Organization',
-            'name'  => $settings->get('site_name', $site->name),
-            'url'   => url('/'),
-            'sameAs' => $sameAs ?: null,
-        ]);
-
-        $webpage = array_filter([
-            '@type'         => $content->type === 'post' ? 'Article' : 'WebPage',
-            'headline'      => $seo['title'],
-            'url'           => $seo['canonical'],
-            'description'   => $seo['description'] ?: null,
-            'image'         => $seo['og_image_url'] ?: null,
-            'datePublished' => $content->published_at?->toIso8601String(),
-            'dateModified'  => $content->updated_at->toIso8601String(),
-        ]);
-
         $jsonLd = [
             '@context' => 'https://schema.org',
-            '@graph'   => [$organization, $webpage],
+            '@graph' => [
+                array_filter(['@type' => 'Organization', 'name' => $settings->get('site_name', $site->name), 'url' => url('/'), 'sameAs' => $sameAs ?: null]),
+                array_filter(['@type' => $content->type === 'post' ? 'Article' : 'WebPage', 'headline' => $seo['title'], 'url' => $seo['canonical'], 'description' => $seo['description'] ?: null, 'image' => $seo['og_image_url'] ?: null, 'datePublished' => $content->published_at?->toIso8601String(), 'dateModified' => $content->updated_at->toIso8601String()]),
+            ],
         ];
     @endphp
     <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
 
     @vite('resources/css/app.css')
+
+    {{-- Nav design: Google Fonts + CSS overrides --}}
+    @php
+        $hd = collect($navDesign['header'] ?? []);
+        $fd = collect($navDesign['footer'] ?? []);
+
+        $googleFontMap = [
+            'Inter'              => 'Inter:wght@300;400;500;600;700',
+            'Roboto'             => 'Roboto:wght@300;400;500;700',
+            'Open Sans'          => 'Open+Sans:wght@300;400;500;600;700',
+            'Lato'               => 'Lato:wght@300;400;700',
+            'Montserrat'         => 'Montserrat:wght@300;400;500;600;700',
+            'Poppins'            => 'Poppins:wght@300;400;500;600;700',
+            'Nunito'             => 'Nunito:wght@300;400;500;600;700',
+            'Raleway'            => 'Raleway:wght@300;400;500;600;700',
+            'Ubuntu'             => 'Ubuntu:wght@300;400;500;700',
+            'Rubik'              => 'Rubik:wght@300;400;500;600;700',
+            'Work Sans'          => 'Work+Sans:wght@300;400;500;600;700',
+            'DM Sans'            => 'DM+Sans:wght@300;400;500;600;700',
+            'Noto Sans'          => 'Noto+Sans:wght@300;400;500;600;700',
+            'Source Sans 3'      => 'Source+Sans+3:wght@300;400;500;600;700',
+            'Manrope'            => 'Manrope:wght@300;400;500;600;700',
+            'Outfit'             => 'Outfit:wght@300;400;500;600;700',
+            'Plus Jakarta Sans'  => 'Plus+Jakarta+Sans:wght@300;400;500;600;700',
+            'Playfair Display'   => 'Playfair+Display:wght@400;500;600;700',
+            'Merriweather'       => 'Merriweather:wght@300;400;700',
+            'Lora'               => 'Lora:wght@400;500;600;700',
+            'PT Serif'           => 'PT+Serif:wght@400;700',
+            'Libre Baskerville'  => 'Libre+Baskerville:wght@400;700',
+            'EB Garamond'        => 'EB+Garamond:wght@400;500;600;700',
+            'Cormorant Garamond' => 'Cormorant+Garamond:wght@300;400;500;600;700',
+            'Crimson Text'       => 'Crimson+Text:wght@400;600;700',
+        ];
+
+        $fontsToLoad = collect([$hd->get('font_family'), $fd->get('font_family')])
+            ->filter()
+            ->flatMap(fn ($f) => collect($googleFontMap)->filter(fn ($_, $n) => str_starts_with($f, $n))->values())
+            ->unique();
+
+        // Header computed values
+        $hIsSticky       = $hd->get('sticky') === null ? true : (bool) $hd->get('sticky');
+        $hHeight         = (int) ($hd->get('height') ?: 64);
+        $hLogoHeight     = (int) ($hd->get('logo_height') ?: 32);
+        $hLinksGap       = (int) ($hd->get('links_gap') ?: 24);
+        $hLinksAlign     = $hd->get('links_align', 'flex-end');
+        $hBg             = $hd->get('bg_color', '#ffffff');
+        $hText           = $hd->get('text_color', '#4b5563');
+        $hHover          = $hd->get('hover_color');
+        $hActive         = $hd->get('active_color');
+        $hBorderColor    = $hd->get('border_color', '#e5e7eb');
+        $hBorderWidth    = $hd->get('border_width', '1px');
+        $hDropdownBg     = $hd->get('dropdown_bg', '#ffffff');
+        $hDropdownText   = $hd->get('dropdown_text', '#374151');
+        $hDropdownHoverBg = $hd->get('dropdown_hover_bg', '#f9fafb');
+        $hFont           = $hd->get('font_family');
+        $hSize           = $hd->get('font_size');
+        $hWeight         = $hd->get('font_weight');
+
+        // Background opacity → rgba conversion
+        $hBgOpacity  = max(0, min(100, (int) ($hd->get('bg_opacity', 100))));
+        $hBgAlpha    = round($hBgOpacity / 100, 2);
+        $hBgHex      = ltrim($hBg, '#');
+        if (strlen($hBgHex) === 3) {
+            $hBgHex = $hBgHex[0].$hBgHex[0].$hBgHex[1].$hBgHex[1].$hBgHex[2].$hBgHex[2];
+        }
+        $hBgRgba = sprintf(
+            'rgba(%d,%d,%d,%s)',
+            hexdec(substr($hBgHex, 0, 2)),
+            hexdec(substr($hBgHex, 2, 2)),
+            hexdec(substr($hBgHex, 4, 2)),
+            $hBgAlpha
+        );
+        $hIsTranslucent = $hBgAlpha < 1.0;
+
+        $shadowMap = [
+            'shadow_sm' => '0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px -1px rgba(0,0,0,.1)',
+            'shadow_md' => '0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -2px rgba(0,0,0,.1)',
+            'shadow_lg' => '0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1)',
+        ];
+        $hShadow = $shadowMap[$hd->get('shadow', '')] ?? null;
+
+        $hHeaderStyle = collect([
+            'background-color:' . $hBgRgba,
+            $hIsTranslucent ? 'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)' : null,
+            $hBorderWidth !== '0px' ? 'border-bottom:' . $hBorderWidth . ' solid ' . $hBorderColor : 'border-bottom:none',
+            $hShadow ? 'box-shadow:' . $hShadow : null,
+            $hFont ? 'font-family:' . $hFont : null,
+        ])->filter()->implode(';');
+
+        $hLinkFontStyle = collect([
+            $hFont   ? 'font-family:' . $hFont   : null,
+            $hSize   ? 'font-size:' . $hSize . 'px'  : null,
+            $hWeight ? 'font-weight:' . $hWeight : null,
+        ])->filter()->implode(';');
+
+        // Footer computed values
+        $fIsTransparent  = false;
+        $fBg             = $fd->get('bg_color', '#f9fafb');
+        $fText           = $fd->get('text_color', '#6b7280');
+        $fHover          = $fd->get('hover_color');
+        $fBorderColor    = $fd->get('border_color', '#e5e7eb');
+        $fFont           = $fd->get('font_family');
+        $fSize           = $fd->get('font_size');
+        $fWeight         = $fd->get('font_weight');
+        $fPaddingY       = (int) ($fd->get('padding_y') ?: 32);
+        $fLayout         = $fd->get('layout', 'row');
+        $fCopyright      = $fd->get('copyright_text');
+        $fShowCopyright  = $fd->get('show_copyright') === null ? true : (bool) $fd->get('show_copyright');
+
+        $fFooterStyle = collect([
+            'background-color:' . $fBg,
+            'border-top:1px solid ' . $fBorderColor,
+            $fFont ? 'font-family:' . $fFont : null,
+        ])->filter()->implode(';');
+
+        $fLinkFontStyle = collect([
+            $fFont   ? 'font-family:' . $fFont   : null,
+            $fSize   ? 'font-size:' . $fSize . 'px'  : null,
+            $fWeight ? 'font-weight:' . $fWeight : null,
+        ])->filter()->implode(';');
+
+        // Active link detection
+        $currentPath = request()->getPathInfo();
+    @endphp
+
+    @if($fontsToLoad->isNotEmpty())
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family={{ $fontsToLoad->implode('&family=') }}&display=swap" rel="stylesheet">
+    @endif
+
+    <style>
+        @if($hHover)header .nav-link:hover { color: {{ $hHover }} !important; }@endif
+        @if($fHover)footer .nav-link:hover { color: {{ $fHover }} !important; }@endif
+        @if($hDropdownHoverBg !== '#f9fafb')header .nav-dropdown-item:hover { background-color: {{ $hDropdownHoverBg }} !important; }@endif
+    </style>
+
     @stack('head')
 </head>
+
 <body class="h-full bg-white text-gray-900 antialiased flex flex-col min-h-screen">
 
-    {{-- Navigation --}}
-    <header class="border-b border-gray-200 bg-white sticky top-0 z-50">
+    {{-- Header --}}
+    <header
+        class="{{ $hIsSticky ? 'sticky top-0 z-50' : '' }}"
+        style="{{ $hHeaderStyle }}"
+    >
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="flex items-center justify-between h-16">
-                <a href="/" class="flex items-center hover:opacity-80 transition-opacity">
+            @php
+                $isCentered = $hLinksAlign === 'center';
+                $isLeft     = $hLinksAlign === 'flex-start';
+            @endphp
+            <div class="flex items-center {{ $isCentered || $isLeft ? '' : 'justify-between' }} relative" style="height:{{ $hHeight }}px">
+
+                {{-- Logo --}}
+                <a href="/" class="flex items-center hover:opacity-80 transition-opacity shrink-0">
                     @if($logoMedia)
-                        <img src="{{ $logoMedia->variantUrl(ImageVariant::FULL) }}" alt="{{ $settings->get('site_name', $site->name) }}" class="h-8 w-auto">
+                        <img src="{{ $logoMedia->variantUrl(ImageVariant::FULL) }}"
+                             alt="{{ $settings->get('site_name', $site->name) }}"
+                             style="height:{{ $hLogoHeight }}px;width:auto">
                     @else
-                        <span class="text-xl font-bold text-gray-900">{{ $settings->get('site_name', $site->name) }}</span>
+                        <span class="text-xl font-bold" style="color:{{ $hText }}">
+                            {{ $settings->get('site_name', $site->name) }}
+                        </span>
                     @endif
                 </a>
 
                 {{-- Desktop nav --}}
-                <nav class="hidden md:flex items-center gap-6">
+                <nav class="hidden md:flex items-center {{ $isCentered ? 'absolute left-1/2 -translate-x-1/2' : ($isLeft ? 'ml-8' : '') }}"
+                     style="gap:{{ $hLinksGap }}px">
                     @foreach ($navigations['header'] ?? [] as $item)
+                        @php
+                            $urlPath  = parse_url($item['url'] ?? '', PHP_URL_PATH) ?? '';
+                            $isActive = $urlPath && ($currentPath === $urlPath || ($urlPath !== '/' && str_starts_with($currentPath, rtrim($urlPath, '/'))));
+                            $linkColor = ($isActive && $hActive) ? $hActive : $hText;
+                            $linkStyle = collect([$hLinkFontStyle, 'color:' . $linkColor])->filter()->implode(';');
+                        @endphp
                         @if (!empty($item['children']))
                             <div class="relative group">
                                 <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
-                                   class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                                   class="nav-link font-medium transition-colors"
+                                   style="{{ $linkStyle }}">
                                     {{ $item['label'] }}
                                 </a>
-                                <div class="absolute left-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block z-50">
+                                <div class="absolute left-0 top-full mt-1 w-52 rounded-md shadow-lg hidden group-hover:block z-50 overflow-hidden"
+                                     style="background-color:{{ $hDropdownBg }};border:1px solid {{ $hBorderColor }}">
                                     @foreach ($item['children'] as $child)
                                         <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
-                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                           class="nav-dropdown-item block px-4 py-2 text-sm transition-colors"
+                                           style="color:{{ $hDropdownText }}">
                                             {{ $child['label'] }}
                                         </a>
                                     @endforeach
@@ -122,15 +260,18 @@
                             </div>
                         @else
                             <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
-                               class="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+                               class="nav-link font-medium transition-colors"
+                               style="{{ $linkStyle }}">
                                 {{ $item['label'] }}
                             </a>
                         @endif
                     @endforeach
                 </nav>
 
-                {{-- Mobile menu button --}}
-                <button id="mobile-menu-toggle" class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                {{-- Mobile toggle --}}
+                <button id="mobile-menu-toggle"
+                        class="md:hidden p-2 rounded-md transition-colors {{ $isCentered || $isLeft ? 'ml-auto' : '' }}"
+                        style="color:{{ $hText }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
@@ -138,15 +279,22 @@
             </div>
 
             {{-- Mobile nav --}}
-            <nav id="mobile-menu" class="hidden md:hidden pb-4 flex flex-col gap-3">
+            <nav id="mobile-menu" class="hidden md:hidden pb-4 flex flex-col gap-2">
                 @foreach ($navigations['header'] ?? [] as $item)
+                    @php
+                        $urlPath  = parse_url($item['url'] ?? '', PHP_URL_PATH) ?? '';
+                        $isActive = $urlPath && ($currentPath === $urlPath || ($urlPath !== '/' && str_starts_with($currentPath, rtrim($urlPath, '/'))));
+                        $linkColor = ($isActive && $hActive) ? $hActive : $hText;
+                    @endphp
                     <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
-                       class="text-sm font-medium text-gray-700 hover:text-gray-900 py-1">
+                       class="nav-link py-1.5 border-b border-gray-100"
+                       style="{{ collect([$hLinkFontStyle, 'color:' . $linkColor])->filter()->implode(';') }}">
                         {{ $item['label'] }}
                     </a>
                     @foreach ($item['children'] ?? [] as $child)
                         <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
-                           class="text-sm text-gray-500 hover:text-gray-900 py-1 pl-4">
+                           class="nav-link py-1 pl-4 text-sm"
+                           style="{{ collect([$hLinkFontStyle, 'color:' . $hText, 'opacity:.75'])->filter()->implode(';') }}">
                             {{ $child['label'] }}
                         </a>
                     @endforeach
@@ -158,9 +306,9 @@
     {{-- Page content --}}
     @php
         $mainStyle = collect([
-            $appearance->get('color') ? 'background-color:'.$appearance->get('color') : null,
-            $appearance->get('text_color') ? 'color:'.$appearance->get('text_color') : null,
-            $bgMedia ? 'background-image:url('.$bgMedia->variantUrl(ImageVariant::LARGE).');background-size:cover;background-position:center' : null,
+            $appearance->get('color') ? 'background-color:' . $appearance->get('color') : null,
+            $appearance->get('text_color') ? 'color:' . $appearance->get('text_color') : null,
+            $bgMedia ? 'background-image:url(' . $bgMedia->variantUrl(ImageVariant::LARGE) . ');background-size:cover;background-position:center' : null,
         ])->filter()->implode(';');
     @endphp
     <main class="flex-1 {{ $appearance->get('custom_css_class') }}"
@@ -169,26 +317,34 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="border-t border-gray-200 bg-gray-50 mt-auto">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+    <footer class="mt-auto" style="{{ $fFooterStyle }}">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6"
+             style="padding-top:{{ $fPaddingY }}px;padding-bottom:{{ $fPaddingY }}px">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                <p class="text-sm text-gray-500">&copy; {{ date('Y') }} {{ $site->name }}</p>
-                <nav class="flex flex-wrap justify-center gap-4">
+
+                @if($fShowCopyright)
+                <p class="text-sm" style="color:{{ $fText }}{{ $fSize ? ';font-size:' . $fSize . 'px' : '' }}">
+                    &copy; {{ date('Y') }} {{ $fCopyright ?: $site->name }}
+                </p>
+                @endif
+
+                <nav class="{{ $fLayout === 'stacked' ? 'flex flex-col items-center gap-2' : 'flex flex-wrap justify-center gap-5' }}">
                     @foreach ($navigations['footer'] ?? [] as $item)
                         <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
-                           class="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                           class="nav-link transition-colors"
+                           style="{{ collect([$fLinkFontStyle, 'color:' . $fText])->filter()->implode(';') }}">
                             {{ $item['label'] }}
                         </a>
                     @endforeach
                 </nav>
+
             </div>
         </div>
     </footer>
 
     <script>
         document.getElementById('mobile-menu-toggle')?.addEventListener('click', function () {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+            document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>
     @stack('scripts')

@@ -45,6 +45,7 @@ class PreviewController extends Controller
 
         $data = $this->pageDataBuilder->build($site, $content);
         $data['navigations'] = $cached['navigations'];
+        $data['navDesign'] = $cached['nav_design'] ?? [];
 
         $seo = $this->buildSeo($content, $data);
 

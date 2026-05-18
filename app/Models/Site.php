@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
-use Promethys\Revive\Concerns\Recyclable;
 
-#[Fillable(['name', 'domain', 'theme', 'navigations'])]
+#[Fillable(['name', 'domain', 'theme', 'navigations', 'nav_design'])]
 class Site extends Model implements HasAvatar
 {
-    use LogsActivity, HasFactory, SoftDeletes, Recyclable;
+    use HasFactory, LogsActivity, Recyclable, SoftDeletes;
 
     public function getFilamentAvatarUrl(): ?string
     {
@@ -42,6 +42,7 @@ class Site extends Model implements HasAvatar
     {
         return [
             'navigations' => 'array',
+            'nav_design' => 'array',
         ];
     }
 

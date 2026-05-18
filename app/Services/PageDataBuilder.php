@@ -88,12 +88,13 @@ class PageDataBuilder
         $faviconMedia = ($faviconId = (int) $settings->get('favicon')) ? $mediaMap->get($faviconId) : null;
 
         $navigations = $site->navigations ?? [];
+        $navDesign = $site->nav_design ?? [];
 
         return compact(
             'navPages', 'recentPosts', 'archivePosts',
             'settings', 'mediaMap', 'appearance',
             'bgMedia', 'systemFieldKeys', 'logoMedia', 'faviconMedia',
-            'navigations'
+            'navigations', 'navDesign'
         );
     }
 }
