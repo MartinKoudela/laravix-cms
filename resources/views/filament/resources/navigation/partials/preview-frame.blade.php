@@ -11,9 +11,10 @@
     </div>
     <iframe
         data-nav-preview
-        @if($scrollToBottom ?? false) data-scroll-to-bottom @endif
-        src="{{ route('nav.preview', $previewToken) }}"
+        data-nav-part="{{ $part ?? 'header' }}"
+        src="{{ route('nav.preview', $previewToken) }}?part={{ $part ?? 'header' }}"
         class="w-full border-0 block"
-        style="height: {{ $height }}px;"
+        style="height: 80px;"
+        scrolling="no"
     ></iframe>
 </div>

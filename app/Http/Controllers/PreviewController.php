@@ -49,6 +49,12 @@ class PreviewController extends Controller
 
         $seo = $this->buildSeo($content, $data);
 
+        $theme = $site->theme ?? 'default';
+        $navPartView = "themes.{$theme}::preview.nav";
+        if (request()->has('part') && view()->exists($navPartView)) {
+            return view($navPartView, array_merge($data, compact('content', 'site', 'seo')));
+        }
+
         return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));
     }
 

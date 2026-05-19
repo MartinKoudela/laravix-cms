@@ -2,7 +2,6 @@
 
     <div x-data="{ tab: 'items' }">
 
-        {{-- Tabs --}}
         <div class="flex gap-1 mb-6 border-b border-gray-200 dark:border-gray-700">
             <button
                 type="button"
@@ -26,12 +25,11 @@
             </button>
         </div>
 
-        {{-- Items tab --}}
         <div x-show="tab === 'items'" x-cloak>
 
             @include('filament.resources.navigation.partials.preview-frame', [
                 'label' => __('navigation.labels.header'),
-                'height' => 100,
+                'part'  => 'header',
             ])
 
             {{ $this->headerForm }}
@@ -39,8 +37,7 @@
             <div class="mt-8">
                 @include('filament.resources.navigation.partials.preview-frame', [
                     'label' => __('navigation.labels.footer'),
-                    'height' => 140,
-                    'scrollToBottom' => true,
+                    'part'  => 'footer',
                 ])
             </div>
 
@@ -48,12 +45,11 @@
 
         </div>
 
-        {{-- Design tab --}}
         <div x-show="tab === 'design'" x-cloak>
 
             @include('filament.resources.navigation.partials.preview-frame', [
                 'label' => __('navigation.labels.header'),
-                'height' => 100,
+                'part'  => 'header',
             ])
 
             {{ $this->headerDesignForm }}
@@ -61,8 +57,7 @@
             <div class="mt-8">
                 @include('filament.resources.navigation.partials.preview-frame', [
                     'label' => __('navigation.labels.footer'),
-                    'height' => 140,
-                    'scrollToBottom' => true,
+                    'part'  => 'footer',
                 ])
             </div>
 
@@ -77,20 +72,18 @@
 
         function refreshAllPreviews() {
             document.querySelectorAll('[data-nav-preview]').forEach(function (iframe) {
-                iframe.src = iframe.src;
+                var src = iframe.getAttribute('src');
+                iframe.setAttribute('src', src);
             });
         }
 
-        function scrollFooterIframes() {
-            document.querySelectorAll('[data-nav-preview][data-scroll-to-bottom]').forEach(function (iframe) {
-                try {
-                    iframe.contentWindow.scrollTo(0, iframe.contentWindow.document.body.scrollHeight);
-                } catch (e) {}
+        window.addEventListener('message', function (event) {
+            if (!event.data || event.data.type !== 'nav-preview-height') { return; }
+            document.querySelectorAll('[data-nav-preview]').forEach(function (iframe) {
+                if (iframe.contentWindow === event.source) {
+                    iframe.style.height = event.data.height + 'px';
+                }
             });
-        }
-
-        document.querySelectorAll('[data-nav-preview][data-scroll-to-bottom]').forEach(function (iframe) {
-            iframe.addEventListener('load', scrollFooterIframes);
         });
 
         document.addEventListener('livewire:initialized', function () {

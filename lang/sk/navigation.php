@@ -11,6 +11,7 @@ return [
         'target' => 'Cieľ',
         'submenu' => 'Podmenu',
         'url_manual' => 'Alebo zadajte URL ručne',
+        'icon' => 'Ikona',
     ],
     'tabs' => [
         'items' => 'Položky menu',
@@ -73,6 +74,12 @@ return [
         'section_content' => 'Obsah',
         'copyright_text' => 'Text copyrightu',
         'show_copyright' => 'Zobraziť copyright',
+        // Ikony
+        'icon_position' => 'Pozícia ikony',
+        'icon_none' => 'Bez ikon',
+        'icon_pos_before' => 'Pred textom',
+        'icon_pos_after' => 'Za textom',
+        'icon_pos_only' => 'Len ikona',
     ],
     'options' => [
         'same_tab' => 'Rovnaká záložka',

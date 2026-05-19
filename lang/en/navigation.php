@@ -11,6 +11,7 @@ return [
         'target' => 'Target',
         'submenu' => 'Submenu',
         'url_manual' => 'Or enter a URL manually',
+        'icon' => 'Icon',
     ],
     'tabs' => [
         'items' => 'Menu Items',
@@ -73,6 +74,12 @@ return [
         'section_content' => 'Content',
         'copyright_text' => 'Copyright Text',
         'show_copyright' => 'Show copyright',
+        // Icons
+        'icon_position' => 'Icon Position',
+        'icon_none' => 'No icons',
+        'icon_pos_before' => 'Before text',
+        'icon_pos_after' => 'After text',
+        'icon_pos_only' => 'Icon only',
     ],
     'options' => [
         'same_tab' => 'Same tab',

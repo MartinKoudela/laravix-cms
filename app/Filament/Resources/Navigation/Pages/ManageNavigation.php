@@ -103,7 +103,7 @@ class ManageNavigation extends Page
 
     public function headerDesignForm(Schema $schema): Schema
     {
-        [$colorInput, $fontFamilyOptions, $fontWeightOptions, $borderWidthOptions, $shadowOptions, $linksAlignOptions] = $this->designFormSharedOptions();
+        [$colorInput, $fontFamilyOptions, $fontWeightOptions, $borderWidthOptions, $shadowOptions, $linksAlignOptions,, $iconPositionOptions] = $this->designFormSharedOptions();
 
         return $schema
             ->statePath('headerDesignData')
@@ -177,6 +177,10 @@ class ManageNavigation extends Page
                                     ->label(__('navigation.design.links_align'))
                                     ->options($linksAlignOptions)
                                     ->live(),
+                                Select::make('nav_design.header.icon_position')
+                                    ->label(__('navigation.design.icon_position'))
+                                    ->options($iconPositionOptions)
+                                    ->live(),
                             ])
                             ->columns(4),
 
@@ -216,7 +220,7 @@ class ManageNavigation extends Page
 
     public function footerDesignForm(Schema $schema): Schema
     {
-        [$colorInput, $fontFamilyOptions, $fontWeightOptions,,,, $footerLayoutOptions] = $this->designFormSharedOptions();
+        [$colorInput, $fontFamilyOptions, $fontWeightOptions,,,, $footerLayoutOptions, $iconPositionOptions] = $this->designFormSharedOptions();
 
         return $schema
             ->statePath('footerDesignData')
@@ -264,8 +268,12 @@ class ManageNavigation extends Page
                                     ->label(__('navigation.design.layout'))
                                     ->options($footerLayoutOptions)
                                     ->live(),
+                                Select::make('nav_design.footer.icon_position')
+                                    ->label(__('navigation.design.icon_position'))
+                                    ->options($iconPositionOptions)
+                                    ->live(),
                             ])
-                            ->columns(2),
+                            ->columns(3),
 
                         Section::make(__('navigation.design.section_content'))
                             ->schema([
@@ -406,6 +414,13 @@ class ManageNavigation extends Page
             'stacked' => __('navigation.design.footer_layout_stacked'),
         ];
 
-        return [$colorInput, $fontFamilyOptions, $fontWeightOptions, $borderWidthOptions, $shadowOptions, $linksAlignOptions, $footerLayoutOptions];
+        $iconPositionOptions = [
+            '' => __('navigation.design.icon_none'),
+            'before' => __('navigation.design.icon_pos_before'),
+            'after' => __('navigation.design.icon_pos_after'),
+            'only' => __('navigation.design.icon_pos_only'),
+        ];
+
+        return [$colorInput, $fontFamilyOptions, $fontWeightOptions, $borderWidthOptions, $shadowOptions, $linksAlignOptions, $footerLayoutOptions, $iconPositionOptions];
     }
 }

@@ -64,7 +64,6 @@
 
     @vite('resources/css/app.css')
 
-    {{-- Nav design: Google Fonts + CSS overrides --}}
     @php
         $hd = collect($navDesign['header'] ?? []);
         $fd = collect($navDesign['footer'] ?? []);
@@ -102,7 +101,6 @@
             ->flatMap(fn ($f) => collect($googleFontMap)->filter(fn ($_, $n) => str_starts_with($f, $n))->values())
             ->unique();
 
-        // Header computed values
         $hIsSticky       = $hd->get('sticky') === null ? true : (bool) $hd->get('sticky');
         $hHeight         = (int) ($hd->get('height') ?: 64);
         $hLogoHeight     = (int) ($hd->get('logo_height') ?: 32);
@@ -158,7 +156,6 @@
             $hWeight ? 'font-weight:' . $hWeight : null,
         ])->filter()->implode(';');
 
-        // Footer computed values
         $fIsTransparent  = false;
         $fBg             = $fd->get('bg_color', '#f9fafb');
         $fText           = $fd->get('text_color', '#6b7280');
@@ -184,7 +181,9 @@
             $fWeight ? 'font-weight:' . $fWeight : null,
         ])->filter()->implode(';');
 
-        // Active link detection
+        $hIconPos = $hd->get('icon_position', '');
+        $fIconPos = $fd->get('icon_position', '');
+
         $currentPath = request()->getPathInfo();
     @endphp
 
@@ -205,7 +204,6 @@
 
 <body class="h-full bg-white text-gray-900 antialiased flex flex-col min-h-screen">
 
-    {{-- Header --}}
     <header
         class="{{ $hIsSticky ? 'sticky top-0 z-50' : '' }}"
         style="{{ $hHeaderStyle }}"
@@ -217,7 +215,6 @@
             @endphp
             <div class="flex items-center {{ $isCentered || $isLeft ? '' : 'justify-between' }} relative" style="height:{{ $hHeight }}px">
 
-                {{-- Logo --}}
                 <a href="/" class="flex items-center hover:opacity-80 transition-opacity shrink-0">
                     @if($logoMedia)
                         <img src="{{ $logoMedia->variantUrl(ImageVariant::FULL) }}"
@@ -230,7 +227,6 @@
                     @endif
                 </a>
 
-                {{-- Desktop nav --}}
                 <nav class="hidden md:flex items-center {{ $isCentered ? 'absolute left-1/2 -translate-x-1/2' : ($isLeft ? 'ml-8' : '') }}"
                      style="gap:{{ $hLinksGap }}px">
                     @foreach ($navigations['header'] ?? [] as $item)
@@ -238,22 +234,40 @@
                             $urlPath  = parse_url($item['url'] ?? '', PHP_URL_PATH) ?? '';
                             $isActive = $urlPath && ($currentPath === $urlPath || ($urlPath !== '/' && str_starts_with($currentPath, rtrim($urlPath, '/'))));
                             $linkColor = ($isActive && $hActive) ? $hActive : $hText;
-                            $linkStyle = collect([$hLinkFontStyle, 'color:' . $linkColor])->filter()->implode(';');
+                            $hIconSvg = ($hIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                            $linkStyle = collect([$hLinkFontStyle, 'color:' . $linkColor, $hIconSvg ? 'display:inline-flex;align-items:center;gap:5px' : null])->filter()->implode(';');
+                            $hLinkText = $hIconPos === 'only' && $hIconSvg ? '' : e($item['label']);
+                            $hLinkHtml = match($hIconPos) {
+                                'before' => $hIconSvg . '<span>' . $hLinkText . '</span>',
+                                'after'  => '<span>' . $hLinkText . '</span>' . $hIconSvg,
+                                'only'   => $hIconSvg ?: '<span>' . $hLinkText . '</span>',
+                                default  => '<span>' . $hLinkText . '</span>',
+                            };
                         @endphp
                         @if (!empty($item['children']))
                             <div class="relative group">
                                 <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
                                    class="nav-link font-medium transition-colors"
                                    style="{{ $linkStyle }}">
-                                    {{ $item['label'] }}
+                                    {!! $hLinkHtml !!}
                                 </a>
                                 <div class="absolute left-0 top-full mt-1 w-52 rounded-md shadow-lg hidden group-hover:block z-50 overflow-hidden"
                                      style="background-color:{{ $hDropdownBg }};border:1px solid {{ $hBorderColor }}">
                                     @foreach ($item['children'] as $child)
+                                        @php
+                                            $cIconSvg = ($hIconPos && ! empty($child['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($child['icon']) : '';
+                                            $cLinkText = $hIconPos === 'only' && $cIconSvg ? '' : e($child['label']);
+                                            $cLinkHtml = match($hIconPos) {
+                                                'before' => $cIconSvg . '<span>' . $cLinkText . '</span>',
+                                                'after'  => '<span>' . $cLinkText . '</span>' . $cIconSvg,
+                                                'only'   => $cIconSvg ?: '<span>' . $cLinkText . '</span>',
+                                                default  => '<span>' . $cLinkText . '</span>',
+                                            };
+                                        @endphp
                                         <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
-                                           class="nav-dropdown-item block px-4 py-2 text-sm transition-colors"
+                                           class="nav-dropdown-item flex items-center gap-2 px-4 py-2 text-sm transition-colors"
                                            style="color:{{ $hDropdownText }}">
-                                            {{ $child['label'] }}
+                                            {!! $cLinkHtml !!}
                                         </a>
                                     @endforeach
                                 </div>
@@ -262,13 +276,12 @@
                             <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
                                class="nav-link font-medium transition-colors"
                                style="{{ $linkStyle }}">
-                                {{ $item['label'] }}
+                                {!! $hLinkHtml !!}
                             </a>
                         @endif
                     @endforeach
                 </nav>
 
-                {{-- Mobile toggle --}}
                 <button id="mobile-menu-toggle"
                         class="md:hidden p-2 rounded-md transition-colors {{ $isCentered || $isLeft ? 'ml-auto' : '' }}"
                         style="color:{{ $hText }}">
@@ -278,22 +291,29 @@
                 </button>
             </div>
 
-            {{-- Mobile nav --}}
             <nav id="mobile-menu" class="hidden md:hidden pb-4 flex flex-col gap-2">
                 @foreach ($navigations['header'] ?? [] as $item)
                     @php
                         $urlPath  = parse_url($item['url'] ?? '', PHP_URL_PATH) ?? '';
                         $isActive = $urlPath && ($currentPath === $urlPath || ($urlPath !== '/' && str_starts_with($currentPath, rtrim($urlPath, '/'))));
                         $linkColor = ($isActive && $hActive) ? $hActive : $hText;
+                        $mIconSvg = ($hIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                        $mLinkText = $hIconPos === 'only' && $mIconSvg ? '' : e($item['label']);
+                        $mLinkHtml = match($hIconPos) {
+                            'before' => $mIconSvg . '<span>' . $mLinkText . '</span>',
+                            'after'  => '<span>' . $mLinkText . '</span>' . $mIconSvg,
+                            'only'   => $mIconSvg ?: '<span>' . $mLinkText . '</span>',
+                            default  => '<span>' . $mLinkText . '</span>',
+                        };
                     @endphp
                     <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
-                       class="nav-link py-1.5 border-b border-gray-100"
+                       class="nav-link flex items-center gap-2 py-1.5 border-b border-gray-100"
                        style="{{ collect([$hLinkFontStyle, 'color:' . $linkColor])->filter()->implode(';') }}">
-                        {{ $item['label'] }}
+                        {!! $mLinkHtml !!}
                     </a>
                     @foreach ($item['children'] ?? [] as $child)
                         <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
-                           class="nav-link py-1 pl-4 text-sm"
+                           class="nav-link flex items-center gap-2 py-1 pl-4 text-sm"
                            style="{{ collect([$hLinkFontStyle, 'color:' . $hText, 'opacity:.75'])->filter()->implode(';') }}">
                             {{ $child['label'] }}
                         </a>
@@ -303,7 +323,6 @@
         </div>
     </header>
 
-    {{-- Page content --}}
     @php
         $mainStyle = collect([
             $appearance->get('color') ? 'background-color:' . $appearance->get('color') : null,
@@ -316,7 +335,6 @@
         @yield('content')
     </main>
 
-    {{-- Footer --}}
     <footer class="mt-auto" style="{{ $fFooterStyle }}">
         <div class="max-w-6xl mx-auto px-4 sm:px-6"
              style="padding-top:{{ $fPaddingY }}px;padding-bottom:{{ $fPaddingY }}px">
@@ -330,10 +348,20 @@
 
                 <nav class="{{ $fLayout === 'stacked' ? 'flex flex-col items-center gap-2' : 'flex flex-wrap justify-center gap-5' }}">
                     @foreach ($navigations['footer'] ?? [] as $item)
+                        @php
+                            $fIconSvg = ($fIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                            $fLinkText = $fIconPos === 'only' && $fIconSvg ? '' : e($item['label']);
+                            $fLinkHtml = match($fIconPos) {
+                                'before' => $fIconSvg . '<span>' . $fLinkText . '</span>',
+                                'after'  => '<span>' . $fLinkText . '</span>' . $fIconSvg,
+                                'only'   => $fIconSvg ?: '<span>' . $fLinkText . '</span>',
+                                default  => '<span>' . $fLinkText . '</span>',
+                            };
+                        @endphp
                         <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
-                           class="nav-link transition-colors"
+                           class="nav-link flex items-center gap-2 transition-colors"
                            style="{{ collect([$fLinkFontStyle, 'color:' . $fText])->filter()->implode(';') }}">
-                            {{ $item['label'] }}
+                            {!! $fLinkHtml !!}
                         </a>
                     @endforeach
                 </nav>
