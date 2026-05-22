@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Laravix CMS — Copyright (C) 2026 Martin Koudela (laravix.com)
+ * Licensed under GPL-3.0-or-later. See LICENSE for details.
+ */
+
 namespace App\Providers;
 
 use App\Blocks\ButtonBlock;
@@ -181,29 +186,30 @@ class AppServiceProvider extends ServiceProvider
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt_BR', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh_CN', 'ar', 'ru', 'ko', 'hi'])
+                ->locales(['en', 'cs', 'sk'])
+                // ->locales(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt_BR', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh_CN', 'ar', 'ru', 'ko', 'hi'])
                 ->flags([
                     'en' => 'https://flagcdn.com/gb.svg',
                     'cs' => 'https://flagcdn.com/cz.svg',
                     'sk' => 'https://flagcdn.com/sk.svg',
-                    'de' => 'https://flagcdn.com/de.svg',
-                    'fr' => 'https://flagcdn.com/fr.svg',
-                    'es' => 'https://flagcdn.com/es.svg',
-                    'it' => 'https://flagcdn.com/it.svg',
-                    'pl' => 'https://flagcdn.com/pl.svg',
-                    'pt_BR' => 'https://flagcdn.com/br.svg',
-                    'uk' => 'https://flagcdn.com/ua.svg',
-                    'nl' => 'https://flagcdn.com/nl.svg',
-                    'hu' => 'https://flagcdn.com/hu.svg',
-                    'ro' => 'https://flagcdn.com/ro.svg',
-                    'sv' => 'https://flagcdn.com/se.svg',
-                    'tr' => 'https://flagcdn.com/tr.svg',
-                    'ja' => 'https://flagcdn.com/jp.svg',
-                    'zh_CN' => 'https://flagcdn.com/cn.svg',
-                    'ar' => 'https://flagcdn.com/sa.svg',
-                    'ru' => 'https://flagcdn.com/ru.svg',
-                    'ko' => 'https://flagcdn.com/kr.svg',
-                    'hi' => 'https://flagcdn.com/in.svg',
+                    // 'de' => 'https://flagcdn.com/de.svg',
+                    // 'fr' => 'https://flagcdn.com/fr.svg',
+                    // 'es' => 'https://flagcdn.com/es.svg',
+                    // 'it' => 'https://flagcdn.com/it.svg',
+                    // 'pl' => 'https://flagcdn.com/pl.svg',
+                    // 'pt_BR' => 'https://flagcdn.com/br.svg',
+                    // 'uk' => 'https://flagcdn.com/ua.svg',
+                    // 'nl' => 'https://flagcdn.com/nl.svg',
+                    // 'hu' => 'https://flagcdn.com/hu.svg',
+                    // 'ro' => 'https://flagcdn.com/ro.svg',
+                    // 'sv' => 'https://flagcdn.com/se.svg',
+                    // 'tr' => 'https://flagcdn.com/tr.svg',
+                    // 'ja' => 'https://flagcdn.com/jp.svg',
+                    // 'zh_CN' => 'https://flagcdn.com/cn.svg',
+                    // 'ar' => 'https://flagcdn.com/sa.svg',
+                    // 'ru' => 'https://flagcdn.com/ru.svg',
+                    // 'ko' => 'https://flagcdn.com/kr.svg',
+                    // 'hi' => 'https://flagcdn.com/in.svg',
                 ])
                 ->circular()
                 ->maxHeight('40rem')

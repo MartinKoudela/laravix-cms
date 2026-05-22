@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Laravix CMS — Copyright (C) 2026 Martin Koudela (laravix.com)
+ * Licensed under GPL-3.0-or-later. See LICENSE for details.
+ */
+
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Tenancy\RegisterSite;
@@ -34,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->viteTheme('resources/css/filament/admin/theme.css')
+            ->renderHook('panels::head.end', fn () => new HtmlString('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">'))
             ->renderHook('panels::body.end', fn () => new HtmlString(app(Vite::class)('resources/js/filament/admin/app.js')))
             ->login()
             ->brandName('Laravix CMS')

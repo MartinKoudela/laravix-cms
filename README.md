@@ -17,8 +17,8 @@
     <img src="https://img.shields.io/github/commit-activity/m/MartinKoudela/laravix-cms?style=flat-square&color=6366f1" alt="Commit Activity">
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-AGPL_3.0-6366f1?style=flat-square" alt="License">
-  </a>
+<img src="https://img.shields.io/badge/License-GPL--3.0--or--later-6366f1?styl
+  e=flat-square" alt="License">  </a>
   <a href="https://laravix.com">
     <img src="https://img.shields.io/badge/Website-laravix.com-6366f1?style=flat-square" alt="laravix.com">
   </a>
@@ -39,7 +39,8 @@
 
 ## Overview
 
-Laravix CMS is a **multi-tenant** content management system. Each site is a fully isolated tenant with its own content, users, roles, navigation, settings, and theme — all managed from a single Filament admin panel.
+Laravix CMS is a **multi-tenant** content management system. Each site is a fully isolated tenant with its own content,
+users, roles, navigation, settings, and theme — all managed from a single Filament admin panel.
 
 **Core capabilities:**
 
@@ -102,11 +103,11 @@ vendor/bin/sail up -d
 vendor/bin/sail composer run dev
 ```
 
-| Service | URL                        |
-|---------|----------------------------|
-| App     | http://localhost           |
-| Admin   | http://localhost/admin     |
-| Mailpit | http://localhost:8025      |
+| Service | URL                    |
+|---------|------------------------|
+| App     | http://localhost       |
+| Admin   | http://localhost/admin |
+| Mailpit | http://localhost:8025  |
 
 ---
 
@@ -147,10 +148,10 @@ Super admins have access across all sites.
 
 ### Content
 
-| Property   | Options                                        |
-|------------|------------------------------------------------|
-| Type       | `page`, `post`, `archive`                      |
-| Status     | `draft`, `published`, `scheduled`, `archived`  |
+| Property | Options                                       |
+|----------|-----------------------------------------------|
+| Type     | `page`, `post`, `archive`                     |
+| Status   | `draft`, `published`, `scheduled`, `archived` |
 
 - Scheduled publishing via `cms:publish-scheduled` (registered in scheduler)
 - Full revision history via [promethys/revive](https://github.com/promethys/revive)
@@ -161,33 +162,34 @@ Super admins have access across all sites.
 
 Visual block-based content builder with real-time split-screen preview.
 
-| Block         | Description                         |
-|---------------|-------------------------------------|
+| Block         | Description                          |
+|---------------|--------------------------------------|
 | `Hero`        | Full-width hero with heading and CTA |
-| `Text`        | Rich text content                   |
-| `Cards`       | Card grid                           |
-| `Columns`     | Multi-column layout                 |
-| `Button`      | CTA button                          |
-| `ButtonGroup` | Row of multiple buttons             |
-| `Divider`     | Horizontal separator                |
+| `Text`        | Rich text content                    |
+| `Cards`       | Card grid                            |
+| `Columns`     | Multi-column layout                  |
+| `Button`      | CTA button                           |
+| `ButtonGroup` | Row of multiple buttons              |
+| `Divider`     | Horizontal separator                 |
 
 ### Other Features
 
-| Feature             | Description                                                        |
-|---------------------|--------------------------------------------------------------------|
-| Media               | File upload, hero images, block media, disk-based storage          |
-| Navigation          | Header and footer nav per site with live admin preview             |
-| Taxonomies          | Hierarchical, site-scoped, with unique slug enforcement            |
-| Redirects           | 301/302 redirect rules per site                                    |
-| User Invitations    | Email invitation with role assignment                              |
-| Activity Log        | Full audit trail (Spatie Activity Log) scoped per site             |
-| Sitemap & Robots    | Auto-generated, tenant-aware `sitemap.xml` and `robots.txt`       |
+| Feature          | Description                                                 |
+|------------------|-------------------------------------------------------------|
+| Media            | File upload, hero images, block media, disk-based storage   |
+| Navigation       | Header and footer nav per site with live admin preview      |
+| Taxonomies       | Hierarchical, site-scoped, with unique slug enforcement     |
+| Redirects        | 301/302 redirect rules per site                             |
+| User Invitations | Email invitation with role assignment                       |
+| Activity Log     | Full audit trail (Spatie Activity Log) scoped per site      |
+| Sitemap & Robots | Auto-generated, tenant-aware `sitemap.xml` and `robots.txt` |
 
 ---
 
 ## Themes
 
-Themes live in `/themes/{name}/` and consist of Blade views and a `theme.json` manifest. View namespaces are auto-registered as `themes.{name}::*`.
+Themes live in `/themes/{name}/` and consist of Blade views and a `theme.json` manifest. View namespaces are
+auto-registered as `themes.{name}::*`.
 
 ```
 themes/default/
@@ -284,7 +286,8 @@ Key variables beyond standard Laravel defaults:
 
 ## Author
 
-**Martin Koudela** — [martinkoudela.com](https://martinkoudela.com) · [mk@martinkoudela.com](mailto:martin@martinkoudela.com)
+**Martin Koudela
+** — [martinkoudela.com](https://martinkoudela.com) · [mk@martinkoudela.com](mailto:martin@martinkoudela.com)
 
 ---
 

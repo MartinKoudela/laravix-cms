@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Laravix CMS — Copyright (C) 2026 Martin Koudela (laravix.com)
+ * Licensed under GPL-3.0-or-later. See LICENSE for details.
+ */
+
 namespace App\Support;
 
 use App\Models\Content;
@@ -120,8 +125,8 @@ class NavigationComponentFactory
         return Select::make('icon')
             ->label(fn () => __('navigation.labels.icon'))
             ->allowHtml()
-            ->searchable()
             ->nullable()
+            ->live(debounce: 300)
             ->options(fn () => NavigationIconRegistry::selectOptions());
     }
 }
