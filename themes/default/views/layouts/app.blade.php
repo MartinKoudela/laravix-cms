@@ -186,6 +186,7 @@
         $fIconPos = $fd->get('icon_position', '');
 
         $currentPath = request()->getPathInfo();
+        $navUrl = fn ($u) => ($u && ! preg_match('~^(https?://|/|mailto:|tel:)~', $u)) ? 'https://'.$u : ($u ?? '');
     @endphp
 
     @if($fontsToLoad->isNotEmpty())
@@ -247,7 +248,7 @@
                         @endphp
                         @if (!empty($item['children']))
                             <div class="relative group">
-                                <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
+                                <a href="{{ $navUrl($item['url']) }}" target="{{ $item['target'] ?? '_self' }}"
                                    class="nav-link font-medium transition-colors"
                                    style="{{ $linkStyle }}">
                                     {!! $hLinkHtml !!}
@@ -265,7 +266,7 @@
                                                 default  => '<span>' . $cLinkText . '</span>',
                                             };
                                         @endphp
-                                        <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
+                                        <a href="{{ $navUrl($child['url']) }}" target="{{ $child['target'] ?? '_self' }}"
                                            class="nav-dropdown-item flex items-center gap-2 px-4 py-2 text-sm transition-colors"
                                            style="color:{{ $hDropdownText }}">
                                             {!! $cLinkHtml !!}
@@ -274,7 +275,7 @@
                                 </div>
                             </div>
                         @else
-                            <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
+                            <a href="{{ $navUrl($item['url']) }}" target="{{ $item['target'] ?? '_self' }}"
                                class="nav-link font-medium transition-colors"
                                style="{{ $linkStyle }}">
                                 {!! $hLinkHtml !!}
@@ -307,13 +308,13 @@
                             default  => '<span>' . $mLinkText . '</span>',
                         };
                     @endphp
-                    <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
+                    <a href="{{ $navUrl($item['url']) }}" target="{{ $item['target'] ?? '_self' }}"
                        class="nav-link flex items-center gap-2 py-1.5 border-b border-gray-100"
                        style="{{ collect([$hLinkFontStyle, 'color:' . $linkColor])->filter()->implode(';') }}">
                         {!! $mLinkHtml !!}
                     </a>
                     @foreach ($item['children'] ?? [] as $child)
-                        <a href="{{ $child['url'] }}" target="{{ $child['target'] ?? '_self' }}"
+                        <a href="{{ $navUrl($child['url']) }}" target="{{ $child['target'] ?? '_self' }}"
                            class="nav-link flex items-center gap-2 py-1 pl-4 text-sm"
                            style="{{ collect([$hLinkFontStyle, 'color:' . $hText, 'opacity:.75'])->filter()->implode(';') }}">
                             {{ $child['label'] }}
@@ -359,7 +360,7 @@
                                 default  => '<span>' . $fLinkText . '</span>',
                             };
                         @endphp
-                        <a href="{{ $item['url'] }}" target="{{ $item['target'] ?? '_self' }}"
+                        <a href="{{ $navUrl($item['url']) }}" target="{{ $item['target'] ?? '_self' }}"
                            class="nav-link flex items-center gap-2 transition-colors"
                            style="{{ collect([$fLinkFontStyle, 'color:' . $fText])->filter()->implode(';') }}">
                             {!! $fLinkHtml !!}

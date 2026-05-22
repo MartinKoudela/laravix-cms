@@ -127,6 +127,7 @@ class NavigationComponentFactory
             ->allowHtml()
             ->nullable()
             ->live(debounce: 300)
+            ->optionsLimit(200)
             ->options(fn () => NavigationIconRegistry::selectOptions());
     }
 }

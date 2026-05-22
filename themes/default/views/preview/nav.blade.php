@@ -132,6 +132,7 @@
         ])->filter()->implode(';');
 
         $currentPath = '/';
+        $navUrl = fn ($u) => ($u && ! preg_match('~^(https?://|/|mailto:|tel:)~', $u)) ? 'https://'.$u : ($u ?? '');
     @endphp
 
     @if($fontsToLoad->isNotEmpty())
@@ -191,18 +192,18 @@
                         @endphp
                         @if (!empty($item['children']))
                             <div class="relative group">
-                                <a href="{{ $item['url'] }}" class="nav-link font-medium transition-colors" style="{{ $linkStyle }}">{!! $hLinkHtml !!}</a>
+                                <a href="{{ $navUrl($item['url']) }}" class="nav-link font-medium transition-colors" style="{{ $linkStyle }}">{!! $hLinkHtml !!}</a>
                                 <div class="absolute left-0 top-full mt-1 w-52 rounded-md shadow-lg hidden group-hover:block z-50 overflow-hidden"
                                      style="background-color:{{ $hDropdownBg }};border:1px solid {{ $hBorderColor }}">
                                     @foreach ($item['children'] as $child)
-                                        <a href="{{ $child['url'] }}"
+                                        <a href="{{ $navUrl($child['url']) }}"
                                            class="nav-dropdown-item flex items-center gap-2 block px-4 py-2 text-sm transition-colors"
                                            style="color:{{ $hDropdownText }}">{{ $child['label'] }}</a>
                                     @endforeach
                                 </div>
                             </div>
                         @else
-                            <a href="{{ $item['url'] }}" class="nav-link font-medium transition-colors" style="{{ $linkStyle }}">{!! $hLinkHtml !!}</a>
+                            <a href="{{ $navUrl($item['url']) }}" class="nav-link font-medium transition-colors" style="{{ $linkStyle }}">{!! $hLinkHtml !!}</a>
                         @endif
                     @endforeach
                 </nav>
@@ -241,7 +242,7 @@
                                 default  => '<span>'.$fLinkText.'</span>',
                             };
                         @endphp
-                        <a href="{{ $item['url'] }}"
+                        <a href="{{ $navUrl($item['url']) }}"
                            class="nav-link flex items-center gap-2 transition-colors"
                            style="{{ collect([$fLinkFontStyle, 'color:'.$fText])->filter()->implode(';') }}">
                             {!! $fLinkHtml !!}

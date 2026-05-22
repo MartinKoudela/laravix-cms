@@ -44,7 +44,7 @@ users, roles, navigation, settings, and theme — all managed from a single Fila
 
 **Core capabilities:**
 
-- Multi-site tenancy with per-site roles
+- Multi-site tenancy with per-site roles --soon!
 - Visual block editor with live preview
 - Hierarchical taxonomies, media management, redirects
 - Email-based user invitations
@@ -293,4 +293,4 @@ Key variables beyond standard Laravel defaults:
 
 ## License
 
-Laravix CMS is open-source software licensed under the [GNU Affero General Public License v3.0](LICENSE).
+Laravix CMS is open-source software licensed under the [GNU General Public License v3.0](LICENSE).
