@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'back' => 'Späť',
     'title' => 'Názov',
     'slug' => 'Slug',
     'site' => 'Web',

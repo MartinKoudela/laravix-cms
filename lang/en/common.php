@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'back' => 'Back',
     'general' => 'General',
     'seo' => 'SEO',
     'appearance' => 'Appearance',

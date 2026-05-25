@@ -7,6 +7,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\Tenancy\RegisterSite;
 use App\Models\Site;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
@@ -52,6 +53,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::hex('#ff0465'),
                 'gray' => Color::Zinc,
             ])
+            ->profile(EditProfile::class)
             ->tenant(Site::class, slugAttribute: 'id')
             ->tenantRegistration(RegisterSite::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')

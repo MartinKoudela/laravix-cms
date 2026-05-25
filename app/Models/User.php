@@ -21,7 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'avatar'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser, HasTenants
 {
@@ -43,8 +43,8 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     public function isAdmin(): bool
     {
         return $this->is_super_admin || $this->sites()
-                ->wherePivot('role', SiteRole::ADMIN)
-                ->exists();
+            ->wherePivot('role', SiteRole::ADMIN)
+            ->exists();
     }
 
     public function getTenants(Panel $panel): Collection
