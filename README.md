@@ -17,8 +17,8 @@
     <img src="https://img.shields.io/github/commit-activity/m/MartinKoudela/laravix-cms?style=flat-square&color=6366f1" alt="Commit Activity">
   </a>
   <a href="LICENSE">
-<img src="https://img.shields.io/badge/License-GPL--3.0--or--later-6366f1?styl
-  e=flat-square" alt="License">  </a>
+<img src="https://img.shields.io/badge/License-GPL--3.0--or--later-6366f1?style=flat-square" alt="License">  
+  </a>
   <a href="https://laravix.com">
     <img src="https://img.shields.io/badge/Website-laravix.com-6366f1?style=flat-square" alt="laravix.com">
   </a>
