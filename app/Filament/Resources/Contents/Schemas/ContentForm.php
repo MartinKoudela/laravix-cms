@@ -10,8 +10,6 @@ namespace App\Filament\Resources\Contents\Schemas;
 use App\Enums\ContentStatus;
 use App\Models\Content;
 use App\Models\Taxonomy;
-use App\Support\AppearanceComponentFactory;
-use App\Support\AppearanceRegistry;
 use App\Support\FieldComponentFactory;
 use App\Support\FieldRegistry;
 use Filament\Forms\Components\DateTimePicker;
@@ -32,7 +30,6 @@ class ContentForm
         $grouped = FieldRegistry::grouped();
         $seoDefinitions = $grouped['content.sections.seo_group'] ?? [];
         $contentGroups = array_filter($grouped, fn (string $key) => $key !== 'content.sections.seo_group', ARRAY_FILTER_USE_KEY);
-        $appearanceDefinitions = AppearanceRegistry::forContentType(null);
 
         return $schema
             ->components([
@@ -138,19 +135,8 @@ class ContentForm
                                         $seoDefinitions,
                                     )),
                             ]),
-                        Tab::make(__('common.appearance'))
-                            ->schema([
-                                View::make('filament.partials.appearance-preview')
-                                    ->viewData(fn ($livewire) => ['token' => $livewire->appearancePreviewToken ?? '']),
-                                Section::make()
-                                    ->columns(2)
-                                    ->schema(array_map(
-                                        fn ($definition) => AppearanceComponentFactory::make($definition),
-                                        $appearanceDefinitions,
-                                    )),
-                            ]),
                         Tab::make(__('content.sections.builder'))
-                            ->hidden(fn (Get $get): bool => $get('type') !== 'page')
+                            ->hidden(fn (Get $get, ?Content $record): bool => $get('type') !== 'page' || $record === null)
                             ->schema([
                                 View::make('filament.partials.block-builder')
                                     ->viewData(fn ($livewire) => [

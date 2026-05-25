@@ -63,25 +63,6 @@ class PreviewController extends Controller
         return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));
     }
 
-    public function appearance(string $token): View|Response
-    {
-        $cached = cache()->get("preview_appearance_{$token}");
-
-        if (! $cached) {
-            return $this->loading();
-        }
-
-        $content = Content::with(['fields', 'taxonomies', 'site'])->findOrFail($cached['content_id']);
-        $site = $content->site;
-
-        $data = $this->pageDataBuilder->build($site, $content);
-        $data['appearance'] = collect($cached['appearance']);
-
-        $seo = $this->buildSeo($content, $data);
-
-        return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));
-    }
-
     public function blocks(string $token): View|Response
     {
         $cached = cache()->get("preview_blocks_{$token}");

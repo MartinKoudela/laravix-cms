@@ -11,6 +11,7 @@ use App\Enums\FieldType;
 use App\Models\Media;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -34,27 +35,7 @@ class FieldComponentFactory
             FieldType::DATETIME => DateTimePicker::make($key)->label($label),
             FieldType::NUMBER => TextInput::make($key)->label($label)->numeric(),
             FieldType::URL => TextInput::make($key)->label($label)->url(),
-            FieldType::IMAGE, FieldType::FILE => Select::make($key)
-                ->label($label)
-                ->allowHtml()
-                ->searchable()
-                ->getSearchResultsUsing(fn (string $search) => Media::where('site_id', filament()->getTenant()?->id)
-                    ->where('name', 'like', "%{$search}%")
-                    ->limit(20)
-                    ->get()
-                    ->mapWithKeys(fn (Media $media) => [$media->id => static::mediaOptionLabel($media)])
-                    ->toArray()
-                )
-                ->options(fn () => Media::where('site_id', filament()->getTenant()?->id)
-                    ->limit(20)
-                    ->get()
-                    ->mapWithKeys(fn (Media $media) => [$media->id => static::mediaOptionLabel($media)])
-                    ->toArray()
-                )
-                ->getOptionLabelUsing(fn ($value) => ($media = Media::find($value))
-                    ? static::mediaOptionLabel($media)
-                    : '-'
-                ),
+            FieldType::IMAGE, FieldType::FILE => static::mediaSelect($key, $label),
             FieldType::SELECT => Select::make($key)
                 ->label($label)
                 ->options($definition->config['options'] ?? []),
@@ -89,7 +70,34 @@ class FieldComponentFactory
             ->getOptionLabelUsing(fn ($value) => ($media = Media::find($value))
                 ? static::mediaOptionLabel($media)
                 : '-'
-            );
+            )
+            ->createOptionForm([
+                FileUpload::make('path')
+                    ->label(__('common.file'))
+                    ->required()
+                    ->disk('public')
+                    ->directory('media')
+                    ->storeFileNamesIn('name')
+                    ->acceptedFileTypes(['image/*'])
+                    ->maxSize(524288)
+                    ->imageEditor()
+                    ->columnSpanFull(),
+            ])
+            ->createOptionUsing(function (array $data): int {
+                $filePath = Storage::disk('public')->path($data['path']);
+
+                $media = Media::create([
+                    'site_id' => filament()->getTenant()?->id,
+                    'path' => $data['path'],
+                    'name' => $data['name'] ?? basename($data['path']),
+                    'disk' => 'public',
+                    'mime_type' => mime_content_type($filePath) ?: 'application/octet-stream',
+                    'size' => filesize($filePath) ?: 0,
+                    'created_by' => auth()->id(),
+                ]);
+
+                return $media->id;
+            });
     }
 
     public static function mediaOptionLabel(Media $media): string

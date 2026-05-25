@@ -16,7 +16,6 @@ Route::post('/invitation/{token}', [InvitationController::class, 'accept'])->nam
 
 Route::prefix('/__preview')->group(function () {
     Route::get('/nav/{token}', [PreviewController::class, 'nav'])->name('nav.preview');
-    Route::get('/appearance/{token}', [PreviewController::class, 'appearance'])->name('appearance.preview');
     Route::get('/blocks/{token}', [PreviewController::class, 'blocks'])->name('block.preview');
 });
 

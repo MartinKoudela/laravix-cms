@@ -11,7 +11,6 @@ use App\Enums\FieldType;
 use App\Models\Content;
 use App\Models\Setting;
 use App\Models\Site;
-use App\Support\AppearanceRegistry;
 use App\Support\BlockRegistry;
 use App\Support\FieldRegistry;
 
@@ -58,12 +57,8 @@ class PageDataBuilder
             ->filter(fn ($def) => $def->type === FieldType::IMAGE)
             ->pluck('key');
 
-        $appearanceImageKeys = collect(AppearanceRegistry::forContentType($content->type))
-            ->filter(fn ($def) => $def->type === FieldType::IMAGE)
-            ->pluck('key');
-
         $mediaIds = $content->fields
-            ->whereIn('key', $imageKeys->merge($appearanceImageKeys)->all())
+            ->whereIn('key', $imageKeys->all())
             ->pluck('value')
             ->filter()
             ->map(fn ($id) => (int) $id);
@@ -80,13 +75,11 @@ class PageDataBuilder
 
         $mediaMap = $this->mediaResolver->resolve($mediaIds);
 
-        $appearanceKeys = collect(AppearanceRegistry::forContentType($content->type))->pluck('key');
-        $appearance = $content->fields->whereIn('key', $appearanceKeys->all())->pluck('value', 'key');
-        $bgMedia = ($bgId = (int) $appearance->get('background_image')) ? $mediaMap->get($bgId) : null;
+        $appearance = collect();
+        $bgMedia = null;
 
         $systemFieldKeys = collect(FieldRegistry::forContentType($content->type))
             ->pluck('key')
-            ->merge($appearanceKeys)
             ->all();
 
         $logoMedia = ($logoId = (int) $settings->get('logo')) ? $mediaMap->get($logoId) : null;

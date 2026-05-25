@@ -21,6 +21,7 @@ services:
             - '.:/var/www/html'
             - 'sail-vendor:/var/www/html/vendor'
             - './docker/php.ini:/etc/php/8.4/cli/conf.d/99-custom.ini'
+            - './docker/php.ini:/etc/php/8.4/fpm/conf.d/99-custom.ini'
         networks:
             - sail
         depends_on:

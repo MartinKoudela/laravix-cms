@@ -15,8 +15,6 @@ use App\Blocks\DividerBlock;
 use App\Blocks\HeroBlock;
 use App\Blocks\TextBlock;
 use App\Enums\FieldType;
-use App\Support\AppearanceDefinition;
-use App\Support\AppearanceRegistry;
 use App\Support\BlockRegistry;
 use App\Support\FieldDefinition;
 use App\Support\FieldRegistry;
@@ -61,30 +59,6 @@ class AppServiceProvider extends ServiceProvider
                 ->type(FieldType::BOOLEAN)
                 ->label('content.fields.noindex')
                 ->group('content.sections.seo_group'),
-        ]);
-
-        AppearanceRegistry::content([
-            AppearanceDefinition::make('color')
-                ->type(FieldType::COLOR)
-                ->label('blocks.settings.background_color'),
-            AppearanceDefinition::make('text_color')
-                ->type(FieldType::COLOR)
-                ->label('blocks.settings.text_color'),
-            AppearanceDefinition::make('background_image')
-                ->type(FieldType::IMAGE)
-                ->label('blocks.settings.background_image'),
-            AppearanceDefinition::make('layout')
-                ->type(FieldType::SELECT)
-                ->label('blocks.settings.layout')
-                ->config(['options' => [
-                    'full-width' => 'Full Width',
-                    'boxed' => 'Boxed',
-                    'sidebar-left' => 'Sidebar Left',
-                    'sidebar-right' => 'Sidebar Right',
-                ]]),
-            AppearanceDefinition::make('custom_css_class')
-                ->label('blocks.settings.custom_css_class')
-                ->hint('blocks.settings.custom_css_class_hint'),
         ]);
 
         SettingRegistry::register([
