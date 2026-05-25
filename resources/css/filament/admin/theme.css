@@ -133,6 +133,7 @@
 
 /* ── Topbar – light mode ──────────────────────────────────────────── */
 .fi-topbar {
+    position: relative !important;
     background-color: #ffffff !important;
     box-shadow: none !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;

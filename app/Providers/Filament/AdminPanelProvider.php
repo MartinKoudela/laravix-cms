@@ -42,6 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->renderHook('panels::head.end', fn () => new HtmlString('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">'))
             ->renderHook('panels::body.end', fn () => new HtmlString(app(Vite::class)('resources/js/filament/admin/app.js')))
+            ->renderHook('panels::topbar.end', fn () => view('filament.partials.fast-actions'))
             ->login()
             ->brandName('Laravix CMS')
             ->brandLogo(asset('laravix-logo-black.svg'))
