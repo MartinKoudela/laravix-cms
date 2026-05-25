@@ -20,12 +20,8 @@ class ActivityLogsTable
             ->columns([
                 ImageColumn::make('causer.avatar')
                     ->label('')
-                    ->disk('public')
                     ->circular()
-                    ->defaultImageUrl(fn ($record): string => $record->causer
-                        ? 'https://ui-avatars.com/api/?name='.urlencode($record->causer->name).'&color=ffffff&background=6366f1'
-                        : 'https://ui-avatars.com/api/?name=?&color=ffffff&background=6b7280'
-                    )
+                    ->getStateUsing(fn ($record): ?string => $record->causer?->getFilamentAvatarUrl())
                     ->size(36),
                 TextColumn::make('causer.name')
                     ->label(__('common.user'))

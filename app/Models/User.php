@@ -35,7 +35,19 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasTenant
             return Storage::disk('public')->url($this->avatar);
         }
 
-        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=ffffff&background=6366f1';
+        return $this->generateAvatarSvg();
+    }
+
+    private function generateAvatarSvg(): string
+    {
+        $initials = collect(explode(' ', $this->name))
+            ->map(fn (string $word): string => mb_strtoupper(mb_substr($word, 0, 1)))
+            ->take(2)
+            ->join('');
+
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FF0C5D"/><stop offset="100%" style="stop-color:#FF6602"/></linearGradient></defs><rect width="100" height="100" fill="url(#g)"/><text x="50" y="50" font-family="sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="central">'.htmlspecialchars($initials).'</text></svg>';
+
+        return 'data:image/svg+xml;base64,'.base64_encode($svg);
     }
 
     public function sites(): BelongsToMany

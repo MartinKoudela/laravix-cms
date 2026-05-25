@@ -24,9 +24,8 @@ class UsersTable
             ->columns([
                 ImageColumn::make('avatar')
                     ->label('')
-                    ->disk('public')
                     ->circular()
-                    ->defaultImageUrl(fn ($record): string => 'https://ui-avatars.com/api/?name='.urlencode($record->name).'&color=ffffff&background=6366f1')
+                    ->getStateUsing(fn ($record): string => $record->getFilamentAvatarUrl())
                     ->size(36),
                 TextColumn::make('name')
                     ->label(__('common.name'))
