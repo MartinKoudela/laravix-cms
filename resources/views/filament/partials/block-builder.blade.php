@@ -9,7 +9,7 @@
             new MutationObserver(function(_, obs) {
                 if (panel.classList.contains('fi-active')) {
                     obs.disconnect();
-                    window.open(url, '_blank');
+                    window.location.href = url;
                 }
             }).observe(panel, { attributes: true, attributeFilter: ['class'] });
         "

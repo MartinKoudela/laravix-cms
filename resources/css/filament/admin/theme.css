@@ -31,71 +31,107 @@
 
 /* Nav item – base style */
 .fi-sidebar-item-btn {
-    border-radius: 8px !important;
-    transition: background 0.15s, box-shadow 0.15s !important;
+    border-radius: 7px !important;
+    transition: background 0.12s, color 0.12s !important;
 }
 
 /* Light mode nav item colors */
 .fi-sidebar-item-btn > .fi-icon {
-    color: rgba(0, 0, 0, 0.35) !important;
-    transition: color 0.15s !important;
+    color: rgba(0, 0, 0, 0.3) !important;
+    transition: color 0.12s !important;
 }
 
 .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: rgba(0, 0, 0, 0.55) !important;
-    transition: color 0.15s !important;
+    color: rgba(0, 0, 0, 0.5) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    transition: color 0.12s !important;
 }
 
 /* Dark mode nav item colors */
 .dark .fi-sidebar-item-btn > .fi-icon {
-    color: rgba(255, 255, 255, 0.35) !important;
+    color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .dark .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: rgba(255, 255, 255, 0.45) !important;
 }
 
 /* Nav item – hover (light) */
 .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover {
-    background: rgba(255, 4, 101, 0.07) !important;
+    background: rgba(0, 0, 0, 0.04) !important;
 }
 
 .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-icon {
-    color: rgba(0, 0, 0, 0.65) !important;
+    color: rgba(0, 0, 0, 0.6) !important;
 }
 
 .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-sidebar-item-label {
-    color: rgba(0, 0, 0, 0.8) !important;
+    color: rgba(0, 0, 0, 0.75) !important;
 }
 
 /* Nav item – hover (dark) */
+.dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
 .dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-icon {
-    color: rgba(255, 255, 255, 0.75) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-sidebar-item-label {
-    color: rgba(255, 255, 255, 0.85) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Nav item – active (gradient pill + glow) */
+/* Nav item – active (left accent bar) */
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
-    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%) !important;
-    box-shadow: 0 4px 18px -3px rgba(255, 4, 101, 0.5) !important;
+    background: rgba(255, 4, 101, 0.07) !important;
+    box-shadow: none !important;
+    position: relative !important;
 }
 
-.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon,
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 22%;
+    bottom: 22%;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    background: linear-gradient(180deg, #ff0465 0%, #ff6602 100%);
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon {
+    color: #ff0465 !important;
+}
+
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: #fff !important;
+    color: rgba(0, 0, 0, 0.85) !important;
+    font-weight: 600 !important;
+}
+
+/* Active – dark mode */
+.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background: rgba(255, 4, 101, 0.1) !important;
+}
+
+.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon {
+    color: #ff6b9d !important;
+}
+
+.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label {
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-weight: 600 !important;
 }
 
 /* Dot connector in grouped active items */
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-sidebar-item-grouped-border-part {
-    background-color: #fff !important;
+    background-color: #ff0465 !important;
 }
 
 /* Nav group label */
 .fi-sidebar-group-label {
-    color: rgba(0, 0, 0, 0.25) !important;
+    color: rgba(0, 0, 0, 0.22) !important;
     text-transform: uppercase !important;
     letter-spacing: 0.09em !important;
     font-size: 0.62rem !important;
@@ -103,16 +139,27 @@
 }
 
 .dark .fi-sidebar-group-label {
-    color: rgba(255, 255, 255, 0.2) !important;
+    color: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Separator between nav groups */
+.fi-sidebar-group:not(:first-child) {
+    margin-top: 4px !important;
+    padding-top: 12px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.dark .fi-sidebar-group:not(:first-child) {
+    border-top-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 /* Sidebar nav group btn icons */
 .fi-sidebar-group-btn > .fi-icon {
-    color: rgba(0, 0, 0, 0.3) !important;
+    color: rgba(0, 0, 0, 0.28) !important;
 }
 
 .dark .fi-sidebar-group-btn > .fi-icon {
-    color: rgba(255, 255, 255, 0.3) !important;
+    color: rgba(255, 255, 255, 0.28) !important;
 }
 
 /* Sidebar scrollbar */
