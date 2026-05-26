@@ -30,7 +30,7 @@ class FastActions
             'account_settings' => [
                 'label' => __('fast_actions.user_settings'),
                 'icon' => 'heroicon-o-cog-6-tooth',
-                'url'   => route('filament.admin.auth.profile'),
+                'url' => route('filament.admin.auth.profile'),
             ],
         ];
     }

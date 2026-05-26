@@ -1,16 +1,11 @@
 @php
     $tenant = filament()->getTenant();
-    $user = auth()->user();
 
     if (! $tenant) {
         return;
     }
 
-    $all = \App\Support\FastActions::all($tenant->id);
-    $selected = $user?->fast_actions;
-    $actions = $selected !== null
-        ? array_intersect_key($all, array_flip($selected))
-        : $all;
+    $actions = \App\Support\FastActions::all($tenant->id);
 @endphp
 
 @if (count($actions))
