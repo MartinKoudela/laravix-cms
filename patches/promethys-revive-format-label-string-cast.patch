@@ -1,0 +1,11 @@
+--- a/src/Tables/RecycleBin.php
++++ b/src/Tables/RecycleBin.php
+@@ -494,5 +494,7 @@
+ 
+     private function formatLabel(mixed $value): string
+     {
+-        return __(Str::of((string) $value)->headline()->lower()->ucfirst()->toString());
++        $key = Str::of((string) $value)->headline()->lower()->ucfirst()->toString();
++        $translated = __($key);
++        return is_array($translated) ? $key : $translated;
+     }

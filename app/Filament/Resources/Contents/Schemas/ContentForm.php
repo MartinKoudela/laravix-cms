@@ -20,6 +20,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 
@@ -61,6 +62,8 @@ class ContentForm
                                         Toggle::make('is_homepage')
                                             ->label(__('content.messages.set_as_homepage'))
                                             ->helperText(__('content.messages.only_one_homepage'))
+                                            ->live()
+                                            ->afterStateUpdated(fn (bool $state, Set $set) => $state ? $set('slug', '') : null)
                                             ->columnSpanFull()
                                             ->hidden(function (?Content $record): bool {
                                                 if ($record?->is_homepage) {

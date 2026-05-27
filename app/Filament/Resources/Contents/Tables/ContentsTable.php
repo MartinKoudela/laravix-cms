@@ -30,7 +30,7 @@ class ContentsTable
                     ->sortable(),
                 TextColumn::make('slug')
                     ->label(__('common.slug'))
-                    ->prefix('/')
+                    ->formatStateUsing(fn (string $state): string => str_starts_with($state, '/') ? $state : '/'.$state)
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
@@ -38,10 +38,6 @@ class ContentsTable
                     ->label(__('common.site'))
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('type')
-                    ->label(__('common.type'))
-                    ->badge()
-                    ->sortable(),
                 TextColumn::make('status')
                     ->label(__('common.status'))
                     ->badge()
@@ -79,11 +75,6 @@ class ContentsTable
                     ->options(collect(ContentStatus::cases())->mapWithKeys(
                         fn (ContentStatus $case) => [$case->value => $case->name]
                     )),
-                SelectFilter::make('type')
-                    ->options([
-                        'page' => __('content.types.page'),
-                        'post' => __('content.types.post'),
-                    ]),
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),
             ])
