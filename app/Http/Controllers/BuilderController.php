@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Media;
 use App\Models\Site;
+use App\Support\BlockRegistry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -49,6 +50,7 @@ class BuilderController extends Controller
             'pages' => $pages,
             'contactEmail' => $settings->get('contact_email', ''),
             'backUrl' => url("/admin/{$site->id}/contents/{$content->id}/edit"),
+            'gjsBlocks' => BlockRegistry::toGrapesBlocks(),
         ]);
     }
 

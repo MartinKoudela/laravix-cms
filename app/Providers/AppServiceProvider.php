@@ -12,6 +12,35 @@ use App\Blocks\ButtonGroupBlock;
 use App\Blocks\CardsBlock;
 use App\Blocks\ColumnsBlock;
 use App\Blocks\DividerBlock;
+use App\Blocks\Grapesjs\AccordionBlock;
+use App\Blocks\Grapesjs\BadgeBlock;
+use App\Blocks\Grapesjs\ButtonPrimaryBlock;
+use App\Blocks\Grapesjs\CardsSliderBlock;
+use App\Blocks\Grapesjs\ContactFormBlock;
+use App\Blocks\Grapesjs\CtaBlock;
+use App\Blocks\Grapesjs\FaqBlock;
+use App\Blocks\Grapesjs\GalleryBlock;
+use App\Blocks\Grapesjs\GallerySliderBlock;
+use App\Blocks\Grapesjs\HeroImageBlock;
+use App\Blocks\Grapesjs\HtmlEmbedBlock;
+use App\Blocks\Grapesjs\IconBlock;
+use App\Blocks\Grapesjs\ImageCenteredBlock;
+use App\Blocks\Grapesjs\ImageFullBlock;
+use App\Blocks\Grapesjs\LinkTextBlock;
+use App\Blocks\Grapesjs\LogoBarBlock;
+use App\Blocks\Grapesjs\MapBlock;
+use App\Blocks\Grapesjs\NewsletterBlock;
+use App\Blocks\Grapesjs\PricingBlock;
+use App\Blocks\Grapesjs\SpacerBlock;
+use App\Blocks\Grapesjs\StatsBlock;
+use App\Blocks\Grapesjs\StepsBlock;
+use App\Blocks\Grapesjs\TableBlock;
+use App\Blocks\Grapesjs\TeamBlock;
+use App\Blocks\Grapesjs\TestimonialsBlock;
+use App\Blocks\Grapesjs\TestimonialsSliderBlock;
+use App\Blocks\Grapesjs\VideoEmbedBlock;
+use App\Blocks\Grapesjs\VideoHeroBlock;
+use App\Blocks\Grapesjs\YoutubeBlock;
 use App\Blocks\HeroBlock;
 use App\Blocks\TextBlock;
 use App\Enums\FieldType;
@@ -146,6 +175,36 @@ class AppServiceProvider extends ServiceProvider
             ButtonBlock::definition(),
             ButtonGroupBlock::definition(),
             DividerBlock::definition(),
+            // GrapesJS-only blocks
+            HeroImageBlock::definition(),
+            VideoHeroBlock::definition(),
+            StepsBlock::definition(),
+            StatsBlock::definition(),
+            GalleryBlock::definition(),
+            GallerySliderBlock::definition(),
+            CardsSliderBlock::definition(),
+            YoutubeBlock::definition(),
+            VideoEmbedBlock::definition(),
+            MapBlock::definition(),
+            TestimonialsBlock::definition(),
+            TestimonialsSliderBlock::definition(),
+            LogoBarBlock::definition(),
+            TeamBlock::definition(),
+            CtaBlock::definition(),
+            PricingBlock::definition(),
+            ContactFormBlock::definition(),
+            NewsletterBlock::definition(),
+            FaqBlock::definition(),
+            AccordionBlock::definition(),
+            ButtonPrimaryBlock::definition(),
+            ImageFullBlock::definition(),
+            ImageCenteredBlock::definition(),
+            IconBlock::definition(),
+            BadgeBlock::definition(),
+            LinkTextBlock::definition(),
+            SpacerBlock::definition(),
+            TableBlock::definition(),
+            HtmlEmbedBlock::definition(),
         );
 
         NavigationRegistry::register(

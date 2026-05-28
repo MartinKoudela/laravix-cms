@@ -18,6 +18,15 @@ class TextBlock
         return BlockDefinition::make('text')
             ->label('blocks.types.text')
             ->icon('heroicon-o-document-text')
+            ->category('blocks.categories.content')
+            ->canvasHtml(<<<'HTML'
+<section style="padding:64px 24px;">
+    <div style="max-width:720px;margin:0 auto;">
+        <h2 style="font-size:2rem;font-weight:700;color:#111827;margin:0 0 16px;">Section heading</h2>
+        <p style="font-size:1rem;color:#374151;line-height:1.8;margin:0;">This is section text. Click to edit content.</p>
+    </div>
+</section>
+HTML)
             ->schema(fn () => [
                 TextInput::make('heading')->label(fn () => __('common.heading'))->columnSpanFull(),
                 RichEditor::make('content')->label(fn () => __('common.content'))->columnSpanFull(),

@@ -63,7 +63,7 @@ class ContentForm
                                             ->label(__('content.messages.set_as_homepage'))
                                             ->helperText(__('content.messages.only_one_homepage'))
                                             ->live()
-                                            ->afterStateUpdated(fn (bool $state, Set $set) => $state ? $set('slug', '') : null)
+                                            ->afterStateUpdated(fn (bool $state, Set $set) => $state ? $set('slug', '/') : null)
                                             ->columnSpanFull()
                                             ->hidden(function (?Content $record): bool {
                                                 if ($record?->is_homepage) {

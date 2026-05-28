@@ -26,6 +26,9 @@ class BlockDefinition
         public readonly ?string $icon = null,
         public readonly \Closure|array $schema = [],
         public readonly bool $nestable = true,
+        public readonly ?string $category = null,
+        public readonly \Closure|string|null $canvasHtml = null,
+        public readonly array $defaultData = [],
     ) {}
 
     public static function make(string $key): static
@@ -35,22 +38,65 @@ class BlockDefinition
 
     public function label(string $label): static
     {
-        return new static($this->key, $label, $this->icon, $this->schema, $this->nestable);
+        return new static($this->key, $label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData);
     }
 
     public function icon(string $icon): static
     {
-        return new static($this->key, $this->label, $icon, $this->schema, $this->nestable);
+        return new static($this->key, $this->label, $icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData);
     }
 
     public function schema(\Closure|array $schema): static
     {
-        return new static($this->key, $this->label, $this->icon, $schema, $this->nestable);
+        return new static($this->key, $this->label, $this->icon, $schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData);
     }
 
     public function nestable(bool $nestable): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $nestable);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $nestable, $this->category, $this->canvasHtml, $this->defaultData);
+    }
+
+    public function category(string $category): static
+    {
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $category, $this->canvasHtml, $this->defaultData);
+    }
+
+    public function canvasHtml(\Closure|string $html): static
+    {
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $html, $this->defaultData);
+    }
+
+    public function defaultData(array $data): static
+    {
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $data);
+    }
+
+    public function resolveCanvasHtml(): string
+    {
+        if ($this->canvasHtml === null) {
+            return '<div style="padding:40px;text-align:center;color:#9ca3af;font-family:sans-serif;">'.__($this->label).'</div>';
+        }
+
+        return is_callable($this->canvasHtml) ? ($this->canvasHtml)() : $this->canvasHtml;
+    }
+
+    /** @return array{id: string, label: string, category: string, content: string, media: string} */
+    public function toGrapesBlock(): array
+    {
+        $media = '';
+        if ($this->icon && ! str_starts_with($this->icon, 'heroicon-')) {
+            $needsPrefix = ! preg_match('/^fa-(brands|regular|light|thin|duotone)\b/', $this->icon);
+            $faClass = $needsPrefix ? 'fa-solid '.$this->icon : $this->icon;
+            $media = '<i class="'.$faClass.'" style="font-size:1.5rem;display:block;margin:0 auto 4px;"></i>';
+        }
+
+        return [
+            'id' => $this->key,
+            'label' => __($this->label),
+            'category' => $this->category ?? __('blocks.categories.general'),
+            'content' => $this->resolveCanvasHtml(),
+            'media' => $media,
+        ];
     }
 
     /** @return array<int, array{key: string, label: string, type: string, options: array, fields?: array}> */

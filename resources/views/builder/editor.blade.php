@@ -58,6 +58,7 @@
             data-csrf="{{ csrf_token() }}"
             data-canvas-css="{{ Vite::asset('resources/css/app.css') }}"
             data-media-items="{{ json_encode($mediaItems) }}"
+            data-gjs-blocks="{{ json_encode($gjsBlocks) }}"
             data-trans="{{ json_encode(__('builder')) }}"
         ></div>
     </div>

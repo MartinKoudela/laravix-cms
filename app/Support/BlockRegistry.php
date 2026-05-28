@@ -25,15 +25,26 @@ class BlockRegistry
 
     public static function toBlocks(): array
     {
-        return array_map(fn (BlockDefinition $def) => $def->toBlock(), static::$blocks);
+        return array_map(
+            fn (BlockDefinition $def) => $def->toBlock(),
+            array_filter(static::$blocks, fn (BlockDefinition $def) => $def->schema !== [])
+        );
     }
 
     public static function toNestableBlocks(): array
     {
         return array_map(
             fn (BlockDefinition $def) => $def->toBlock(),
-            array_filter(static::$blocks, fn (BlockDefinition $def) => $def->nestable)
+            array_filter(static::$blocks, fn (BlockDefinition $def) => $def->schema !== [] && $def->nestable)
         );
+    }
+
+    public static function toGrapesBlocks(): array
+    {
+        return array_values(array_map(
+            fn (BlockDefinition $def) => $def->toGrapesBlock(),
+            array_filter(static::$blocks, fn (BlockDefinition $def) => $def->canvasHtml !== null)
+        ));
     }
 
     public static function extractMediaIds(array $blocks): array

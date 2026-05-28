@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ $settings->get('locale', 'en') }}" class="h-full">
+<html lang="{{ $settings->get('locale', 'en') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -204,10 +204,10 @@
     @stack('head')
 </head>
 
-<body class="h-full bg-white text-gray-900 antialiased flex flex-col min-h-screen">
+<body class="bg-white text-gray-900 antialiased flex flex-col min-h-screen">
 
     <header
-        class="{{ $hIsSticky ? 'sticky top-0 z-50' : '' }}"
+        class="{{ $hIsSticky ? 'sticky top-0 z-[999]' : '' }}"
         style="{{ $hHeaderStyle }}"
     >
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
