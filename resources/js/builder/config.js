@@ -2,27 +2,6 @@ import grapesjsPresetWebpage from 'grapesjs-preset-webpage';
 import { FONT_AWESOME_CSS, GOOGLE_FONTS } from './constants';
 import { t } from './trans';
 
-const DIR = {
-    row:           `<i class="fa-solid fa-arrow-right"></i>`,
-    column:        `<i class="fa-solid fa-arrow-down"></i>`,
-    rowReverse:    `<i class="fa-solid fa-arrow-left"></i>`,
-    columnReverse: `<i class="fa-solid fa-arrow-up"></i>`,
-};
-const JC = {
-    start:   `<i class="fa-solid fa-align-left"></i>`,
-    center:  `<i class="fa-solid fa-align-center"></i>`,
-    end:     `<i class="fa-solid fa-align-right"></i>`,
-    between: `<i class="fa-solid fa-align-justify"></i>`,
-    around:  `<i class="fa-solid fa-grip-lines-vertical"></i>`,
-};
-const R90 = 'transform:rotate(-90deg);display:inline-block';
-const AI = {
-    start:   `<i class="fa-solid fa-align-left" style="${R90}"></i>`,
-    center:  `<i class="fa-solid fa-align-center" style="${R90}"></i>`,
-    end:     `<i class="fa-solid fa-align-right" style="${R90}"></i>`,
-    stretch: `<i class="fa-solid fa-align-justify" style="${R90}"></i>`,
-};
-
 export function buildConfig({ canvasCss, mediaItems }) {
     const FONT_OPTIONS = [
         { value: 'inherit',   name: t('val_font_inherit', '— Inherit —') },
@@ -74,67 +53,6 @@ export function buildConfig({ canvasCss, mediaItems }) {
                     open: true,
                     properties: [
                         {
-                            label: t('prop_display', 'Display'),
-                            property: 'display',
-                            type: 'select',
-                            options: [
-                                { value: 'block',        name: t('val_block', 'Block') },
-                                { value: 'flex',         name: t('val_flex', 'Flex') },
-                                { value: 'grid',         name: t('val_grid', 'Grid') },
-                                { value: 'inline-block', name: t('val_inline_block', 'Inline block') },
-                                { value: 'inline',       name: t('val_inline', 'Inline') },
-                                { value: 'none',         name: t('val_none', 'Hidden') },
-                            ],
-                        },
-                        {
-                            label: t('prop_direction', 'Direction'),
-                            property: 'flex-direction',
-                            type: 'radio',
-                            requires: { display: ['flex'] },
-                            options: [
-                                { value: 'row',            name: DIR.row,           title: 'Row →' },
-                                { value: 'column',         name: DIR.column,        title: 'Column ↓' },
-                                { value: 'row-reverse',    name: DIR.rowReverse,    title: 'Row reverse ←' },
-                                { value: 'column-reverse', name: DIR.columnReverse, title: 'Column reverse ↑' },
-                            ],
-                        },
-                        {
-                            label: t('prop_align_x', 'Align X'),
-                            property: 'justify-content',
-                            type: 'radio',
-                            requires: { display: ['flex'] },
-                            options: [
-                                { value: 'flex-start',    name: JC.start,   title: 'Start' },
-                                { value: 'center',        name: JC.center,  title: 'Center' },
-                                { value: 'flex-end',      name: JC.end,     title: 'End' },
-                                { value: 'space-between', name: JC.between, title: 'Space between' },
-                                { value: 'space-around',  name: JC.around,  title: 'Space around' },
-                            ],
-                        },
-                        {
-                            label: t('prop_align_y', 'Align Y'),
-                            property: 'align-items',
-                            type: 'radio',
-                            requires: { display: ['flex'] },
-                            options: [
-                                { value: 'flex-start', name: AI.start,   title: 'Start' },
-                                { value: 'center',     name: AI.center,  title: 'Center' },
-                                { value: 'flex-end',   name: AI.end,     title: 'End' },
-                                { value: 'stretch',    name: AI.stretch, title: 'Stretch' },
-                            ],
-                        },
-                        {
-                            label: t('prop_wrap', 'Wrap'),
-                            property: 'flex-wrap',
-                            type: 'radio',
-                            requires: { display: ['flex'] },
-                            options: [
-                                { value: 'nowrap', name: t('val_no_wrap', 'No') },
-                                { value: 'wrap',   name: t('val_wrap', 'Yes') },
-                            ],
-                        },
-                        { property: 'gap', label: t('prop_gap', 'Gap'), type: 'integer', units: ['px', 'rem', '%', 'em'] },
-                        {
                             property: 'width',
                             label: t('prop_width', 'Width'),
                             type: 'integer',
@@ -162,17 +80,6 @@ export function buildConfig({ canvasCss, mediaItems }) {
                             units: ['px', '%', 'rem', 'vh', 'em'],
                             min: 0,
                         },
-                        {
-                            property: 'overflow',
-                            label: t('prop_overflow', 'Overflow'),
-                            type: 'select',
-                            options: [
-                                { value: 'visible', name: t('val_visible', 'Visible') },
-                                { value: 'hidden',  name: t('val_hidden', 'Hidden') },
-                                { value: 'auto',    name: t('val_auto', 'Auto') },
-                                { value: 'scroll',  name: t('val_scroll', 'Scroll') },
-                            ],
-                        },
                     ],
                 },
                 {
@@ -184,21 +91,10 @@ export function buildConfig({ canvasCss, mediaItems }) {
                             label: t('prop_padding', 'Padding'),
                             type: 'composite',
                             properties: [
-                                { property: 'padding-top',    label: t('prop_top', 'Top'),    type: 'integer', units: ['px', 'rem', '%', 'em'] },
-                                { property: 'padding-right',  label: t('prop_right', 'Right'), type: 'integer', units: ['px', 'rem', '%', 'em'] },
+                                { property: 'padding-top',    label: t('prop_top', 'Top'),       type: 'integer', units: ['px', 'rem', '%', 'em'] },
+                                { property: 'padding-right',  label: t('prop_right', 'Right'),   type: 'integer', units: ['px', 'rem', '%', 'em'] },
                                 { property: 'padding-bottom', label: t('prop_bottom', 'Bottom'), type: 'integer', units: ['px', 'rem', '%', 'em'] },
-                                { property: 'padding-left',   label: t('prop_left', 'Left'),  type: 'integer', units: ['px', 'rem', '%', 'em'] },
-                            ],
-                        },
-                        {
-                            property: 'margin',
-                            label: t('prop_margin', 'Margin'),
-                            type: 'composite',
-                            properties: [
-                                { property: 'margin-top',    label: t('prop_top', 'Top'),    type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
-                                { property: 'margin-right',  label: t('prop_right', 'Right'), type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
-                                { property: 'margin-bottom', label: t('prop_bottom', 'Bottom'), type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
-                                { property: 'margin-left',   label: t('prop_left', 'Left'),  type: 'integer', units: ['px', 'rem', '%', 'em', 'auto'] },
+                                { property: 'padding-left',   label: t('prop_left', 'Left'),     type: 'integer', units: ['px', 'rem', '%', 'em'] },
                             ],
                         },
                     ],
@@ -300,49 +196,6 @@ export function buildConfig({ canvasCss, mediaItems }) {
                         { property: 'border-color',  label: t('prop_border_color', 'Border color'), type: 'color' },
                         { property: 'box-shadow',    label: t('prop_box_shadow', 'Box shadow') },
                         { property: 'opacity',       label: t('prop_opacity', 'Opacity'),           type: 'slider', min: 0, max: 1, step: 0.01 },
-                    ],
-                },
-                {
-                    name: t('sector_position', 'Position'),
-                    open: false,
-                    properties: [
-                        {
-                            label: t('prop_position', 'Position type'),
-                            property: 'position',
-                            type: 'select',
-                            options: [
-                                { value: 'static',   name: 'Static' },
-                                { value: 'relative', name: 'Relative' },
-                                { value: 'absolute', name: 'Absolute' },
-                                { value: 'fixed',    name: 'Fixed' },
-                                { value: 'sticky',   name: 'Sticky' },
-                            ],
-                        },
-                        { property: 'top',     label: t('prop_top', 'Top'),    type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'right',   label: t('prop_right', 'Right'), type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'bottom',  label: t('prop_bottom', 'Bottom'), type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'left',    label: t('prop_left', 'Left'),  type: 'integer', units: ['px', '%', 'rem'] },
-                        { property: 'z-index', label: t('prop_z_index', 'Z-index'), type: 'integer' },
-                    ],
-                },
-                {
-                    name: t('sector_transform', 'Transform & Animations'),
-                    open: false,
-                    properties: [
-                        { property: 'transform',  label: t('prop_transform', 'Transform') },
-                        { property: 'transition', label: t('prop_transition', 'Transition') },
-                        {
-                            property: 'cursor',
-                            label: t('prop_cursor', 'Cursor'),
-                            type: 'select',
-                            options: [
-                                { value: 'default',     name: 'Default' },
-                                { value: 'pointer',     name: 'Pointer' },
-                                { value: 'text',        name: 'Text' },
-                                { value: 'move',        name: 'Move' },
-                                { value: 'not-allowed', name: 'Not allowed' },
-                            ],
-                        },
                     ],
                 },
             ],

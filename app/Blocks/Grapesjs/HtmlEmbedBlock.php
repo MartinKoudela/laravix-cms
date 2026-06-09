@@ -17,6 +17,6 @@ class HtmlEmbedBlock
             ->label('blocks.gjs.html')
             ->icon('fa-code')
             ->category('blocks.categories.elements')
-            ->canvasHtml('<div data-gjs-type="html-embed" style="padding:16px;border:2px dashed #e5e7eb;border-radius:8px;text-align:center;color:#9ca3af;font-size:.875rem;"><!-- HTML --></div>');
+            ->canvasHtml('<div data-gjs-type="html-embed" class="lx-html-embed"><!-- HTML --></div>');
     }
 }

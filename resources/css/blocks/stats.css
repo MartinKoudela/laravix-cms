@@ -1,0 +1,8 @@
+.lx-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 32px;
+    text-align: center;
+}
+.lx-stats__value { font-size: 3rem; font-weight: 800; color: #fff; margin: 0 0 4px; }
+.lx-stats__label { font-size: .9375rem; color: #9ca3af; margin: 0; }

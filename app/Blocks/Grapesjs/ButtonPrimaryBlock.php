@@ -17,6 +17,6 @@ class ButtonPrimaryBlock
             ->label('blocks.gjs.button')
             ->icon('fa-hand-pointer')
             ->category('blocks.categories.elements')
-            ->canvasHtml('<a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;background:#111827;color:#fff;border:2px solid #111827;">Button text</a>');
+            ->canvasHtml('<a href="#" data-gjs-type="button-link" class="lx-btn lx-btn--dark">Button text</a>');
     }
 }

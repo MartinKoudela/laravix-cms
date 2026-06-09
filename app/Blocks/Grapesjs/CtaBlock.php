@@ -18,13 +18,13 @@ class CtaBlock
             ->icon('fa-bullhorn')
             ->category('blocks.categories.conversion')
             ->canvasHtml(<<<'HTML'
-<section style="padding:80px 24px;background:#111827;text-align:center;">
-    <div style="max-width:600px;margin:0 auto;">
-        <h2 style="font-size:2.25rem;font-weight:800;color:#fff;margin:0 0 16px;">Ready to get started?</h2>
-        <p style="font-size:1.125rem;color:#9ca3af;margin:0 0 32px;line-height:1.7;">Join thousands of satisfied customers today.</p>
-        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-            <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:#fff;color:#111827;border:2px solid #fff;">Start for free</a>
-            <a href="#" data-gjs-type="button-link" style="display:inline-flex;align-items:center;gap:8px;padding:14px 32px;font-size:.9375rem;font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;background:transparent;color:#fff;border:2px solid #4b5563;">Contact us</a>
+<section class="lx-section lx-section--dark" style="text-align:center;">
+    <div class="lx-container--sm">
+        <h2 class="lx-cta__title">Ready to get started?</h2>
+        <p class="lx-cta__text">Join thousands of satisfied customers today.</p>
+        <div class="lx-cta__actions">
+            <a href="#" data-gjs-type="button-link" class="lx-btn lx-btn--white lx-btn--lg">Start for free</a>
+            <a href="#" data-gjs-type="button-link" class="lx-btn lx-btn--outline lx-btn--lg">Contact us</a>
         </div>
     </div>
 </section>

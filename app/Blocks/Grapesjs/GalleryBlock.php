@@ -18,16 +18,18 @@ class GalleryBlock
             ->icon('fa-images')
             ->category('blocks.categories.media')
             ->canvasHtml(<<<'HTML'
-<section style="padding:64px 24px;">
-    <div style="max-width:1100px;margin:0 auto;">
-        <h2 style="font-size:2rem;font-weight:700;color:#111827;text-align:center;margin:0 0 40px;">Gallery</h2>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-            <img src="https://placehold.co/600x400?text=1" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-            <img src="https://placehold.co/600x400?text=2" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-            <img src="https://placehold.co/600x400?text=3" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-            <img src="https://placehold.co/600x400?text=4" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-            <img src="https://placehold.co/600x400?text=5" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
-            <img src="https://placehold.co/600x400?text=6" data-gjs-type="media-image" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;display:block;" alt="">
+<section class="lx-section">
+    <div class="lx-container">
+        <div class="lx-section-head">
+            <h2 class="lx-section-head__title">Gallery</h2>
+        </div>
+        <div class="lx-gallery__grid">
+            <img src="https://placehold.co/600x400?text=1" data-gjs-type="media-image" class="lx-gallery__img" alt="">
+            <img src="https://placehold.co/600x400?text=2" data-gjs-type="media-image" class="lx-gallery__img" alt="">
+            <img src="https://placehold.co/600x400?text=3" data-gjs-type="media-image" class="lx-gallery__img" alt="">
+            <img src="https://placehold.co/600x400?text=4" data-gjs-type="media-image" class="lx-gallery__img" alt="">
+            <img src="https://placehold.co/600x400?text=5" data-gjs-type="media-image" class="lx-gallery__img" alt="">
+            <img src="https://placehold.co/600x400?text=6" data-gjs-type="media-image" class="lx-gallery__img" alt="">
         </div>
     </div>
 </section>

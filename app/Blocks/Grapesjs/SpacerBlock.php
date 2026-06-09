@@ -17,6 +17,6 @@ class SpacerBlock
             ->label('blocks.gjs.spacer')
             ->icon('fa-up-down')
             ->category('blocks.categories.elements')
-            ->canvasHtml('<div style="height:80px;"></div>');
+            ->canvasHtml('<div class="lx-spacer"></div>');
     }
 }

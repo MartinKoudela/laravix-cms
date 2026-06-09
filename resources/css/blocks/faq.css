@@ -1,0 +1,21 @@
+.lx-faq__list { display: flex; flex-direction: column; }
+.lx-faq__item { border-bottom: 1px solid #e5e7eb; padding: 20px 0; }
+.lx-faq__item:last-child { border-bottom: none; }
+.lx-faq__question { font-size: 1rem; font-weight: 600; color: #111827; margin: 0 0 8px; }
+.lx-faq__answer   { font-size: .9375rem; color: #6b7280; margin: 0; line-height: 1.7; }
+
+.lx-accordion__item { border-bottom: 1px solid #e5e7eb; }
+.lx-accordion__item:last-child { border-bottom: none; }
+.lx-accordion__summary {
+    padding: 20px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    -webkit-appearance: none;
+}
+.lx-accordion__body { font-size: .9375rem; color: #6b7280; padding: 0 0 20px; margin: 0; line-height: 1.7; }

@@ -18,9 +18,9 @@ class VideoEmbedBlock
             ->icon('fa-clapperboard')
             ->category('blocks.categories.media')
             ->canvasHtml(<<<'HTML'
-<section style="padding:64px 24px;">
-    <div style="max-width:800px;margin:0 auto;">
-        <video data-gjs-type="mp4-video" controls preload="metadata" style="width:100%;border-radius:12px;display:block;"></video>
+<section class="lx-section">
+    <div class="lx-video__inner">
+        <video data-gjs-type="mp4-video" controls preload="metadata" class="lx-video__el"></video>
     </div>
 </section>
 HTML);

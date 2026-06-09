@@ -1,0 +1,22 @@
+.lx-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+.lx-gallery__img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+.lx-gallery-slider__swiper { overflow: hidden; padding-bottom: 44px; }
+.lx-gallery-slider__slide  { width: 380px; }
+.lx-gallery-slider__img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}

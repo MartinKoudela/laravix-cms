@@ -1,0 +1,18 @@
+.lx-cards-slider__swiper { overflow: hidden; padding-bottom: 44px; }
+.lx-cards-slider__card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+.lx-cards-slider__icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.lx-cards-slider__card-title { font-size: 1.125rem; font-weight: 600; color: #111827; margin: 0 0 8px; }
+.lx-cards-slider__card-text  { font-size: .9375rem; color: #6b7280; margin: 0; line-height: 1.6; }

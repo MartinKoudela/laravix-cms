@@ -18,12 +18,12 @@ class StatsBlock
             ->icon('fa-chart-bar')
             ->category('blocks.categories.content')
             ->canvasHtml(<<<'HTML'
-<section style="padding:64px 24px;background:#111827;">
-    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:32px;text-align:center;">
-        <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">10,000+</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Happy customers</p></div>
-        <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">99.9%</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Service uptime</p></div>
-        <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">50+</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Countries worldwide</p></div>
-        <div><p style="font-size:3rem;font-weight:800;color:#fff;margin:0 0 4px;">24/7</p><p style="font-size:.9375rem;color:#9ca3af;margin:0;">Customer support</p></div>
+<section class="lx-section lx-section--dark">
+    <div class="lx-stats__grid lx-container--lg">
+        <div><p class="lx-stats__value">10,000+</p><p class="lx-stats__label">Happy customers</p></div>
+        <div><p class="lx-stats__value">99.9%</p><p class="lx-stats__label">Service uptime</p></div>
+        <div><p class="lx-stats__value">50+</p><p class="lx-stats__label">Countries worldwide</p></div>
+        <div><p class="lx-stats__value">24/7</p><p class="lx-stats__label">Customer support</p></div>
     </div>
 </section>
 HTML);

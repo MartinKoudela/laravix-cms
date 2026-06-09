@@ -17,6 +17,6 @@ class BadgeBlock
             ->label('blocks.gjs.badge')
             ->icon('fa-certificate')
             ->category('blocks.categories.elements')
-            ->canvasHtml('<span style="display:inline-block;padding:4px 12px;background:#eff6ff;color:#2563eb;font-size:.8125rem;font-weight:600;border-radius:999px;">New</span>');
+            ->canvasHtml('<span class="lx-badge">New</span>');
     }
 }

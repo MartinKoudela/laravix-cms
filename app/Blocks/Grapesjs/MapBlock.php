@@ -18,9 +18,9 @@ class MapBlock
             ->icon('fa-map-location-dot')
             ->category('blocks.categories.media')
             ->canvasHtml(<<<'HTML'
-<section style="padding:64px 24px;">
-    <div data-gjs-type="map-embed" style="max-width:1100px;margin:0 auto;border-radius:12px;overflow:hidden;height:420px;">
-        <iframe src="https://maps.google.com/maps?q=Praha&output=embed&z=13" width="100%" height="100%" style="border:none;display:block;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<section class="lx-section">
+    <div data-gjs-type="map-embed" class="lx-map__embed">
+        <iframe src="https://maps.google.com/maps?q=Praha&output=embed&z=13" class="lx-map__iframe" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </section>
 HTML);

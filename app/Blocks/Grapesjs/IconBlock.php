@@ -17,6 +17,6 @@ class IconBlock
             ->label('blocks.gjs.icon')
             ->icon('fa-icons')
             ->category('blocks.categories.elements')
-            ->canvasHtml('<i class="fa-solid fa-star" style="font-size:2rem;color:#111827;display:block;"></i>');
+            ->canvasHtml('<i class="fa-solid fa-star lx-icon"></i>');
     }
 }

@@ -1,0 +1,18 @@
+.lx-cta__title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #fff;
+    margin: 0 0 16px;
+}
+.lx-cta__text {
+    font-size: 1.125rem;
+    color: #9ca3af;
+    margin: 0 0 32px;
+    line-height: 1.7;
+}
+.lx-cta__actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}

@@ -18,18 +18,18 @@ class LogoBarBlock
             ->icon('fa-building')
             ->category('blocks.categories.social_proof')
             ->canvasHtml(<<<'HTML'
-<section style="padding:40px 24px;border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;">
-    <div style="max-width:960px;margin:0 auto;">
-        <p style="font-size:.875rem;font-weight:500;color:#9ca3af;text-align:center;margin:0 0 28px;text-transform:uppercase;letter-spacing:.08em;">Trusted by</p>
-        <div style="display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;">
-            <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Company A</span>
-            <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Company B</span>
-            <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Company C</span>
-            <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Company D</span>
-            <span style="font-size:1.375rem;font-weight:800;color:#d1d5db;letter-spacing:-.02em;">Company E</span>
+<div class="lx-logo-bar">
+    <div class="lx-logo-bar__inner">
+        <p class="lx-logo-bar__label">Trusted by</p>
+        <div class="lx-logo-bar__list">
+            <span class="lx-logo-bar__item">Company A</span>
+            <span class="lx-logo-bar__item">Company B</span>
+            <span class="lx-logo-bar__item">Company C</span>
+            <span class="lx-logo-bar__item">Company D</span>
+            <span class="lx-logo-bar__item">Company E</span>
         </div>
     </div>
-</section>
+</div>
 HTML);
     }
 }

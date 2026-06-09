@@ -17,6 +17,6 @@ class ImageCenteredBlock
             ->label('blocks.gjs.image_centered')
             ->icon('fa-expand')
             ->category('blocks.categories.elements')
-            ->canvasHtml('<div style="display:flex;justify-content:center;"><img src="https://placehold.co/400x300?text=Photo" data-gjs-type="media-image" style="width:400px;max-width:100%;height:auto;display:block;border-radius:8px;" alt=""></div>');
+            ->canvasHtml('<div class="lx-img-centered-wrap"><img src="https://placehold.co/400x300?text=Photo" data-gjs-type="media-image" class="lx-img-centered" alt=""></div>');
     }
 }

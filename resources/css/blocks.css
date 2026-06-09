@@ -1,0 +1,16 @@
+@import './blocks/shared.css';
+@import './blocks/elements.css';
+@import './blocks/hero.css';
+@import './blocks/cta.css';
+@import './blocks/stats.css';
+@import './blocks/steps.css';
+@import './blocks/logo-bar.css';
+@import './blocks/faq.css';
+@import './blocks/newsletter.css';
+@import './blocks/contact-form.css';
+@import './blocks/gallery.css';
+@import './blocks/cards-slider.css';
+@import './blocks/team.css';
+@import './blocks/testimonials.css';
+@import './blocks/media.css';
+@import './blocks/pricing.css';

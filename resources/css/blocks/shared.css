@@ -1,0 +1,36 @@
+.lx-section       { padding: 64px 24px; }
+.lx-section--hero { padding: 80px 24px; }
+.lx-section--sm   { padding: 40px 24px; }
+
+.lx-section--dark  { background: #111827; }
+.lx-section--light { background: #f9fafb; }
+.lx-section--blue  { background: #eff6ff; }
+
+.lx-container       { max-width: 1100px; margin: 0 auto; }
+.lx-container--lg   { max-width: 1000px; margin: 0 auto; }
+.lx-container--md   { max-width: 760px;  margin: 0 auto; }
+.lx-container--sm   { max-width: 600px;  margin: 0 auto; }
+.lx-container--form { max-width: 560px;  margin: 0 auto; }
+
+.lx-section-head           { text-align: center; }
+.lx-section-head__title    { font-size: 2rem; font-weight: 700; color: #111827; margin: 0 0 12px; }
+.lx-section-head__subtitle { font-size: 1rem; color: #6b7280; line-height: 1.7; margin: 0 0 40px; }
+.lx-section-head__title--white    { color: #fff; }
+.lx-section-head__subtitle--white { color: #9ca3af; }
+
+.lx-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    font-size: .9375rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+.lx-btn--lg      { padding: 14px 32px; }
+.lx-btn--dark    { background: #111827; color: #fff;     border-color: #111827; }
+.lx-btn--white   { background: #fff;     color: #111827; border-color: #fff; }
+.lx-btn--outline { background: transparent; color: #fff; border-color: #4b5563; }

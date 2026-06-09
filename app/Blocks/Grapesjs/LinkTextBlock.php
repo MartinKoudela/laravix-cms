@@ -17,6 +17,6 @@ class LinkTextBlock
             ->label('blocks.gjs.link')
             ->icon('fa-link')
             ->category('blocks.categories.elements')
-            ->canvasHtml('<a href="#" style="color:#2563eb;text-decoration:underline;font-size:1rem;cursor:pointer;">Click here</a>');
+            ->canvasHtml('<a href="#" class="lx-link">Click here</a>');
     }
 }

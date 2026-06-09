@@ -1,0 +1,21 @@
+.lx-steps__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+}
+.lx-steps__item { text-align: center; }
+.lx-steps__number {
+    width: 56px;
+    height: 56px;
+    background: #eff6ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2563eb;
+}
+.lx-steps__title { font-size: 1rem; font-weight: 600; color: #111827; margin: 0 0 8px; }
+.lx-steps__text  { font-size: .9375rem; color: #6b7280; margin: 0; line-height: 1.6; }
