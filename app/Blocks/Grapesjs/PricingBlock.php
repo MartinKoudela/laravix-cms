@@ -32,7 +32,7 @@ class PricingBlock
                     <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;"><i class="fa-solid fa-check" style="color:#16a34a;"></i> 5 pages</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;color:#9ca3af;"><i class="fa-solid fa-xmark" style="color:#d1d5db;"></i> Custom domain</li>
                 </ul>
-                <a href="#" style="display:block;text-align:center;padding:12px;background:#f9fafb;color:#111827;font-weight:600;border-radius:8px;text-decoration:none;border:1px solid #e5e7eb;">Start for free</a>
+                <a href="#" data-gjs-type="button-link" style="display:block;text-align:center;padding:12px;background:#f9fafb;color:#111827;font-weight:600;border-radius:8px;text-decoration:none;border:1px solid #e5e7eb;">Start for free</a>
             </div>
             <div style="background:#111827;border-radius:16px;padding:32px;">
                 <h3 style="font-size:.875rem;font-weight:600;color:#9ca3af;margin:0 0 12px;text-transform:uppercase;letter-spacing:.05em;">Pro</h3>
@@ -43,7 +43,7 @@ class PricingBlock
                     <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;color:#e5e7eb;"><i class="fa-solid fa-check" style="color:#4ade80;"></i> Unlimited pages</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;color:#e5e7eb;"><i class="fa-solid fa-check" style="color:#4ade80;"></i> Custom domain</li>
                 </ul>
-                <a href="#" style="display:block;text-align:center;padding:12px;background:#2563eb;color:#fff;font-weight:600;border-radius:8px;text-decoration:none;">Choose Pro</a>
+                <a href="#" data-gjs-type="button-link" style="display:block;text-align:center;padding:12px;background:#2563eb;color:#fff;font-weight:600;border-radius:8px;text-decoration:none;">Choose Pro</a>
             </div>
             <div style="background:#fff;border-radius:16px;padding:32px;border:1px solid #e5e7eb;">
                 <h3 style="font-size:.875rem;font-weight:600;color:#6b7280;margin:0 0 12px;text-transform:uppercase;letter-spacing:.05em;">Enterprise</h3>
@@ -54,7 +54,7 @@ class PricingBlock
                     <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;"><i class="fa-solid fa-check" style="color:#16a34a;"></i> SLA support</li>
                     <li style="display:flex;align-items:center;gap:8px;font-size:.9375rem;"><i class="fa-solid fa-check" style="color:#16a34a;"></i> Custom integrations</li>
                 </ul>
-                <a href="#" style="display:block;text-align:center;padding:12px;background:#f9fafb;color:#111827;font-weight:600;border-radius:8px;text-decoration:none;border:1px solid #e5e7eb;">Contact us</a>
+                <a href="#" data-gjs-type="button-link" style="display:block;text-align:center;padding:12px;background:#f9fafb;color:#111827;font-weight:600;border-radius:8px;text-decoration:none;border:1px solid #e5e7eb;">Contact us</a>
             </div>
         </div>
     </div>

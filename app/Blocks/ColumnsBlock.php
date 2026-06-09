@@ -20,6 +20,7 @@ class ColumnsBlock
         return BlockDefinition::make('columns')
             ->label('blocks.types.columns')
             ->icon('heroicon-o-view-columns')
+            ->gjsIcon('fa-table-columns')
             ->category('blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section style="padding:64px 24px;">

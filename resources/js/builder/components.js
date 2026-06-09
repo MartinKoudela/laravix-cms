@@ -3,60 +3,82 @@ import { t } from './trans';
 export function registerComponents(editor) {
     editor.Components.addType('button-link', {
         isComponent: (el) => el.dataset?.gjsType === 'button-link',
+        extend: 'text',
         model: {
             defaults: {
                 tagName: 'a',
+                name: 'Button',
                 draggable: true,
                 droppable: false,
+                btnIcon: '',
+                resizable: {
+                    handles: ['cl', 'cr'],
+                    currentUnit: 1,
+                    unitWidth: 'px',
+                    minDim: 40,
+                    step: 1,
+                },
                 traits: [
-                    { type: 'text', name: 'content', label: t('trait_btn_content', 'Button text'), changeProp: true },
                     {
-                        type: 'select', name: 'variant', label: t('trait_btn_variant', 'Style'), changeProp: true,
-                        options: [
-                            { value: 'primary', name: 'Primary' },
-                            { value: 'outline', name: 'Outline' },
-                            { value: 'ghost',   name: 'Ghost' },
-                            { value: 'white',   name: t('trait_btn_white', 'White') },
-                        ],
+                        type: 'text',
+                        name: 'href',
+                        label: t('trait_btn_href', 'URL'),
+                        placeholder: 'https://',
                     },
                     {
-                        type: 'select', name: 'size', label: t('trait_btn_size', 'Size'), changeProp: true,
-                        options: [
-                            { value: 'sm', name: t('trait_btn_sm', 'Small') },
-                            { value: 'md', name: t('trait_btn_md', 'Medium') },
-                            { value: 'lg', name: t('trait_btn_lg', 'Large') },
-                            { value: 'xl', name: t('trait_btn_xl', 'Extra large') },
-                        ],
-                    },
-                    { type: 'text', name: 'href',   label: t('trait_btn_href', 'URL') },
-                    {
-                        type: 'select', name: 'target', label: t('trait_btn_target', 'Open'),
+                        type: 'select',
+                        name: 'target',
+                        label: t('trait_btn_target', 'Open in'),
                         options: [
                             { value: '_self',  name: t('trait_target_self', 'Same window') },
                             { value: '_blank', name: t('trait_target_blank', 'New window') },
                         ],
                     },
-                    { type: 'text', name: 'icon', label: t('trait_btn_icon', 'FA icon (fa-arrow-right)') },
+                    {
+                        type: 'text',
+                        name: 'btnIcon',
+                        label: t('trait_btn_icon', 'Icon (arrow-right, star, check…)'),
+                        placeholder: 'arrow-right',
+                        changeProp: true,
+                    },
                 ],
             },
             init() {
-                this.on('change:variant change:size change:content change:icon', this.updateStyles);
+                this.on('change:btnIcon', this.syncIcon);
             },
-            updateStyles() {
-                const variant  = this.get('variant') || 'primary';
-                const size     = this.get('size')    || 'md';
-                const content  = this.get('content') || t('trait_btn_content', 'Button');
-                const icon     = this.get('icon');
-                const padding  = { sm: '8px 18px', md: '12px 28px', lg: '16px 36px', xl: '18px 44px' }[size] || '12px 28px';
-                const fontSize = { sm: '0.8125rem', md: '0.9375rem', lg: '1rem', xl: '1.125rem' }[size] || '0.9375rem';
-                const styles   = {
-                    primary: 'background:#111827;color:#fff;border:2px solid #111827;',
-                    outline: 'background:transparent;color:#111827;border:2px solid #111827;',
-                    ghost:   'background:transparent;color:#111827;border:2px solid transparent;',
-                    white:   'background:#fff;color:#111827;border:2px solid #fff;',
-                }[variant] || '';
-                this.addStyle(`display:inline-flex;align-items:center;gap:8px;padding:${padding};font-size:${fontSize};font-weight:600;border-radius:8px;text-decoration:none;cursor:pointer;transition:opacity .15s;${styles}`);
-                this.components(`${icon ? `<i class="fa-solid ${icon}"></i> ` : ''}${content}`);
+            syncIcon() {
+                const raw  = (this.get('btnIcon') || '').trim();
+                const comps = this.components();
+                const existing = comps.models.find(c => c.getAttributes()['data-btn-icon'] === '1');
+
+                if (!raw) {
+                    existing?.remove();
+                    return;
+                }
+
+                // Accept "arrow-right", "fa-arrow-right" or "fa-solid fa-arrow-right"
+                const name = raw
+                    .replace(/^fa-solid\s+fa-/i, '')
+                    .replace(/^fa-solid\s+/i, '')
+                    .replace(/^fa-/i, '');
+                const cls = `fa-solid fa-${name}`;
+
+                if (existing) {
+                    existing.addAttributes({ class: cls });
+                } else {
+                    comps.add(
+                        {
+                            tagName: 'i',
+                            attributes: { class: cls, 'data-btn-icon': '1', 'aria-hidden': 'true' },
+                            selectable: false,
+                            hoverable: false,
+                            layerable: false,
+                            copyable: false,
+                            removable: false,
+                        },
+                        { at: 0 },
+                    );
+                }
             },
         },
     });
@@ -85,12 +107,13 @@ export function registerComponents(editor) {
     });
 
     editor.Components.addType('youtube-video', {
-        isComponent: (el) => el.tagName === 'IFRAME' && el.dataset?.gjsType === 'youtube-video',
+        isComponent: (el) => el.dataset?.gjsType === 'youtube-video',
         model: {
             defaults: {
-                tagName: 'iframe',
+                tagName: 'div',
                 name: 'YouTube Video',
                 droppable: false,
+                resizable: { handles: ['cl', 'cr', 'bc', 'tc'], currentUnit: 1, unitWidth: 'px', unitHeight: 'px', minDim: 120, step: 1 },
                 ytUrl: '',
                 ytAutoplay: false,
                 ytControls: true,
@@ -103,33 +126,54 @@ export function registerComponents(editor) {
                         placeholder: 'https://www.youtube.com/watch?v=...',
                         changeProp: true,
                     },
-                    { type: 'checkbox', name: 'ytAutoplay',  label: t('trait_yt_autoplay', 'Autoplay'),         changeProp: true },
-                    { type: 'checkbox', name: 'ytControls',  label: t('trait_yt_controls', 'Show controls'),    changeProp: true },
-                    { type: 'checkbox', name: 'ytRel',       label: t('trait_yt_rel', 'Related videos at end'), changeProp: true },
+                    { type: 'checkbox', name: 'ytAutoplay', label: t('trait_yt_autoplay', 'Autoplay'),          changeProp: true },
+                    { type: 'checkbox', name: 'ytControls', label: t('trait_yt_controls', 'Show controls'),     changeProp: true },
+                    { type: 'checkbox', name: 'ytRel',      label: t('trait_yt_rel', 'Related videos at end'),  changeProp: true },
                 ],
             },
             init() {
+                if (!this.get('ytUrl')) {
+                    const iframeModel = this.components().filter(c => c.get('tagName') === 'iframe')[0];
+                    const src = iframeModel?.getAttributes()?.src || '';
+                    const m = src.match(/embed\/([a-zA-Z0-9_-]{11})/);
+                    if (m) this.set('ytUrl', `https://www.youtube.com/watch?v=${m[1]}`, { silent: true });
+                }
                 this.on('change:ytUrl change:ytAutoplay change:ytControls change:ytRel', this.syncSrc);
             },
             syncSrc() {
-                const url   = this.get('ytUrl') || '';
-                const match = url.match(/(?:youtu\.be\/|[?&]v=)([a-zA-Z0-9_-]{11})/);
-                const id    = match ? match[1] : url.replace(/\s/g, '');
+                const url = (this.get('ytUrl') || '').trim();
+                const iframe = this.view?.el?.querySelector('iframe');
+
+                if (!url) {
+                    if (iframe) iframe.src = '';
+                    return;
+                }
+
+                const match = url.match(/(?:youtu\.be\/|[?&]v=|embed\/)([a-zA-Z0-9_-]{11})/);
+                const id = match ? match[1] : (/^[a-zA-Z0-9_-]{11}$/.test(url) ? url : null);
                 if (!id) return;
+
                 const params = [`rel=${this.get('ytRel') ? '1' : '0'}`];
-                if (this.get('ytAutoplay')) params.push('autoplay=1');
+                if (this.get('ytAutoplay')) params.push('autoplay=1', 'mute=1');
                 if (!this.get('ytControls')) params.push('controls=0');
-                this.addAttributes({
-                    src: `https://www.youtube.com/embed/${id}?${params.join('&')}`,
-                    frameborder: '0',
-                    allowfullscreen: 'true',
-                    allow: 'accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture',
-                    'data-gjs-type': 'youtube-video',
+
+                const src = `https://www.youtube.com/embed/${id}?${params.join('&')}`;
+
+                // Update DOM immediately
+                if (iframe) iframe.src = src;
+
+                // Update child component model so src is saved in project data
+                this.components().each(c => {
+                    if (c.get('tagName') === 'iframe') c.addAttributes({ src });
                 });
             },
         },
         view: {
-            onRender() { this.el.setAttribute('data-gjs-type', 'youtube-video'); },
+            onRender() {
+                this.el.setAttribute('data-gjs-type', 'youtube-video');
+                addIframeOverlay(this.el);
+                if (this.model.get('ytUrl')) this.model.syncSrc();
+            },
         },
     });
 
@@ -179,7 +223,10 @@ export function registerComponents(editor) {
             },
         },
         view: {
-            onRender() { this.el.setAttribute('data-gjs-type', 'mp4-video'); },
+            onRender() {
+                this.el.setAttribute('data-gjs-type', 'mp4-video');
+                addIframeOverlay(this.el);
+            },
         },
     });
 
@@ -230,7 +277,10 @@ export function registerComponents(editor) {
             },
         },
         view: {
-            onRender() { this.el.setAttribute('data-gjs-type', 'map-embed'); },
+            onRender() {
+                this.el.setAttribute('data-gjs-type', 'map-embed');
+                addIframeOverlay(this.el);
+            },
         },
     });
 
@@ -256,18 +306,32 @@ export function registerComponents(editor) {
         },
     });
 
+    const resizableDefaults = {
+        handles: ['cl', 'cr', 'bc'],
+        currentUnit: 1,
+        unitWidth: 'px',
+        unitHeight: 'px',
+        minDim: 10,
+        step: 1,
+    };
+
     editor.DomComponents.addType('default', {
-        model: {
-            defaults: {
-                resizable: {
-                    handles: ['tl', 'tc', 'tr', 'cl', 'cr', 'bl', 'bc', 'br'],
-                    currentUnit: 1,
-                    unitWidth: 'px',
-                    unitHeight: 'px',
-                    minDim: 10,
-                    step: 1,
-                },
-            },
-        },
+        model: { defaults: { resizable: resizableDefaults } },
     });
+
+    editor.DomComponents.addType('text', {
+        model: { defaults: { resizable: { ...resizableDefaults, handles: ['cl', 'cr'] } } },
+    });
+
+    editor.DomComponents.addType('image', {
+        model: { defaults: { resizable: { ...resizableDefaults, handles: ['tl', 'tr', 'bl', 'br', 'cl', 'cr', 'bc'] } } },
+    });
+}
+
+function addIframeOverlay(el) {
+    if (el.querySelector('.gjs-iframe-overlay')) return;
+    const overlay = document.createElement('div');
+    overlay.className = 'gjs-iframe-overlay';
+    overlay.style.cssText = 'position:absolute;inset:0;z-index:9;cursor:pointer;';
+    el.appendChild(overlay);
 }

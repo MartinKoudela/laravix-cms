@@ -16,6 +16,7 @@ class DividerBlock
         return BlockDefinition::make('divider')
             ->label('blocks.types.divider')
             ->icon('heroicon-o-minus')
+            ->gjsIcon('fa-minus')
             ->schema(fn () => [])
             ->canvasHtml('<div style="padding:32px 24px;"><hr style="border:none;border-top:1px solid #e5e7eb;"></div>')
             ->category('blocks.categories.info');

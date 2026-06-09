@@ -124,19 +124,11 @@ return [
     'val_font_monospace' => 'Monospace',
 
     // Traity — tlačítko
-    'trait_btn_content' => 'Text tlačítka',
-    'trait_btn_variant' => 'Styl',
-    'trait_btn_size' => 'Velikost',
     'trait_btn_href' => 'URL odkazu',
-    'trait_btn_target' => 'Otevřít',
-    'trait_btn_icon' => 'FA ikona (fa-arrow-right)',
-    'trait_target_self' => 'Stejné okno',
-    'trait_target_blank' => 'Nové okno',
-    'trait_btn_white' => 'Bílé',
-    'trait_btn_sm' => 'Malé',
-    'trait_btn_md' => 'Střední',
-    'trait_btn_lg' => 'Velké',
-    'trait_btn_xl' => 'Extra velké',
+    'trait_btn_target' => 'Otevřít v',
+    'trait_btn_icon' => 'Ikona (arrow-right, star, check…)',
+    'trait_target_self' => 'Stejném okně',
+    'trait_target_blank' => 'Novém okně',
 
     // Traity — obrázek
     'trait_img_src' => 'URL obrázku',
@@ -321,4 +313,8 @@ return [
     'c_table_col' => 'Sloupec',
     'c_table_row' => 'Řádek',
     'c_table_data' => 'Data',
+
+    'align_left' => 'Zarovnat vlevo',
+    'align_center' => 'Na střed',
+    'align_right' => 'Zarovnat vpravo',
 ];

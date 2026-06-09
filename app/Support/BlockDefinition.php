@@ -29,6 +29,7 @@ class BlockDefinition
         public readonly ?string $category = null,
         public readonly \Closure|string|null $canvasHtml = null,
         public readonly array $defaultData = [],
+        public readonly ?string $gjsIcon = null,
     ) {}
 
     public static function make(string $key): static
@@ -38,37 +39,42 @@ class BlockDefinition
 
     public function label(string $label): static
     {
-        return new static($this->key, $label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData);
+        return new static($this->key, $label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
     }
 
     public function icon(string $icon): static
     {
-        return new static($this->key, $this->label, $icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData);
+        return new static($this->key, $this->label, $icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
+    }
+
+    public function gjsIcon(string $icon): static
+    {
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $icon);
     }
 
     public function schema(\Closure|array $schema): static
     {
-        return new static($this->key, $this->label, $this->icon, $schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData);
+        return new static($this->key, $this->label, $this->icon, $schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
     }
 
     public function nestable(bool $nestable): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $nestable, $this->category, $this->canvasHtml, $this->defaultData);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
     }
 
     public function category(string $category): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $category, $this->canvasHtml, $this->defaultData);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
     }
 
     public function canvasHtml(\Closure|string $html): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $html, $this->defaultData);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $html, $this->defaultData, $this->gjsIcon);
     }
 
     public function defaultData(array $data): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $data);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $data, $this->gjsIcon);
     }
 
     public function resolveCanvasHtml(): string
@@ -83,17 +89,18 @@ class BlockDefinition
     /** @return array{id: string, label: string, category: string, content: string, media: string} */
     public function toGrapesBlock(): array
     {
+        $iconClass = $this->gjsIcon ?? (str_starts_with((string) $this->icon, 'heroicon-') ? null : $this->icon);
         $media = '';
-        if ($this->icon && ! str_starts_with($this->icon, 'heroicon-')) {
-            $needsPrefix = ! preg_match('/^fa-(brands|regular|light|thin|duotone)\b/', $this->icon);
-            $faClass = $needsPrefix ? 'fa-solid '.$this->icon : $this->icon;
+        if ($iconClass) {
+            $needsPrefix = ! preg_match('/^fa-(brands|regular|light|thin|duotone)\b/', $iconClass);
+            $faClass = $needsPrefix ? 'fa-solid '.$iconClass : $iconClass;
             $media = '<i class="'.$faClass.'" style="font-size:1.5rem;display:block;margin:0 auto 4px;"></i>';
         }
 
         return [
             'id' => $this->key,
             'label' => __($this->label),
-            'category' => $this->category ?? __('blocks.categories.general'),
+            'category' => $this->category ? __($this->category) : __('blocks.categories.general'),
             'content' => $this->resolveCanvasHtml(),
             'media' => $media,
         ];

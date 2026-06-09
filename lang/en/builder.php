@@ -104,19 +104,11 @@ return [
     'val_font_serif' => 'Serif',
     'val_font_monospace' => 'Monospace',
 
-    'trait_btn_content' => 'Button text',
-    'trait_btn_variant' => 'Style',
-    'trait_btn_size' => 'Size',
     'trait_btn_href' => 'URL',
-    'trait_btn_target' => 'Open',
-    'trait_btn_icon' => 'FA icon (fa-arrow-right)',
+    'trait_btn_target' => 'Open in',
+    'trait_btn_icon' => 'Icon (arrow-right, star, check…)',
     'trait_target_self' => 'Same window',
     'trait_target_blank' => 'New window',
-    'trait_btn_white' => 'White',
-    'trait_btn_sm' => 'Small',
-    'trait_btn_md' => 'Medium',
-    'trait_btn_lg' => 'Large',
-    'trait_btn_xl' => 'Extra large',
 
     'trait_img_src' => 'Image URL',
     'trait_img_alt' => 'Alt text (SEO)',
@@ -294,4 +286,8 @@ return [
     'c_table_col' => 'Column',
     'c_table_row' => 'Row',
     'c_table_data' => 'Data',
+
+    'align_left' => 'Align left',
+    'align_center' => 'Center',
+    'align_right' => 'Align right',
 ];

@@ -18,6 +18,7 @@ class TextBlock
         return BlockDefinition::make('text')
             ->label('blocks.types.text')
             ->icon('heroicon-o-document-text')
+            ->gjsIcon('fa-align-left')
             ->category('blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section style="padding:64px 24px;">

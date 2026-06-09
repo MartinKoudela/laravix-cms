@@ -21,6 +21,7 @@ class CardsBlock
         return BlockDefinition::make('cards')
             ->label('blocks.types.cards')
             ->icon('heroicon-o-squares-2x2')
+            ->gjsIcon('fa-grip')
             ->category('blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section style="padding:64px 24px;background:#f9fafb;">

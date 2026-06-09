@@ -51,10 +51,9 @@ return [
     'val_visible' => 'Viditeľné', 'val_hidden' => 'Skryté', 'val_auto' => 'Auto', 'val_scroll' => 'Scrollovanie',
     'val_font_inherit' => '— Zdediť —', 'val_font_serif' => 'Serif', 'val_font_monospace' => 'Monospace',
 
-    'trait_btn_content' => 'Text tlačidla', 'trait_btn_variant' => 'Štýl', 'trait_btn_size' => 'Veľkosť',
-    'trait_btn_href' => 'URL', 'trait_btn_target' => 'Otvoriť', 'trait_btn_icon' => 'FA ikona (fa-arrow-right)',
-    'trait_target_self' => 'Rovnaké okno', 'trait_target_blank' => 'Nové okno',
-    'trait_btn_white' => 'Biele', 'trait_btn_sm' => 'Malé', 'trait_btn_md' => 'Stredné', 'trait_btn_lg' => 'Veľké', 'trait_btn_xl' => 'Extra veľké',
+    'trait_btn_href' => 'URL', 'trait_btn_target' => 'Otvoriť v',
+    'trait_btn_icon' => 'Ikona (arrow-right, star, check…)',
+    'trait_target_self' => 'Rovnakom okne', 'trait_target_blank' => 'Novom okne',
     'trait_img_src' => 'URL obrázka', 'trait_img_alt' => 'Alt text (SEO)', 'trait_img_title' => 'Titulok', 'trait_img_fit' => 'Object fit',
     'trait_yt_url' => 'YouTube URL alebo ID videa', 'trait_yt_autoplay' => 'Autoplay',
     'trait_yt_controls' => 'Zobraziť ovládanie', 'trait_yt_rel' => 'Odporúčané videá na konci',
@@ -190,4 +189,8 @@ return [
     'c_table_col' => 'Stĺpec',
     'c_table_row' => 'Riadok',
     'c_table_data' => 'Dáta',
+
+    'align_left' => 'Zarovnať vľavo',
+    'align_center' => 'Na stred',
+    'align_right' => 'Zarovnať vpravo',
 ];
