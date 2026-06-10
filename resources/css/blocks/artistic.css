@@ -1,0 +1,80 @@
+.lx-bigtype {
+    padding: 80px 24px;
+    overflow: hidden;
+}
+.lx-bigtype__label {
+    font-size: .875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: #9ca3af;
+    margin: 0 0 16px;
+}
+.lx-bigtype__text {
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 900;
+    color: #111827;
+    margin: 0;
+    line-height: 1.05;
+    letter-spacing: -.03em;
+}
+.lx-bigtype--light .lx-bigtype__text  { color: #f3f4f6; }
+.lx-bigtype--dark  { background: #111827; }
+.lx-bigtype--dark .lx-bigtype__text   { color: #fff; }
+.lx-bigtype--dark .lx-bigtype__label  { color: #4b5563; }
+.lx-bigtype__sub {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin: 20px 0 0;
+    max-width: 560px;
+    line-height: 1.7;
+}
+.lx-bigtype--dark .lx-bigtype__sub { color: #6b7280; }
+
+.lx-gradient-hero {
+    position: relative;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 40%, #f093fb 80%, #f5576c 100%);
+    background-size: 300% 300%;
+    animation: lx-gradient-shift 8s ease infinite;
+}
+.lx-gradient-hero__content { position: relative; z-index: 1; max-width: 680px; }
+.lx-gradient-hero__title {
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 20px;
+    line-height: 1.1;
+    letter-spacing: -.02em;
+}
+.lx-gradient-hero__text {
+    font-size: 1.25rem;
+    color: rgba(255,255,255,.85);
+    margin: 0 0 36px;
+    line-height: 1.7;
+}
+
+@keyframes lx-gradient-shift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.lx-quote { max-width: 720px; margin: 0 auto; text-align: center; padding: 80px 24px; }
+.lx-quote__mark { font-size: 4rem; color: #e5e7eb; line-height: 1; display: block; margin: 0 0 24px; }
+.lx-quote__text {
+    font-size: clamp(1.375rem, 3vw, 2rem);
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.5;
+    margin: 0 0 28px;
+    font-style: italic;
+}
+.lx-quote__author { font-size: .9375rem; color: #9ca3af; font-style: normal; }
+.lx-quote__author strong { color: #374151; }

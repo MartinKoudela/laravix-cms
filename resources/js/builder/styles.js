@@ -7,6 +7,7 @@ export function preloadFonts() {
     document.head.appendChild(link);
 }
 
+
 export function setupStyleManager(editor) {
     editor.StyleManager.addType('integer', {
         create({change}) {

@@ -38,6 +38,75 @@
                         breakpoints: breakpoints,
                     });
                 });
+
+                document.querySelectorAll('[data-lx-tabs]').forEach(function(tabs) {
+                    tabs.querySelectorAll('.lx-tabs__btn').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var target = btn.dataset.tab;
+                            tabs.querySelectorAll('.lx-tabs__btn').forEach(function(b) { b.classList.remove('lx-tabs__btn--active'); });
+                            tabs.querySelectorAll('.lx-tabs__panel').forEach(function(p) { p.classList.remove('lx-tabs__panel--active'); });
+                            btn.classList.add('lx-tabs__btn--active');
+                            var panel = tabs.querySelector('#' + target);
+                            if (panel) panel.classList.add('lx-tabs__panel--active');
+                        });
+                    });
+                });
+
+                document.querySelectorAll('[data-lx-countdown]').forEach(function(el) {
+                    var target = new Date(el.dataset.target).getTime();
+                    var pad = function(n) { return String(n).padStart(2, '0'); };
+                    var tick = function() {
+                        var diff = target - Date.now();
+                        if (diff <= 0) return;
+                        var d = Math.floor(diff / 86400000);
+                        var h = Math.floor((diff % 86400000) / 3600000);
+                        var m = Math.floor((diff % 3600000) / 60000);
+                        var s = Math.floor((diff % 60000) / 1000);
+                        var days = el.querySelector('[data-days]');
+                        var hours = el.querySelector('[data-hours]');
+                        var mins = el.querySelector('[data-minutes]');
+                        var secs = el.querySelector('[data-seconds]');
+                        if (days) days.textContent = pad(d);
+                        if (hours) hours.textContent = pad(h);
+                        if (mins) mins.textContent = pad(m);
+                        if (secs) secs.textContent = pad(s);
+                    };
+                    tick();
+                    setInterval(tick, 1000);
+                });
+
+                if ('IntersectionObserver' in window) {
+                    document.querySelectorAll('[data-lx-counter]').forEach(function(el) {
+                        var targetVal = parseInt(el.dataset.target) || 0;
+                        var suffix = el.dataset.suffix || '';
+                        var obs = new IntersectionObserver(function(entries) {
+                            if (!entries[0].isIntersecting) return;
+                            obs.disconnect();
+                            var duration = 1600, start = performance.now();
+                            var step = function(now) {
+                                var progress = Math.min((now - start) / duration, 1);
+                                var eased = 1 - Math.pow(1 - progress, 3);
+                                el.textContent = Math.floor(eased * targetVal) + suffix;
+                                if (progress < 1) requestAnimationFrame(step);
+                            };
+                            requestAnimationFrame(step);
+                        }, { threshold: 0.5 });
+                        obs.observe(el);
+                    });
+                }
+
+                document.querySelectorAll('[data-lx-before-after]').forEach(function(el) {
+                    var range = el.querySelector('.lx-before-after__range');
+                    var after = el.querySelector('.lx-before-after__after');
+                    var handle = el.querySelector('.lx-before-after__handle');
+                    if (!range || !after) return;
+                    var update = function(val) {
+                        after.style.clipPath = 'inset(0 ' + (100 - val) + '% 0 0)';
+                        if (handle) handle.style.left = val + '%';
+                    };
+                    update(range.value);
+                    range.addEventListener('input', function() { update(range.value); });
+                });
             </script>
         @endpush
         <div class="gjs-content" style="isolation:isolate">{!! $content->grapesjs_html !!}</div>

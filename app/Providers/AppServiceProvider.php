@@ -13,14 +13,23 @@ use App\Blocks\CardsBlock;
 use App\Blocks\ColumnsBlock;
 use App\Blocks\DividerBlock;
 use App\Blocks\Grapesjs\AccordionBlock;
+use App\Blocks\Grapesjs\AnimatedCounterBlock;
 use App\Blocks\Grapesjs\BadgeBlock;
+use App\Blocks\Grapesjs\BeforeAfterBlock;
+use App\Blocks\Grapesjs\BentoGridBlock;
+use App\Blocks\Grapesjs\BigTypographyBlock;
 use App\Blocks\Grapesjs\ButtonPrimaryBlock;
 use App\Blocks\Grapesjs\CardsSliderBlock;
+use App\Blocks\Grapesjs\ComparisonBlock;
 use App\Blocks\Grapesjs\ContactFormBlock;
+use App\Blocks\Grapesjs\CookieBannerBlock;
+use App\Blocks\Grapesjs\CountdownBlock;
 use App\Blocks\Grapesjs\CtaBlock;
 use App\Blocks\Grapesjs\FaqBlock;
+use App\Blocks\Grapesjs\FeatureListBlock;
 use App\Blocks\Grapesjs\GalleryBlock;
 use App\Blocks\Grapesjs\GallerySliderBlock;
+use App\Blocks\Grapesjs\GradientHeroBlock;
 use App\Blocks\Grapesjs\HeroImageBlock;
 use App\Blocks\Grapesjs\HtmlEmbedBlock;
 use App\Blocks\Grapesjs\IconBlock;
@@ -29,15 +38,23 @@ use App\Blocks\Grapesjs\ImageFullBlock;
 use App\Blocks\Grapesjs\LinkTextBlock;
 use App\Blocks\Grapesjs\LogoBarBlock;
 use App\Blocks\Grapesjs\MapBlock;
+use App\Blocks\Grapesjs\MarqueeBlock;
 use App\Blocks\Grapesjs\NewsletterBlock;
 use App\Blocks\Grapesjs\PricingBlock;
+use App\Blocks\Grapesjs\ProgressBarsBlock;
+use App\Blocks\Grapesjs\QuoteBlock;
 use App\Blocks\Grapesjs\SpacerBlock;
+use App\Blocks\Grapesjs\SplitScreenBlock;
 use App\Blocks\Grapesjs\StatsBlock;
 use App\Blocks\Grapesjs\StepsBlock;
+use App\Blocks\Grapesjs\StickyCtaBarBlock;
 use App\Blocks\Grapesjs\TableBlock;
+use App\Blocks\Grapesjs\TabsBlock;
 use App\Blocks\Grapesjs\TeamBlock;
 use App\Blocks\Grapesjs\TestimonialsBlock;
 use App\Blocks\Grapesjs\TestimonialsSliderBlock;
+use App\Blocks\Grapesjs\TimelineBlock;
+use App\Blocks\Grapesjs\TwoColumnTextBlock;
 use App\Blocks\Grapesjs\VideoEmbedBlock;
 use App\Blocks\Grapesjs\VideoHeroBlock;
 use App\Blocks\Grapesjs\YoutubeBlock;
@@ -175,7 +192,6 @@ class AppServiceProvider extends ServiceProvider
             ButtonBlock::definition(),
             ButtonGroupBlock::definition(),
             DividerBlock::definition(),
-            // GrapesJS-only blocks
             HeroImageBlock::definition(),
             VideoHeroBlock::definition(),
             StepsBlock::definition(),
@@ -205,6 +221,23 @@ class AppServiceProvider extends ServiceProvider
             SpacerBlock::definition(),
             TableBlock::definition(),
             HtmlEmbedBlock::definition(),
+            MarqueeBlock::definition(),
+            BentoGridBlock::definition(),
+            SplitScreenBlock::definition(),
+            BigTypographyBlock::definition(),
+            GradientHeroBlock::definition(),
+            QuoteBlock::definition(),
+            TimelineBlock::definition(),
+            FeatureListBlock::definition(),
+            TwoColumnTextBlock::definition(),
+            ComparisonBlock::definition(),
+            TabsBlock::definition(),
+            CountdownBlock::definition(),
+            AnimatedCounterBlock::definition(),
+            BeforeAfterBlock::definition(),
+            ProgressBarsBlock::definition(),
+            CookieBannerBlock::definition(),
+            StickyCtaBarBlock::definition(),
         );
 
         NavigationRegistry::register(

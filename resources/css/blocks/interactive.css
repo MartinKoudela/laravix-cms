@@ -1,0 +1,140 @@
+.lx-tabs__nav {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid #e5e7eb;
+    margin: 0 0 32px;
+    flex-wrap: wrap;
+}
+.lx-tabs__btn {
+    padding: 10px 20px;
+    font-size: .9375rem;
+    font-weight: 600;
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    transition: color .15s;
+}
+.lx-tabs__btn:hover { color: #111827; }
+.lx-tabs__btn--active { color: #2563eb; border-bottom-color: #2563eb; }
+.lx-tabs__panel { display: none; }
+.lx-tabs__panel--active { display: block; }
+.lx-tabs__panel-title { font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0 0 12px; }
+.lx-tabs__panel-text  { font-size: 1rem; color: #6b7280; line-height: 1.7; margin: 0; }
+
+.lx-countdown__grid {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 32px 0 0;
+}
+.lx-countdown__unit { text-align: center; }
+.lx-countdown__num {
+    display: block;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    min-width: 80px;
+}
+.lx-countdown__label { font-size: .8125rem; font-weight: 500; color: #6b7280; text-transform: uppercase; letter-spacing: .08em; margin-top: 8px; display: block; }
+.lx-countdown__sep { font-size: 3rem; font-weight: 900; color: #374151; align-self: center; padding-top: 0; line-height: 1; }
+
+.lx-counter__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 40px;
+    text-align: center;
+}
+.lx-counter__num {
+    display: block;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #111827;
+    line-height: 1;
+    margin: 0 0 8px;
+    font-variant-numeric: tabular-nums;
+}
+.lx-counter__suffix { font-size: 2rem; font-weight: 900; }
+.lx-counter__label { font-size: .9375rem; color: #6b7280; }
+
+.lx-before-after {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: col-resize;
+    user-select: none;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.lx-before-after img { display: block; width: 100%; height: 400px; object-fit: cover; }
+.lx-before-after__after {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    clip-path: inset(0 50% 0 0);
+}
+.lx-before-after__after img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.lx-before-after__handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 3px;
+    height: 100%;
+    background: #fff;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+.lx-before-after__handle::before,
+.lx-before-after__handle::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.lx-before-after__handle::before { top: 50%; transform: translate(-50%, -50%); }
+.lx-before-after__handle::after  { display: none; }
+.lx-before-after__range {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: col-resize;
+    margin: 0;
+}
+.lx-before-after__label {
+    position: absolute;
+    top: 12px;
+    padding: 4px 10px;
+    background: rgba(0,0,0,.5);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    pointer-events: none;
+}
+.lx-before-after__label--before { left: 12px; }
+.lx-before-after__label--after  { right: 12px; }
+
+.lx-progress { display: flex; flex-direction: column; gap: 20px; }
+.lx-progress__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 8px;
+}
+.lx-progress__name  { font-size: .9375rem; font-weight: 600; color: #111827; }
+.lx-progress__value { font-size: .875rem; font-weight: 600; color: #6b7280; }
+.lx-progress__bar   { height: 8px; background: #f3f4f6; border-radius: 999px; overflow: hidden; }
+.lx-progress__fill  { height: 100%; background: #2563eb; border-radius: 999px; transition: width .6s ease; }

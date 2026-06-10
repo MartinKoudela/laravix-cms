@@ -1,0 +1,34 @@
+.lx-split {
+    display: flex;
+    min-height: 480px;
+}
+.lx-split__half {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 48px;
+}
+.lx-split__half--dark  { background: #111827; }
+.lx-split__half--light { background: #f9fafb; }
+.lx-split__half--white { background: #fff; }
+.lx-split__half--blue  { background: #eff6ff; }
+.lx-split__content { max-width: 380px; }
+.lx-split__label {
+    font-size: .8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #6b7280;
+    margin: 0 0 16px;
+}
+.lx-split__half--dark .lx-split__label { color: #4b5563; }
+.lx-split__title { font-size: 2rem; font-weight: 800; color: #111827; margin: 0 0 16px; line-height: 1.2; }
+.lx-split__half--dark .lx-split__title { color: #fff; }
+.lx-split__text { font-size: 1rem; color: #6b7280; line-height: 1.7; margin: 0 0 28px; }
+.lx-split__half--dark .lx-split__text { color: #9ca3af; }
+
+@media (max-width: 768px) {
+    .lx-split { flex-direction: column; }
+    .lx-split__half { padding: 48px 24px; }
+}

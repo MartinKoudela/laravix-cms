@@ -14,3 +14,10 @@
 @import './blocks/testimonials.css';
 @import './blocks/media.css';
 @import './blocks/pricing.css';
+@import './blocks/marquee.css';
+@import './blocks/bento.css';
+@import './blocks/split.css';
+@import './blocks/artistic.css';
+@import './blocks/content-ext.css';
+@import './blocks/interactive.css';
+@import './blocks/utility.css';

@@ -24,13 +24,23 @@ export function setupCanvas(editor, { contactUrl, csrfToken }) {
         }
 
         initSwipers(canvasDoc, win);
+        initTabs(canvasDoc);
+        initCountdowns(canvasDoc);
+        initCounters(canvasDoc, win);
+        initBeforeAfter(canvasDoc);
     });
 
-    let swiperTimer;
+    let interactiveTimer;
     editor.on('component:add', () => {
-        clearTimeout(swiperTimer);
-        swiperTimer = setTimeout(() => {
-            initSwipers(editor.Canvas.getDocument(), editor.Canvas.getWindow());
+        clearTimeout(interactiveTimer);
+        interactiveTimer = setTimeout(() => {
+            const doc = editor.Canvas.getDocument();
+            const win = editor.Canvas.getWindow();
+            initSwipers(doc, win);
+            initTabs(doc);
+            initCountdowns(doc);
+            initCounters(doc, win);
+            initBeforeAfter(doc);
         }, 200);
     });
 }
@@ -51,6 +61,97 @@ function initSwipers(doc, win) {
             navigation:    el.querySelector('.swiper-button-next') ? { nextEl: el.querySelector('.swiper-button-next'), prevEl: el.querySelector('.swiper-button-prev') } : false,
             breakpoints,
         });
+    });
+}
+
+function initTabs(doc) {
+    if (!doc) return;
+    doc.querySelectorAll('[data-lx-tabs]').forEach(tabs => {
+        if (tabs._lxTabsInit) return;
+        tabs._lxTabsInit = true;
+        tabs.querySelectorAll('.lx-tabs__btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const target = btn.dataset.tab;
+                tabs.querySelectorAll('.lx-tabs__btn').forEach(b => b.classList.remove('lx-tabs__btn--active'));
+                tabs.querySelectorAll('.lx-tabs__panel').forEach(p => p.classList.remove('lx-tabs__panel--active'));
+                btn.classList.add('lx-tabs__btn--active');
+                const panel = tabs.querySelector(`#${target}`);
+                if (panel) panel.classList.add('lx-tabs__panel--active');
+            });
+        });
+    });
+}
+
+function initCountdowns(doc) {
+    if (!doc) return;
+    doc.querySelectorAll('[data-lx-countdown]').forEach(el => {
+        if (el._lxCountdownInit) return;
+        el._lxCountdownInit = true;
+        const target = new Date(el.dataset.target).getTime();
+        const tick = () => {
+            const diff = target - Date.now();
+            if (diff <= 0) return;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            const pad = n => String(n).padStart(2, '0');
+            const days = el.querySelector('[data-days]');
+            const hours = el.querySelector('[data-hours]');
+            const mins = el.querySelector('[data-minutes]');
+            const secs = el.querySelector('[data-seconds]');
+            if (days) days.textContent = pad(d);
+            if (hours) hours.textContent = pad(h);
+            if (mins) mins.textContent = pad(m);
+            if (secs) secs.textContent = pad(s);
+        };
+        tick();
+        setInterval(tick, 1000);
+    });
+}
+
+function initCounters(doc, win) {
+    if (!doc || !win) return;
+    const Observer = win.IntersectionObserver;
+    if (!Observer) return;
+    doc.querySelectorAll('[data-lx-counter]').forEach(el => {
+        if (el._lxCounterInit) return;
+        el._lxCounterInit = true;
+        const target = parseInt(el.dataset.target) || 0;
+        const suffix = el.dataset.suffix || '';
+        const obs = new Observer(([entry]) => {
+            if (!entry.isIntersecting) return;
+            obs.disconnect();
+            const duration = 1600;
+            const start = performance.now();
+            const step = (now) => {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * target) + suffix;
+                if (progress < 1) win.requestAnimationFrame(step);
+            };
+            win.requestAnimationFrame(step);
+        }, { threshold: 0.5 });
+        obs.observe(el);
+    });
+}
+
+function initBeforeAfter(doc) {
+    if (!doc) return;
+    doc.querySelectorAll('[data-lx-before-after]').forEach(el => {
+        if (el._lxBAInit) return;
+        el._lxBAInit = true;
+        const range = el.querySelector('.lx-before-after__range');
+        const after = el.querySelector('.lx-before-after__after');
+        const handle = el.querySelector('.lx-before-after__handle');
+        if (!range || !after) return;
+        const update = (val) => {
+            const pct = 100 - val;
+            after.style.clipPath = `inset(0 ${pct}% 0 0)`;
+            if (handle) handle.style.left = `${val}%`;
+        };
+        update(range.value);
+        range.addEventListener('input', () => update(range.value));
     });
 }
 
