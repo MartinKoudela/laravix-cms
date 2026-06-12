@@ -8,6 +8,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\CustomCodeBlock;
 use App\Models\Media;
 use App\Models\Site;
 use App\Support\BlockRegistry;
@@ -50,7 +51,7 @@ class BuilderController extends Controller
             'pages' => $pages,
             'contactEmail' => $settings->get('contact_email', ''),
             'backUrl' => url("/admin/{$site->id}/contents/{$content->id}/edit"),
-            'gjsBlocks' => BlockRegistry::toGrapesBlocks(),
+            'gjsBlocks' => array_merge(BlockRegistry::toGrapesBlocks(), $this->customBlocksToGrapesBlocks($site)),
         ]);
     }
 
@@ -135,5 +136,34 @@ class BuilderController extends Controller
         );
 
         return response()->json(['ok' => true]);
+    }
+
+    private function customBlocksToGrapesBlocks(Site $site): array
+    {
+        return CustomCodeBlock::where('site_id', $site->id)
+            ->orderBy('name')
+            ->get()
+            ->map(function (CustomCodeBlock $block): array {
+                $icon = $block->icon ?? 'brackets-curly';
+                $media = '<i class="fa-solid fa-'.$icon.'" style="font-size:1.5rem;display:block;margin:0 auto 4px;"></i>';
+
+                $attrs = 'class="lx-custom-block"';
+                if ($block->css_content) {
+                    $attrs .= ' data-lx-css="'.base64_encode($block->css_content).'"';
+                }
+                if ($block->js_content) {
+                    $attrs .= ' data-lx-script="'.base64_encode($block->js_content).'"';
+                }
+
+                return [
+                    'id' => 'custom-code-'.$block->id,
+                    'label' => $block->name,
+                    'category' => __('blocks.categories.custom'),
+                    'content' => '<div '.$attrs.'>'.($block->html_content ?? '').'</div>',
+                    'media' => $media,
+                ];
+            })
+            ->values()
+            ->toArray();
     }
 }

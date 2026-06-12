@@ -28,6 +28,7 @@ export function setupCanvas(editor, { contactUrl, csrfToken }) {
         initCountdowns(canvasDoc);
         initCounters(canvasDoc, win);
         initBeforeAfter(canvasDoc);
+        initCustomCodeBlocks(canvasDoc);
     });
 
     let interactiveTimer;
@@ -41,6 +42,7 @@ export function setupCanvas(editor, { contactUrl, csrfToken }) {
             initCountdowns(doc);
             initCounters(doc, win);
             initBeforeAfter(doc);
+            initCustomCodeBlocks(doc);
         }, 200);
     });
 }
@@ -191,5 +193,25 @@ function attachContactFormHandler(doc, { contactUrl, csrfToken }) {
         } finally {
             btn.disabled = false;
         }
+    });
+}
+
+function initCustomCodeBlocks(doc) {
+    if (!doc) return;
+
+    doc.querySelectorAll('[data-lx-css]:not([data-lx-css-done])').forEach(el => {
+        el.setAttribute('data-lx-css-done', '1');
+        try {
+            const style = doc.createElement('style');
+            style.textContent = atob(el.getAttribute('data-lx-css'));
+            doc.head.appendChild(style);
+        } catch {}
+    });
+
+    doc.querySelectorAll('[data-lx-script]:not([data-lx-script-done])').forEach(el => {
+        el.setAttribute('data-lx-script-done', '1');
+        try {
+            new Function(atob(el.getAttribute('data-lx-script'))).call(el);
+        } catch {}
     });
 }

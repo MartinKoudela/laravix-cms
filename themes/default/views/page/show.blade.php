@@ -107,6 +107,20 @@
                     update(range.value);
                     range.addEventListener('input', function() { update(range.value); });
                 });
+
+                document.querySelectorAll('[data-lx-css]').forEach(function(el) {
+                    try {
+                        var style = document.createElement('style');
+                        style.textContent = atob(el.getAttribute('data-lx-css'));
+                        document.head.appendChild(style);
+                    } catch(e) {}
+                });
+
+                document.querySelectorAll('[data-lx-script]').forEach(function(el) {
+                    try {
+                        new Function(atob(el.getAttribute('data-lx-script'))).call(el);
+                    } catch(e) {}
+                });
             </script>
         @endpush
         <div class="gjs-content" style="isolation:isolate">{!! $content->grapesjs_html !!}</div>

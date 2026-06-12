@@ -11,6 +11,7 @@ return [
         'elements' => 'Elements',
         'artistic' => 'Artistic',
         'interactive' => 'Interactive',
+        'custom' => 'Custom Blocks',
     ],
     'gjs' => [
         'marquee' => 'Marquee / Ticker',

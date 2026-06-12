@@ -11,6 +11,7 @@ return [
         'elements' => 'Prvky',
         'artistic' => 'Umělecké',
         'interactive' => 'Interaktivní',
+        'custom' => 'Vlastní bloky',
     ],
     'gjs' => [
         'marquee' => 'Marquee / Ticker',
