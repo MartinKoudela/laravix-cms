@@ -28,7 +28,7 @@ class ContentForm
 {
     public static function configure(Schema $schema): Schema
     {
-        $grouped = FieldRegistry::grouped();
+        $grouped = FieldRegistry::grouped(siteId: filament()->getTenant()?->id);
         $seoDefinitions = $grouped['content.sections.seo_group'] ?? [];
         $contentGroups = array_filter($grouped, fn (string $key) => $key !== 'content.sections.seo_group', ARRAY_FILTER_USE_KEY);
 

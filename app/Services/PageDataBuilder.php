@@ -53,7 +53,7 @@ class PageDataBuilder
 
         $settings = Setting::where('site_id', $site->id)->pluck('value', 'key');
 
-        $imageKeys = collect(FieldRegistry::forContentType($content->type))
+        $imageKeys = collect(FieldRegistry::forContentType($content->type, $site->id))
             ->filter(fn ($def) => $def->type === FieldType::IMAGE)
             ->pluck('key');
 
@@ -78,7 +78,7 @@ class PageDataBuilder
         $appearance = collect();
         $bgMedia = null;
 
-        $systemFieldKeys = collect(FieldRegistry::forContentType($content->type))
+        $systemFieldKeys = collect(FieldRegistry::forContentType($content->type, $site->id))
             ->pluck('key')
             ->all();
 

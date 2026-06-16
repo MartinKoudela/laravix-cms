@@ -82,7 +82,7 @@ class EditContent extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        foreach (FieldRegistry::forContentType($this->record->type) as $definition) {
+        foreach (FieldRegistry::forContentType($this->record->type, $this->record->site_id) as $definition) {
             $this->fieldData[$definition->key] = $data['field_'.$definition->key] ?? null;
             unset($data['field_'.$definition->key]);
         }

@@ -21,7 +21,7 @@ class CreateContent extends CreateRecord
     {
         $type = $data['type'] ?? null;
 
-        foreach (FieldRegistry::forContentType($type) as $definition) {
+        foreach (FieldRegistry::forContentType($type, filament()->getTenant()?->id) as $definition) {
             $this->fieldData[$definition->key] = $data['field_'.$definition->key] ?? null;
             unset($data['field_'.$definition->key]);
         }

@@ -27,6 +27,14 @@ class ContentTypeField extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        $clearCache = fn (self $field) => cache()->forget("field_registry:{$field->site_id}:{$field->content_type}");
+
+        static::saved($clearCache);
+        static::deleted($clearCache);
+    }
+
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);
