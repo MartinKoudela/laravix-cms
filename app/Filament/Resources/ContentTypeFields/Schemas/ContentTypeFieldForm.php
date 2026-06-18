@@ -8,6 +8,7 @@
 namespace App\Filament\Resources\ContentTypeFields\Schemas;
 
 use App\Enums\FieldType;
+use App\Models\ContentTypeField;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -38,7 +39,9 @@ class ContentTypeFieldForm
                     ->label(__('content_type_field.fields.key'))
                     ->required()
                     ->maxLength(255)
-                    ->alphaDash(),
+                    ->alphaDash()
+                    ->disabled(fn (?ContentTypeField $record) => $record !== null)
+                    ->dehydrated(fn (?ContentTypeField $record) => $record === null),
                 TextInput::make('label')
                     ->label(__('content_type_field.fields.label'))
                     ->required()

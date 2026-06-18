@@ -20,7 +20,10 @@ class ListContents extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->url(fn (): string => ContentResource::getUrl('create', [
+                    'type' => in_array($this->activeTab, ['page', 'post', 'archive'], true) ? $this->activeTab : 'page',
+                ])),
         ];
     }
 

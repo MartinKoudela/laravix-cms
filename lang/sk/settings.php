@@ -5,6 +5,7 @@ return [
     'plural' => 'nastavenia',
     'tabs' => [
         'general' => 'Všeobecné',
+        'appearance' => 'Vzhľad',
         'seo' => 'SEO',
         'social' => 'Sociálne siete',
     ],
@@ -45,5 +46,6 @@ return [
         'locale' => 'Kód jazyka použitý v <html lang="">. Napr. en, sk, de, fr.',
         'google_verification' => 'Vložte hodnotu atribútu content z meta tagu Google Search Console.',
         'robots_txt' => 'Nechajte prázdne pre predvolené nastavenie (Povoliť všetko). URL sitemapy je vždy pridaná automaticky.',
+        'theme' => 'Zmena šablóny sa okamžite premietne do vzhľadu webu pre návštevníkov.',
     ],
 ];

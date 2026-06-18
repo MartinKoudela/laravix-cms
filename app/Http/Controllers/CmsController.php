@@ -26,6 +26,9 @@ class CmsController extends Controller
     public function show(Request $request, string $slug = '/'): View
     {
         $site = $this->siteResolver->resolve($request->getHost());
+
+        abort_if($site->isHeadless(), 404);
+
         $content = $this->contentResolver->resolve($site, $slug);
 
         $theme = $site->theme ?? 'default';

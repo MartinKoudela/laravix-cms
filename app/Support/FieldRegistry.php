@@ -7,7 +7,9 @@
 
 namespace App\Support;
 
+use App\Enums\FieldType;
 use App\Models\ContentTypeField;
+use App\Models\Site;
 use Illuminate\Support\Facades\Cache;
 
 class FieldRegistry
@@ -39,26 +41,47 @@ class FieldRegistry
             return array_values($systemFields);
         }
 
-        $userFields = Cache::remember("field_registry:{$siteId}:{$type}", 3600, function () use ($siteId, $type) {
+        $customFields = static::customFields($siteId, $type);
+
+        $site = Site::find($siteId);
+        if ($site?->isHeadless()) {
+            return array_values($customFields);
+        }
+
+        $systemKeys = array_keys($systemFields);
+        $filteredCustomFields = array_filter($customFields, fn ($key) => ! in_array($key, $systemKeys), ARRAY_FILTER_USE_KEY);
+
+        return array_values(array_merge($systemFields, $filteredCustomFields));
+    }
+
+    private static function customFields(int $siteId, string $type): array
+    {
+        $rows = Cache::remember("field_registry:{$siteId}:{$type}", 3600, function () use ($siteId, $type) {
             return ContentTypeField::where('site_id', $siteId)
                 ->where('content_type', $type)
                 ->orderBy('sort_order')
                 ->get()
-                ->mapWithKeys(fn (ContentTypeField $field) => [
-                    $field->key => FieldDefinition::make($field->key)
-                        ->type($field->type)
-                        ->label($field->label)
-                        ->group($field->group ?? 'content.sections.content')
-                        ->hint($field->hint ?? '')
-                        ->config($field->config ?? []),
+                ->map(fn (ContentTypeField $field) => [
+                    'key' => $field->key,
+                    'type' => $field->type->value,
+                    'label' => $field->label,
+                    'group' => $field->group ?? 'content.sections.content',
+                    'hint' => $field->hint ?? '',
+                    'config' => $field->config ?? [],
                 ])
                 ->all();
         });
 
-        $systemKeys = array_keys($systemFields);
-        $filteredUserFields = array_filter($userFields, fn ($key) => ! in_array($key, $systemKeys), ARRAY_FILTER_USE_KEY);
-
-        return array_values(array_merge($systemFields, $filteredUserFields));
+        return collect($rows)
+            ->mapWithKeys(fn (array $row) => [
+                $row['key'] => FieldDefinition::make($row['key'])
+                    ->type(FieldType::from($row['type']))
+                    ->label($row['label'])
+                    ->group($row['group'])
+                    ->hint($row['hint'])
+                    ->config($row['config']),
+            ])
+            ->all();
     }
 
     public static function grouped(?string $type = null, string $defaultGroup = 'Content', ?int $siteId = null): array

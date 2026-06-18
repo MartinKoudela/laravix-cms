@@ -7,7 +7,7 @@
 
 namespace App\Filament\Resources\Sites\Schemas;
 
-use App\Models\Site;
+use App\Enums\SiteMode;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -35,12 +35,16 @@ class SiteForm
                             ->unique(table: 'sites', column: 'domain', ignoreRecord: true),
                     ]),
                 Section::make(__('common.appearance'))
+                    ->columns(2)
                     ->schema([
-                        Select::make('theme')
-                            ->label(__('common.theme'))
-                            ->required()
-                            ->default('default')
-                            ->options(Site::availableThemes()),
+                        Select::make('mode')
+                            ->label(__('sites.fields.mode'))
+                            ->options([
+                                SiteMode::THEME->value => __('sites.modes.theme'),
+                                SiteMode::HEADLESS->value => __('sites.modes.headless'),
+                            ])
+                            ->default(SiteMode::THEME->value)
+                            ->required(),
                     ]),
             ]);
     }

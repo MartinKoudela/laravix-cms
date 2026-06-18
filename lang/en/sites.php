@@ -6,6 +6,11 @@ return [
     'fields' => [
         'users_count' => 'Users',
         'contents_count' => 'Contents',
+        'mode' => 'Mode',
+    ],
+    'modes' => [
+        'theme' => 'Theme (SSR)',
+        'headless' => 'Headless (API)',
     ],
     'messages' => [
         'public_name' => 'The public name of the website.',

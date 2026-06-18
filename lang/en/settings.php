@@ -5,8 +5,10 @@ return [
     'plural' => 'settings',
     'tabs' => [
         'general' => 'General',
+        'appearance' => 'Appearance',
         'seo' => 'SEO',
         'social' => 'Social',
+        'api' => 'API',
     ],
     'fields' => [
         'site_name' => 'Site Name',
@@ -25,6 +27,7 @@ return [
         'facebook' => 'Facebook',
         'instagram' => 'Instagram',
         'github' => 'GitHub',
+        'api_base_url' => 'API Base URL',
     ],
     'hints' => [
         'setting_key' => 'Unique setting key, e.g. "site_name", "google_analytics", "logo".',
@@ -38,6 +41,8 @@ return [
         'og_image' => 'Default Open Graph image for social sharing.',
         'google_verification' => 'Paste the content value from the Google Search Console meta tag.',
         'robots_txt' => 'Leave empty for default (Allow all). Sitemap URL is always appended automatically.',
+        'api_base_url' => 'Use this URL as the base for all API requests in your frontend.',
+        'theme' => 'Changing the theme instantly changes how your site looks to visitors.',
     ],
     'actions' => [
         'save' => 'Save Settings',

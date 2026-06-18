@@ -69,6 +69,9 @@ use App\Support\NavigationRegistry;
 use App\Support\SettingDefinition;
 use App\Support\SettingRegistry;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -81,12 +84,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->ip()));
 
         FieldRegistry::content([
-            FieldDefinition::make('body')->type(FieldType::RICH_TEXT)->label('content.fields.body'),
-            FieldDefinition::make('hero_image')->type(FieldType::IMAGE)->label('content.fields.hero_image'),
-            FieldDefinition::make('excerpt')->type(FieldType::TEXTAREA)->label('content.fields.excerpt'),
-
             FieldDefinition::make('meta_title')
                 ->label('content.fields.meta_title')
                 ->group('content.sections.seo_group')

@@ -28,17 +28,13 @@ class ContentForm
 {
     public static function configure(Schema $schema): Schema
     {
-        $grouped = FieldRegistry::grouped(siteId: filament()->getTenant()?->id);
-        $seoDefinitions = $grouped['content.sections.seo_group'] ?? [];
-        $contentGroups = array_filter($grouped, fn (string $key) => $key !== 'content.sections.seo_group', ARRAY_FILTER_USE_KEY);
-
         return $schema
             ->components([
                 Tabs::make()
                     ->columnSpanFull()
                     ->tabs([
                         Tab::make(__('content.sections.content'))
-                            ->schema([
+                            ->schema(fn (Get $get): array => [
                                 Section::make(__('common.general'))
                                     ->columns(2)
                                     ->schema([
@@ -94,7 +90,8 @@ class ContentForm
                                             ])
                                             ->default('page')
                                             ->disabled(fn ($record) => $record !== null)
-                                            ->dehydrated(),
+                                            ->dehydrated()
+                                            ->live(),
                                         Select::make('status')
                                             ->label(__('common.status'))
                                             ->required()
@@ -118,28 +115,19 @@ class ContentForm
                                                 ->pluck('name', 'id')
                                             ),
                                     ]),
-                                ...array_map(
-                                    fn (string $group, array $definitions) => Section::make(__($group))
-                                        ->schema(array_map(
-                                            fn ($definition) => FieldComponentFactory::make($definition),
-                                            $definitions,
-                                        ))
-                                        ->columns(2),
-                                    array_keys($contentGroups),
-                                    array_values($contentGroups),
-                                ),
+                                ...static::fieldSections(static::contentGroups($get)),
                             ]),
                         Tab::make(__('common.seo'))
-                            ->schema([
+                            ->schema(fn (Get $get): array => [
                                 Section::make()
                                     ->columns(2)
                                     ->schema(array_map(
                                         fn ($definition) => FieldComponentFactory::make($definition),
-                                        $seoDefinitions,
+                                        static::groupedFields($get)['content.sections.seo_group'] ?? [],
                                     )),
                             ]),
                         Tab::make(__('content.sections.builder'))
-                            ->hidden(fn (Get $get, ?Content $record): bool => $get('type') !== 'page' || $record === null)
+                            ->hidden(fn (Get $get, ?Content $record): bool => $get('type') !== 'page' || $record === null || filament()->getTenant()?->isHeadless())
                             ->schema([
                                 View::make('filament.partials.block-builder')
                                     ->viewData(fn ($livewire) => [
@@ -149,5 +137,33 @@ class ContentForm
                             ]),
                     ]),
             ]);
+    }
+
+    private static function groupedFields(Get $get): array
+    {
+        return FieldRegistry::grouped(type: $get('type'), siteId: filament()->getTenant()?->id);
+    }
+
+    private static function contentGroups(Get $get): array
+    {
+        return array_filter(
+            static::groupedFields($get),
+            fn (string $group) => $group !== 'content.sections.seo_group',
+            ARRAY_FILTER_USE_KEY,
+        );
+    }
+
+    private static function fieldSections(array $groups): array
+    {
+        return array_map(
+            fn (string $group, array $definitions) => Section::make(__($group))
+                ->columns(2)
+                ->schema(array_map(
+                    fn ($definition) => FieldComponentFactory::make($definition),
+                    $definitions,
+                )),
+            array_keys($groups),
+            array_values($groups),
+        );
     }
 }

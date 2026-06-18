@@ -7,6 +7,7 @@
 
 namespace App\Models;
 
+use App\Enums\SiteMode;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,11 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['name', 'domain', 'theme', 'navigations', 'nav_design'])]
+#[Fillable(['name', 'domain', 'mode', 'theme', 'navigations', 'nav_design'])]
 class Site extends Model implements HasAvatar
 {
     use HasFactory, LogsActivity, Recyclable, SoftDeletes;
@@ -46,9 +48,15 @@ class Site extends Model implements HasAvatar
     protected function casts(): array
     {
         return [
+            'mode' => SiteMode::class,
             'navigations' => 'array',
             'nav_design' => 'array',
         ];
+    }
+
+    public function isHeadless(): bool
+    {
+        return $this->mode === SiteMode::HEADLESS;
     }
 
     public function contents(): HasMany
@@ -87,7 +95,37 @@ class Site extends Model implements HasAvatar
     public static function availableThemes(): array
     {
         return collect(glob(base_path('themes/*'), GLOB_ONLYDIR))
-            ->mapWithKeys(fn ($path) => [basename($path) => basename($path)])
+            ->mapWithKeys(fn ($path) => [basename($path) => Str::headline(basename($path))])
             ->all();
+    }
+
+    public static function themePreviewPath(string $theme): ?string
+    {
+        foreach (['svg', 'webp', 'png', 'jpg'] as $extension) {
+            $path = base_path("themes/{$theme}/preview.{$extension}");
+
+            if (file_exists($path)) {
+                return $path;
+            }
+        }
+
+        return null;
+    }
+
+    public static function themePreviewUrl(string $theme): ?string
+    {
+        return static::themePreviewPath($theme) ? route('theme.preview', ['theme' => $theme]) : null;
+    }
+
+    public static function themeOptionLabel(string $theme): string
+    {
+        $label = e(static::availableThemes()[$theme] ?? Str::headline($theme));
+        $preview = static::themePreviewUrl($theme);
+
+        $image = $preview
+            ? '<img src="'.e($preview).'" style="width:160px;height:100px;object-fit:cover;border-radius:8px;flex-shrink:0;border:1px solid rgba(0,0,0,.1)">'
+            : '<div style="width:160px;height:100px;border-radius:8px;flex-shrink:0;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:12px">'.$label.'</div>';
+
+        return '<div style="display:flex;align-items:center;gap:16px;padding:8px 0">'.$image.'<span style="font-weight:500;font-size:14px">'.$label.'</span></div>';
     }
 }

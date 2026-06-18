@@ -3,77 +3,73 @@
 @section('content')
     @php
         use App\Enums\ImageVariant;
-        $fields = $content->fields->keyBy('key');
-        $body = $fields->get('body')?->value;
-        $excerpt = $fields->get('excerpt')?->value;
-        $heroImageId = $fields->get('hero_image')?->value;
-        $heroMedia = $heroImageId ? ($mediaMap[$heroImageId] ?? null) : null;
         $extraFields = $content->fields->whereNotIn('key', $systemFieldKeys);
+        $ogImageId = (int) ($content->fields->firstWhere('key', 'og_image')?->value ?? 0);
+        $heroMedia = $ogImageId ? ($mediaMap[$ogImageId] ?? null) : null;
+        $hasBuilderContent = $content->grapesjs_html || ! empty($content->blocks);
     @endphp
 
-    @if ($heroMedia)
-        <img src="{{ $heroMedia->variantUrl(ImageVariant::LARGE) }}" alt="{{ $heroMedia->name }}" style="width:100%;display:block;">
-    @endif
-
-    <div>
-        <article>
-            @if ($content->taxonomies->isNotEmpty())
-                <div>
-                    @foreach ($content->taxonomies as $taxonomy)
-                        <span>{{ $taxonomy->name }}</span>
-                    @endforeach
-                </div>
-            @endif
-
-            <h1>{{ $content->title }}</h1>
-
-            <div>
-                @if ($content->published_at)
-                    <time datetime="{{ $content->published_at->toIso8601String() }}">
-                        {{ $content->published_at->format('j. n. Y') }}
-                    </time>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <div class="lg:flex lg:gap-16">
+            <article class="max-w-3xl w-full">
+                @if ($content->taxonomies->isNotEmpty())
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        @foreach ($content->taxonomies as $taxonomy)
+                            <span class="inline-block text-xs font-medium text-gray-500 bg-gray-100 rounded-full px-2.5 py-1">{{ $taxonomy->name }}</span>
+                        @endforeach
+                    </div>
                 @endif
-                @if ($content->author)
-                    <span>{{ $content->author->name }}</span>
-                @endif
-            </div>
 
-            @if ($excerpt)
-                <p>{{ $excerpt }}</p>
-            @endif
+                <h1 class="text-4xl font-bold text-gray-900 mb-4 leading-tight">{{ $content->title }}</h1>
 
-            @if ($body)
-                <div>{!! $body !!}</div>
-            @endif
-
-            @if ($extraFields->isNotEmpty())
-                <div>
-                    @foreach ($extraFields as $field)
-                        <div>
-                            <dt>{{ $field->key }}</dt>
-                            <dd>{{ $field->value }}</dd>
-                        </div>
-                    @endforeach
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-8">
+                    @if ($content->published_at)
+                        <time datetime="{{ $content->published_at->toIso8601String() }}">{{ $content->published_at->format('j. n. Y') }}</time>
+                    @endif
+                    @if ($content->author)
+                        <span>&middot;</span>
+                        <span>{{ $content->author->name }}</span>
+                    @endif
                 </div>
-            @endif
-        </article>
 
-        @if ($recentPosts->isNotEmpty())
-            <aside>
-                <h2>Recent posts</h2>
-                <ul>
-                    @foreach ($recentPosts as $post)
-                        <li>
-                            <a href="/{{ $post->slug }}">
-                                <p>{{ $post->title }}</p>
-                                @if ($post->published_at)
-                                    <p>{{ $post->published_at->format('j. n. Y') }}</p>
-                                @endif
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </aside>
-        @endif
+                @if ($heroMedia)
+                    <img src="{{ $heroMedia->variantUrl(ImageVariant::LARGE) }}" alt="{{ $content->title }}"
+                         class="w-full rounded-xl mb-10 object-cover max-h-[28rem]">
+                @endif
+
+                @if ($hasBuilderContent)
+                    @include('cms.builder-content')
+                @endif
+
+                @if ($extraFields->isNotEmpty())
+                    <div class="mt-10 pt-8 border-t border-gray-200 space-y-4">
+                        @foreach ($extraFields as $field)
+                            <div>
+                                <dt class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">{{ $field->key }}</dt>
+                                <dd class="text-gray-700">{{ $field->value }}</dd>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </article>
+
+            @if ($recentPosts->isNotEmpty())
+                <aside class="w-full lg:w-72 shrink-0 mt-12 lg:mt-0">
+                    <h2 class="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Recent posts</h2>
+                    <ul class="divide-y divide-gray-100">
+                        @foreach ($recentPosts as $post)
+                            <li class="py-4 first:pt-0">
+                                <a href="/{{ $post->slug }}" class="block group">
+                                    <p class="text-sm font-medium text-gray-900 group-hover:text-gray-600 transition-colors leading-snug">{{ $post->title }}</p>
+                                    @if ($post->published_at)
+                                        <p class="text-xs text-gray-400 mt-1">{{ $post->published_at->format('j. n. Y') }}</p>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </aside>
+            @endif
+        </div>
     </div>
 @endsection

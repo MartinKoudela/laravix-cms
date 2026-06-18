@@ -17,6 +17,19 @@ class CreateContent extends CreateRecord
 
     protected array $fieldData = [];
 
+    protected function fillForm(): void
+    {
+        $this->callHook('beforeFill');
+
+        $type = request()->query('type');
+
+        $this->form->fill(
+            in_array($type, ['page', 'post', 'archive'], true) ? ['type' => $type] : null
+        );
+
+        $this->callHook('afterFill');
+    }
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $type = $data['type'] ?? null;

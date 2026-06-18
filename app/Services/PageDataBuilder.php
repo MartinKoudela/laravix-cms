@@ -64,7 +64,14 @@ class PageDataBuilder
             ->map(fn ($id) => (int) $id);
 
         $blockMediaIds = collect(BlockRegistry::extractMediaIds($content->blocks ?? []));
-        $mediaIds = $mediaIds->merge($blockMediaIds)->unique();
+
+        $archiveMediaIds = $archivePosts
+            ? $archivePosts->flatMap(fn ($post) => $post->fields->where('key', 'og_image')->pluck('value'))
+                ->filter()
+                ->map(fn ($id) => (int) $id)
+            : collect();
+
+        $mediaIds = $mediaIds->merge($blockMediaIds)->merge($archiveMediaIds)->unique();
 
         foreach (['og_image', 'logo', 'favicon'] as $key) {
             $id = (int) $settings->get($key);
@@ -78,7 +85,7 @@ class PageDataBuilder
         $appearance = collect();
         $bgMedia = null;
 
-        $systemFieldKeys = collect(FieldRegistry::forContentType($content->type, $site->id))
+        $systemFieldKeys = collect(FieldRegistry::forContentType($content->type))
             ->pluck('key')
             ->all();
 

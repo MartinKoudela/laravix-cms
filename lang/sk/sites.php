@@ -6,6 +6,11 @@ return [
     'fields' => [
         'users_count' => 'Používateľov',
         'contents_count' => 'Obsahu',
+        'mode' => 'Režim',
+    ],
+    'modes' => [
+        'theme' => 'Šablóna (SSR)',
+        'headless' => 'Headless (API)',
     ],
     'stats' => [
         'title' => 'Weby',

@@ -7,10 +7,12 @@
 
 namespace App\Filament\Pages\Tenancy;
 
+use App\Enums\SiteMode;
 use App\Models\Site;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\RegisterTenant;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class RegisterSite extends RegisterTenant
@@ -45,11 +47,21 @@ class RegisterSite extends RegisterTenant
                     ->maxLength(255)
                     ->placeholder('example.com')
                     ->unique(table: 'sites', column: 'domain'),
+                Select::make('mode')
+                    ->label(__('sites.fields.mode'))
+                    ->options([
+                        SiteMode::THEME->value => __('sites.modes.theme'),
+                        SiteMode::HEADLESS->value => __('sites.modes.headless'),
+                    ])
+                    ->default(SiteMode::THEME->value)
+                    ->required()
+                    ->live(),
                 Select::make('theme')
                     ->label(__('common.theme'))
-                    ->required()
                     ->default('default')
-                    ->options(Site::availableThemes()),
+                    ->options(Site::availableThemes())
+                    ->visible(fn (Get $get) => $get('mode') === SiteMode::THEME->value)
+                    ->required(fn (Get $get) => $get('mode') === SiteMode::THEME->value),
             ]);
     }
 
