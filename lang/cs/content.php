@@ -37,6 +37,11 @@ return [
         'post' => 'Příspěvek',
         'archive' => 'Archiv',
     ],
+    'types_plural' => [
+        'page' => 'Stránky',
+        'post' => 'Příspěvky',
+        'archive' => 'Archivy',
+    ],
     'hints' => [
         'meta_title' => 'Přepíše výchozí nastavení webu, pokud je vyplněno.',
         'meta_description' => 'Až 160 znaků. Přepíše výchozí nastavení webu.',

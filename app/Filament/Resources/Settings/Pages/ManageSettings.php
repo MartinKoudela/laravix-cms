@@ -17,12 +17,12 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Arr;
+use Livewire\Attributes\Url;
 
 class ManageSettings extends Page
 {
@@ -30,15 +30,24 @@ class ManageSettings extends Page
 
     protected string $view = 'filament.resources.settings.pages.manage-settings';
 
+    #[Url]
+    public string $group = '';
+
     public function getTitle(): string
     {
-        return __('settings.actions.manage');
+        return __(SettingResource::groupOptions()[$this->group]);
     }
 
     public ?array $data = [];
 
     public function mount(): void
     {
+        $groups = SettingResource::groupOptions();
+
+        if (! array_key_exists($this->group, $groups)) {
+            $this->group = array_key_first($groups);
+        }
+
         $siteId = filament()->getTenant()?->id;
 
         $saved = Setting::where('site_id', $siteId)
@@ -56,57 +65,52 @@ class ManageSettings extends Page
 
     public function form(Schema $schema): Schema
     {
-        $tabs = [];
-
-        foreach (SettingRegistry::grouped() as $group => $definitions) {
-            $components = array_map(
-                fn ($definition) => SettingComponentFactory::make($definition),
-                $definitions,
-            );
-
-            $tabs[] = Tab::make(__($group))->schema([
-                Section::make()->schema($components)->columns(2),
-            ]);
-        }
-
-        if (! filament()->getTenant()?->isHeadless()) {
-            $tabs[] = Tab::make(__('settings.tabs.appearance'))->schema([
-                Section::make()->schema([
-                    Select::make('theme')
-                        ->label(__('common.theme'))
-                        ->allowHtml()
-                        ->options(collect(Site::availableThemes())
-                            ->mapWithKeys(fn ($label, $key) => [$key => Site::themeOptionLabel($key)])
-                            ->all()
-                        )
-                        ->default('default')
-                        ->required()
-                        ->helperText(__('settings.hints.theme')),
-                ]),
-            ]);
-        }
-
-        if (filament()->getTenant()?->isHeadless()) {
-            $tabs[] = Tab::make(__('settings.tabs.api'))->schema([
-                Section::make()->schema([
-                    TextInput::make('api_base_url')
-                        ->label(__('settings.fields.api_base_url'))
-                        ->afterStateHydrated(fn (TextInput $component) => $component->state('https://'.filament()->getTenant()->domain.'/api/v1'))
-                        ->disabled()
-                        ->dehydrated(false)
-                        ->helperText(__('settings.hints.api_base_url'))
-                        ->suffixAction(
-                            Action::make('copy')
-                                ->icon(Heroicon::OutlinedClipboardDocument)
-                                ->alpineClickHandler('window.navigator.clipboard.writeText($el.closest(\'.fi-input-wrp\').querySelector(\'input\').value); $el.style.color = \'green\'; setTimeout(() => $el.style.color = \'\', 1500)')
-                        ),
-                ]),
-            ]);
-        }
-
         return $schema->statePath('data')->components([
-            Tabs::make()->tabs($tabs),
+            Section::make()->schema($this->activeGroupComponents())->columns(2),
         ]);
+    }
+
+
+    private function activeGroupComponents(): array
+    {
+        if ($this->group === 'appearance') {
+            return [
+                Select::make('theme')
+                    ->label(__('common.theme'))
+                    ->allowHtml()
+                    ->options(collect(Site::availableThemes())
+                        ->mapWithKeys(fn ($label, $key) => [$key => Site::themeOptionLabel($key)])
+                        ->all()
+                    )
+                    ->default('default')
+                    ->required()
+                    ->helperText(__('settings.hints.theme')),
+            ];
+        }
+
+        if ($this->group === 'api') {
+            return [
+                TextInput::make('api_base_url')
+                    ->label(__('settings.fields.api_base_url'))
+                    ->afterStateHydrated(fn (TextInput $component) => $component->state('https://'.filament()->getTenant()->domain.'/api/v1'))
+                    ->disabled()
+                    ->dehydrated(false)
+                    ->helperText(__('settings.hints.api_base_url'))
+                    ->suffixAction(
+                        Action::make('copy')
+                            ->icon(Heroicon::OutlinedClipboardDocument)
+                            ->alpineClickHandler('window.navigator.clipboard.writeText($el.closest(\'.fi-input-wrp\').querySelector(\'input\').value); $el.style.color = \'green\'; setTimeout(() => $el.style.color = \'\', 1500)')
+                    ),
+            ];
+        }
+
+        $groupKey = SettingResource::groupOptions()[$this->group];
+        $definitions = SettingRegistry::grouped()[$groupKey] ?? [];
+
+        return array_map(
+            fn ($definition) => SettingComponentFactory::make($definition),
+            $definitions,
+        );
     }
 
     public function save(): void

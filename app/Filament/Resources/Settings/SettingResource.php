@@ -11,9 +11,14 @@ use App\Enums\SiteRole;
 use App\Filament\Resources\Settings\Pages\ManageSettings;
 use App\Models\Setting;
 use App\Models\Site;
+use App\Support\SettingRegistry;
 use BackedEnum;
+use Filament\Navigation\NavigationItem;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Str;
+
+use function Filament\Support\original_request;
 
 class SettingResource extends Resource
 {
@@ -49,6 +54,41 @@ class SettingResource extends Resource
 
         return $site instanceof Site
             && $user->roleForSite($site) === SiteRole::ADMIN;
+    }
+
+    public static function groupOptions(): array
+    {
+        $groups = [];
+
+        foreach (array_keys(SettingRegistry::grouped()) as $group) {
+            $groups[Str::afterLast($group, '.')] = $group;
+        }
+
+        if (filament()->getTenant() instanceof Site && filament()->getTenant()->isHeadless()) {
+            $groups['api'] = 'settings.tabs.api';
+        } else {
+            $groups['appearance'] = 'settings.tabs.appearance';
+        }
+
+        return $groups;
+    }
+
+    public static function getNavigationItems(): array
+    {
+        $groups = static::groupOptions();
+        $defaultSlug = array_key_first($groups);
+
+        $childItems = collect($groups)
+            ->map(fn (string $labelKey, string $slug) => NavigationItem::make(fn () => __($labelKey))
+                ->url(fn () => static::getUrl('index', ['group' => $slug]))
+                ->isActiveWhen(fn (): bool => original_request()->routeIs(static::getRouteBaseName().'.index')
+                    && original_request()->query('group', $defaultSlug) === $slug))
+            ->values()
+            ->all();
+
+        [$item] = parent::getNavigationItems();
+
+        return [$item->childItems($childItems)];
     }
 
     public static function getPages(): array

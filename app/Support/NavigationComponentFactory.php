@@ -8,10 +8,12 @@
 namespace App\Support;
 
 use App\Models\Content;
+use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 
 class NavigationComponentFactory
@@ -21,103 +23,96 @@ class NavigationComponentFactory
         return Repeater::make('navigations.'.$definition->key)
             ->label(fn () => __($definition->label))
             ->schema([
-                TextInput::make('label')
-                    ->label(fn () => __('common.label'))
-                    ->required()
-                    ->live(debounce: 500)
-                    ->columnSpanFull(),
-                Select::make('content_id')
-                    ->label(fn () => __('content.types.page'))
-                    ->options(fn () => Content::query()
-                        ->where('site_id', filament()->getTenant()?->id)
-                        ->whereIn('type', ['page', 'archive'])
-                        ->where('status', 'published')
-                        ->orderBy('title')
-                        ->pluck('title', 'id')
-                    )
-                    ->searchable()
-                    ->live()
-                    ->afterStateUpdated(function (?int $state, Set $set) {
-                        if (! $state) {
-                            return;
-                        }
-                        $content = Content::find($state);
-                        if ($content) {
-                            $set('url', $content->is_homepage ? '/' : '/'.$content->slug);
-                        }
-                    })
-                    ->placeholder(fn () => __('navigation.labels.url_manual'))
-                    ->nullable(),
-                TextInput::make('url')
-                    ->label(fn () => __('common.url'))
-                    ->live(debounce: 500)
-                    ->nullable(),
-                Select::make('target')
-                    ->label(fn () => __('navigation.labels.target'))
-                    ->options([
-                        '_self' => __('navigation.options.same_tab'),
-                        '_blank' => __('navigation.options.new_tab'),
-                    ])
-                    ->default('_self'),
-                static::iconSelect(),
-                Textarea::make('description')
-                    ->label(fn () => __('common.description'))
-                    ->rows(2)
-                    ->columnSpanFull(),
-                Repeater::make('children')
-                    ->label(fn () => __('navigation.labels.submenu'))
+                ...static::itemFields(),
+                Section::make(fn () => __('navigation.labels.submenu'))
+                    ->description(fn () => __('navigation.hints.submenu'))
                     ->schema([
-                        TextInput::make('label')
-                            ->label(fn () => __('common.label'))
-                            ->nullable()
-                            ->columnSpanFull(),
-                        Select::make('content_id')
-                            ->label(fn () => __('content.types.page'))
-                            ->options(fn () => Content::query()
-                                ->where('site_id', filament()->getTenant()?->id)
-                                ->whereIn('type', ['page', 'archive'])
-                                ->where('status', 'published')
-                                ->orderBy('title')
-                                ->pluck('title', 'id')
-                            )
-                            ->searchable()
-                            ->live()
-                            ->afterStateUpdated(function (?int $state, Set $set) {
-                                if (! $state) {
-                                    return;
-                                }
-                                $content = Content::find($state);
-                                if ($content) {
-                                    $set('url', $content->is_homepage ? '/' : '/'.$content->slug);
-                                }
-                            })
-                            ->placeholder(fn () => __('navigation.labels.url_manual'))
-                            ->nullable(),
-                        TextInput::make('url')
-                            ->label(fn () => __('common.url'))
-                            ->nullable(),
-                        Select::make('target')
-                            ->label(fn () => __('navigation.labels.target'))
-                            ->options([
-                                '_self' => __('navigation.options.same_tab'),
-                                '_blank' => __('navigation.options.new_tab'),
-                            ])
-                            ->nullable()
-                            ->default('_self'),
-                        static::iconSelect(),
-                        Textarea::make('description')
-                            ->label(fn () => __('common.description'))
-                            ->rows(2)
+                        Repeater::make('children')
+                            ->hiddenLabel()
+                            ->schema(static::itemFields(child: true))
+                            ->itemLabel(fn (array $state) => static::itemLabel($state))
+                            ->addActionLabel(fn () => __('navigation.actions.add_child'))
+                            ->columns(2)
+                            ->collapsible()
+                            ->collapsed()
+                            ->reorderableWithButtons()
+                            ->defaultItems(0)
                             ->columnSpanFull(),
                     ])
                     ->collapsible()
                     ->collapsed()
                     ->columnSpanFull(),
             ])
+            ->itemLabel(fn (array $state) => static::itemLabel($state))
+            ->addActionLabel(fn () => __('navigation.actions.add_item'))
             ->columns(2)
             ->collapsible()
+            ->collapsed()
             ->reorderableWithButtons()
             ->columnSpanFull();
+    }
+
+    private static function itemFields(bool $child = false): array
+    {
+        return [
+            TextInput::make('label')
+                ->label(fn () => __('common.label'))
+                ->required(! $child)
+                ->nullable($child)
+                ->live(debounce: 500)
+                ->columnSpanFull(),
+            Select::make('content_id')
+                ->label(fn () => __('content.types.page'))
+                ->options(fn () => Content::query()
+                    ->where('site_id', filament()->getTenant()?->id)
+                    ->whereIn('type', ['page', 'archive'])
+                    ->where('status', 'published')
+                    ->orderBy('title')
+                    ->pluck('title', 'id')
+                )
+                ->searchable()
+                ->live()
+                ->afterStateUpdated(function (?int $state, Set $set) {
+                    if (! $state) {
+                        return;
+                    }
+                    $content = Content::find($state);
+                    if ($content) {
+                        $set('url', $content->is_homepage ? '/' : '/'.$content->slug);
+                    }
+                })
+                ->placeholder(fn () => __('navigation.labels.url_manual'))
+                ->nullable(),
+            TextInput::make('url')
+                ->label(fn () => __('common.url'))
+                ->live(debounce: 500)
+                ->nullable(),
+            Select::make('target')
+                ->label(fn () => __('navigation.labels.target'))
+                ->options([
+                    '_self' => __('navigation.options.same_tab'),
+                    '_blank' => __('navigation.options.new_tab'),
+                ])
+                ->default('_self'),
+            static::iconSelect(),
+            Textarea::make('description')
+                ->label(fn () => __('common.description'))
+                ->rows(2)
+                ->columnSpanFull(),
+        ];
+    }
+
+    private static function itemLabel(array $state): string
+    {
+        $label = filled($state['label'] ?? null)
+            ? $state['label']
+            : (filled($state['url'] ?? null) ? $state['url'] : __('navigation.labels.untitled'));
+
+        $childCount = count($state['children'] ?? []);
+
+        return $childCount > 0
+            ? $label.' — '.trans_choice('navigation.labels.submenu_count', $childCount, ['count' => $childCount])
+            : $label;
     }
 
     private static function iconSelect(): Select

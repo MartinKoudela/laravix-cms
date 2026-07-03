@@ -37,6 +37,11 @@ return [
         'post' => 'Príspevok',
         'archive' => 'Archív',
     ],
+    'types_plural' => [
+        'page' => 'Stránky',
+        'post' => 'Príspevky',
+        'archive' => 'Archívy',
+    ],
     'hints' => [
         'meta_title' => 'Prepíše predvolené nastavenie webu, ak je vyplnené.',
         'meta_description' => 'Až 160 znakov. Prepíše predvolené nastavenie webu.',

@@ -16,10 +16,12 @@ use App\Filament\Resources\Contents\Schemas\ContentForm;
 use App\Filament\Resources\Contents\Tables\ContentsTable;
 use App\Models\Content;
 use BackedEnum;
+use Filament\Navigation\NavigationItem;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use function Filament\Support\original_request;
 
 class ContentResource extends Resource
 {
@@ -40,6 +42,24 @@ class ContentResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $recordTitleAttribute = 'title';
+
+    public static function getNavigationItems(): array
+    {
+        $typeItem = fn (string $type) => NavigationItem::make(fn () => __('content.types_plural.'.$type))
+            ->url(fn () => static::getUrl('index', ['type' => $type]))
+            ->isActiveWhen(fn (): bool => original_request()->routeIs(static::getRouteBaseName().'.index')
+                && original_request()->query('type', 'page') === $type);
+
+        [$item] = parent::getNavigationItems();
+
+        return [
+            $item->childItems([
+                $typeItem('page'),
+                $typeItem('post'),
+                $typeItem('archive'),
+            ]),
+        ];
+    }
 
     public static function form(Schema $schema): Schema
     {

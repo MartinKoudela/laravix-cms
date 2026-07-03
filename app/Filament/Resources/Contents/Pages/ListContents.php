@@ -10,35 +10,42 @@ namespace App\Filament\Resources\Contents\Pages;
 use App\Filament\Resources\Contents\ContentResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
-use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Attributes\Url;
 
 class ListContents extends ListRecords
 {
     protected static string $resource = ContentResource::class;
 
+    #[Url]
+    public string $type = 'page';
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        if (! in_array($this->type, ['page', 'post', 'archive'], true)) {
+            $this->type = 'page';
+        }
+    }
+
+    public function getTitle(): string
+    {
+        return __('content.types_plural.'.$this->type);
+    }
+
+    public function table(Table $table): Table
+    {
+        return parent::table($table)
+            ->modifyQueryUsing(fn (Builder $query) => $query->where('type', $this->type));
+    }
+
     protected function getHeaderActions(): array
     {
         return [
             CreateAction::make()
-                ->url(fn (): string => ContentResource::getUrl('create', [
-                    'type' => in_array($this->activeTab, ['page', 'post', 'archive'], true) ? $this->activeTab : 'page',
-                ])),
-        ];
-    }
-
-    public function getTabs(): array
-    {
-        return [
-            'page' => Tab::make(__('content.types.page'))
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', 'page'))
-                ->badge(fn () => static::getResource()::getEloquentQuery()->where('type', 'page')->count()),
-            'post' => Tab::make(__('content.types.post'))
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', 'post'))
-                ->badge(fn () => static::getResource()::getEloquentQuery()->where('type', 'post')->count()),
-            'archive' => Tab::make(__('content.types.archive'))
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('type', 'archive'))
-                ->badge(fn () => static::getResource()::getEloquentQuery()->where('type', 'archive')->count()),
+                ->url(fn (): string => ContentResource::getUrl('create', ['type' => $this->type])),
         ];
     }
 }

@@ -12,6 +12,11 @@ return [
         'submenu' => 'Podmenu',
         'url_manual' => 'Nebo zadejte URL ručně',
         'icon' => 'Ikona',
+        'untitled' => 'Nová položka',
+        'submenu_count' => '{1} 1 podpoložka|[2,4] :count podpoložky|[5,*] :count podpoložek',
+    ],
+    'hints' => [
+        'submenu' => 'Odkazy zobrazené v rozbalovacím menu pod touto položkou',
     ],
     'tabs' => [
         'items' => 'Položky menu',
@@ -88,6 +93,8 @@ return [
     'actions' => [
         'manage' => 'Správa navigace',
         'save' => 'Uložit navigaci',
+        'add_item' => 'Přidat položku menu',
+        'add_child' => 'Přidat podpoložku',
     ],
     'messages' => [
         'saved' => 'Navigace uložena',

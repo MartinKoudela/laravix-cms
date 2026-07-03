@@ -12,6 +12,11 @@ return [
         'submenu' => 'Submenu',
         'url_manual' => 'Or enter a URL manually',
         'icon' => 'Icon',
+        'untitled' => 'New item',
+        'submenu_count' => '{1} 1 submenu item|[2,*] :count submenu items',
+    ],
+    'hints' => [
+        'submenu' => 'Links shown in a dropdown under this item',
     ],
     'tabs' => [
         'items' => 'Menu Items',
@@ -88,6 +93,8 @@ return [
     'actions' => [
         'save' => 'Save Navigation',
         'manage' => 'Manage Navigation',
+        'add_item' => 'Add menu item',
+        'add_child' => 'Add submenu item',
     ],
     'messages' => [
         'saved' => 'Navigation saved',

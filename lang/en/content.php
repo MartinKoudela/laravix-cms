@@ -15,6 +15,11 @@ return [
         'post' => 'Post',
         'archive' => 'Archive',
     ],
+    'types_plural' => [
+        'page' => 'Pages',
+        'post' => 'Posts',
+        'archive' => 'Archives',
+    ],
     'fields' => [
         'body' => 'Body',
         'hero_image' => 'Hero Image',
