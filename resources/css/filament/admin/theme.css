@@ -5,87 +5,107 @@
 @source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
 @source '../../../../vendor/bezhansalleh/filament-language-switch/**';
 
-/* ── Sidebar – light mode ─────────────────────────────────────────── */
+:root {
+    --lx-brand: #ff0465;
+    --lx-brand-alt: #ff6602;
+    --lx-gradient: linear-gradient(135deg, var(--lx-brand) 0%, var(--lx-brand-alt) 100%);
+    --lx-gradient-v: linear-gradient(180deg, var(--lx-brand) 0%, var(--lx-brand-alt) 100%);
+
+    --lx-body-bg: #f0f0f3;
+    --lx-surface: #ffffff;
+    --lx-surface-raised: #ffffff;
+
+    --lx-border: rgba(0, 0, 0, 0.07);
+    --lx-border-faint: rgba(0, 0, 0, 0.05);
+
+    --lx-text-strong: rgba(0, 0, 0, 0.85);
+    --lx-text-muted: rgba(0, 0, 0, 0.5);
+    --lx-icon: rgba(0, 0, 0, 0.3);
+    --lx-icon-hover: rgba(0, 0, 0, 0.6);
+    --lx-group-label: rgba(0, 0, 0, 0.22);
+
+    --lx-hover-bg: rgba(0, 0, 0, 0.04);
+    --lx-brand-soft: rgba(255, 4, 101, 0.07);
+    --lx-brand-soft-border: rgba(255, 4, 101, 0.25);
+    --lx-brand-icon-active: var(--lx-brand);
+    --lx-badge-bg: rgba(255, 4, 101, 0.08);
+    --lx-badge-text: #e0004f;
+    --lx-badge-ring: rgba(255, 4, 101, 0.15);
+
+    --lx-radius-lg: 16px;
+    --lx-radius-md: 12px;
+    --lx-radius-sm: 8px;
+}
+
+.dark {
+    --lx-body-bg: #0e0e10;
+    --lx-surface: #111113;
+    --lx-surface-raised: #1a1a1f;
+
+    --lx-border: rgba(255, 255, 255, 0.06);
+    --lx-border-faint: rgba(255, 255, 255, 0.05);
+
+    --lx-text-strong: rgba(255, 255, 255, 0.92);
+    --lx-text-muted: rgba(255, 255, 255, 0.45);
+    --lx-icon: rgba(255, 255, 255, 0.3);
+    --lx-icon-hover: rgba(255, 255, 255, 0.7);
+    --lx-group-label: rgba(255, 255, 255, 0.18);
+
+    --lx-hover-bg: rgba(255, 255, 255, 0.05);
+    --lx-brand-soft: rgba(255, 4, 101, 0.1);
+    --lx-brand-soft-border: rgba(255, 4, 101, 0.3);
+    --lx-brand-icon-active: #ff6b9d;
+    --lx-badge-bg: rgba(255, 4, 101, 0.15);
+    --lx-badge-text: #ff6b9d;
+    --lx-badge-ring: rgba(255, 4, 101, 0.25);
+}
+
+.fi-body {
+    background-color: var(--lx-body-bg) !important;
+}
+
 .fi-sidebar {
-    background-color: #ffffff !important;
-    border-right: 1px solid rgba(0, 0, 0, 0.07) !important;
+    background-color: var(--lx-surface) !important;
+    border-right: 1px solid var(--lx-border) !important;
 }
 
 .fi-sidebar .fi-sidebar-header {
-    background-color: #ffffff !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    background-color: var(--lx-surface) !important;
+    border-bottom: 1px solid var(--lx-border) !important;
     box-shadow: none !important;
 }
 
-/* ── Sidebar – dark mode ──────────────────────────────────────────── */
-.dark .fi-sidebar {
-    background-color: #111113 !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
-}
-
-.dark .fi-sidebar .fi-sidebar-header {
-    background-color: #111113 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-    box-shadow: none !important;
-}
-
-/* Nav item – base style */
 .fi-sidebar-item-btn {
     border-radius: 7px !important;
     transition: background 0.12s, color 0.12s !important;
 }
 
-/* Light mode nav item colors */
 .fi-sidebar-item-btn > .fi-icon {
-    color: rgba(0, 0, 0, 0.3) !important;
+    color: var(--lx-icon) !important;
     transition: color 0.12s !important;
 }
 
 .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: rgba(0, 0, 0, 0.5) !important;
+    color: var(--lx-text-muted) !important;
     font-size: 0.875rem !important;
     font-weight: 500 !important;
     transition: color 0.12s !important;
 }
 
-/* Dark mode nav item colors */
-.dark .fi-sidebar-item-btn > .fi-icon {
-    color: rgba(255, 255, 255, 0.3) !important;
-}
-
-.dark .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: rgba(255, 255, 255, 0.45) !important;
-}
-
-/* Nav item – hover (light) */
 .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover {
-    background: rgba(0, 0, 0, 0.04) !important;
+    background: var(--lx-hover-bg) !important;
 }
 
 .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-icon {
-    color: rgba(0, 0, 0, 0.6) !important;
+    color: var(--lx-icon-hover) !important;
 }
 
 .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-sidebar-item-label {
-    color: rgba(0, 0, 0, 0.75) !important;
+    color: var(--lx-text-strong) !important;
 }
 
-/* Nav item – hover (dark) */
-.dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover {
-    background: rgba(255, 255, 255, 0.05) !important;
-}
-
-.dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-icon {
-    color: rgba(255, 255, 255, 0.7) !important;
-}
-
-.dark .fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover > .fi-sidebar-item-label {
-    color: rgba(255, 255, 255, 0.8) !important;
-}
-
-/* Nav item – active (left accent bar) */
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
-    background: rgba(255, 4, 101, 0.07) !important;
+    background: var(--lx-brand-soft) !important;
     box-shadow: none !important;
     position: relative !important;
 }
@@ -98,150 +118,83 @@
     bottom: 22%;
     width: 3px;
     border-radius: 0 2px 2px 0;
-    background: linear-gradient(180deg, #ff0465 0%, #ff6602 100%);
+    background: var(--lx-gradient-v);
 }
 
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon {
-    color: #ff0465 !important;
+    color: var(--lx-brand-icon-active) !important;
 }
 
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: rgba(0, 0, 0, 0.85) !important;
+    color: var(--lx-text-strong) !important;
     font-weight: 600 !important;
 }
 
-/* Active – dark mode */
-.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
-    background: rgba(255, 4, 101, 0.1) !important;
-}
-
-.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon {
-    color: #ff6b9d !important;
-}
-
-.dark .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: rgba(255, 255, 255, 0.92) !important;
-    font-weight: 600 !important;
-}
-
-/* Dot connector in grouped active items */
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-sidebar-item-grouped-border-part {
-    background-color: #ff0465 !important;
+    background-color: var(--lx-brand) !important;
 }
 
-/* Nav group label */
 .fi-sidebar-group-label {
-    color: rgba(0, 0, 0, 0.22) !important;
+    color: var(--lx-group-label) !important;
     text-transform: uppercase !important;
     letter-spacing: 0.09em !important;
     font-size: 0.62rem !important;
     font-weight: 700 !important;
 }
 
-.dark .fi-sidebar-group-label {
-    color: rgba(255, 255, 255, 0.18) !important;
-}
-
-/* Separator between nav groups */
 .fi-sidebar-group:not(:first-child) {
     margin-top: 4px !important;
     padding-top: 12px !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+    border-top: 1px solid var(--lx-border-faint) !important;
 }
 
-.dark .fi-sidebar-group:not(:first-child) {
-    border-top-color: rgba(255, 255, 255, 0.05) !important;
-}
-
-/* Sidebar nav group btn icons */
 .fi-sidebar-group-btn > .fi-icon {
-    color: rgba(0, 0, 0, 0.28) !important;
+    color: var(--lx-icon) !important;
 }
 
-.dark .fi-sidebar-group-btn > .fi-icon {
-    color: rgba(255, 255, 255, 0.28) !important;
-}
-
-/* Sidebar scrollbar */
 .fi-sidebar-nav {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+    scrollbar-color: var(--lx-border) transparent;
 }
 
 .fi-sidebar-nav::-webkit-scrollbar { width: 3px; }
 .fi-sidebar-nav::-webkit-scrollbar-track { background: transparent; }
 .fi-sidebar-nav::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--lx-border);
     border-radius: 4px;
 }
 .fi-sidebar-nav::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 4, 101, 0.4);
 }
 
-/* ── Topbar – light mode ──────────────────────────────────────────── */
 .fi-topbar {
     position: relative !important;
-    background-color: #ffffff !important;
+    background-color: var(--lx-surface) !important;
     box-shadow: none !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-bottom: 1px solid var(--lx-border-faint) !important;
 }
 
 .fi-topbar .fi-topbar-item-label {
-    color: rgba(0, 0, 0, 0.5) !important;
+    color: var(--lx-text-muted) !important;
 }
 
 .fi-topbar .fi-icon {
-    color: rgba(0, 0, 0, 0.3) !important;
+    color: var(--lx-icon) !important;
 }
 
-/* ── Topbar – dark mode ───────────────────────────────────────────── */
-.dark .fi-topbar {
-    background-color: #111113 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-}
-
-.dark .fi-topbar .fi-topbar-item-label {
-    color: rgba(255, 255, 255, 0.6) !important;
-}
-
-.dark .fi-topbar .fi-icon {
-    color: rgba(255, 255, 255, 0.35) !important;
-}
-
-/* Tenant menu trigger button – light */
 .fi-tenant-menu-trigger-btn {
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    border-radius: 8px !important;
+    border: 1px solid var(--lx-border) !important;
+    border-radius: var(--lx-radius-sm) !important;
     transition: background 0.15s, border-color 0.15s !important;
 }
 
 .fi-tenant-menu-trigger-btn:hover {
-    background: rgba(255, 4, 101, 0.07) !important;
-    border-color: rgba(255, 4, 101, 0.25) !important;
+    background: var(--lx-brand-soft) !important;
+    border-color: var(--lx-brand-soft-border) !important;
 }
 
-/* Tenant menu trigger button – dark */
-.dark .fi-tenant-menu-trigger-btn {
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-.dark .fi-tenant-menu-trigger-btn:hover {
-    background: rgba(255, 4, 101, 0.1) !important;
-    border-color: rgba(255, 4, 101, 0.3) !important;
-}
-
-/* ── Body / main area ─────────────────────────────────────────────── */
-.fi-body {
-    background-color: #f0f0f3 !important; /* light mode */
-}
-
-.dark .fi-body {
-    background-color: #0e0e10 !important; /* dark mode */
-}
-
-/* ── Page heading – gradient text ─────────────────────────────────── */
 .fi-header-heading {
-    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%);
+    background: var(--lx-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -249,43 +202,32 @@
     letter-spacing: -0.025em !important;
 }
 
-/* ── Sections / Cards ─────────────────────────────────────────────── */
-/* Light mode */
 .fi-section:not(.fi-section-not-contained):not(.fi-aside) {
-    border-radius: 16px !important;
+    border-radius: var(--lx-radius-lg) !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Dark mode */
 .dark .fi-section:not(.fi-section-not-contained):not(.fi-aside) {
-    background-color: #1a1a1f !important;
+    background-color: var(--lx-surface-raised) !important;
     box-shadow: none !important;
-}
-
-/* Section border (ring) in dark mode */
-.dark .fi-section:not(.fi-section-not-contained):not(.fi-aside) {
     --tw-ring-color: rgba(255, 255, 255, 0.07) !important;
     --tw-ring-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07) !important;
 }
 
-/* Section header separator in dark mode */
 .dark .fi-section:not(.fi-section-not-contained) .fi-section-header {
-    border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+    border-bottom-color: var(--lx-border-faint) !important;
 }
 
-/* ── Tables ───────────────────────────────────────────────────────── */
 .fi-ta-ctn {
-    border-radius: 16px !important;
+    border-radius: var(--lx-radius-lg) !important;
     overflow: hidden !important;
 }
 
-/* Dark mode table */
 .dark .fi-ta-ctn {
-    background-color: #1a1a1f !important;
+    background-color: var(--lx-surface-raised) !important;
     --tw-ring-color: rgba(255, 255, 255, 0.07) !important;
 }
 
-/* Table header cell labels */
 .fi-ta-header-cell-ctn {
     font-size: 0.67rem !important;
     text-transform: uppercase !important;
@@ -294,14 +236,12 @@
     opacity: 0.4 !important;
 }
 
-/* Table row hover in dark mode */
 .dark .fi-ta-row:hover td {
     background-color: rgba(255, 4, 101, 0.03) !important;
 }
 
-/* ── Primary buttons – gradient ───────────────────────────────────── */
 .fi-btn.fi-color-primary:not(.fi-outlined) {
-    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%) !important;
+    background: var(--lx-gradient) !important;
     color: #fff !important;
     border: none !important;
     box-shadow: 0 2px 10px -2px rgba(255, 4, 101, 0.4) !important;
@@ -321,64 +261,48 @@
     transform: translateY(0) !important;
     box-shadow: 0 1px 5px -1px rgba(255, 4, 101, 0.3) !important;
 }
-
-/* ── Badges – primary ─────────────────────────────────────────────── */
-/* Light mode */
 .fi-badge.fi-color-primary {
-    background: rgba(255, 4, 101, 0.08) !important;
-    color: #e0004f !important;
-    --tw-ring-color: rgba(255, 4, 101, 0.15) !important;
+    background: var(--lx-badge-bg) !important;
+    color: var(--lx-badge-text) !important;
+    --tw-ring-color: var(--lx-badge-ring) !important;
 }
 
-/* Dark mode */
-.dark .fi-badge.fi-color-primary {
-    background: rgba(255, 4, 101, 0.15) !important;
-    color: #ff6b9d !important;
-    --tw-ring-color: rgba(255, 4, 101, 0.25) !important;
-}
-
-/* ── Dropdown panels ──────────────────────────────────────────────── */
 .fi-dropdown-panel {
-    border-radius: 12px !important;
+    border-radius: var(--lx-radius-md) !important;
 }
 
-/* Dark mode dropdown */
 .dark .fi-dropdown-panel {
     background-color: #1e1e24 !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* ── Login / simple layout – light ───────────────────────────────── */
 .fi-simple-layout {
     background: linear-gradient(160deg, #f5f5f8 0%, #fdf0f4 50%, #f5f5f8 100%) !important;
 }
 
+.dark .fi-simple-layout {
+    background: linear-gradient(160deg, #0d0d0f 0%, #1c0810 50%, #0d0d0f 100%) !important;
+}
+
 .fi-simple-main {
-    background-color: #ffffff !important;
+    background-color: var(--lx-surface) !important;
     border-radius: 18px !important;
-    border: 1px solid rgba(0, 0, 0, 0.07) !important;
+    border: 1px solid var(--lx-border) !important;
     box-shadow:
         0 0 0 1px rgba(255, 4, 101, 0.06),
         0 24px 64px -12px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* ── Login / simple layout – dark ────────────────────────────────── */
-.dark .fi-simple-layout {
-    background: linear-gradient(160deg, #0d0d0f 0%, #1c0810 50%, #0d0d0f 100%) !important;
-}
-
 .dark .fi-simple-main {
     background-color: #18181b !important;
-    border: 1px solid rgba(255, 255, 255, 0.07) !important;
     box-shadow:
         0 0 0 1px rgba(255, 4, 101, 0.08),
         0 24px 64px -12px rgba(0, 0, 0, 0.55) !important;
 }
 
-/* Login heading – gradient text (both modes) */
 .fi-simple-header-heading {
-    background: linear-gradient(135deg, #ff0465 0%, #ff6602 100%);
+    background: var(--lx-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
