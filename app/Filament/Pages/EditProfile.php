@@ -43,6 +43,7 @@ class EditProfile extends BaseEditProfile
                         ),
                 ])->columnSpanFull(),
                 Tabs::make()
+                    ->vertical()
                     ->columnSpanFull()
                     ->tabs([
                         Tab::make(__('profile.tabs.profile'))
