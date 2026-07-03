@@ -30,6 +30,7 @@ class BlockDefinition
         public readonly \Closure|string|null $canvasHtml = null,
         public readonly array $defaultData = [],
         public readonly ?string $gjsIcon = null,
+        public readonly array $contentTypes = [],
     ) {}
 
     public static function make(string $key): static
@@ -39,42 +40,52 @@ class BlockDefinition
 
     public function label(string $label): static
     {
-        return new static($this->key, $label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
+        return new static($this->key, $label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon, $this->contentTypes);
     }
 
     public function icon(string $icon): static
     {
-        return new static($this->key, $this->label, $icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
+        return new static($this->key, $this->label, $icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon, $this->contentTypes);
     }
 
     public function gjsIcon(string $icon): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $icon);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $icon, $this->contentTypes);
     }
 
     public function schema(\Closure|array $schema): static
     {
-        return new static($this->key, $this->label, $this->icon, $schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
+        return new static($this->key, $this->label, $this->icon, $schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon, $this->contentTypes);
     }
 
     public function nestable(bool $nestable): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon, $this->contentTypes);
     }
 
     public function category(string $category): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $category, $this->canvasHtml, $this->defaultData, $this->gjsIcon);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $category, $this->canvasHtml, $this->defaultData, $this->gjsIcon, $this->contentTypes);
     }
 
     public function canvasHtml(\Closure|string $html): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $html, $this->defaultData, $this->gjsIcon);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $html, $this->defaultData, $this->gjsIcon, $this->contentTypes);
     }
 
     public function defaultData(array $data): static
     {
-        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $data, $this->gjsIcon);
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $data, $this->gjsIcon, $this->contentTypes);
+    }
+
+    public function contentTypes(array $types): static
+    {
+        return new static($this->key, $this->label, $this->icon, $this->schema, $this->nestable, $this->category, $this->canvasHtml, $this->defaultData, $this->gjsIcon, $types);
+    }
+
+    public function supportsContentType(?string $type): bool
+    {
+        return $this->contentTypes === [] || in_array($type, $this->contentTypes, true);
     }
 
     public function resolveCanvasHtml(): string
@@ -86,7 +97,6 @@ class BlockDefinition
         return is_callable($this->canvasHtml) ? ($this->canvasHtml)() : $this->canvasHtml;
     }
 
-    /** @return array{id: string, label: string, category: string, content: string, media: string} */
     public function toGrapesBlock(): array
     {
         $iconClass = $this->gjsIcon ?? (str_starts_with((string) $this->icon, 'heroicon-') ? null : $this->icon);
@@ -106,7 +116,6 @@ class BlockDefinition
         ];
     }
 
-    /** @return array<int, array{key: string, label: string, type: string, options: array, fields?: array}> */
     public function toEditorFields(): array
     {
         $schema = is_callable($this->schema) ? ($this->schema)() : $this->schema;
@@ -133,7 +142,6 @@ class BlockDefinition
         return $fields;
     }
 
-    /** @return array{key: string, label: string, type: string, options: array} */
     private function fieldToMeta(Field $component): array
     {
         try {
@@ -175,7 +183,6 @@ class BlockDefinition
         ];
     }
 
-    /** @return array{key: string, label: string, type: 'repeater', options: array, fields: array} */
     private function repeaterToField(Repeater $component): array
     {
         try {

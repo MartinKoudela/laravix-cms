@@ -31,6 +31,7 @@ return [
         'progress_bars' => 'Progress Bars',
         'cookie_banner' => 'Cookie Banner',
         'sticky_cta_bar' => 'Sticky CTA Bar',
+        'post_list' => 'Post List',
         'hero_text' => 'Hero – text',
         'hero_image' => 'Hero + Photo',
         'video_hero' => 'Hero with video',

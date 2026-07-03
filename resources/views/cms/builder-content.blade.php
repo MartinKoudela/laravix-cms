@@ -2,7 +2,7 @@
     $hasBlocks = ! empty($content->blocks);
 @endphp
 
-@if ($content->grapesjs_html)
+@if ($grapesjsHtml)
     @push('head')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
@@ -113,7 +113,7 @@
             });
         </script>
     @endpush
-    <div class="gjs-content" style="isolation:isolate">{!! $content->grapesjs_html !!}</div>
+    <div class="gjs-content" style="isolation:isolate">{!! $grapesjsHtml !!}</div>
 
 @elseif ($hasBlocks)
 

@@ -127,7 +127,7 @@ class ContentForm
                                     )),
                             ]),
                         Tab::make(__('content.sections.builder'))
-                            ->hidden(fn (Get $get, ?Content $record): bool => $get('type') !== 'page' || $record === null || filament()->getTenant()?->isHeadless())
+                            ->hidden(fn (Get $get, ?Content $record): bool => ! in_array($get('type'), ['page', 'post', 'archive'], true) || $record === null || filament()->getTenant()?->isHeadless())
                             ->schema([
                                 View::make('filament.partials.block-builder')
                                     ->viewData(fn ($livewire) => [

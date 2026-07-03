@@ -18,6 +18,7 @@ class PageDataBuilder
 {
     public function __construct(
         private readonly MediaResolver $mediaResolver,
+        private readonly PostListHydrator $postListHydrator,
     ) {}
 
     public function build(Site $site, Content $content): array
@@ -29,15 +30,6 @@ class PageDataBuilder
             ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
             ->orderBy('title')
             ->get(['id', 'title', 'slug', 'is_homepage']);
-
-        $recentPosts = Content::query()
-            ->where('site_id', $site->id)
-            ->where('type', 'post')
-            ->where('status', 'published')
-            ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
-            ->orderByDesc('published_at')
-            ->limit(5)
-            ->get(['id', 'title', 'slug', 'published_at']);
 
         $archivePosts = null;
         if ($content->type === 'archive') {
@@ -95,11 +87,15 @@ class PageDataBuilder
         $navigations = $site->navigations ?? [];
         $navDesign = $site->nav_design ?? [];
 
+        $grapesjsHtml = $content->grapesjs_html
+            ? $this->postListHydrator->hydrate($content->grapesjs_html, $archivePosts ?? collect(), $mediaMap)
+            : null;
+
         return compact(
-            'navPages', 'recentPosts', 'archivePosts',
+            'navPages', 'archivePosts',
             'settings', 'mediaMap', 'appearance',
             'bgMedia', 'systemFieldKeys', 'logoMedia', 'faviconMedia',
-            'navigations', 'navDesign'
+            'navigations', 'navDesign', 'grapesjsHtml'
         );
     }
 }

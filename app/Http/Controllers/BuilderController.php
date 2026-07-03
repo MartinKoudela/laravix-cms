@@ -51,7 +51,7 @@ class BuilderController extends Controller
             'pages' => $pages,
             'contactEmail' => $settings->get('contact_email', ''),
             'backUrl' => url("/admin/{$site->id}/contents/{$content->id}/edit"),
-            'gjsBlocks' => array_merge(BlockRegistry::toGrapesBlocks(), $this->customBlocksToGrapesBlocks($site)),
+            'gjsBlocks' => array_merge(BlockRegistry::toGrapesBlocks($content->type), $this->customBlocksToGrapesBlocks($site)),
         ]);
     }
 

@@ -40,6 +40,7 @@ use App\Blocks\Grapesjs\LogoBarBlock;
 use App\Blocks\Grapesjs\MapBlock;
 use App\Blocks\Grapesjs\MarqueeBlock;
 use App\Blocks\Grapesjs\NewsletterBlock;
+use App\Blocks\Grapesjs\PostListBlock;
 use App\Blocks\Grapesjs\PricingBlock;
 use App\Blocks\Grapesjs\ProgressBarsBlock;
 use App\Blocks\Grapesjs\QuoteBlock;
@@ -238,6 +239,7 @@ class AppServiceProvider extends ServiceProvider
             ProgressBarsBlock::definition(),
             CookieBannerBlock::definition(),
             StickyCtaBarBlock::definition(),
+            PostListBlock::definition(),
         );
 
         NavigationRegistry::register(

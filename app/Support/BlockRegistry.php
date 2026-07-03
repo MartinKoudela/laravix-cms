@@ -39,11 +39,14 @@ class BlockRegistry
         );
     }
 
-    public static function toGrapesBlocks(): array
+    public static function toGrapesBlocks(?string $contentType = null): array
     {
         return array_values(array_map(
             fn (BlockDefinition $def) => $def->toGrapesBlock(),
-            array_filter(static::$blocks, fn (BlockDefinition $def) => $def->canvasHtml !== null)
+            array_filter(
+                static::$blocks,
+                fn (BlockDefinition $def) => $def->canvasHtml !== null && $def->supportsContentType($contentType)
+            )
         ));
     }
 

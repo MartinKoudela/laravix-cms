@@ -1,0 +1,27 @@
+.lx-post-list__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+}
+.lx-post-list__card {
+    display: block;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow .2s ease;
+}
+.lx-post-list__card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+.lx-post-list__image {
+    aspect-ratio: 16 / 10;
+    background-color: #f3f4f6;
+    background-size: cover;
+    background-position: center;
+}
+.lx-post-list__body { padding: 20px; }
+.lx-post-list__title { font-size: 1.0625rem; font-weight: 600; color: #111827; margin: 0 0 8px; line-height: 1.4; }
+.lx-post-list__meta { font-size: .8125rem; color: #9ca3af; margin: 0; }

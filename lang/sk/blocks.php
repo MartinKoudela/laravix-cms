@@ -31,6 +31,7 @@ return [
         'progress_bars' => 'Progress bary',
         'cookie_banner' => 'Cookie lišta',
         'sticky_cta_bar' => 'Fixná CTA lišta',
+        'post_list' => 'Zoznam príspevkov',
         'hero_text' => 'Hero – text',
         'hero_image' => 'Hero + fotka',
         'video_hero' => 'Hero s videom',
