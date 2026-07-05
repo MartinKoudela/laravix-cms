@@ -21,7 +21,7 @@ use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'blocks', 'grapesjs_data', 'grapesjs_html', 'status', 'published_at', 'created_by'])]
+#[Fillable(['site_id', 'type', 'locale', 'translation_group_id', 'title', 'slug', 'is_homepage', 'blocks', 'grapesjs_data', 'grapesjs_html', 'status', 'published_at', 'created_by'])]
 #[ObservedBy(ContentObserver::class)]
 class Content extends Model
 {
@@ -72,5 +72,29 @@ class Content extends Model
     public function redirects(): HasMany
     {
         return $this->hasMany(Redirect::class);
+    }
+
+    public function translations(): HasMany
+    {
+        return $this->hasMany(Content::class, 'translation_group_id', 'translation_group_id')
+            ->whereKeyNot($this->getKey());
+    }
+
+    public function translationForLocale(string $locale): ?Content
+    {
+        return $this->locale === $locale
+            ? $this
+            : $this->translations()->where('locale', $locale)->first();
+    }
+
+    public function path(string $defaultLocale): string
+    {
+        $path = $this->is_homepage ? '/' : '/'.$this->slug;
+
+        if ($this->locale && $this->locale !== $defaultLocale) {
+            $path = '/'.$this->locale.($path === '/' ? '' : $path);
+        }
+
+        return $path;
     }
 }

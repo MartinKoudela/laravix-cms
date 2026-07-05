@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ $settings->get('locale', 'en') }}">
+<html lang="{{ $currentLocale ?? $settings->get('locale', 'en') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,6 +18,12 @@
         <meta name="robots" content="noindex, nofollow">
     @endif
     <link rel="canonical" href="{{ $seo['canonical'] }}">
+    @if(($alternates ?? collect())->count() > 1)
+        @foreach ($alternates as $altLocale => $altUrl)
+            <link rel="alternate" hreflang="{{ $altLocale }}" href="{{ $altUrl }}">
+        @endforeach
+        <link rel="alternate" hreflang="x-default" href="{{ $alternates->get($defaultLocale, $seo['canonical']) }}">
+    @endif
 
     <meta property="og:title" content="{{ $seo['title'] }}">
     <meta property="og:type" content="{{ $content->type === 'post' ? 'article' : 'website' }}">

@@ -13,11 +13,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ContentResolver
 {
-    public function resolve(Site $site, string $slug): Content
+    public function resolve(Site $site, string $slug, ?string $locale = null): Content
     {
         $content = Content::query()
             ->where('site_id', $site->id)
             ->where('status', 'published')
+            ->when($locale, fn ($q) => $q->where('locale', $locale))
             ->where(function ($q) use ($slug) {
                 if ($slug === '/') {
                     $q->where('is_homepage', true);

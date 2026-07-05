@@ -7,6 +7,7 @@ return [
         'users_count' => 'Users',
         'contents_count' => 'Contents',
         'mode' => 'Mode',
+        'locales' => 'Additional languages',
     ],
     'modes' => [
         'theme' => 'Theme (SSR)',
@@ -21,5 +22,8 @@ return [
     'stats' => [
         'title' => 'Sites',
         'total' => 'Total managed sites',
+    ],
+    'hints' => [
+        'locales' => 'Languages available for content besides the default site language.',
     ],
 ];

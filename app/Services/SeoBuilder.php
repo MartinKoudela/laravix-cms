@@ -24,7 +24,7 @@ class SeoBuilder
                 ?: $settings->get('meta_description'),
             'og_image_url' => $ogMedia?->variantUrl(ImageVariant::OG),
             'noindex' => (bool) $contentFields->get('noindex'),
-            'canonical' => url($content->is_homepage ? '/' : '/'.$content->slug),
+            'canonical' => url($content->path($settings->get('locale') ?: 'en')),
         ];
     }
 }

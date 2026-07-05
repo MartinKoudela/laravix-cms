@@ -38,9 +38,11 @@ class SitemapController extends Controller
                     ->where('content_fields.value', '1');
             })
             ->orderByDesc('updated_at')
-            ->get(['id', 'slug', 'is_homepage', 'updated_at']);
+            ->get(['id', 'slug', 'is_homepage', 'locale', 'updated_at']);
 
-        $xml = view('sitemap', compact('contents'))->render();
+        $defaultLocale = $site->defaultLocale();
+
+        $xml = view('sitemap', compact('contents', 'defaultLocale'))->render();
 
         return response($xml, 200, ['Content-Type' => 'application/xml']);
     }

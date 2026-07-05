@@ -29,7 +29,20 @@ class CmsController extends Controller
 
         abort_if($site->isHeadless(), 404);
 
-        $content = $this->contentResolver->resolve($site, $slug);
+        $defaultLocale = $site->defaultLocale();
+        $locale = $defaultLocale;
+
+        $segments = explode('/', trim($slug, '/'), 2);
+        if ($segments[0] !== ''
+            && $segments[0] !== $defaultLocale
+            && in_array($segments[0], $site->enabledLocales(), true)) {
+            $locale = $segments[0];
+            $slug = $segments[1] ?? '/';
+        }
+
+        app()->setLocale($locale);
+
+        $content = $this->contentResolver->resolve($site, $slug, $locale);
 
         $theme = $site->theme ?? 'default';
         $view = "themes.{$theme}::{$content->type}.show";

@@ -10,6 +10,7 @@ return [
         'builder' => 'Staviteľ stránok',
     ],
     'fields' => [
+        'locale' => 'Jazyk',
         'meta_title' => 'Meta názov',
         'meta_description' => 'Meta popis',
         'og_image' => 'OG obrázok',
@@ -26,6 +27,7 @@ return [
         'awaiting' => 'Čaká na publikovanie',
     ],
     'messages' => [
+        'translation_created' => 'Preklad vytvorený',
         'set_as_homepage' => 'Nastaviť ako úvodnú stránku',
         'only_one_homepage' => 'Iba jeden obsah na webe môže byť úvodná stránka.',
         'save_first_for_builder' => 'Najprv uložte obsah, aby ste mohli používať blokový staviteľ.',
@@ -52,5 +54,6 @@ return [
     'actions' => [
         'revert' => 'Vrátiť',
         'open_builder' => 'Otvoriť Builder',
+        'translate' => 'Preložiť',
     ],
 ];

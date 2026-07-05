@@ -7,6 +7,7 @@ return [
         'users_count' => 'Uživatelů',
         'contents_count' => 'Obsahu',
         'mode' => 'Režim',
+        'locales' => 'Další jazyky',
     ],
     'modes' => [
         'theme' => 'Šablona (SSR)',
@@ -21,5 +22,8 @@ return [
     ],
     'messages' => [
         'public_name' => 'Veřejný název webu.',
+    ],
+    'hints' => [
+        'locales' => 'Jazyky dostupné pro obsah kromě výchozího jazyka webu.',
     ],
 ];

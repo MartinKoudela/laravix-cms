@@ -10,6 +10,7 @@ return [
         'builder' => 'Stavitel',
     ],
     'fields' => [
+        'locale' => 'Jazyk',
         'meta_title' => 'Meta název',
         'meta_description' => 'Meta popis',
         'og_image' => 'OG obrázek',
@@ -26,6 +27,7 @@ return [
         'awaiting' => 'Čeká na publikování',
     ],
     'messages' => [
+        'translation_created' => 'Překlad vytvořen',
         'set_as_homepage' => 'Nastavit jako úvodní stránku',
         'only_one_homepage' => 'Pouze jeden obsah na webu může být úvodní stránka.',
         'save_first_for_builder' => 'Nejdříve uložte obsah, aby bylo možné používat blokový stavitel.',
@@ -52,5 +54,6 @@ return [
     'actions' => [
         'revert' => 'Vrátit',
         'open_builder' => 'Otevřít Builder',
+        'translate' => 'Přeložit',
     ],
 ];

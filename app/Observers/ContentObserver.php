@@ -18,8 +18,19 @@ use App\Models\Content;
 
 class ContentObserver
 {
+    public function creating(Content $content): void
+    {
+        if (! $content->locale) {
+            $content->locale = $content->site?->defaultLocale() ?? 'en';
+        }
+    }
+
     public function created(Content $content): void
     {
+        if (! $content->translation_group_id) {
+            $content->updateQuietly(['translation_group_id' => $content->id]);
+        }
+
         ContentCreated::dispatch($content);
 
         if ($content->status === ContentStatus::PUBLISHED) {

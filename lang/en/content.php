@@ -21,6 +21,7 @@ return [
         'archive' => 'Archives',
     ],
     'fields' => [
+        'locale' => 'Language',
         'body' => 'Body',
         'hero_image' => 'Hero Image',
         'excerpt' => 'Excerpt',
@@ -37,10 +38,12 @@ return [
         'field_value' => 'The value for this field. Plugins may use this data to extend content functionality.',
     ],
     'actions' => [
+        'translate' => 'Translate',
         'revert' => 'Revert',
         'open_builder' => 'Open Builder',
     ],
     'messages' => [
+        'translation_created' => 'Translation created',
         'set_as_homepage' => 'Set as homepage',
         'only_one_homepage' => 'Only one content per site can be the homepage.',
         'save_first_for_builder' => 'Save the content first to use the block builder.',

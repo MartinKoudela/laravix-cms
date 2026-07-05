@@ -22,6 +22,8 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PostController extends Controller
 {
+    use Concerns\ResolvesLocale;
+
     public function __construct(private readonly MediaResolver $mediaResolver) {}
 
     public function index(Request $request): AnonymousResourceCollection
@@ -31,6 +33,7 @@ class PostController extends Controller
         $query = Content::query()
             ->where('site_id', $site->id)
             ->where('type', 'post')
+            ->where('locale', $this->resolveLocale($request, $site))
             ->where('status', ContentStatus::PUBLISHED)
             ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
             ->with(['fields', 'taxonomies', 'author'])
@@ -70,6 +73,7 @@ class PostController extends Controller
             ->where('site_id', $site->id)
             ->where('slug', $slug)
             ->where('type', 'post')
+            ->where('locale', $this->resolveLocale($request, $site))
             ->where('status', ContentStatus::PUBLISHED)
             ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
             ->with(['fields', 'taxonomies', 'author'])

@@ -38,6 +38,11 @@ class ContentsTable
                     ->label(__('common.site'))
                     ->sortable()
                     ->searchable(),
+                TextColumn::make('locale')
+                    ->label(__('content.fields.locale'))
+                    ->badge()
+                    ->formatStateUsing(fn (?string $state): string => strtoupper($state ?? ''))
+                    ->visible(fn (): bool => filament()->getTenant()?->isMultilingual() ?? false),
                 TextColumn::make('status')
                     ->label(__('common.status'))
                     ->badge()
@@ -71,6 +76,11 @@ class ContentsTable
             ])
             ->defaultSort('updated_at', 'desc')
             ->filters([
+                SelectFilter::make('locale')
+                    ->label(__('content.fields.locale'))
+                    ->options(fn () => collect(filament()->getTenant()?->enabledLocales() ?? [])
+                        ->mapWithKeys(fn (string $locale) => [$locale => strtoupper($locale)]))
+                    ->visible(fn (): bool => filament()->getTenant()?->isMultilingual() ?? false),
                 SelectFilter::make('status')
                     ->options(collect(ContentStatus::cases())->mapWithKeys(
                         fn (ContentStatus $case) => [$case->value => $case->name]

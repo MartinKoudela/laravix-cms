@@ -8,6 +8,7 @@
 namespace App\Filament\Resources\Sites\Schemas;
 
 use App\Enums\SiteMode;
+use App\Models\Site;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -45,6 +46,11 @@ class SiteForm
                             ])
                             ->default(SiteMode::THEME->value)
                             ->required(),
+                        Select::make('locales')
+                            ->label(__('sites.fields.locales'))
+                            ->multiple()
+                            ->options(Site::availableContentLocales())
+                            ->helperText(__('sites.hints.locales')),
                     ]),
             ]);
     }

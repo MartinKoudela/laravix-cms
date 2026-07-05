@@ -20,7 +20,7 @@ use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['name', 'domain', 'mode', 'theme', 'navigations', 'nav_design'])]
+#[Fillable(['name', 'domain', 'mode', 'theme', 'locales', 'navigations', 'nav_design'])]
 class Site extends Model implements HasAvatar
 {
     use HasFactory, LogsActivity, Recyclable, SoftDeletes;
@@ -49,8 +49,47 @@ class Site extends Model implements HasAvatar
     {
         return [
             'mode' => SiteMode::class,
+            'locales' => 'array',
             'navigations' => 'array',
             'nav_design' => 'array',
+        ];
+    }
+
+    public function defaultLocale(): string
+    {
+        return $this->settings()->where('key', 'locale')->value('value') ?: 'en';
+    }
+
+    public function enabledLocales(): array
+    {
+        return array_values(array_unique(array_merge([$this->defaultLocale()], $this->locales ?? [])));
+    }
+
+    public function isMultilingual(): bool
+    {
+        return count($this->enabledLocales()) > 1;
+    }
+
+    public static function availableContentLocales(): array
+    {
+        return [
+            'en' => 'English',
+            'cs' => 'Čeština',
+            'sk' => 'Slovenčina',
+            'de' => 'Deutsch',
+            'fr' => 'Français',
+            'es' => 'Español',
+            'it' => 'Italiano',
+            'pl' => 'Polski',
+            'pt' => 'Português',
+            'uk' => 'Українська',
+            'nl' => 'Nederlands',
+            'hu' => 'Magyar',
+            'ro' => 'Română',
+            'sv' => 'Svenska',
+            'tr' => 'Türkçe',
+            'ja' => '日本語',
+            'zh' => '中文',
         ];
     }
 

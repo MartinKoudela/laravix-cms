@@ -7,11 +7,14 @@
 
 namespace App\Filament\Resources\Contents\Pages;
 
+use App\Enums\ContentStatus;
 use App\Filament\Resources\Contents\ContentResource;
 use App\Models\Content;
 use App\Support\FieldRegistry;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
 
@@ -61,12 +64,63 @@ class EditContent extends EditRecord
                     $record = $this->getRecord();
                     $record->loadMissing('site');
 
-                    $slug = $record->is_homepage ? '' : ltrim($record->slug, '/');
-
-                    return 'https://'.$record->site->domain.'/'.$slug;
+                    return 'https://'.$record->site->domain.$record->path($record->site->defaultLocale());
                 }, shouldOpenInNewTab: true),
+            Action::make('translate')
+                ->label(__('content.actions.translate'))
+                ->icon(Heroicon::OutlinedLanguage)
+                ->color('gray')
+                ->visible(fn (): bool => $this->missingLocales() !== [])
+                ->schema([
+                    Select::make('locale')
+                        ->label(__('content.fields.locale'))
+                        ->options(fn () => collect($this->missingLocales())
+                            ->mapWithKeys(fn (string $locale) => [$locale => strtoupper($locale)]))
+                        ->required(),
+                ])
+                ->action(function (array $data): void {
+                    /** @var Content $record */
+                    $record = $this->getRecord();
+
+                    $copy = $record->replicate();
+                    $copy->locale = $data['locale'];
+                    $copy->translation_group_id = $record->translation_group_id;
+                    $copy->status = ContentStatus::DRAFT;
+                    $copy->published_at = null;
+                    $copy->created_by = auth()->id();
+                    $copy->save();
+
+                    foreach ($record->fields as $field) {
+                        $copy->fields()->create(['key' => $field->key, 'value' => $field->value]);
+                    }
+
+                    Notification::make()
+                        ->title(__('content.messages.translation_created'))
+                        ->success()
+                        ->send();
+
+                    $this->redirect(ContentResource::getUrl('edit', ['record' => $copy]));
+                }),
             DeleteAction::make(),
         ];
+    }
+
+    private function missingLocales(): array
+    {
+        $site = filament()->getTenant();
+
+        if (! $site?->isMultilingual()) {
+            return [];
+        }
+
+        /** @var Content $record */
+        $record = $this->getRecord();
+
+        $existing = Content::where('translation_group_id', $record->translation_group_id)
+            ->pluck('locale')
+            ->all();
+
+        return array_values(array_diff($site->enabledLocales(), $existing));
     }
 
     protected function mutateFormDataBeforeFill(array $data): array

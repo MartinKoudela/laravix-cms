@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Enums\ContentStatus;
 use App\Enums\FieldType;
+use App\Http\Controllers\Api\V1\Concerns\ResolvesLocale;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\ContentSummaryResource;
 use App\Http\Resources\Api\V1\PageResource;
@@ -21,6 +22,8 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PageController extends Controller
 {
+    use ResolvesLocale;
+
     public function __construct(private readonly MediaResolver $mediaResolver) {}
 
     public function index(Request $request): AnonymousResourceCollection
@@ -30,6 +33,7 @@ class PageController extends Controller
         $pages = Content::query()
             ->where('site_id', $site->id)
             ->whereIn('type', ['page', 'archive'])
+            ->where('locale', $this->resolveLocale($request, $site))
             ->where('status', ContentStatus::PUBLISHED)
             ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
             ->with(['fields', 'taxonomies', 'author'])
@@ -58,6 +62,7 @@ class PageController extends Controller
         $page = Content::query()
             ->where('site_id', $site->id)
             ->where('is_homepage', true)
+            ->where('locale', $this->resolveLocale($request, $site))
             ->where('status', ContentStatus::PUBLISHED)
             ->with(['fields', 'taxonomies', 'author'])
             ->firstOrFail();
@@ -73,6 +78,7 @@ class PageController extends Controller
             ->where('site_id', $site->id)
             ->where('slug', $slug)
             ->whereIn('type', ['page', 'archive'])
+            ->where('locale', $this->resolveLocale($request, $site))
             ->where('status', ContentStatus::PUBLISHED)
             ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
             ->with(['fields', 'taxonomies', 'author'])

@@ -54,7 +54,9 @@ class ContentForm
                                             ->maxLength(255)
                                             ->key('slug')
                                             ->prefix('/')
-                                            ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule) => $rule->where('site_id', filament()->getTenant()?->id))
+                                            ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, Get $get) => $rule
+                                                ->where('site_id', filament()->getTenant()?->id)
+                                                ->where('locale', $get('locale') ?: filament()->getTenant()?->defaultLocale() ?? 'en'))
                                             ->helperText(__('common.must_be_unique')),
                                         Toggle::make('is_homepage')
                                             ->label(__('content.messages.set_as_homepage'))
@@ -62,7 +64,7 @@ class ContentForm
                                             ->live()
                                             ->afterStateUpdated(fn (bool $state, Set $set) => $state ? $set('slug', '/') : null)
                                             ->columnSpanFull()
-                                            ->hidden(function (?Content $record): bool {
+                                            ->hidden(function (?Content $record, Get $get): bool {
                                                 if ($record?->is_homepage) {
                                                     return false;
                                                 }
@@ -75,6 +77,7 @@ class ContentForm
 
                                                 return Content::where('site_id', $siteId)
                                                     ->where('is_homepage', true)
+                                                    ->where('locale', $get('locale') ?: filament()->getTenant()?->defaultLocale() ?? 'en')
                                                     ->exists();
                                             }),
                                     ]),
@@ -89,6 +92,16 @@ class ContentForm
                                             ->disabled(fn ($record) => $record !== null)
                                             ->dehydrated()
                                             ->live(),
+                                        Select::make('locale')
+                                            ->label(__('content.fields.locale'))
+                                            ->required()
+                                            ->options(fn () => collect(filament()->getTenant()?->enabledLocales() ?? ['en'])
+                                                ->mapWithKeys(fn (string $locale) => [$locale => strtoupper($locale)]))
+                                            ->default(fn () => filament()->getTenant()?->defaultLocale() ?? 'en')
+                                            ->disabled(fn ($record) => $record !== null)
+                                            ->dehydrated()
+                                            ->live()
+                                            ->visible(fn () => filament()->getTenant()?->isMultilingual() ?? false),
                                         Select::make('status')
                                             ->label(__('common.status'))
                                             ->required()
