@@ -12,6 +12,7 @@ use App\Models\Content;
 use App\Models\Setting;
 use App\Models\Site;
 use App\Support\BlockRegistry;
+use App\Support\ContentTypeRegistry;
 use App\Support\FieldRegistry;
 
 class PageDataBuilder
@@ -25,7 +26,7 @@ class PageDataBuilder
     {
         $navPages = Content::query()
             ->where('site_id', $site->id)
-            ->whereIn('type', ['page', 'archive'])
+            ->whereIn('type', ContentTypeRegistry::navigationLinkableKeys())
             ->where('status', 'published')
             ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
             ->orderBy('title')

@@ -8,6 +8,7 @@
 namespace App\Filament\Resources\Contents\Pages;
 
 use App\Filament\Resources\Contents\ContentResource;
+use App\Support\ContentTypeRegistry;
 use App\Support\FieldRegistry;
 use Filament\Resources\Pages\CreateRecord;
 
@@ -24,7 +25,7 @@ class CreateContent extends CreateRecord
         $type = request()->query('type');
 
         $this->form->fill(
-            in_array($type, ['page', 'post', 'archive'], true) ? ['type' => $type] : null
+            ContentTypeRegistry::has($type) ? ['type' => $type] : null
         );
 
         $this->callHook('afterFill');

@@ -8,6 +8,7 @@
 namespace App\Filament\Resources\ContentTypeFields\Tables;
 
 use App\Enums\FieldType;
+use App\Support\ContentTypeRegistry;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -56,11 +57,7 @@ class ContentTypeFieldsTable
             ->filters([
                 SelectFilter::make('content_type')
                     ->label(__('content_type_field.fields.content_type'))
-                    ->options([
-                        'page' => __('content.types.page'),
-                        'post' => __('content.types.post'),
-                        'archive' => __('content.types.archive'),
-                    ]),
+                    ->options(fn () => ContentTypeRegistry::options()),
                 SelectFilter::make('type')
                     ->label(__('content_type_field.fields.type'))
                     ->options(collect(FieldType::cases())->mapWithKeys(

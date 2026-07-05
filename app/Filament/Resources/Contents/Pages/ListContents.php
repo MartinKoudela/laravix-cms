@@ -8,6 +8,7 @@
 namespace App\Filament\Resources\Contents\Pages;
 
 use App\Filament\Resources\Contents\ContentResource;
+use App\Support\ContentTypeRegistry;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
@@ -19,20 +20,20 @@ class ListContents extends ListRecords
     protected static string $resource = ContentResource::class;
 
     #[Url]
-    public string $type = 'page';
+    public string $type = '';
 
     public function mount(): void
     {
         parent::mount();
 
-        if (! in_array($this->type, ['page', 'post', 'archive'], true)) {
-            $this->type = 'page';
+        if (! ContentTypeRegistry::has($this->type)) {
+            $this->type = ContentTypeRegistry::default()->key;
         }
     }
 
     public function getTitle(): string
     {
-        return __('content.types_plural.'.$this->type);
+        return __(ContentTypeRegistry::find($this->type)->pluralLabel);
     }
 
     public function table(Table $table): Table

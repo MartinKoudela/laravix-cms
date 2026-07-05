@@ -10,6 +10,7 @@ namespace App\Filament\Resources\Contents\Schemas;
 use App\Enums\ContentStatus;
 use App\Models\Content;
 use App\Models\Taxonomy;
+use App\Support\ContentTypeRegistry;
 use App\Support\FieldComponentFactory;
 use App\Support\FieldRegistry;
 use Filament\Forms\Components\DateTimePicker;
@@ -83,12 +84,8 @@ class ContentForm
                                         Select::make('type')
                                             ->label(__('common.type'))
                                             ->required()
-                                            ->options([
-                                                'page' => __('content.types.page'),
-                                                'post' => __('content.types.post'),
-                                                'archive' => __('content.types.archive'),
-                                            ])
-                                            ->default('page')
+                                            ->options(fn () => ContentTypeRegistry::options())
+                                            ->default(fn () => ContentTypeRegistry::default()->key)
                                             ->disabled(fn ($record) => $record !== null)
                                             ->dehydrated()
                                             ->live(),
@@ -127,7 +124,7 @@ class ContentForm
                                     )),
                             ]),
                         Tab::make(__('content.sections.builder'))
-                            ->hidden(fn (Get $get, ?Content $record): bool => ! in_array($get('type'), ['page', 'post', 'archive'], true) || $record === null || filament()->getTenant()?->isHeadless())
+                            ->hidden(fn (Get $get, ?Content $record): bool => ! (ContentTypeRegistry::find($get('type') ?? '')?->hasBuilder ?? false) || $record === null || filament()->getTenant()?->isHeadless())
                             ->schema([
                                 View::make('filament.partials.block-builder')
                                     ->viewData(fn ($livewire) => [

@@ -8,7 +8,6 @@
 namespace App\Support;
 
 use App\Models\Content;
-use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -65,7 +64,7 @@ class NavigationComponentFactory
                 ->label(fn () => __('content.types.page'))
                 ->options(fn () => Content::query()
                     ->where('site_id', filament()->getTenant()?->id)
-                    ->whereIn('type', ['page', 'archive'])
+                    ->whereIn('type', ContentTypeRegistry::navigationLinkableKeys())
                     ->where('status', 'published')
                     ->orderBy('title')
                     ->pluck('title', 'id')

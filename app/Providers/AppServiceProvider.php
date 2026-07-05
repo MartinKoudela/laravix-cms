@@ -63,6 +63,8 @@ use App\Blocks\HeroBlock;
 use App\Blocks\TextBlock;
 use App\Enums\FieldType;
 use App\Support\BlockRegistry;
+use App\Support\ContentTypeDefinition;
+use App\Support\ContentTypeRegistry;
 use App\Support\FieldDefinition;
 use App\Support\FieldRegistry;
 use App\Support\NavigationDefinition;
@@ -86,6 +88,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->ip()));
+
+        ContentTypeRegistry::register(
+            ContentTypeDefinition::make('page')
+                ->label('content.types.page')
+                ->pluralLabel('content.types_plural.page')
+                ->linkableInNavigation(),
+            ContentTypeDefinition::make('post')
+                ->label('content.types.post')
+                ->pluralLabel('content.types_plural.post'),
+            ContentTypeDefinition::make('archive')
+                ->label('content.types.archive')
+                ->pluralLabel('content.types_plural.archive')
+                ->linkableInNavigation(),
+        );
 
         FieldRegistry::content([
             FieldDefinition::make('meta_title')

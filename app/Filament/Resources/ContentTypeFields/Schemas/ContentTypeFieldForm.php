@@ -9,6 +9,7 @@ namespace App\Filament\Resources\ContentTypeFields\Schemas;
 
 use App\Enums\FieldType;
 use App\Models\ContentTypeField;
+use App\Support\ContentTypeRegistry;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -23,11 +24,7 @@ class ContentTypeFieldForm
             Section::make()->columns(2)->schema([
                 Select::make('content_type')
                     ->label(__('content_type_field.fields.content_type'))
-                    ->options([
-                        'page' => __('content.types.page'),
-                        'post' => __('content.types.post'),
-                        'archive' => __('content.types.archive'),
-                    ])
+                    ->options(fn () => ContentTypeRegistry::options())
                     ->required(),
                 Select::make('type')
                     ->label(__('content_type_field.fields.type'))
