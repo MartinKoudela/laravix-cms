@@ -8,7 +8,9 @@
 namespace App\Models;
 
 use App\Enums\ContentStatus;
+use App\Observers\ContentObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,6 +22,7 @@ use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
 #[Fillable(['site_id', 'type', 'title', 'slug', 'is_homepage', 'blocks', 'grapesjs_data', 'grapesjs_html', 'status', 'published_at', 'created_by'])]
+#[ObservedBy(ContentObserver::class)]
 class Content extends Model
 {
     use HasFactory, LogsActivity, Recyclable, SoftDeletes;

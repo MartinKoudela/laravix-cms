@@ -19,11 +19,15 @@ class PublishScheduledContent extends Command
 {
     public function handle(): int
     {
-        $count = Content::where('status', ContentStatus::SCHEDULED->value)
+        $contents = Content::where('status', ContentStatus::SCHEDULED->value)
             ->where('published_at', '<=', now())
-            ->update(['status' => ContentStatus::PUBLISHED->value]);
+            ->get();
 
-        $this->info("Published {$count} scheduled content item(s).");
+        foreach ($contents as $content) {
+            $content->update(['status' => ContentStatus::PUBLISHED]);
+        }
+
+        $this->info("Published {$contents->count()} scheduled content item(s).");
 
         return self::SUCCESS;
     }
