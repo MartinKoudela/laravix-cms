@@ -6,6 +6,7 @@ use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\PreviewController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ThemePreviewController;
+use App\Support\RouteRegistry;
 use BezhanSalleh\LanguageSwitch\Http\Middleware\SwitchLanguageLocale;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,8 @@ Route::middleware(['auth', SwitchLanguageLocale::class])->group(function () {
 
 Route::post('/builder/{site}/contact', [BuilderController::class, 'contact'])
     ->name('builder.contact');
+
+RouteRegistry::apply();
 
 Route::get('/{slug?}', [CmsController::class, 'show'])
     ->where('slug', '.*')
