@@ -9,9 +9,11 @@ namespace App\Support;
 
 use App\Enums\FieldType;
 use App\Models\Media;
+use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -26,14 +28,16 @@ class FieldComponentFactory
         $key = 'field_'.$definition->key;
         $label = __($definition->label);
 
-        return match ($definition->type) {
+        $component = match ($definition->type) {
             FieldType::TEXT => TextInput::make($key)->label($label),
             FieldType::TEXTAREA => Textarea::make($key)->label($label)->columnSpanFull(),
             FieldType::RICH_TEXT => RichEditor::make($key)->label($label)->columnSpanFull(),
+            FieldType::MARKDOWN => MarkdownEditor::make($key)->label($label)->columnSpanFull(),
             FieldType::BOOLEAN => Toggle::make($key)->label($label),
             FieldType::DATE => DatePicker::make($key)->label($label),
             FieldType::DATETIME => DateTimePicker::make($key)->label($label),
             FieldType::NUMBER => TextInput::make($key)->label($label)->numeric(),
+            FieldType::COLOR => ColorPicker::make($key)->label($label),
             FieldType::URL => TextInput::make($key)->label($label)->url(),
             FieldType::IMAGE, FieldType::FILE => static::mediaSelect($key, $label),
             FieldType::SELECT => Select::make($key)

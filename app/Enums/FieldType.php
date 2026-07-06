@@ -12,6 +12,7 @@ enum FieldType: string
     case TEXT = 'text';
     case TEXTAREA = 'textarea';
     case RICH_TEXT = 'rich_text';
+    case MARKDOWN = 'markdown';
     case IMAGE = 'image';
     case FILE = 'file';
     case BOOLEAN = 'boolean';

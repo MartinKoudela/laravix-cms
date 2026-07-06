@@ -64,6 +64,12 @@ class ChangelogReleaseResource extends Resource
                     ->label(__('changelog::changelog.fields.title'))
                     ->maxLength(255)
                     ->columnSpanFull(),
+                ...static::translationInputs(
+                    fn (string $locale) => TextInput::make("translations.{$locale}.title")
+                        ->label(__('changelog::changelog.fields.title').' ('.strtoupper($locale).')')
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+                ),
             ]),
             Section::make(__('changelog::changelog.fields.items'))->schema([
                 Repeater::make('items')
@@ -82,6 +88,12 @@ class ChangelogReleaseResource extends Resource
                             ->label(__('changelog::changelog.fields.text'))
                             ->rows(2)
                             ->required(),
+                        ...static::translationInputs(
+                            fn (string $locale) => Textarea::make("translations.{$locale}.text")
+                                ->label(__('changelog::changelog.fields.text').' ('.strtoupper($locale).')')
+                                ->rows(2)
+                                ->columnSpanFull(),
+                        ),
                     ])
                     ->columns(2)
                     ->reorderableWithButtons()
@@ -89,6 +101,26 @@ class ChangelogReleaseResource extends Resource
                     ->defaultItems(1),
             ]),
         ]);
+    }
+
+    private static function translationInputs(callable $makeInput): array
+    {
+        $site = filament()->getTenant();
+
+        if (! ($site?->isMultilingual() ?? false)) {
+            return [];
+        }
+
+        $default = $site->defaultLocale();
+        $inputs = [];
+
+        foreach ($site->enabledLocales() as $locale) {
+            if ($locale !== $default) {
+                $inputs[] = $makeInput($locale);
+            }
+        }
+
+        return $inputs;
     }
 
     public static function table(Table $table): Table

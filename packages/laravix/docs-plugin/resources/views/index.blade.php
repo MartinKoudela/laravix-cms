@@ -12,7 +12,8 @@
         .search-results { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid #e4e4e7; border-radius: 10px; margin-top: 4px; box-shadow: 0 10px 30px rgba(0,0,0,.08); z-index: 10; }
         .search-results a { display: block; padding: 10px 14px; text-decoration: none; color: inherit; }
         .search-results a:hover { background: #fafafa; }
-        h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .05em; color: #71717a; margin: 2rem 0 .75rem; }
+        h2 { font-size: 1.3rem; margin: 2.5rem 0 .5rem; }
+        h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: #71717a; margin: 1.25rem 0 .5rem; }
         ul { list-style: none; padding: 0; }
         li a { display: block; padding: 8px 0; color: #18181b; text-decoration: none; border-bottom: 1px solid #f4f4f5; }
         li a:hover { color: #ff0465; }
@@ -26,14 +27,26 @@
         <div class="search-results" id="docs-search-results" hidden></div>
     </div>
 
-    @foreach ($grouped as $category => $docs)
-        <h2>{{ $category }}</h2>
+    @foreach ($sections as $section)
+        <h2><a href="{{ $section['url'] }}" style="color:inherit;text-decoration:none">{{ $section['label'] }}</a></h2>
+        @foreach ($section['groups'] as $group)
+            <h3>{{ $group['label'] }}</h3>
+            <ul>
+                @foreach ($group['docs'] as $doc)
+                    <li><a href="{{ $docUrl($doc) }}">{{ $doc->title }}</a></li>
+                @endforeach
+            </ul>
+        @endforeach
+    @endforeach
+
+    @if ($ungrouped->isNotEmpty())
+        <h2>{{ __('docs::docs.uncategorized') }}</h2>
         <ul>
-            @foreach ($docs as $doc)
-                <li><a href="{{ $docsUrl }}/{{ $doc->slug }}">{{ $doc->title }}</a></li>
+            @foreach ($ungrouped as $doc)
+                <li><a href="{{ $docUrl($doc) }}">{{ $doc->title }}</a></li>
             @endforeach
         </ul>
-    @endforeach
+    @endif
 
     <script>
         const input = document.getElementById('docs-search');

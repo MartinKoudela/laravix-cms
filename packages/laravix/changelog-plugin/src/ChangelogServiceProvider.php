@@ -34,6 +34,8 @@ class ChangelogServiceProvider extends ServiceProvider
 
         RouteRegistry::register(function () {
             Route::get('/changelog', ChangelogController::class)->name('changelog');
+            Route::get('/{locale}/changelog', ChangelogController::class)
+                ->where('locale', '[a-z]{2}')->name('changelog.localized');
         });
     }
 }

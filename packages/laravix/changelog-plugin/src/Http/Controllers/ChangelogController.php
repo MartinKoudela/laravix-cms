@@ -17,9 +17,19 @@ class ChangelogController
 {
     public function __construct(private readonly SiteResolver $siteResolver) {}
 
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request, ?string $locale = null): View
     {
         $site = $this->siteResolver->resolve($request->getHost());
+
+        $default = $site->defaultLocale();
+
+        if ($locale === null) {
+            $locale = $default;
+        } else {
+            abort_if($locale === $default || ! in_array($locale, $site->enabledLocales(), true), 404);
+        }
+
+        app()->setLocale($locale);
 
         $enabled = (bool) Setting::where('site_id', $site->id)
             ->where('key', 'changelog_page_enabled')
@@ -33,6 +43,6 @@ class ChangelogController
             ->orderByDesc('released_at')
             ->get();
 
-        return view('changelog::index', compact('site', 'releases'));
+        return view('changelog::index', compact('site', 'releases', 'locale'));
     }
 }

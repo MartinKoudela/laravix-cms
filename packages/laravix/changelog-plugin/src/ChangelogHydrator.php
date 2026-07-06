@@ -59,7 +59,7 @@ class ChangelogHydrator implements BlockHydrator
             .'<span class="lx-changelog__type lx-changelog__type--'.e($item->type).'">'
             .e(__('changelog::changelog.types.'.$item->type))
             .'</span> '
-            .e($item->text)
+            .e($item->localizedText())
             .'</li>'
         )->implode('');
 
@@ -68,7 +68,7 @@ class ChangelogHydrator implements BlockHydrator
             .'<span class="lx-changelog__version">v'.e($release->version).'</span>'
             .'<span class="lx-changelog__date">'.e($release->released_at->format('j. n. Y')).'</span>'
             .'</div>'
-            .($release->title ? '<p class="lx-changelog__title">'.e($release->title).'</p>' : '')
+            .($release->localizedTitle() ? '<p class="lx-changelog__title">'.e($release->localizedTitle()).'</p>' : '')
             .'<ul class="lx-changelog__items">'.$items.'</ul>'
             .'</div>';
     }

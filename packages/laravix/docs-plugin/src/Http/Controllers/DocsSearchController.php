@@ -11,6 +11,7 @@ use App\Models\Content;
 use App\Services\SiteResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Laravix\Docs\Support\DocsTree;
 
 class DocsSearchController
 {
@@ -32,19 +33,20 @@ class DocsSearchController
             return response()->json(['data' => []]);
         }
 
-        $prefix = $locale === $default ? '/docs' : '/'.$locale.'/docs';
-
         $results = Content::search($query)
             ->where('site_id', $site->id)
             ->where('type', 'doc')
             ->where('locale', $locale)
             ->take(10)
-            ->get();
+            ->get()
+            ->load('taxonomies');
+
+        $tree = new DocsTree($site, $locale);
 
         return response()->json([
             'data' => $results->map(fn (Content $doc) => [
                 'title' => $doc->title,
-                'url' => $prefix.'/'.$doc->slug,
+                'url' => $tree->pathFor($doc, $default),
             ])->values(),
         ]);
     }

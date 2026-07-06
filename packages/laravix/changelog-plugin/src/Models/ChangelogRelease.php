@@ -14,13 +14,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ChangelogRelease extends Model
 {
-    protected $fillable = ['site_id', 'version', 'title', 'released_at'];
+    protected $fillable = ['site_id', 'version', 'title', 'translations', 'released_at'];
 
     protected function casts(): array
     {
         return [
             'released_at' => 'date',
+            'translations' => 'array',
         ];
+    }
+
+    public function localizedTitle(?string $locale = null): ?string
+    {
+        $locale ??= app()->getLocale();
+
+        return $this->translations[$locale]['title'] ?? $this->title;
     }
 
     public function site(): BelongsTo

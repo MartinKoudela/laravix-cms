@@ -27,6 +27,10 @@ class ResolveSiteForApi
             return response()->json(['message' => 'Site not found.'], 404);
         }
 
+        if (! $site->isHeadless()) {
+            return response()->json(['message' => 'API is not enabled for this site.'], 403);
+        }
+
         $request->attributes->set('site', $site);
 
         return $next($request);

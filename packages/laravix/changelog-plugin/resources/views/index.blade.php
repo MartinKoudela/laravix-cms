@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ $locale }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,14 +31,14 @@
                 <span class="version">v{{ $release->version }}</span>
                 <span class="date">{{ $release->released_at->format('j. n. Y') }}</span>
             </div>
-            @if ($release->title)
-                <p class="title">{{ $release->title }}</p>
+            @if ($release->localizedTitle())
+                <p class="title">{{ $release->localizedTitle() }}</p>
             @endif
             <ul>
                 @foreach ($release->items as $item)
                     <li>
                         <span class="type type-{{ $item->type }}">{{ __('changelog::changelog.types.'.$item->type) }}</span>
-                        <span>{{ $item->text }}</span>
+                        <span>{{ $item->localizedText() }}</span>
                     </li>
                 @endforeach
             </ul>
