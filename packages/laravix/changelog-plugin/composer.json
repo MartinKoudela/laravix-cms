@@ -1,0 +1,23 @@
+{
+    "name": "laravix/changelog-plugin",
+    "description": "Changelog plugin for Laravix CMS — release notes with categorized change items.",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "keywords": ["laravix", "cms", "changelog", "plugin"],
+    "autoload": {
+        "psr-4": {
+            "Laravix\\Changelog\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravix\\Changelog\\ChangelogServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

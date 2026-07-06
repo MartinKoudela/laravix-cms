@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a17412198fb5185714f0dbad964ac50",
+    "content-hash": "3346e2d32280293d2967e9e60ad8773e",
     "packages": [
         {
             "name": "bezhansalleh/filament-language-switch",
@@ -2959,6 +2959,45 @@
                 "source": "https://github.com/laravel/tinker/tree/v3.0.2"
             },
             "time": "2026-03-17T14:54:13+00:00"
+        },
+        {
+            "name": "laravix/changelog-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/laravix/changelog-plugin",
+                "reference": "2854c30a7499a1bcd0c39c6c1cc73323b981e90c"
+            },
+            "require": {
+                "php": "^8.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravix\\Changelog\\ChangelogServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravix\\Changelog\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Changelog plugin for Laravix CMS — release notes with categorized change items.",
+            "keywords": [
+                "changelog",
+                "cms",
+                "laravix",
+                "plugin"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "league/commonmark",
@@ -12421,7 +12460,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "laravix/changelog-plugin": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

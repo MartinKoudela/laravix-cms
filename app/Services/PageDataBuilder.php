@@ -14,6 +14,7 @@ use App\Models\Site;
 use App\Support\BlockRegistry;
 use App\Support\ContentTypeRegistry;
 use App\Support\FieldRegistry;
+use App\Support\HydratorRegistry;
 
 class PageDataBuilder
 {
@@ -106,6 +107,12 @@ class PageDataBuilder
         $grapesjsHtml = $content->grapesjs_html
             ? $this->postListHydrator->hydrate($content->grapesjs_html, $archivePosts ?? collect(), $mediaMap)
             : null;
+
+        if ($grapesjsHtml !== null) {
+            foreach (HydratorRegistry::all() as $hydratorClass) {
+                $grapesjsHtml = app($hydratorClass)->hydrate($grapesjsHtml, $site, $content);
+            }
+        }
 
         return compact(
             'navPages', 'archivePosts',

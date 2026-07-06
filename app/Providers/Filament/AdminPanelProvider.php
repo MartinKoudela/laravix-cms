@@ -10,6 +10,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Pages\Tenancy\RegisterSite;
 use App\Models\Site;
+use App\Support\FilamentPluginRegistry;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -102,6 +103,8 @@ class AdminPanelProvider extends PanelProvider
                         ['title' => __('panel.footer.docs'), 'url' => 'https://laravix.com/docs'],
                         ['title' => __('panel.footer.contact'), 'url' => 'https://laravix.com/contact'],
                     ]),
+
+                ...FilamentPluginRegistry::all(),
             ]);
     }
 }
