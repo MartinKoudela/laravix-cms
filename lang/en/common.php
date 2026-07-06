@@ -47,4 +47,10 @@ return [
     'date' => 'Date',
     'key' => 'Key',
     'value' => 'Value',
+    'back_home' => 'Back to homepage',
+    'errors' => [
+        '404' => 'Page not found',
+        '500' => 'Something went wrong',
+        '503' => 'We\'ll be right back',
+    ],
 ];

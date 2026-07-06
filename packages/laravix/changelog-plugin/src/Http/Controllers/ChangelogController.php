@@ -43,6 +43,13 @@ class ChangelogController
             ->orderByDesc('released_at')
             ->get();
 
-        return view('changelog::index', compact('site', 'releases', 'locale'));
+        $theme = $site->theme ?? 'default';
+        $view = "themes.{$theme}::changelog.index";
+
+        if (! view()->exists($view)) {
+            $view = 'changelog::index';
+        }
+
+        return view($view, compact('site', 'releases', 'locale'));
     }
 }

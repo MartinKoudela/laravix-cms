@@ -43,4 +43,10 @@ return [
     'date' => 'Datum',
     'key' => 'Klíč',
     'value' => 'Hodnota',
+    'back_home' => 'Zpět na úvod',
+    'errors' => [
+        '404' => 'Stránka nenalezena',
+        '500' => 'Něco se pokazilo',
+        '503' => 'Hned jsme zpátky',
+    ],
 ];
