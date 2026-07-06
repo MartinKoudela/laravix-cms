@@ -121,9 +121,13 @@ class ContentForm
                                             ->multiple()
                                             ->searchable()
                                             ->preload()
-                                            ->options(fn () => Taxonomy::where('site_id', filament()->getTenant()?->id)
-                                                ->pluck('name', 'id')
-                                            ),
+                                            ->options(function (Get $get) {
+                                                $taxonomyTypes = ContentTypeRegistry::find($get('type') ?? '')?->taxonomyTypes ?? [];
+
+                                                return Taxonomy::where('site_id', filament()->getTenant()?->id)
+                                                    ->when($taxonomyTypes !== [], fn ($q) => $q->whereIn('type', $taxonomyTypes))
+                                                    ->pluck('name', 'id');
+                                            }),
                                     ]),
                                 ...static::fieldSections(static::contentGroups($get)),
                             ]),

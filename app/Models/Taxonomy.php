@@ -18,10 +18,31 @@ use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['site_id', 'type', 'name', 'slug', 'parent_id', 'sort_order'])]
+#[Fillable(['site_id', 'type', 'name', 'slug', 'translations', 'parent_id', 'sort_order'])]
 class Taxonomy extends Model
 {
     use HasFactory, LogsActivity, Recyclable, SoftDeletes;
+
+    protected function casts(): array
+    {
+        return [
+            'translations' => 'array',
+        ];
+    }
+
+    public function localizedName(?string $locale = null): string
+    {
+        $locale ??= app()->getLocale();
+
+        return $this->translations[$locale]['name'] ?? $this->name;
+    }
+
+    public function localizedSlug(?string $locale = null): string
+    {
+        $locale ??= app()->getLocale();
+
+        return $this->translations[$locale]['slug'] ?? $this->slug;
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

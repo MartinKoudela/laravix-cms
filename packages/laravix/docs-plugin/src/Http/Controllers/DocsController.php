@@ -37,7 +37,17 @@ class DocsController
         ]);
     }
 
-    public function show(Request $request, string $slug, ?string $locale = null): View
+    public function show(Request $request, string $slug): View
+    {
+        return $this->renderDoc($request, null, $slug);
+    }
+
+    public function showLocalized(Request $request, string $locale, string $slug): View
+    {
+        return $this->renderDoc($request, $locale, $slug);
+    }
+
+    private function renderDoc(Request $request, ?string $locale, string $slug): View
     {
         [$site, $locale] = $this->resolve($request, $locale);
 
@@ -86,7 +96,7 @@ class DocsController
             ->orderBy('title')
             ->get(['id', 'title', 'slug', 'locale', 'sort_order'])
             ->sortBy(fn (Content $doc) => $doc->taxonomies->first()?->sort_order ?? PHP_INT_MAX)
-            ->groupBy(fn (Content $doc) => $doc->taxonomies->first()?->name ?? __('docs::docs.uncategorized'));
+            ->groupBy(fn (Content $doc) => $doc->taxonomies->first()?->localizedName($locale) ?? __('docs::docs.uncategorized'));
     }
 
     private function publishedDocs(Site $site, string $locale)

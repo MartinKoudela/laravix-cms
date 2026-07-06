@@ -4,6 +4,7 @@ return [
     'singular' => 'taxonomie',
     'plural' => 'taxonymy',
     'sections' => [
+        'translations' => 'Překlady',
         'hierarchy' => 'Hierarchie',
     ],
     'types' => [

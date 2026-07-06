@@ -8,6 +8,7 @@
 namespace App\Filament\Resources\Taxonomies\Schemas;
 
 use App\Models\Taxonomy;
+use App\Support\TaxonomyTypeRegistry;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
@@ -41,12 +42,33 @@ class TaxonomyForm
                         Select::make('type')
                             ->label(__('common.type'))
                             ->required()
-                            ->options([
-                                'category' => __('taxonomy.types.category'),
-                                'tag' => __('taxonomy.types.tag'),
-                            ])
+                            ->options(fn () => TaxonomyTypeRegistry::options())
                             ->default('category'),
                     ]),
+                Section::make(__('taxonomy.sections.translations'))
+                    ->columns(2)
+                    ->visible(fn () => filament()->getTenant()?->isMultilingual() ?? false)
+                    ->schema(function (): array {
+                        $site = filament()->getTenant();
+                        $default = $site?->defaultLocale() ?? 'en';
+                        $components = [];
+
+                        foreach ($site?->enabledLocales() ?? [] as $locale) {
+                            if ($locale === $default) {
+                                continue;
+                            }
+
+                            $components[] = TextInput::make("translations.{$locale}.name")
+                                ->label(__('common.title').' ('.strtoupper($locale).')')
+                                ->maxLength(255);
+                            $components[] = TextInput::make("translations.{$locale}.slug")
+                                ->label(__('common.slug').' ('.strtoupper($locale).')')
+                                ->prefix('/')
+                                ->maxLength(255);
+                        }
+
+                        return $components;
+                    }),
                 Section::make(__('taxonomy.sections.hierarchy'))
                     ->schema([
                         Select::make('parent_id')

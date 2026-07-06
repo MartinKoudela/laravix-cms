@@ -10,6 +10,7 @@ namespace Laravix\Docs;
 use App\Support\ContentTypeDefinition;
 use App\Support\ContentTypeRegistry;
 use App\Support\RouteRegistry;
+use App\Support\TaxonomyTypeRegistry;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravix\Docs\Http\Controllers\DocsController;
@@ -22,12 +23,15 @@ class DocsServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'docs');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'docs');
 
+        TaxonomyTypeRegistry::register('doc-category', 'docs::docs.taxonomy_type');
+
         ContentTypeRegistry::register(
             ContentTypeDefinition::make('doc')
                 ->label('docs::docs.types.doc')
                 ->pluralLabel('docs::docs.types.docs')
                 ->linkableInNavigation()
-                ->routePrefix('docs'),
+                ->routePrefix('docs')
+                ->taxonomyTypes(['doc-category']),
         );
 
         RouteRegistry::register(function () {
@@ -39,7 +43,7 @@ class DocsServiceProvider extends ServiceProvider
                 ->where('locale', '[a-z]{2}')->name('docs.index.localized');
             Route::get('/{locale}/docs/search', DocsSearchController::class)
                 ->where('locale', '[a-z]{2}')->name('docs.search.localized');
-            Route::get('/{locale}/docs/{slug}', [DocsController::class, 'show'])
+            Route::get('/{locale}/docs/{slug}', [DocsController::class, 'showLocalized'])
                 ->where('locale', '[a-z]{2}')->name('docs.show.localized');
         });
     }

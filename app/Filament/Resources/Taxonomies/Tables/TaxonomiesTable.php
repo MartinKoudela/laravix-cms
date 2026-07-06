@@ -7,6 +7,7 @@
 
 namespace App\Filament\Resources\Taxonomies\Tables;
 
+use App\Support\TaxonomyTypeRegistry;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -29,6 +30,7 @@ class TaxonomiesTable
                 TextColumn::make('type')
                     ->label(__('common.type'))
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => TaxonomyTypeRegistry::label($state))
                     ->sortable(),
                 TextColumn::make('site.name')
                     ->label(__('common.site'))

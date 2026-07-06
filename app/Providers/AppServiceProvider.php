@@ -71,6 +71,7 @@ use App\Support\NavigationDefinition;
 use App\Support\NavigationRegistry;
 use App\Support\SettingDefinition;
 use App\Support\SettingRegistry;
+use App\Support\TaxonomyTypeRegistry;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -82,6 +83,9 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        TaxonomyTypeRegistry::register('category', 'taxonomy.types.category');
+        TaxonomyTypeRegistry::register('tag', 'taxonomy.types.tag');
+
         ContentTypeRegistry::register(
             ContentTypeDefinition::make('page')
                 ->label('content.types.page')
