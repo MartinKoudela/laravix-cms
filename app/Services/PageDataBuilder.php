@@ -15,6 +15,7 @@ use App\Support\BlockRegistry;
 use App\Support\ContentTypeRegistry;
 use App\Support\FieldRegistry;
 use App\Support\HydratorRegistry;
+use Illuminate\Support\Collection;
 
 class PageDataBuilder
 {
@@ -101,7 +102,7 @@ class PageDataBuilder
         $logoMedia = ($logoId = (int) $settings->get('logo')) ? $mediaMap->get($logoId) : null;
         $faviconMedia = ($faviconId = (int) $settings->get('favicon')) ? $mediaMap->get($faviconId) : null;
 
-        $navigations = $site->navigations ?? [];
+        $navigations = $this->localizeNavigations($site->navigations ?? [], $currentLocale, $defaultLocale);
         $navDesign = $site->nav_design ?? [];
 
         $grapesjsHtml = $content->grapesjs_html
@@ -121,5 +122,82 @@ class PageDataBuilder
             'navigations', 'navDesign', 'grapesjsHtml',
             'defaultLocale', 'currentLocale', 'alternates'
         );
+    }
+
+    private function localizeNavigations(array $navigations, string $locale, string $defaultLocale): array
+    {
+        if ($locale === $defaultLocale) {
+            return $navigations;
+        }
+
+        $pathMap = $this->localizedPathMap($navigations, $locale, $defaultLocale);
+
+        return array_map(
+            fn (array $items) => array_map(
+                fn (array $item) => $this->localizeItem($item, $locale, $pathMap),
+                $items,
+            ),
+            $navigations,
+        );
+    }
+
+    private function localizeItem(array $item, string $locale, Collection $pathMap): array
+    {
+        if (filled($item['translations'][$locale]['label'] ?? null)) {
+            $item['label'] = $item['translations'][$locale]['label'];
+        }
+
+        $contentId = (int) ($item['content_id'] ?? 0);
+        if ($contentId && $pathMap->has($contentId)) {
+            $item['url'] = $pathMap->get($contentId);
+        }
+
+        if (! empty($item['children'])) {
+            $item['children'] = array_map(
+                fn (array $child) => $this->localizeItem($child, $locale, $pathMap),
+                $item['children'],
+            );
+        }
+
+        return $item;
+    }
+
+    private function localizedPathMap(array $navigations, string $locale, string $defaultLocale): Collection
+    {
+        $contentIds = collect($navigations)
+            ->flatten(1)
+            ->flatMap(fn (array $item) => [
+                $item['content_id'] ?? null,
+                ...array_map(fn (array $child) => $child['content_id'] ?? null, $item['children'] ?? []),
+            ])
+            ->filter()
+            ->map(fn ($id) => (int) $id)
+            ->unique()
+            ->values();
+
+        if ($contentIds->isEmpty()) {
+            return collect();
+        }
+
+        $groups = Content::query()
+            ->whereIn('id', $contentIds)
+            ->pluck('translation_group_id', 'id')
+            ->filter();
+
+        if ($groups->isEmpty()) {
+            return collect();
+        }
+
+        $translations = Content::query()
+            ->whereIn('translation_group_id', $groups->unique()->values())
+            ->where('locale', $locale)
+            ->where('status', 'published')
+            ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
+            ->get(['id', 'type', 'slug', 'is_homepage', 'locale', 'translation_group_id'])
+            ->keyBy('translation_group_id');
+
+        return $groups
+            ->map(fn ($groupId) => $translations->get($groupId)?->path($defaultLocale))
+            ->filter();
     }
 }
