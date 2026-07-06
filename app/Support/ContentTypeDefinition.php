@@ -15,6 +15,7 @@ class ContentTypeDefinition
         public readonly string $pluralLabel,
         public readonly bool $linkableInNavigation = false,
         public readonly bool $hasBuilder = true,
+        public readonly ?string $routePrefix = null,
     ) {}
 
     public static function make(string $key): static
@@ -25,24 +26,30 @@ class ContentTypeDefinition
     public function label(string $label): static
     {
         return new static($this->key, $label, $this->pluralLabel,
-            $this->linkableInNavigation, $this->hasBuilder);
+            $this->linkableInNavigation, $this->hasBuilder, $this->routePrefix);
     }
 
     public function pluralLabel(string $pluralLabel): static
     {
         return new static($this->key, $this->label, $pluralLabel,
-            $this->linkableInNavigation, $this->hasBuilder);
+            $this->linkableInNavigation, $this->hasBuilder, $this->routePrefix);
     }
 
     public function linkableInNavigation(bool $linkable = true): static
     {
         return new static($this->key, $this->label, $this->pluralLabel,
-            $linkable, $this->hasBuilder);
+            $linkable, $this->hasBuilder, $this->routePrefix);
     }
 
     public function builder(bool $hasBuilder = true): static
     {
         return new static($this->key, $this->label, $this->pluralLabel,
-            $this->linkableInNavigation, $hasBuilder);
+            $this->linkableInNavigation, $hasBuilder, $this->routePrefix);
+    }
+
+    public function routePrefix(?string $routePrefix): static
+    {
+        return new static($this->key, $this->label, $this->pluralLabel,
+            $this->linkableInNavigation, $this->hasBuilder, $routePrefix);
     }
 }

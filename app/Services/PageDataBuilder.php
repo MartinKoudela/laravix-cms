@@ -56,7 +56,7 @@ class PageDataBuilder
                 ->where('translation_group_id', $content->translation_group_id)
                 ->where('status', 'published')
                 ->where(fn ($q) => $q->whereNull('published_at')->orWhere('published_at', '<=', now()))
-                ->get(['id', 'slug', 'is_homepage', 'locale'])
+                ->get(['id', 'type', 'slug', 'is_homepage', 'locale'])
                 ->mapWithKeys(fn (Content $c) => [$c->locale => url($c->path($defaultLocale))]);
         }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3346e2d32280293d2967e9e60ad8773e",
+    "content-hash": "d4533e8d05c4c7605b3c66230b5e1d51",
     "packages": [
         {
             "name": "bezhansalleh/filament-language-switch",
@@ -2991,6 +2991,46 @@
             "keywords": [
                 "changelog",
                 "cms",
+                "laravix",
+                "plugin"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "laravix/docs-plugin",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "packages/laravix/docs-plugin",
+                "reference": "0a699f75349d5aac0a8efa8f388e6d9045f83fa2"
+            },
+            "require": {
+                "php": "^8.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravix\\Docs\\DocsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravix\\Docs\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Documentation plugin for Laravix CMS — doc content type with categories, search and docs pages.",
+            "keywords": [
+                "cms",
+                "docs",
+                "documentation",
                 "laravix",
                 "plugin"
             ],
@@ -12461,13 +12501,14 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "laravix/changelog-plugin": 20
+        "laravix/changelog-plugin": 20,
+        "laravix/docs-plugin": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.4",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "php": "^8.4"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"

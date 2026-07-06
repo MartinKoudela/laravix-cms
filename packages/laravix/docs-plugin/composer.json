@@ -1,0 +1,23 @@
+{
+    "name": "laravix/docs-plugin",
+    "description": "Documentation plugin for Laravix CMS — doc content type with categories, search and docs pages.",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "keywords": ["laravix", "cms", "docs", "documentation", "plugin"],
+    "autoload": {
+        "psr-4": {
+            "Laravix\\Docs\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.4"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravix\\Docs\\DocsServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

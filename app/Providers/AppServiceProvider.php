@@ -82,13 +82,6 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
-    }
-
-    public function boot(): void
-    {
-        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->ip()));
-
         ContentTypeRegistry::register(
             ContentTypeDefinition::make('page')
                 ->label('content.types.page')
@@ -262,6 +255,11 @@ class AppServiceProvider extends ServiceProvider
             NavigationDefinition::make('header')->label('navigation.labels.header'),
             NavigationDefinition::make('footer')->label('navigation.labels.footer'),
         );
+    }
+
+    public function boot(): void
+    {
+        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->ip()));
 
         foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) as $themePath) {
             $themeName = basename($themePath);

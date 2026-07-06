@@ -38,7 +38,7 @@ class SitemapController extends Controller
                     ->where('content_fields.value', '1');
             })
             ->orderByDesc('updated_at')
-            ->get(['id', 'slug', 'is_homepage', 'locale', 'updated_at']);
+            ->get(['id', 'type', 'slug', 'is_homepage', 'locale', 'updated_at']);
 
         $defaultLocale = $site->defaultLocale();
 

@@ -9,6 +9,7 @@ namespace App\Models;
 
 use App\Enums\ContentStatus;
 use App\Observers\ContentObserver;
+use App\Support\ContentTypeRegistry;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,7 +23,7 @@ use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['site_id', 'type', 'locale', 'translation_group_id', 'title', 'slug', 'is_homepage', 'blocks', 'grapesjs_data', 'grapesjs_html', 'status', 'published_at', 'created_by'])]
+#[Fillable(['site_id', 'type', 'locale', 'translation_group_id', 'title', 'slug', 'is_homepage', 'sort_order', 'blocks', 'grapesjs_data', 'grapesjs_html', 'status', 'published_at', 'created_by'])]
 #[ObservedBy(ContentObserver::class)]
 class Content extends Model
 {
@@ -109,7 +110,9 @@ class Content extends Model
 
     public function path(string $defaultLocale): string
     {
-        $path = $this->is_homepage ? '/' : '/'.$this->slug;
+        $prefix = ContentTypeRegistry::find($this->type)?->routePrefix;
+
+        $path = $this->is_homepage ? '/' : '/'.($prefix ? $prefix.'/' : '').$this->slug;
 
         if ($this->locale && $this->locale !== $defaultLocale) {
             $path = '/'.$this->locale.($path === '/' ? '' : $path);

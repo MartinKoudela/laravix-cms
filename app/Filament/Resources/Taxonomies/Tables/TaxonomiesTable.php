@@ -19,6 +19,7 @@ class TaxonomiesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->reorderable('sort_order')
             ->columnToggleFormMaxHeight('400')
             ->columns([
                 TextColumn::make('name')

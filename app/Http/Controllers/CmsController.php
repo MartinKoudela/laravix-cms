@@ -11,6 +11,8 @@ use App\Services\ContentResolver;
 use App\Services\PageDataBuilder;
 use App\Services\SeoBuilder;
 use App\Services\SiteResolver;
+use App\Support\ContentTypeRegistry;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -23,7 +25,7 @@ class CmsController extends Controller
         private readonly SeoBuilder $seoBuilder,
     ) {}
 
-    public function show(Request $request, string $slug = '/'): View
+    public function show(Request $request, string $slug = '/'): View|RedirectResponse
     {
         $site = $this->siteResolver->resolve($request->getHost());
 
@@ -43,6 +45,10 @@ class CmsController extends Controller
         app()->setLocale($locale);
 
         $content = $this->contentResolver->resolve($site, $slug, $locale);
+
+        if (ContentTypeRegistry::find($content->type)?->routePrefix) {
+            return redirect($content->path($defaultLocale), 301);
+        }
 
         $theme = $site->theme ?? 'default';
         $view = "themes.{$theme}::{$content->type}.show";

@@ -22,6 +22,7 @@ class ContentsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->reorderable('sort_order')
             ->columnToggleFormMaxHeight('400px')
             ->columns([
                 TextColumn::make('title')

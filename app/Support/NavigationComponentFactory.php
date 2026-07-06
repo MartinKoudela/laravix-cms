@@ -77,7 +77,7 @@ class NavigationComponentFactory
                     }
                     $content = Content::find($state);
                     if ($content) {
-                        $set('url', $content->is_homepage ? '/' : '/'.$content->slug);
+                        $set('url', $content->path(filament()->getTenant()?->defaultLocale() ?? 'en'));
                     }
                 })
                 ->placeholder(fn () => __('navigation.labels.url_manual'))
