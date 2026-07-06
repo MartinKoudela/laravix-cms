@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
@@ -25,7 +26,26 @@ use Spatie\Activitylog\Support\LogOptions;
 #[ObservedBy(ContentObserver::class)]
 class Content extends Model
 {
-    use HasFactory, LogsActivity, Recyclable, SoftDeletes;
+    use HasFactory, LogsActivity, Recyclable, Searchable, SoftDeletes;
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'site_id' => $this->site_id,
+            'type' => $this->type,
+            'locale' => $this->locale,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'search_text' => $this->search_text,
+        ];
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return $this->status === ContentStatus::PUBLISHED
+            && ($this->published_at === null || $this->published_at->isPast());
+    }
 
     public function getActivitylogOptions(): LogOptions
     {
@@ -96,5 +116,34 @@ class Content extends Model
         }
 
         return $path;
+    }
+
+    public function computeSearchText(): string
+    {
+        $parts = [strip_tags($this->grapesjs_html ?? '')];
+
+        $blocks = $this->blocks ?? [];
+        array_walk_recursive($blocks, function ($value) use (&$parts) {
+            if (is_string($value)) {
+                $parts[] = strip_tags($value);
+            }
+        });
+
+        foreach ($this->fields->pluck('value') as $value) {
+            if (is_string($value)) {
+                $parts[] = strip_tags($value);
+            }
+        }
+
+        $text = preg_replace('/\s+/u', ' ', implode(' ', $parts));
+
+        return mb_substr(trim($text), 0, 60000);
+    }
+
+    public function refreshSearchText(): void
+    {
+        $this->load('fields');
+        $this->forceFill(['search_text' => $this->computeSearchText()])->saveQuietly();
+        $this->searchable();
     }
 }

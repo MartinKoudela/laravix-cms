@@ -25,6 +25,13 @@ class ContentObserver
         }
     }
 
+    public function saving(Content $content): void
+    {
+        if ($content->isDirty(['title', 'grapesjs_html', 'blocks'])) {
+            $content->search_text = $content->computeSearchText();
+        }
+    }
+
     public function created(Content $content): void
     {
         if (! $content->translation_group_id) {

@@ -53,5 +53,7 @@ class CreateContent extends CreateRecord
                 ['value' => $value],
             );
         }
+
+        $this->record->refreshSearchText();
     }
 }

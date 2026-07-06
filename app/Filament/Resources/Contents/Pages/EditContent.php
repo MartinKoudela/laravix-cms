@@ -158,6 +158,8 @@ class EditContent extends EditRecord
             $this->record->updateQuietly(['blocks' => $cached['blocks']]);
         }
 
+        $this->record->refreshSearchText();
+
         $this->record->revisions()->create([
             'created_by' => auth()->id(),
             'data' => [
