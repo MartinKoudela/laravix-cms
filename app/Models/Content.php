@@ -95,19 +95,6 @@ class Content extends Model
         return $this->hasMany(Redirect::class);
     }
 
-    public function translations(): HasMany
-    {
-        return $this->hasMany(Content::class, 'translation_group_id', 'translation_group_id')
-            ->whereKeyNot($this->getKey());
-    }
-
-    public function translationForLocale(string $locale): ?Content
-    {
-        return $this->locale === $locale
-            ? $this
-            : $this->translations()->where('locale', $locale)->first();
-    }
-
     public function path(string $defaultLocale): string
     {
         $prefix = ContentTypeRegistry::find($this->type)?->routePrefix;

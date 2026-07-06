@@ -15,6 +15,9 @@ return [
         'untitled' => 'New item',
         'submenu_count' => '{1} 1 submenu item|[2,*] :count submenu items',
     ],
+    'sections' => [
+        'translations' => 'Translations',
+    ],
     'hints' => [
         'submenu' => 'Links shown in a dropdown under this item',
     ],

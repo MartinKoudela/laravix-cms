@@ -98,6 +98,27 @@ class NavigationComponentFactory
                 ->label(fn () => __('common.description'))
                 ->rows(2)
                 ->columnSpanFull(),
+            Section::make(fn () => __('navigation.sections.translations'))
+                ->visible(fn () => filament()->getTenant()?->isMultilingual() ?? false)
+                ->schema(function (): array {
+                    $site = filament()->getTenant();
+                    $default = $site?->defaultLocale() ?? 'en';
+                    $components = [];
+
+                    foreach ($site?->enabledLocales() ?? [] as $locale) {
+                        if ($locale === $default) {
+                            continue;
+                        }
+                        $components[] = TextInput::make("translations.{$locale}.label")
+                            ->label(__('common.label').' ('.strtoupper($locale).')')
+                            ->nullable();
+                    }
+
+                    return $components;
+                })
+                ->collapsible()
+                ->collapsed()
+                ->columnSpanFull(),
         ];
     }
 

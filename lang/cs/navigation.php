@@ -15,6 +15,9 @@ return [
         'untitled' => 'Nová položka',
         'submenu_count' => '{1} 1 podpoložka|[2,4] :count podpoložky|[5,*] :count podpoložek',
     ],
+    'sections' => [
+        'translations' => 'Překlady',
+    ],
     'hints' => [
         'submenu' => 'Odkazy zobrazené v rozbalovacím menu pod touto položkou',
     ],
