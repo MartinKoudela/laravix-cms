@@ -99,9 +99,9 @@ class AdminPanelProvider extends PanelProvider
                         '<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v'.config('app.version')
                     ))
                     ->withLinks([
-                        ['title' => __('panel.footer.website'), 'url' => 'https://laravix.com'],
-                        ['title' => __('panel.footer.docs'), 'url' => 'https://laravix.com/docs'],
-                        ['title' => __('panel.footer.contact'), 'url' => 'https://laravix.com/contact'],
+                        ['title' => 'panel.footer.website', 'url' => 'https://laravix.com'],
+                        ['title' => 'panel.footer.docs', 'url' => 'https://laravix.com/docs'],
+                        ['title' => 'panel.footer.contact', 'url' => 'https://laravix.com/contact'],
                     ]),
 
                 ...FilamentPluginRegistry::all(),
