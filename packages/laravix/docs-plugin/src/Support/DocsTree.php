@@ -46,7 +46,7 @@ class DocsTree
 
     public function sectionFor(Content $doc): ?Taxonomy
     {
-        $category = $doc->taxonomies->first(fn (Taxonomy $taxonomy) => $taxonomy->type === 'doc-category');
+        $category = $this->categoryFor($doc);
 
         if (! $category) {
             return null;
@@ -87,7 +87,7 @@ class DocsTree
     public function groupedForSection(Taxonomy $section, Collection $docs): Collection
     {
         $byCategory = $docs->groupBy(
-            fn (Content $doc) => $doc->taxonomies->first(fn (Taxonomy $t) => $t->type === 'doc-category')?->id ?? 0,
+            fn (Content $doc) => $this->categoryFor($doc)?->id ?? 0,
         );
 
         return $this->subtree($section)
@@ -99,6 +99,25 @@ class DocsTree
             ])
             ->filter(fn (array $group) => $group['docs']->isNotEmpty())
             ->values();
+    }
+
+    private function categoryFor(Content $doc): ?Taxonomy
+    {
+        return $doc->taxonomies
+            ->filter(fn (Taxonomy $taxonomy) => $taxonomy->type === 'doc-category')
+            ->sortByDesc(fn (Taxonomy $taxonomy) => $this->depth($taxonomy))
+            ->first();
+    }
+
+    private function depth(Taxonomy $taxonomy): int
+    {
+        $depth = 0;
+
+        while ($taxonomy->parent_id !== null && $taxonomy = $this->taxonomies->get($taxonomy->parent_id)) {
+            $depth++;
+        }
+
+        return $depth;
     }
 
     private function subtree(Taxonomy $section): Collection
