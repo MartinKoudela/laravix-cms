@@ -7,6 +7,7 @@
 
 namespace Laravix\Docs;
 
+use Highlight\Highlighter;
 use Illuminate\Support\Collection;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\Autolink\AutolinkExtension;
@@ -19,6 +20,8 @@ use League\CommonMark\MarkdownConverter;
 class MarkdownRenderer
 {
     private MarkdownConverter $converter;
+
+    private Highlighter $highlighter;
 
     public function __construct()
     {
@@ -47,11 +50,32 @@ class MarkdownRenderer
         $environment->addExtension(new HeadingPermalinkExtension);
 
         $this->converter = new MarkdownConverter($environment);
+        $this->highlighter = new Highlighter;
     }
 
     public function toHtml(string $markdown): string
     {
-        return (string) $this->converter->convert($markdown);
+        $html = (string) $this->converter->convert($markdown);
+
+        return preg_replace_callback(
+            '/<pre><code class="language-([\w+-]+)">(.*?)<\/code><\/pre>/s',
+            function (array $matches): string {
+                $code = htmlspecialchars_decode($matches[2], ENT_QUOTES | ENT_HTML5);
+
+                try {
+                    $highlighted = $this->highlighter->highlight($matches[1], $code);
+                } catch (\DomainException) {
+                    return $matches[0];
+                }
+
+                return sprintf(
+                    '<pre><code class="hljs language-%s">%s</code></pre>',
+                    $highlighted->language,
+                    $highlighted->value
+                );
+            },
+            $html
+        );
     }
 
     public function toc(string $html): Collection
