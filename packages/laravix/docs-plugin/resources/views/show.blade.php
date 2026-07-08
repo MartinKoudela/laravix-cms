@@ -45,7 +45,9 @@
                 </div>
             @endif
             @foreach ($grouped as $group)
-                <h2>{{ $group['label'] }}</h2>
+                @if ($group['label'])
+                    <h2>{{ $group['label'] }}</h2>
+                @endif
                 @foreach ($group['docs'] as $sibling)
                     <a href="{{ $docUrl($sibling) }}" @class(['active' => $sibling->id === $doc->id])>{{ $sibling->title }}</a>
                 @endforeach

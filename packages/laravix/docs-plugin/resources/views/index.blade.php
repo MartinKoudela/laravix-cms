@@ -30,7 +30,9 @@
     @foreach ($sections as $section)
         <h2><a href="{{ $section['url'] }}" style="color:inherit;text-decoration:none">{{ $section['label'] }}</a></h2>
         @foreach ($section['groups'] as $group)
-            <h3>{{ $group['label'] }}</h3>
+            @if ($group['label'])
+                <h3>{{ $group['label'] }}</h3>
+            @endif
             <ul>
                 @foreach ($group['docs'] as $doc)
                     <li><a href="{{ $docUrl($doc) }}">{{ $doc->title }}</a></li>

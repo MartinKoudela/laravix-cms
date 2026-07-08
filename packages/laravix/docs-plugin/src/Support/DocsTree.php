@@ -92,7 +92,7 @@ class DocsTree
 
         return $this->subtree($section)
             ->map(fn (Taxonomy $taxonomy) => [
-                'label' => $taxonomy->localizedName($this->locale),
+                'label' => $taxonomy->id === $section->id ? null : $taxonomy->localizedName($this->locale),
                 'docs' => ($byCategory->get($taxonomy->id) ?? collect())
                     ->sortBy([['sort_order', 'asc'], ['title', 'asc']])
                     ->values(),
