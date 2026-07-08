@@ -9,7 +9,7 @@
 @endphp
 
 @if (count($actions))
-    <div class="pointer-events-none absolute inset-x-0 top-0 flex h-full items-center justify-center">
+    <div class="pointer-events-none absolute inset-x-0 top-0 hidden h-full items-center justify-center md:flex">
         <div class="pointer-events-auto flex items-center gap-1 rounded-xl border border-black/[0.06] bg-black/[0.025] px-2 py-2 dark:border-white/[0.06] dark:bg-white/[0.03]">
             @foreach ($actions as $key => $action)
                 <a
