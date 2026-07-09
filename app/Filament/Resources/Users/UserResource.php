@@ -22,6 +22,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class UserResource extends Resource
 {
@@ -70,8 +71,12 @@ class UserResource extends Resource
                 $join->on('users.id', '=', 'site_user.user_id')
                     ->where('site_user.site_id', '=', Filament::getTenant()?->id);
             })
-            ->where('users.is_super_admin', false)
             ->select('users.*', 'site_user.role');
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return ! $record->is_super_admin;
     }
 
     public static function form(Schema $schema): Schema

@@ -3,6 +3,7 @@
 return [
     'singular' => 'uživatel',
     'plural' => 'uživatelé',
+    'super_admin' => 'Superadmin',
     'sections' => [
         'invite' => 'Pozvat uživatele',
     ],

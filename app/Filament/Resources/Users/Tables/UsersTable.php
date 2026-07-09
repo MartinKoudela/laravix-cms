@@ -38,9 +38,13 @@ class UsersTable
                 TextColumn::make('role')
                     ->label(__('common.role'))
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        SiteRole::ADMIN->value => 'warning',
-                        SiteRole::EDITOR->value => 'info',
+                    ->formatStateUsing(fn (string $state, $record): string => $record->is_super_admin
+                        ? __('users.super_admin')
+                        : $state)
+                    ->color(fn (string $state, $record): string => match (true) {
+                        $record->is_super_admin => 'danger',
+                        $state === SiteRole::ADMIN->value => 'warning',
+                        $state === SiteRole::EDITOR->value => 'info',
                         default => 'gray',
                     }),
                 TextColumn::make('email_verified_at')
@@ -60,8 +64,10 @@ class UsersTable
                         fn (SiteRole $case) => [$case->value => $case->name]
                     )),
             ])
+            ->recordClasses(fn ($record) => $record->is_super_admin ? 'opacity-50 grayscale' : null)
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->visible(fn ($record): bool => ! $record->is_super_admin),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
