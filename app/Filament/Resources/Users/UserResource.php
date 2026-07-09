@@ -66,10 +66,16 @@ class UserResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
+        $tenantId = Filament::getTenant()?->id;
+
         return parent::getEloquentQuery()
-            ->join('site_user', function ($join) {
+            ->leftJoin('site_user', function ($join) use ($tenantId) {
                 $join->on('users.id', '=', 'site_user.user_id')
-                    ->where('site_user.site_id', '=', Filament::getTenant()?->id);
+                    ->where('site_user.site_id', '=', $tenantId);
+            })
+            ->where(function (Builder $query) {
+                $query->whereNotNull('site_user.site_id')
+                    ->orWhere('users.is_super_admin', true);
             })
             ->select('users.*', 'site_user.role');
     }

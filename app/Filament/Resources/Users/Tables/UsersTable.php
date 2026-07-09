@@ -38,10 +38,10 @@ class UsersTable
                 TextColumn::make('role')
                     ->label(__('common.role'))
                     ->badge()
-                    ->formatStateUsing(fn (string $state, $record): string => $record->is_super_admin
+                    ->formatStateUsing(fn (?string $state, $record): string => $record->is_super_admin
                         ? __('users.super_admin')
                         : $state)
-                    ->color(fn (string $state, $record): string => match (true) {
+                    ->color(fn (?string $state, $record): string => match (true) {
                         $record->is_super_admin => 'danger',
                         $state === SiteRole::ADMIN->value => 'warning',
                         $state === SiteRole::EDITOR->value => 'info',
