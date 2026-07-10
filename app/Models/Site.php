@@ -118,6 +118,11 @@ class Site extends Model implements HasAvatar
         return $this->hasMany(Setting::class);
     }
 
+    public function apiTokens(): HasMany
+    {
+        return $this->hasMany(SiteApiToken::class);
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'site_user')

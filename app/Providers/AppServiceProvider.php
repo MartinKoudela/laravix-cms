@@ -263,7 +263,11 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        RateLimiter::for('api', fn (Request $request) => Limit::perMinute(120)->by($request->ip()));
+        RateLimiter::for('api', function (Request $request) {
+            $token = $request->attributes->get('apiToken');
+
+            return Limit::perMinute(120)->by($token ? 'api-token:'.$token->id : $request->ip());
+        });
 
         foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) as $themePath) {
             $themeName = basename($themePath);

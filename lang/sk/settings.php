@@ -8,6 +8,7 @@ return [
         'appearance' => 'Vzhľad',
         'seo' => 'SEO',
         'social' => 'Sociálne siete',
+        'api' => 'API',
     ],
     'fields' => [
         'site_name' => 'Názov webu',
@@ -26,6 +27,7 @@ return [
         'instagram' => 'Instagram',
         'github' => 'GitHub',
         'robots_txt' => 'robots.txt',
+        'api_base_url' => 'Základná URL API',
     ],
     'actions' => [
         'save' => 'Uložiť nastavenia',
@@ -47,5 +49,27 @@ return [
         'google_verification' => 'Vložte hodnotu atribútu content z meta tagu Google Search Console.',
         'robots_txt' => 'Nechajte prázdne pre predvolené nastavenie (Povoliť všetko). URL sitemapy je vždy pridaná automaticky.',
         'theme' => 'Zmena šablóny sa okamžite premietne do vzhľadu webu pre návštevníkov.',
+        'api_base_url' => 'Použite túto URL ako základ pre všetky API požiadavky vo vašom frontende. Každá požiadavka musí obsahovať hlavičku "Authorization: Bearer <token>".',
+    ],
+    'api_tokens' => [
+        'fields' => [
+            'name' => 'Názov',
+            'token' => 'Token',
+            'last_used' => 'Naposledy použitý',
+            'expires' => 'Expirácia',
+            'created' => 'Vytvorený',
+        ],
+        'actions' => [
+            'create' => 'Vytvoriť token',
+            'revoke' => 'Odvolať token',
+            'done' => 'Hotovo',
+        ],
+        'messages' => [
+            'reveal_heading' => 'API token vytvorený',
+            'reveal_hint' => 'Skopírujte token teraz — už sa znovu nezobrazí.',
+            'never_used' => 'Nikdy nepoužitý',
+            'never_expires' => 'Nikdy',
+            'empty' => 'Zatiaľ žiadne API tokeny',
+        ],
     ],
 ];

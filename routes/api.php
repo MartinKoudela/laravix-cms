@@ -13,7 +13,7 @@ use App\Http\Controllers\Api\V1\SettingsController;
 use App\Http\Controllers\Api\V1\TaxonomyController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['api.site', 'throttle:api'])->prefix('v1')->group(function (): void {
+Route::middleware(['api.site', 'api.token', 'throttle:api'])->prefix('v1')->group(function (): void {
     Route::get('/pages', [PageController::class, 'index']);
     Route::get('/pages/homepage', [PageController::class, 'homepage']);
     Route::get('/pages/{slug}', [PageController::class, 'show']);

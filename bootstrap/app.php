@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\AuthenticateApiToken;
 use App\Http\Middleware\HandleRedirects;
 use App\Http\Middleware\ResolveSiteForApi;
 use Illuminate\Foundation\Application;
@@ -15,7 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [HandleRedirects::class]);
-        $middleware->alias(['api.site' => ResolveSiteForApi::class]);
+        $middleware->alias([
+            'api.site' => ResolveSiteForApi::class,
+            'api.token' => AuthenticateApiToken::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

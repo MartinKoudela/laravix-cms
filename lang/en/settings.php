@@ -41,7 +41,7 @@ return [
         'og_image' => 'Default Open Graph image for social sharing.',
         'google_verification' => 'Paste the content value from the Google Search Console meta tag.',
         'robots_txt' => 'Leave empty for default (Allow all). Sitemap URL is always appended automatically.',
-        'api_base_url' => 'Use this URL as the base for all API requests in your frontend.',
+        'api_base_url' => 'Use this URL as the base for all API requests in your frontend. Every request must include an "Authorization: Bearer <token>" header.',
         'theme' => 'Changing the theme instantly changes how your site looks to visitors.',
     ],
     'actions' => [
@@ -50,5 +50,26 @@ return [
     ],
     'messages' => [
         'saved' => 'Settings saved',
+    ],
+    'api_tokens' => [
+        'fields' => [
+            'name' => 'Name',
+            'token' => 'Token',
+            'last_used' => 'Last Used',
+            'expires' => 'Expires',
+            'created' => 'Created',
+        ],
+        'actions' => [
+            'create' => 'Create Token',
+            'revoke' => 'Revoke Token',
+            'done' => 'Done',
+        ],
+        'messages' => [
+            'reveal_heading' => 'API Token Created',
+            'reveal_hint' => 'Copy this token now — it will not be shown again.',
+            'never_used' => 'Never used',
+            'never_expires' => 'Never',
+            'empty' => 'No API tokens yet',
+        ],
     ],
 ];
