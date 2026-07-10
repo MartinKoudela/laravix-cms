@@ -17,6 +17,8 @@ return [
 
     'version' => env('APP_VERSION', '1.0.0'),
 
+    'cross_domain_switcher' => env('CMS_CROSS_DOMAIN_SWITCHER', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
