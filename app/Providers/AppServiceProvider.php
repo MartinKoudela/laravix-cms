@@ -62,6 +62,20 @@ use App\Blocks\Grapesjs\YoutubeBlock;
 use App\Blocks\HeroBlock;
 use App\Blocks\TextBlock;
 use App\Enums\FieldType;
+use App\Models\Content;
+use App\Models\ContentField;
+use App\Models\ContentRevision;
+use App\Models\ContentTypeField;
+use App\Models\CustomCodeBlock;
+use App\Models\Media;
+use App\Models\Redirect;
+use App\Models\Setting;
+use App\Models\Site;
+use App\Models\SiteApiToken;
+use App\Models\SiteUser;
+use App\Models\Taxonomy;
+use App\Models\User;
+use App\Models\UserInvitation;
 use App\Support\BlockRegistry;
 use App\Support\ContentTypeDefinition;
 use App\Support\ContentTypeRegistry;
@@ -74,6 +88,7 @@ use App\Support\SettingRegistry;
 use App\Support\TaxonomyTypeRegistry;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\View;
@@ -263,6 +278,23 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        Relation::enforceMorphMap([
+            'content' => Content::class,
+            'content_field' => ContentField::class,
+            'content_revision' => ContentRevision::class,
+            'content_type_field' => ContentTypeField::class,
+            'custom_code_block' => CustomCodeBlock::class,
+            'media' => Media::class,
+            'redirect' => Redirect::class,
+            'setting' => Setting::class,
+            'site' => Site::class,
+            'site_api_token' => SiteApiToken::class,
+            'site_user' => SiteUser::class,
+            'taxonomy' => Taxonomy::class,
+            'user' => User::class,
+            'user_invitation' => UserInvitation::class,
+        ]);
+
         RateLimiter::for('api', function (Request $request) {
             $token = $request->attributes->get('apiToken');
 
