@@ -3,9 +3,6 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Laravix\Cms\Http\Middleware\AuthenticateApiToken;
-use Laravix\Cms\Http\Middleware\HandleRedirects;
-use Laravix\Cms\Http\Middleware\ResolveSiteForApi;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -15,11 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->web(append: [HandleRedirects::class]);
-        $middleware->alias([
-            'api.site' => ResolveSiteForApi::class,
-            'api.token' => AuthenticateApiToken::class,
-        ]);
+        //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
