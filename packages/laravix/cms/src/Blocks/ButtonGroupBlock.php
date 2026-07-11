@@ -7,30 +7,30 @@
 
 namespace Laravix\Cms\Blocks;
 
-use Laravix\Cms\Support\BlockDefinition;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Laravix\Cms\Support\BlockDefinition;
 
 class ButtonGroupBlock
 {
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('button_group')
-            ->label('blocks.types.button_group')
+            ->label('laravix::blocks.types.button_group')
             ->icon('heroicon-o-cursor-arrow-rays')
             ->schema(fn () => [
                 Repeater::make('buttons')
-                    ->label(fn () => __('blocks.fields.buttons'))
+                    ->label(fn () => __('laravix::blocks.fields.buttons'))
                     ->schema([
-                        TextInput::make('label')->label(fn () => __('common.label')),
-                        TextInput::make('url')->label(fn () => __('common.url'))->url(),
+                        TextInput::make('label')->label(fn () => __('laravix::common.label')),
+                        TextInput::make('url')->label(fn () => __('laravix::common.url'))->url(),
                         Select::make('style')
-                            ->label(fn () => __('blocks.fields.style'))
+                            ->label(fn () => __('laravix::blocks.fields.style'))
                             ->options(fn () => [
-                                'primary' => __('blocks.styles.primary'),
-                                'secondary' => __('blocks.styles.secondary'),
-                                'outline' => __('blocks.styles.outline'),
+                                'primary' => __('laravix::blocks.styles.primary'),
+                                'secondary' => __('laravix::blocks.styles.secondary'),
+                                'outline' => __('laravix::blocks.styles.outline'),
                             ])
                             ->default('primary'),
                     ])

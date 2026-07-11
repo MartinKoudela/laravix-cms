@@ -7,16 +7,16 @@
 
 namespace Laravix\Cms\Filament\Resources\Settings;
 
-use Laravix\Cms\Enums\SiteRole;
-use Laravix\Cms\Filament\Resources\Settings\Pages\ManageSettings;
-use Laravix\Cms\Models\Setting;
-use Laravix\Cms\Models\Site;
-use Laravix\Cms\Support\SettingRegistry;
 use BackedEnum;
 use Filament\Navigation\NavigationItem;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
+use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Filament\Resources\Settings\Pages\ManageSettings;
+use Laravix\Cms\Models\Setting;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Support\SettingRegistry;
 
 use function Filament\Support\original_request;
 
@@ -24,12 +24,12 @@ class SettingResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('settings.singular');
+        return __('laravix::settings.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('settings.plural');
+        return __('laravix::settings.plural');
     }
 
     protected static ?string $model = Setting::class;
@@ -65,9 +65,9 @@ class SettingResource extends Resource
         }
 
         if (filament()->getTenant() instanceof Site && filament()->getTenant()->isHeadless()) {
-            $groups['api'] = 'settings.tabs.api';
+            $groups['api'] = 'laravix::settings.tabs.api';
         } else {
-            $groups['appearance'] = 'settings.tabs.appearance';
+            $groups['appearance'] = 'laravix::settings.tabs.appearance';
         }
 
         return $groups;

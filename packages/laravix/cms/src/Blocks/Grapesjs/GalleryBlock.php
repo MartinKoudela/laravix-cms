@@ -14,9 +14,9 @@ class GalleryBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('gallery')
-            ->label('blocks.gjs.gallery')
+            ->label('laravix::blocks.gjs.gallery')
             ->icon('fa-images')
-            ->category('blocks.categories.media')
+            ->category('laravix::blocks.categories.media')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container">

@@ -14,9 +14,9 @@ class BeforeAfterBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('before-after')
-            ->label('blocks.gjs.before_after')
+            ->label('laravix::blocks.gjs.before_after')
             ->icon('fa-sliders')
-            ->category('blocks.categories.interactive')
+            ->category('laravix::blocks.categories.interactive')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--md">

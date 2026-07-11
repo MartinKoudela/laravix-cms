@@ -29,12 +29,12 @@ class CustomCodeBlocksTable
                     ->html()
                     ->grow(false),
                 TextColumn::make('name')
-                    ->label(__('common.name'))
+                    ->label(__('laravix::common.name'))
                     ->weight(FontWeight::Medium)
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('updated_at')
-                    ->label(__('common.updated_at'))
+                    ->label(__('laravix::common.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->color('gray'),

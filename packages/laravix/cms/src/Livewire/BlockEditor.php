@@ -68,7 +68,7 @@ class BlockEditor extends Component
             ->values()
             ->toArray();
 
-        return view('livewire.block-editor', compact('blockFields', 'mediaItems', 'blockTypes'));
+        return view('laravix::livewire.block-editor', compact('blockFields', 'mediaItems', 'blockTypes'));
     }
 
     public function mount(int $contentId, string $previewToken): void

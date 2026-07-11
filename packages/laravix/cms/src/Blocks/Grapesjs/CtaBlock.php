@@ -14,9 +14,9 @@ class CtaBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('cta')
-            ->label('blocks.gjs.cta')
+            ->label('laravix::blocks.gjs.cta')
             ->icon('fa-bullhorn')
-            ->category('blocks.categories.conversion')
+            ->category('laravix::blocks.categories.conversion')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--dark" style="text-align:center;">
     <div class="lx-container--sm">

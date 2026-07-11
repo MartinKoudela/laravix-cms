@@ -14,9 +14,9 @@ class YoutubeBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('video-youtube')
-            ->label('blocks.gjs.youtube')
+            ->label('laravix::blocks.gjs.youtube')
             ->icon('fa-brands fa-youtube')
-            ->category('blocks.categories.media')
+            ->category('laravix::blocks.categories.media')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">
     <div class="lx-youtube__inner">

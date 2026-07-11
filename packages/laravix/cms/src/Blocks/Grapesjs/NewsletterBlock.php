@@ -14,9 +14,9 @@ class NewsletterBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('newsletter')
-            ->label('blocks.gjs.newsletter')
+            ->label('laravix::blocks.gjs.newsletter')
             ->icon('fa-at')
-            ->category('blocks.categories.conversion')
+            ->category('laravix::blocks.categories.conversion')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--blue">
     <div class="lx-container--form" style="text-align:center;">

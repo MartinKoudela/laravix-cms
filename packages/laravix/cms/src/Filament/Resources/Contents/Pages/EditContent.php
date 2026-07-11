@@ -7,16 +7,16 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents\Pages;
 
-use Laravix\Cms\Enums\ContentStatus;
-use Laravix\Cms\Filament\Resources\Contents\ContentResource;
-use Laravix\Cms\Models\Content;
-use Laravix\Cms\Support\FieldRegistry;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Filament\Resources\Contents\ContentResource;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Support\FieldRegistry;
 
 class EditContent extends EditRecord
 {
@@ -56,7 +56,7 @@ class EditContent extends EditRecord
     {
         return [
             Action::make('preview')
-                ->label(__('common.preview'))
+                ->label(__('laravix::common.preview'))
                 ->icon(Heroicon::OutlinedEye)
                 ->color('gray')
                 ->url(function (): string {
@@ -67,13 +67,13 @@ class EditContent extends EditRecord
                     return 'https://'.$record->site->domain.$record->path($record->site->defaultLocale());
                 }, shouldOpenInNewTab: true),
             Action::make('translate')
-                ->label(__('content.actions.translate'))
+                ->label(__('laravix::content.actions.translate'))
                 ->icon(Heroicon::OutlinedLanguage)
                 ->color('gray')
                 ->visible(fn (): bool => $this->missingLocales() !== [])
                 ->schema([
                     Select::make('locale')
-                        ->label(__('content.fields.locale'))
+                        ->label(__('laravix::content.fields.locale'))
                         ->options(fn () => collect($this->missingLocales())
                             ->mapWithKeys(fn (string $locale) => [$locale => strtoupper($locale)]))
                         ->required(),
@@ -95,7 +95,7 @@ class EditContent extends EditRecord
                     }
 
                     Notification::make()
-                        ->title(__('content.messages.translation_created'))
+                        ->title(__('laravix::content.messages.translation_created'))
                         ->success()
                         ->send();
 

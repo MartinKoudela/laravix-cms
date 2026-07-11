@@ -14,9 +14,9 @@ class AnimatedCounterBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('animated-counter')
-            ->label('blocks.gjs.animated_counter')
+            ->label('laravix::blocks.gjs.animated_counter')
             ->icon('fa-arrow-up-right-dots')
-            ->category('blocks.categories.interactive')
+            ->category('laravix::blocks.categories.interactive')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-counter__grid lx-container">

@@ -7,7 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents\RelationManagers;
 
-use Laravix\Cms\Models\ContentRevision;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -15,6 +14,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\DB;
+use Laravix\Cms\Models\ContentRevision;
 
 class RevisionsRelationManager extends RelationManager
 {
@@ -34,15 +34,15 @@ class RevisionsRelationManager extends RelationManager
                 DB::raw("JSON_UNQUOTE(JSON_EXTRACT(data, '$.status')) as revision_status"),
             ]))
             ->columns([
-                TextColumn::make('created_at')->dateTime()->sortable()->label(__('common.date')),
-                TextColumn::make('author.name')->label(__('common.author'))->default('—'),
-                TextColumn::make('revision_title')->label(__('common.title'))->default('—'),
-                TextColumn::make('revision_status')->label(__('common.status'))->badge()->default('—'),
+                TextColumn::make('created_at')->dateTime()->sortable()->label(__('laravix::common.date')),
+                TextColumn::make('author.name')->label(__('laravix::common.author'))->default('—'),
+                TextColumn::make('revision_title')->label(__('laravix::common.title'))->default('—'),
+                TextColumn::make('revision_status')->label(__('laravix::common.status'))->badge()->default('—'),
             ])
             ->headerActions([])
             ->recordActions([
                 Action::make('revert')
-                    ->label(__('content.actions.revert'))
+                    ->label(__('laravix::content.actions.revert'))
                     ->icon('heroicon-o-arrow-uturn-left')
                     ->color('warning')
                     ->requiresConfirmation()

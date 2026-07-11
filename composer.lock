@@ -3005,7 +3005,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/cms",
-                "reference": "35c6ea368522e7eed9fe4a08b863295750ef6cec"
+                "reference": "f07ed0331af40e527a01176478321ac26a812e53"
             },
             "require": {
                 "bezhansalleh/filament-language-switch": "^4.3",
@@ -3031,7 +3031,9 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Laravix\\Cms\\": "src/"
+                    "Laravix\\Cms\\": "src/",
+                    "Laravix\\Cms\\Database\\Factories\\": "database/factories/",
+                    "Laravix\\Cms\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [

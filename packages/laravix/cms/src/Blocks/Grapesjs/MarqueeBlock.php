@@ -14,9 +14,9 @@ class MarqueeBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('marquee')
-            ->label('blocks.gjs.marquee')
+            ->label('laravix::blocks.gjs.marquee')
             ->icon('fa-repeat')
-            ->category('blocks.categories.artistic')
+            ->category('laravix::blocks.categories.artistic')
             ->canvasHtml(<<<'HTML'
 <div class="lx-marquee">
     <div class="lx-marquee__track">

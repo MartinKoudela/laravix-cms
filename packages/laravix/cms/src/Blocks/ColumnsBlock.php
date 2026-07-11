@@ -7,21 +7,21 @@
 
 namespace Laravix\Cms\Blocks;
 
-use Laravix\Cms\Support\BlockDefinition;
-use Laravix\Cms\Support\BlockRegistry;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Laravix\Cms\Support\BlockDefinition;
+use Laravix\Cms\Support\BlockRegistry;
 
 class ColumnsBlock
 {
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('columns')
-            ->label('blocks.types.columns')
+            ->label('laravix::blocks.types.columns')
             ->icon('heroicon-o-view-columns')
             ->gjsIcon('fa-table-columns')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section style="padding:64px 24px;">
     <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:48px;align-items:center;">
@@ -38,12 +38,12 @@ HTML)
             ->nestable(false)
             ->schema(fn () => [
                 Select::make('columns_count')
-                    ->label(fn () => __('blocks.fields.number_of_columns'))
+                    ->label(fn () => __('laravix::blocks.fields.number_of_columns'))
                     ->options(fn () => ['2' => '2', '3' => '3', '4' => '4'])
                     ->default('2')
                     ->required(),
                 Repeater::make('columns')
-                    ->label(fn () => __('blocks.fields.columns'))
+                    ->label(fn () => __('laravix::blocks.fields.columns'))
                     ->schema([
                         Builder::make('blocks')
                             ->blocks(BlockRegistry::toNestableBlocks())

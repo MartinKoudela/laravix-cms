@@ -14,9 +14,9 @@ class IconBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('icon-block')
-            ->label('blocks.gjs.icon')
+            ->label('laravix::blocks.gjs.icon')
             ->icon('fa-icons')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml('<i class="fa-solid fa-star lx-icon"></i>');
     }
 }

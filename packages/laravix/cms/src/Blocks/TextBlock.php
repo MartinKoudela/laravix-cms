@@ -7,19 +7,19 @@
 
 namespace Laravix\Cms\Blocks;
 
-use Laravix\Cms\Support\BlockDefinition;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
+use Laravix\Cms\Support\BlockDefinition;
 
 class TextBlock
 {
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('text')
-            ->label('blocks.types.text')
+            ->label('laravix::blocks.types.text')
             ->icon('heroicon-o-document-text')
             ->gjsIcon('fa-align-left')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section style="padding:64px 24px;">
     <div style="max-width:720px;margin:0 auto;">
@@ -29,8 +29,8 @@ class TextBlock
 </section>
 HTML)
             ->schema(fn () => [
-                TextInput::make('heading')->label(fn () => __('common.heading'))->columnSpanFull(),
-                RichEditor::make('content')->label(fn () => __('common.content'))->columnSpanFull(),
+                TextInput::make('heading')->label(fn () => __('laravix::common.heading'))->columnSpanFull(),
+                RichEditor::make('content')->label(fn () => __('laravix::common.content'))->columnSpanFull(),
             ]);
     }
 }

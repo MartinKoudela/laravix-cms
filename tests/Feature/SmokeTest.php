@@ -45,3 +45,53 @@ test('docs plugin route registered through route registry responds', function ()
 
     $this->get('/docs')->assertSuccessful();
 });
+
+test('admin dashboard renders without raw translation keys', function () {
+    $site = Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);
+    $admin = User::factory()->create(['is_super_admin' => true]);
+
+    $html = $this->actingAs($admin)
+        ->get('/admin/'.$site->id)
+        ->assertSuccessful()
+        ->getContent();
+
+    preg_match_all('/laravix::[a-zA-Z0-9_.]+/', $html, $matches);
+
+    expect(array_unique($matches[0]))->toBe([]);
+});
+
+test('admin navigation is complete in non-default locale', function () {
+    $site = Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);
+    $admin = User::factory()->create(['is_super_admin' => true]);
+
+    $html = $this->actingAs($admin)
+        ->get('/admin/'.$site->id.'?locale=cs')
+        ->assertSuccessful()
+        ->getContent();
+
+    foreach (['Nastavení', 'Uživatelé', 'Navigace', 'Pozvánky', 'Aktivita'] as $label) {
+        expect($html)->toContain($label);
+    }
+});
+
+test('content edit page renders without raw translation keys', function () {
+    $site = Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);
+    $admin = User::factory()->create(['is_super_admin' => true]);
+
+    $content = Content::factory()->create([
+        'site_id' => $site->id,
+        'created_by' => $admin->id,
+        'type' => 'page',
+        'status' => ContentStatus::PUBLISHED,
+        'published_at' => now()->subDay(),
+    ]);
+
+    $html = $this->actingAs($admin)
+        ->get('/admin/'.$site->id.'/contents/'.$content->id.'/edit')
+        ->assertSuccessful()
+        ->getContent();
+
+    preg_match_all('/laravix::[a-zA-Z0-9_.]+/', $html, $matches);
+
+    expect(array_unique($matches[0]))->toBe([]);
+});

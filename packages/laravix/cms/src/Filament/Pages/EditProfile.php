@@ -34,7 +34,7 @@ class EditProfile extends BaseEditProfile
             ->components([
                 Actions::make([
                     Action::make('back')
-                        ->label(__('common.back'))
+                        ->label(__('laravix::common.back'))
                         ->color('gray')
                         ->alpineClickHandler(
                             FilamentView::hasSpaMode($url)
@@ -46,12 +46,12 @@ class EditProfile extends BaseEditProfile
                     ->vertical()
                     ->columnSpanFull()
                     ->tabs([
-                        Tab::make(__('profile.tabs.profile'))
+                        Tab::make(__('laravix::profile.tabs.profile'))
                             ->schema([
                                 Section::make()
                                     ->schema([
                                         FileUpload::make('avatar')
-                                            ->label(__('profile.fields.avatar'))
+                                            ->label(__('laravix::profile.fields.avatar'))
                                             ->image()
                                             ->imageEditor()
                                             ->circleCropper()
@@ -63,7 +63,7 @@ class EditProfile extends BaseEditProfile
                                         $this->getNameFormComponent(),
                                     ]),
                             ]),
-                        Tab::make(__('profile.tabs.security'))
+                        Tab::make(__('laravix::profile.tabs.security'))
                             ->schema([
                                 Section::make()
                                     ->schema([

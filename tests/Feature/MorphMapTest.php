@@ -68,7 +68,7 @@ test('morph alias migration rewrites legacy class names', function () {
         'updated_at' => now(),
     ]);
 
-    $migration = require database_path('migrations/2026_07_11_093725_convert_morph_types_to_aliases.php');
+    $migration = require base_path('packages/laravix/cms/database/migrations/2026_07_11_093725_convert_morph_types_to_aliases.php');
     $migration->up();
 
     $activity = DB::table('activity_log')->where('subject_id', 999)->first();

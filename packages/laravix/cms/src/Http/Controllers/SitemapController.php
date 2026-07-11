@@ -7,11 +7,11 @@
 
 namespace Laravix\Cms\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\Setting;
 use Laravix\Cms\Models\Site;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SitemapController extends Controller
@@ -42,7 +42,7 @@ class SitemapController extends Controller
 
         $defaultLocale = $site->defaultLocale();
 
-        $xml = view('sitemap', compact('contents', 'defaultLocale'))->render();
+        $xml = view('laravix::sitemap', compact('contents', 'defaultLocale'))->render();
 
         return response($xml, 200, ['Content-Type' => 'application/xml']);
     }

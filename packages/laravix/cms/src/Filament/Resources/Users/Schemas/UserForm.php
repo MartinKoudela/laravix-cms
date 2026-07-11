@@ -7,11 +7,11 @@
 
 namespace Laravix\Cms\Filament\Resources\Users\Schemas;
 
-use Laravix\Cms\Enums\SiteRole;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Laravix\Cms\Enums\SiteRole;
 
 class UserForm
 {
@@ -19,15 +19,15 @@ class UserForm
     {
         return $schema
             ->components([
-                Section::make(__('common.general'))
+                Section::make(__('laravix::common.general'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('common.name'))
+                            ->label(__('laravix::common.name'))
                             ->required()
                             ->maxLength(255),
                         Select::make('role')
-                            ->label(__('common.role'))
+                            ->label(__('laravix::common.role'))
                             ->options(collect(SiteRole::cases())->mapWithKeys(
                                 fn (SiteRole $case) => [$case->value => $case->name]
                             ))

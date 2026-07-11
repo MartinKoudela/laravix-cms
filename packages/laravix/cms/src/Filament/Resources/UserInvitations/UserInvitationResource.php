@@ -7,28 +7,28 @@
 
 namespace Laravix\Cms\Filament\Resources\UserInvitations;
 
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Filament\Resources\UserInvitations\Pages\ListUserInvitations;
 use Laravix\Cms\Filament\Resources\UserInvitations\Schemas\UserInvitationForm;
 use Laravix\Cms\Filament\Resources\UserInvitations\Tables\UserInvitationsTable;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\UserInvitation;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class UserInvitationResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('invitations.singular');
+        return __('laravix::invitations.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('invitations.plural');
+        return __('laravix::invitations.plural');
     }
 
     protected static ?string $model = UserInvitation::class;

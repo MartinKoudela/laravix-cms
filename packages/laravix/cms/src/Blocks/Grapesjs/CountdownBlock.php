@@ -14,9 +14,9 @@ class CountdownBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('countdown')
-            ->label('blocks.gjs.countdown')
+            ->label('laravix::blocks.gjs.countdown')
             ->icon('fa-hourglass-half')
-            ->category('blocks.categories.interactive')
+            ->category('laravix::blocks.categories.interactive')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--dark" style="text-align:center;">
     <div class="lx-container--sm">

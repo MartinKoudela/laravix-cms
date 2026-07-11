@@ -14,9 +14,9 @@ class PricingBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('pricing')
-            ->label('blocks.gjs.pricing')
+            ->label('laravix::blocks.gjs.pricing')
             ->icon('fa-tag')
-            ->category('blocks.categories.conversion')
+            ->category('laravix::blocks.categories.conversion')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">
     <div class="lx-container--lg">

@@ -7,12 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Settings\Pages;
 
-use Laravix\Cms\Filament\Resources\Settings\SettingResource;
-use Laravix\Cms\Models\Setting;
-use Laravix\Cms\Models\Site;
-use Laravix\Cms\Models\SiteApiToken;
-use Laravix\Cms\Support\SettingComponentFactory;
-use Laravix\Cms\Support\SettingRegistry;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\DateTimePicker;
@@ -30,6 +24,12 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use Laravix\Cms\Filament\Resources\Settings\SettingResource;
+use Laravix\Cms\Models\Setting;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\SiteApiToken;
+use Laravix\Cms\Support\SettingComponentFactory;
+use Laravix\Cms\Support\SettingRegistry;
 use Livewire\Attributes\Url;
 
 class ManageSettings extends Page implements HasTable
@@ -38,7 +38,7 @@ class ManageSettings extends Page implements HasTable
 
     protected static string $resource = SettingResource::class;
 
-    protected string $view = 'filament.resources.settings.pages.manage-settings';
+    protected string $view = 'laravix::filament.resources.settings.pages.manage-settings';
 
     #[Url]
     public string $group = '';
@@ -85,7 +85,7 @@ class ManageSettings extends Page implements HasTable
         if ($this->group === 'appearance') {
             return [
                 Select::make('theme')
-                    ->label(__('common.theme'))
+                    ->label(__('laravix::common.theme'))
                     ->allowHtml()
                     ->options(collect(Site::availableThemes())
                         ->mapWithKeys(fn ($label, $key) => [$key => Site::themeOptionLabel($key)])
@@ -93,18 +93,18 @@ class ManageSettings extends Page implements HasTable
                     )
                     ->default('default')
                     ->required()
-                    ->helperText(__('settings.hints.theme')),
+                    ->helperText(__('laravix::settings.hints.theme')),
             ];
         }
 
         if ($this->group === 'api') {
             return [
                 TextInput::make('api_base_url')
-                    ->label(__('settings.fields.api_base_url'))
+                    ->label(__('laravix::settings.fields.api_base_url'))
                     ->afterStateHydrated(fn (TextInput $component) => $component->state('https://'.filament()->getTenant()->domain.'/api/v1'))
                     ->disabled()
                     ->dehydrated(false)
-                    ->helperText(__('settings.hints.api_base_url'))
+                    ->helperText(__('laravix::settings.hints.api_base_url'))
                     ->suffixAction(
                         Action::make('copy')
                             ->icon(Heroicon::OutlinedClipboardDocument)
@@ -141,7 +141,7 @@ class ManageSettings extends Page implements HasTable
         }
 
         Notification::make()
-            ->title(__('settings.messages.saved'))
+            ->title(__('laravix::settings.messages.saved'))
             ->success()
             ->send();
     }
@@ -152,45 +152,45 @@ class ManageSettings extends Page implements HasTable
             ->query(SiteApiToken::query()->where('site_id', filament()->getTenant()?->id))
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('settings.api_tokens.fields.name'))
+                    ->label(__('laravix::settings.api_tokens.fields.name'))
                     ->searchable(),
                 TextColumn::make('prefix')
-                    ->label(__('settings.api_tokens.fields.token'))
+                    ->label(__('laravix::settings.api_tokens.fields.token'))
                     ->formatStateUsing(fn (string $state): string => $state.'…')
                     ->fontFamily(FontFamily::Mono),
                 TextColumn::make('last_used_at')
-                    ->label(__('settings.api_tokens.fields.last_used'))
+                    ->label(__('laravix::settings.api_tokens.fields.last_used'))
                     ->since()
-                    ->placeholder(__('settings.api_tokens.messages.never_used')),
+                    ->placeholder(__('laravix::settings.api_tokens.messages.never_used')),
                 TextColumn::make('expires_at')
-                    ->label(__('settings.api_tokens.fields.expires'))
+                    ->label(__('laravix::settings.api_tokens.fields.expires'))
                     ->dateTime()
-                    ->placeholder(__('settings.api_tokens.messages.never_expires'))
+                    ->placeholder(__('laravix::settings.api_tokens.messages.never_expires'))
                     ->color(fn ($state): string => $state?->isPast() ? 'danger' : 'gray'),
                 TextColumn::make('created_at')
-                    ->label(__('settings.api_tokens.fields.created'))
+                    ->label(__('laravix::settings.api_tokens.fields.created'))
                     ->dateTime()
                     ->sortable(),
             ])
             ->recordActions([
                 DeleteAction::make()
-                    ->label(__('settings.api_tokens.actions.revoke'))
-                    ->modalHeading(__('settings.api_tokens.actions.revoke')),
+                    ->label(__('laravix::settings.api_tokens.actions.revoke'))
+                    ->modalHeading(__('laravix::settings.api_tokens.actions.revoke')),
             ])
             ->defaultSort('created_at', 'desc')
-            ->emptyStateHeading(__('settings.api_tokens.messages.empty'));
+            ->emptyStateHeading(__('laravix::settings.api_tokens.messages.empty'));
     }
 
     public function revealTokenAction(): Action
     {
         return Action::make('revealToken')
-            ->modalHeading(__('settings.api_tokens.messages.reveal_heading'))
+            ->modalHeading(__('laravix::settings.api_tokens.messages.reveal_heading'))
             ->schema([
                 TextInput::make('plaintext')
-                    ->label(__('settings.api_tokens.fields.token'))
+                    ->label(__('laravix::settings.api_tokens.fields.token'))
                     ->disabled()
                     ->dehydrated(false)
-                    ->helperText(__('settings.api_tokens.messages.reveal_hint'))
+                    ->helperText(__('laravix::settings.api_tokens.messages.reveal_hint'))
                     ->suffixAction(
                         Action::make('copy')
                             ->icon(Heroicon::OutlinedClipboardDocument)
@@ -199,7 +199,7 @@ class ManageSettings extends Page implements HasTable
             ])
             ->fillForm(fn (array $arguments): array => ['plaintext' => $arguments['plaintext']])
             ->modalSubmitAction(false)
-            ->modalCancelActionLabel(__('settings.api_tokens.actions.done'))
+            ->modalCancelActionLabel(__('laravix::settings.api_tokens.actions.done'))
             ->closeModalByClickingAway(false);
     }
 
@@ -207,15 +207,15 @@ class ManageSettings extends Page implements HasTable
     {
         return [
             Action::make('createToken')
-                ->label(__('settings.api_tokens.actions.create'))
+                ->label(__('laravix::settings.api_tokens.actions.create'))
                 ->icon(Heroicon::OutlinedPlus)
                 ->visible(fn (): bool => $this->group === 'api')
                 ->schema([
                     TextInput::make('name')
-                        ->label(__('settings.api_tokens.fields.name'))
+                        ->label(__('laravix::settings.api_tokens.fields.name'))
                         ->required(),
                     DateTimePicker::make('expires_at')
-                        ->label(__('settings.api_tokens.fields.expires'))
+                        ->label(__('laravix::settings.api_tokens.fields.expires'))
                         ->nullable(),
                 ])
                 ->action(function (array $data): void {
@@ -228,7 +228,7 @@ class ManageSettings extends Page implements HasTable
                     $this->replaceMountedAction('revealToken', ['plaintext' => $result['plaintext']]);
                 }),
             Action::make('save')
-                ->label(__('settings.actions.save'))
+                ->label(__('laravix::settings.actions.save'))
                 ->visible(fn (): bool => $this->group !== 'api')
                 ->action('save'),
         ];

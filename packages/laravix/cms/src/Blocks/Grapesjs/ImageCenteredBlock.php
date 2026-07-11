@@ -14,9 +14,9 @@ class ImageCenteredBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('image-centered')
-            ->label('blocks.gjs.image_centered')
+            ->label('laravix::blocks.gjs.image_centered')
             ->icon('fa-expand')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml('<div class="lx-img-centered-wrap"><img src="https://placehold.co/400x300?text=Photo" data-gjs-type="media-image" class="lx-img-centered" alt=""></div>');
     }
 }

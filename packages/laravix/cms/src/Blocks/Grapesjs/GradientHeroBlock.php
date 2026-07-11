@@ -14,9 +14,9 @@ class GradientHeroBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('gradient-hero')
-            ->label('blocks.gjs.gradient_hero')
+            ->label('laravix::blocks.gjs.gradient_hero')
             ->icon('fa-wand-magic-sparkles')
-            ->category('blocks.categories.artistic')
+            ->category('laravix::blocks.categories.artistic')
             ->canvasHtml(<<<'HTML'
 <section class="lx-gradient-hero">
     <div class="lx-gradient-hero__content">

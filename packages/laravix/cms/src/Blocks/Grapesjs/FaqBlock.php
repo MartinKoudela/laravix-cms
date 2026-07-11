@@ -14,9 +14,9 @@ class FaqBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('faq')
-            ->label('blocks.gjs.faq')
+            ->label('laravix::blocks.gjs.faq')
             ->icon('fa-circle-question')
-            ->category('blocks.categories.info')
+            ->category('laravix::blocks.categories.info')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--md">

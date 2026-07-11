@@ -14,9 +14,9 @@ class PostListBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('post-list')
-            ->label('blocks.gjs.post_list')
+            ->label('laravix::blocks.gjs.post_list')
             ->icon('fa-newspaper')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->contentTypes(['archive'])
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">

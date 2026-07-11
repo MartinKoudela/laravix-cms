@@ -7,26 +7,26 @@
 
 namespace Laravix\Cms\Blocks;
 
-use Laravix\Cms\Support\BlockDefinition;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Laravix\Cms\Support\BlockDefinition;
 
 class ButtonBlock
 {
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('button')
-            ->label('blocks.types.button')
+            ->label('laravix::blocks.types.button')
             ->icon('heroicon-o-cursor-arrow-rays')
             ->schema(fn () => [
-                TextInput::make('label')->label(fn () => __('common.label')),
-                TextInput::make('url')->label(fn () => __('common.url'))->url(),
+                TextInput::make('label')->label(fn () => __('laravix::common.label')),
+                TextInput::make('url')->label(fn () => __('laravix::common.url'))->url(),
                 Select::make('style')
-                    ->label(fn () => __('blocks.fields.style'))
+                    ->label(fn () => __('laravix::blocks.fields.style'))
                     ->options(fn () => [
-                        'primary' => __('blocks.styles.primary'),
-                        'secondary' => __('blocks.styles.secondary'),
-                        'outline' => __('blocks.styles.outline'),
+                        'primary' => __('laravix::blocks.styles.primary'),
+                        'secondary' => __('laravix::blocks.styles.secondary'),
+                        'outline' => __('laravix::blocks.styles.outline'),
                     ])
                     ->default('primary'),
             ]);

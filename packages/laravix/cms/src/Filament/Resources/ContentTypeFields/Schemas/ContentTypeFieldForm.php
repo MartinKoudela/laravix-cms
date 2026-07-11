@@ -7,14 +7,14 @@
 
 namespace Laravix\Cms\Filament\Resources\ContentTypeFields\Schemas;
 
-use Laravix\Cms\Enums\FieldType;
-use Laravix\Cms\Models\ContentTypeField;
-use Laravix\Cms\Support\ContentTypeRegistry;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Laravix\Cms\Enums\FieldType;
+use Laravix\Cms\Models\ContentTypeField;
+use Laravix\Cms\Support\ContentTypeRegistry;
 
 class ContentTypeFieldForm
 {
@@ -23,38 +23,38 @@ class ContentTypeFieldForm
         return $schema->components([
             Section::make()->columns(2)->schema([
                 Select::make('content_type')
-                    ->label(__('content_type_field.fields.content_type'))
+                    ->label(__('laravix::content_type_field.fields.content_type'))
                     ->options(fn () => ContentTypeRegistry::options())
                     ->required(),
                 Select::make('type')
-                    ->label(__('content_type_field.fields.type'))
+                    ->label(__('laravix::content_type_field.fields.type'))
                     ->options(collect(FieldType::cases())->mapWithKeys(
                         fn (FieldType $case) => [$case->value => $case->name]
                     ))
                     ->required(),
                 TextInput::make('key')
-                    ->label(__('content_type_field.fields.key'))
+                    ->label(__('laravix::content_type_field.fields.key'))
                     ->required()
                     ->maxLength(255)
                     ->alphaDash()
                     ->disabled(fn (?ContentTypeField $record) => $record !== null)
                     ->dehydrated(fn (?ContentTypeField $record) => $record === null),
                 TextInput::make('label')
-                    ->label(__('content_type_field.fields.label'))
+                    ->label(__('laravix::content_type_field.fields.label'))
                     ->required()
                     ->maxLength(255),
                 TextInput::make('group')
-                    ->label(__('content_type_field.fields.group'))
+                    ->label(__('laravix::content_type_field.fields.group'))
                     ->maxLength(255),
                 TextInput::make('hint')
-                    ->label(__('content_type_field.fields.hint'))
+                    ->label(__('laravix::content_type_field.fields.hint'))
                     ->maxLength(255),
                 TextInput::make('sort_order')
-                    ->label(__('content_type_field.fields.sort_order'))
+                    ->label(__('laravix::content_type_field.fields.sort_order'))
                     ->numeric()
                     ->default(0),
                 Toggle::make('required')
-                    ->label(__('content_type_field.fields.required'))
+                    ->label(__('laravix::content_type_field.fields.required'))
                     ->default(false),
             ]),
         ]);

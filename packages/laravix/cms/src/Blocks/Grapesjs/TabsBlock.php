@@ -14,9 +14,9 @@ class TabsBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('tabs')
-            ->label('blocks.gjs.tabs')
+            ->label('laravix::blocks.gjs.tabs')
             ->icon('fa-folder-open')
-            ->category('blocks.categories.interactive')
+            ->category('laravix::blocks.categories.interactive')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container">

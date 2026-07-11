@@ -14,9 +14,9 @@ class AccordionBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('accordion')
-            ->label('blocks.gjs.accordion')
+            ->label('laravix::blocks.gjs.accordion')
             ->icon('fa-bars-staggered')
-            ->category('blocks.categories.info')
+            ->category('laravix::blocks.categories.info')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--md">

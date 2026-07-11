@@ -14,9 +14,9 @@ class BadgeBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('badge')
-            ->label('blocks.gjs.badge')
+            ->label('laravix::blocks.gjs.badge')
             ->icon('fa-certificate')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml('<span class="lx-badge">New</span>');
     }
 }

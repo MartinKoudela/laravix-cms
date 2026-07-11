@@ -14,9 +14,9 @@ class LogoBarBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('logo-bar')
-            ->label('blocks.gjs.logo_bar')
+            ->label('laravix::blocks.gjs.logo_bar')
             ->icon('fa-building')
-            ->category('blocks.categories.social_proof')
+            ->category('laravix::blocks.categories.social_proof')
             ->canvasHtml(<<<'HTML'
 <div class="lx-logo-bar">
     <div class="lx-logo-bar__inner">

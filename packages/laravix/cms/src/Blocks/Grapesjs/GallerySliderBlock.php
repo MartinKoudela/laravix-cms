@@ -14,9 +14,9 @@ class GallerySliderBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('gallery-slider')
-            ->label('blocks.gjs.gallery_slider')
+            ->label('laravix::blocks.gjs.gallery_slider')
             ->icon('fa-film')
-            ->category('blocks.categories.media')
+            ->category('laravix::blocks.categories.media')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container">

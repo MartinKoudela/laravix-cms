@@ -110,7 +110,7 @@ class BlockDefinition
         return [
             'id' => $this->key,
             'label' => __($this->label),
-            'category' => $this->category ? __($this->category) : __('blocks.categories.general'),
+            'category' => $this->category ? __($this->category) : __('laravix::blocks.categories.general'),
             'content' => $this->resolveCanvasHtml(),
             'media' => $media,
         ];
@@ -240,21 +240,21 @@ class BlockDefinition
 
                 return [
                     ...$schema,
-                    Section::make(fn () => __('blocks.settings.title'))
+                    Section::make(fn () => __('laravix::blocks.settings.title'))
                         ->collapsed()
                         ->schema([
                             TextInput::make('css_class')
-                                ->label(fn () => __('blocks.settings.css_class')),
+                                ->label(fn () => __('laravix::blocks.settings.css_class')),
                             Select::make('padding')
-                                ->label(fn () => __('blocks.settings.padding'))
+                                ->label(fn () => __('laravix::blocks.settings.padding'))
                                 ->options(fn () => [
-                                    'none' => __('blocks.padding.none'),
-                                    'sm' => __('blocks.padding.small'),
-                                    'md' => __('blocks.padding.medium'),
-                                    'lg' => __('blocks.padding.large'),
+                                    'none' => __('laravix::blocks.padding.none'),
+                                    'sm' => __('laravix::blocks.padding.small'),
+                                    'md' => __('laravix::blocks.padding.medium'),
+                                    'lg' => __('laravix::blocks.padding.large'),
                                 ]),
                             TextInput::make('background_color')
-                                ->label(fn () => __('blocks.settings.background_color'))
+                                ->label(fn () => __('laravix::blocks.settings.background_color'))
                                 ->type('color'),
                         ]),
                 ];

@@ -7,8 +7,6 @@
 
 namespace Laravix\Cms\Support;
 
-use Laravix\Cms\Enums\FieldType;
-use Laravix\Cms\Models\Media;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
@@ -20,6 +18,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Illuminate\Support\Facades\Storage;
+use Laravix\Cms\Enums\FieldType;
+use Laravix\Cms\Models\Media;
 
 class FieldComponentFactory
 {
@@ -77,7 +77,7 @@ class FieldComponentFactory
             )
             ->createOptionForm([
                 FileUpload::make('path')
-                    ->label(__('common.file'))
+                    ->label(__('laravix::common.file'))
                     ->required()
                     ->disk('public')
                     ->directory('media')

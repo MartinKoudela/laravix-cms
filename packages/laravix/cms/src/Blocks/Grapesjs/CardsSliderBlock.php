@@ -14,9 +14,9 @@ class CardsSliderBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('cards-slider')
-            ->label('blocks.gjs.cards_slider')
+            ->label('laravix::blocks.gjs.cards_slider')
             ->icon('fa-table-cells-large')
-            ->category('blocks.categories.media')
+            ->category('laravix::blocks.categories.media')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">
     <div class="lx-container">

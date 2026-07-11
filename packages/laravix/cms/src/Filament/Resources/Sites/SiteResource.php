@@ -7,28 +7,28 @@
 
 namespace Laravix\Cms\Filament\Resources\Sites;
 
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Laravix\Cms\Filament\Resources\Sites\Pages\CreateSite;
 use Laravix\Cms\Filament\Resources\Sites\Pages\EditSite;
 use Laravix\Cms\Filament\Resources\Sites\Pages\ListSites;
 use Laravix\Cms\Filament\Resources\Sites\Schemas\SiteForm;
 use Laravix\Cms\Filament\Resources\Sites\Tables\SitesTable;
 use Laravix\Cms\Models\Site;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class SiteResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('sites.singular');
+        return __('laravix::sites.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('sites.plural');
+        return __('laravix::sites.plural');
     }
 
     protected static ?string $model = Site::class;

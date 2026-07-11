@@ -7,28 +7,28 @@
 
 namespace Laravix\Cms\Filament\Resources\Media;
 
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Laravix\Cms\Filament\Resources\Media\Pages\CreateMedia;
 use Laravix\Cms\Filament\Resources\Media\Pages\EditMedia;
 use Laravix\Cms\Filament\Resources\Media\Pages\ListMedia;
 use Laravix\Cms\Filament\Resources\Media\Schemas\MediaForm;
 use Laravix\Cms\Filament\Resources\Media\Tables\MediaTable;
 use Laravix\Cms\Models\Media;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class MediaResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('media.singular');
+        return __('laravix::media.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('media.plural');
+        return __('laravix::media.plural');
     }
 
     protected static ?string $model = Media::class;

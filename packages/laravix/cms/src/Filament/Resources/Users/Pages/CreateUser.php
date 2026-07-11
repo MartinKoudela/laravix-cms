@@ -7,10 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Users\Pages;
 
-use Laravix\Cms\Enums\SiteRole;
-use Laravix\Cms\Filament\Resources\Users\UserResource;
-use Laravix\Cms\Mail\UserInvitationMail;
-use Laravix\Cms\Models\UserInvitation;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -19,12 +15,16 @@ use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Mail;
+use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Filament\Resources\Users\UserResource;
+use Laravix\Cms\Mail\UserInvitationMail;
+use Laravix\Cms\Models\UserInvitation;
 
 class CreateUser extends Page
 {
     protected static string $resource = UserResource::class;
 
-    protected string $view = 'filament.resources.users.pages.create-user';
+    protected string $view = 'laravix::filament.resources.users.pages.create-user';
 
     public ?array $data = [];
 
@@ -38,12 +38,12 @@ class CreateUser extends Page
         return $schema
             ->statePath('data')
             ->components([
-                Section::make(__('users.sections.invite'))
-                    ->description(__('users.messages.will_receive_email'))
+                Section::make(__('laravix::users.sections.invite'))
+                    ->description(__('laravix::users.messages.will_receive_email'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('email')
-                            ->label(__('common.email'))
+                            ->label(__('laravix::common.email'))
                             ->email()
                             ->required()
                             ->maxLength(255),
@@ -52,7 +52,7 @@ class CreateUser extends Page
                                 fn (SiteRole $case) => [$case->value => $case->name]
                             ))
                             ->required()
-                            ->helperText(__('users.messages.role_determines')),
+                            ->helperText(__('laravix::users.messages.role_determines')),
                     ]),
             ]);
     }
@@ -73,7 +73,7 @@ class CreateUser extends Page
         Mail::to($invitation->email)->send(new UserInvitationMail($invitation));
 
         Notification::make()
-            ->title(__('users.messages.invitation_sent', ['email' => $invitation->email]))
+            ->title(__('laravix::users.messages.invitation_sent', ['email' => $invitation->email]))
             ->success()
             ->send();
 

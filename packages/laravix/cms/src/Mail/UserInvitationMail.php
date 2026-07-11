@@ -7,13 +7,12 @@
 
 namespace Laravix\Cms\Mail;
 
-use Laravix\Cms\Models\UserInvitation;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Laravix\Cms\Models\UserInvitation;
 
 class UserInvitationMail extends Mailable
 {
@@ -24,14 +23,14 @@ class UserInvitationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'You have been invited to ' . $this->invitation->site->name,
+            subject: 'You have been invited to '.$this->invitation->site->name,
         );
     }
 
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.user-invitation',
+            markdown: 'laravix::emails.user-invitation',
             with: [
                 'siteName' => $this->invitation->site->name,
                 'role' => $this->invitation->role,

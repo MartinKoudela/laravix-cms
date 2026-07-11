@@ -14,9 +14,9 @@ class StickyCtaBarBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('sticky-cta-bar')
-            ->label('blocks.gjs.sticky_cta_bar')
+            ->label('laravix::blocks.gjs.sticky_cta_bar')
             ->icon('fa-thumbtack')
-            ->category('blocks.categories.conversion')
+            ->category('laravix::blocks.categories.conversion')
             ->canvasHtml(<<<'HTML'
 <div class="lx-sticky-cta">
     <div class="lx-sticky-cta__inner">

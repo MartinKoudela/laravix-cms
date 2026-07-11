@@ -7,12 +7,12 @@
 
 namespace Laravix\Cms\Filament\Resources\Taxonomies\Schemas;
 
-use Laravix\Cms\Models\Taxonomy;
-use Laravix\Cms\Support\TaxonomyTypeRegistry;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Laravix\Cms\Models\Taxonomy;
+use Laravix\Cms\Support\TaxonomyTypeRegistry;
 
 class TaxonomyForm
 {
@@ -20,11 +20,11 @@ class TaxonomyForm
     {
         return $schema
             ->components([
-                Section::make(__('common.general'))
+                Section::make(__('laravix::common.general'))
                     ->columns(2)
                     ->schema([
                         TextInput::make('name')
-                            ->label(__('common.title'))
+                            ->label(__('laravix::common.title'))
                             ->required()
                             ->maxLength(255)
                             ->live(debounce: 500)
@@ -32,20 +32,20 @@ class TaxonomyForm
                                 ?->state(str($state ?? '')->slug()->toString())
                             ),
                         TextInput::make('slug')
-                            ->label(__('common.slug'))
+                            ->label(__('laravix::common.slug'))
                             ->required()
                             ->maxLength(255)
                             ->key('slug')
                             ->prefix('/')
                             ->unique(table: 'taxonomies', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, callable $get) => $rule->where('site_id', filament()->getTenant()?->id))
-                            ->helperText(__('common.must_be_unique')),
+                            ->helperText(__('laravix::common.must_be_unique')),
                         Select::make('type')
-                            ->label(__('common.type'))
+                            ->label(__('laravix::common.type'))
                             ->required()
                             ->options(fn () => TaxonomyTypeRegistry::options())
                             ->default('category'),
                     ]),
-                Section::make(__('taxonomy.sections.translations'))
+                Section::make(__('laravix::taxonomy.sections.translations'))
                     ->columns(2)
                     ->visible(fn () => filament()->getTenant()?->isMultilingual() ?? false)
                     ->schema(function (): array {
@@ -59,27 +59,27 @@ class TaxonomyForm
                             }
 
                             $components[] = TextInput::make("translations.{$locale}.name")
-                                ->label(__('common.title').' ('.strtoupper($locale).')')
+                                ->label(__('laravix::common.title').' ('.strtoupper($locale).')')
                                 ->maxLength(255);
                             $components[] = TextInput::make("translations.{$locale}.slug")
-                                ->label(__('common.slug').' ('.strtoupper($locale).')')
+                                ->label(__('laravix::common.slug').' ('.strtoupper($locale).')')
                                 ->prefix('/')
                                 ->maxLength(255);
                         }
 
                         return $components;
                     }),
-                Section::make(__('taxonomy.sections.hierarchy'))
+                Section::make(__('laravix::taxonomy.sections.hierarchy'))
                     ->schema([
                         Select::make('parent_id')
-                            ->label(__('common.parent'))
+                            ->label(__('laravix::common.parent'))
                             ->options(fn (?Taxonomy $record) => Taxonomy::query()
                                 ->where('site_id', filament()->getTenant()?->id)
                                 ->when($record, fn ($q) => $q->whereNot('id', $record->id))
                                 ->pluck('name', 'id')
                             )
                             ->searchable()
-                            ->helperText(__('taxonomy.messages.optional_parent')),
+                            ->helperText(__('laravix::taxonomy.messages.optional_parent')),
                     ]),
             ]);
     }

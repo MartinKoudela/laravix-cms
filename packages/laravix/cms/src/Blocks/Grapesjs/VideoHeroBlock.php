@@ -14,9 +14,9 @@ class VideoHeroBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('video-hero')
-            ->label('blocks.gjs.video_hero')
+            ->label('laravix::blocks.gjs.video_hero')
             ->icon('fa-circle-play')
-            ->category('blocks.categories.hero')
+            ->category('laravix::blocks.categories.hero')
             ->canvasHtml(<<<'HTML'
 <section class="lx-hero-video">
     <video data-gjs-type="mp4-video" autoplay muted loop playsinline preload="metadata" class="lx-hero-video__bg"></video>

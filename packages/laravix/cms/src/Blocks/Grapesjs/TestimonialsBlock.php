@@ -14,9 +14,9 @@ class TestimonialsBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('testimonials')
-            ->label('blocks.gjs.testimonials')
+            ->label('laravix::blocks.gjs.testimonials')
             ->icon('fa-comments')
-            ->category('blocks.categories.social_proof')
+            ->category('laravix::blocks.categories.social_proof')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">
     <div class="lx-container">

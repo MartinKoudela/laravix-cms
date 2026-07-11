@@ -7,28 +7,28 @@
 
 namespace Laravix\Cms\Filament\Resources\ActivityLogs;
 
-use Laravix\Cms\Enums\SiteRole;
-use Laravix\Cms\Filament\Resources\ActivityLogs\Pages\ListActivityLogs;
-use Laravix\Cms\Filament\Resources\ActivityLogs\Tables\ActivityLogsTable;
-use Laravix\Cms\Models\Site;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Filament\Resources\ActivityLogs\Pages\ListActivityLogs;
+use Laravix\Cms\Filament\Resources\ActivityLogs\Tables\ActivityLogsTable;
+use Laravix\Cms\Models\Site;
 use Spatie\Activitylog\Models\Activity;
 
 class ActivityLogResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('activity.singular');
+        return __('laravix::activity.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('activity.plural');
+        return __('laravix::activity.plural');
     }
 
     protected static ?string $model = Activity::class;

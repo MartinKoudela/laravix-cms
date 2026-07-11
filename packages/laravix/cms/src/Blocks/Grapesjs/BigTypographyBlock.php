@@ -14,9 +14,9 @@ class BigTypographyBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('big-typography')
-            ->label('blocks.gjs.big_typography')
+            ->label('laravix::blocks.gjs.big_typography')
             ->icon('fa-font')
-            ->category('blocks.categories.artistic')
+            ->category('laravix::blocks.categories.artistic')
             ->canvasHtml(<<<'HTML'
 <section class="lx-bigtype">
     <p class="lx-bigtype__label">Our mission</p>

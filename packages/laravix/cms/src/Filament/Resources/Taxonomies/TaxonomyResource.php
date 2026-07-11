@@ -7,28 +7,28 @@
 
 namespace Laravix\Cms\Filament\Resources\Taxonomies;
 
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Laravix\Cms\Filament\Resources\Taxonomies\Pages\CreateTaxonomy;
 use Laravix\Cms\Filament\Resources\Taxonomies\Pages\EditTaxonomy;
 use Laravix\Cms\Filament\Resources\Taxonomies\Pages\ListTaxonomies;
 use Laravix\Cms\Filament\Resources\Taxonomies\Schemas\TaxonomyForm;
 use Laravix\Cms\Filament\Resources\Taxonomies\Tables\TaxonomiesTable;
 use Laravix\Cms\Models\Taxonomy;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class TaxonomyResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('taxonomy.singular');
+        return __('laravix::taxonomy.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('taxonomy.plural');
+        return __('laravix::taxonomy.plural');
     }
 
     protected static ?string $model = Taxonomy::class;

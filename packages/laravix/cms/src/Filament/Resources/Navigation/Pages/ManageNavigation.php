@@ -7,10 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Navigation\Pages;
 
-use Laravix\Cms\Filament\Resources\Navigation\NavigationResource;
-use Laravix\Cms\Models\Site;
-use Laravix\Cms\Support\NavigationComponentFactory;
-use Laravix\Cms\Support\NavigationRegistry;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -19,16 +15,20 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Laravix\Cms\Filament\Resources\Navigation\NavigationResource;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Support\NavigationComponentFactory;
+use Laravix\Cms\Support\NavigationRegistry;
 
 class ManageNavigation extends Page
 {
     protected static string $resource = NavigationResource::class;
 
-    protected string $view = 'filament.resources.navigation.pages.manage-navigation';
+    protected string $view = 'laravix::filament.resources.navigation.pages.manage-navigation';
 
     public function getTitle(): string
     {
-        return __('navigation.actions.manage');
+        return __('laravix::navigation.actions.manage');
     }
 
     public ?array $headerData = [];
@@ -113,98 +113,98 @@ class ManageNavigation extends Page
         return $schema
             ->statePath('headerDesignData')
             ->components([
-                Section::make(__('navigation.labels.header_design'))
+                Section::make(__('laravix::navigation.labels.header_design'))
                     ->schema([
 
-                        Section::make(__('navigation.design.section_colors'))
+                        Section::make(__('laravix::navigation.design.section_colors'))
                             ->schema([
-                                $colorInput('nav_design.header.bg_color', __('navigation.design.bg_color')),
-                                $colorInput('nav_design.header.text_color', __('navigation.design.text_color')),
-                                $colorInput('nav_design.header.hover_color', __('navigation.design.hover_color')),
-                                $colorInput('nav_design.header.active_color', __('navigation.design.active_color')),
+                                $colorInput('nav_design.header.bg_color', __('laravix::navigation.design.bg_color')),
+                                $colorInput('nav_design.header.text_color', __('laravix::navigation.design.text_color')),
+                                $colorInput('nav_design.header.hover_color', __('laravix::navigation.design.hover_color')),
+                                $colorInput('nav_design.header.active_color', __('laravix::navigation.design.active_color')),
                             ])
                             ->columns(4),
 
-                        Section::make(__('navigation.design.section_border'))
+                        Section::make(__('laravix::navigation.design.section_border'))
                             ->schema([
-                                $colorInput('nav_design.header.border_color', __('navigation.design.border_color')),
+                                $colorInput('nav_design.header.border_color', __('laravix::navigation.design.border_color')),
                                 Select::make('nav_design.header.border_width')
-                                    ->label(__('navigation.design.border_width'))
+                                    ->label(__('laravix::navigation.design.border_width'))
                                     ->options($borderWidthOptions)
                                     ->live(),
                                 Select::make('nav_design.header.shadow')
-                                    ->label(__('navigation.design.shadow'))
+                                    ->label(__('laravix::navigation.design.shadow'))
                                     ->options($shadowOptions)
                                     ->live(),
                             ])
                             ->columns(3),
 
-                        Section::make(__('navigation.design.section_typography'))
+                        Section::make(__('laravix::navigation.design.section_typography'))
                             ->schema([
                                 Select::make('nav_design.header.font_family')
-                                    ->label(__('navigation.design.font_family'))
+                                    ->label(__('laravix::navigation.design.font_family'))
                                     ->options($fontFamilyOptions)
                                     ->columnSpan(2)
                                     ->live(),
                                 TextInput::make('nav_design.header.font_size')
-                                    ->label(__('navigation.design.font_size'))
+                                    ->label(__('laravix::navigation.design.font_size'))
                                     ->numeric()
                                     ->suffix('px')
                                     ->live(debounce: 500),
                                 Select::make('nav_design.header.font_weight')
-                                    ->label(__('navigation.design.font_weight'))
+                                    ->label(__('laravix::navigation.design.font_weight'))
                                     ->options($fontWeightOptions)
                                     ->live(),
                             ])
                             ->columns(4),
 
-                        Section::make(__('navigation.design.section_layout'))
+                        Section::make(__('laravix::navigation.design.section_layout'))
                             ->schema([
                                 TextInput::make('nav_design.header.height')
-                                    ->label(__('navigation.design.height'))
+                                    ->label(__('laravix::navigation.design.height'))
                                     ->numeric()
                                     ->suffix('px')
                                     ->placeholder('64')
                                     ->live(debounce: 500),
                                 TextInput::make('nav_design.header.logo_height')
-                                    ->label(__('navigation.design.logo_height'))
+                                    ->label(__('laravix::navigation.design.logo_height'))
                                     ->numeric()
                                     ->suffix('px')
                                     ->placeholder('32')
                                     ->live(debounce: 500),
                                 TextInput::make('nav_design.header.links_gap')
-                                    ->label(__('navigation.design.links_gap'))
+                                    ->label(__('laravix::navigation.design.links_gap'))
                                     ->numeric()
                                     ->suffix('px')
                                     ->placeholder('24')
                                     ->live(debounce: 500),
                                 Select::make('nav_design.header.links_align')
-                                    ->label(__('navigation.design.links_align'))
+                                    ->label(__('laravix::navigation.design.links_align'))
                                     ->options($linksAlignOptions)
                                     ->live(),
                                 Select::make('nav_design.header.icon_position')
-                                    ->label(__('navigation.design.icon_position'))
+                                    ->label(__('laravix::navigation.design.icon_position'))
                                     ->options($iconPositionOptions)
                                     ->live(),
                             ])
                             ->columns(4),
 
-                        Section::make(__('navigation.design.section_dropdown'))
+                        Section::make(__('laravix::navigation.design.section_dropdown'))
                             ->schema([
-                                $colorInput('nav_design.header.dropdown_bg', __('navigation.design.dropdown_bg')),
-                                $colorInput('nav_design.header.dropdown_text', __('navigation.design.dropdown_text')),
-                                $colorInput('nav_design.header.dropdown_hover_bg', __('navigation.design.dropdown_hover_bg')),
+                                $colorInput('nav_design.header.dropdown_bg', __('laravix::navigation.design.dropdown_bg')),
+                                $colorInput('nav_design.header.dropdown_text', __('laravix::navigation.design.dropdown_text')),
+                                $colorInput('nav_design.header.dropdown_hover_bg', __('laravix::navigation.design.dropdown_hover_bg')),
                             ])
                             ->columns(3),
 
-                        Section::make(__('navigation.design.section_behavior'))
+                        Section::make(__('laravix::navigation.design.section_behavior'))
                             ->schema([
                                 Toggle::make('nav_design.header.sticky')
-                                    ->label(__('navigation.design.sticky'))
+                                    ->label(__('laravix::navigation.design.sticky'))
                                     ->default(true)
                                     ->live(),
                                 TextInput::make('nav_design.header.bg_opacity')
-                                    ->label(__('navigation.design.bg_opacity'))
+                                    ->label(__('laravix::navigation.design.bg_opacity'))
                                     ->type('range')
                                     ->extraInputAttributes([
                                         'min' => '0',
@@ -230,64 +230,64 @@ class ManageNavigation extends Page
         return $schema
             ->statePath('footerDesignData')
             ->components([
-                Section::make(__('navigation.labels.footer_design'))
+                Section::make(__('laravix::navigation.labels.footer_design'))
                     ->schema([
 
-                        Section::make(__('navigation.design.section_colors'))
+                        Section::make(__('laravix::navigation.design.section_colors'))
                             ->schema([
-                                $colorInput('nav_design.footer.bg_color', __('navigation.design.bg_color')),
-                                $colorInput('nav_design.footer.text_color', __('navigation.design.text_color')),
-                                $colorInput('nav_design.footer.hover_color', __('navigation.design.hover_color')),
-                                $colorInput('nav_design.footer.border_color', __('navigation.design.border_color')),
+                                $colorInput('nav_design.footer.bg_color', __('laravix::navigation.design.bg_color')),
+                                $colorInput('nav_design.footer.text_color', __('laravix::navigation.design.text_color')),
+                                $colorInput('nav_design.footer.hover_color', __('laravix::navigation.design.hover_color')),
+                                $colorInput('nav_design.footer.border_color', __('laravix::navigation.design.border_color')),
                             ])
                             ->columns(4),
 
-                        Section::make(__('navigation.design.section_typography'))
+                        Section::make(__('laravix::navigation.design.section_typography'))
                             ->schema([
                                 Select::make('nav_design.footer.font_family')
-                                    ->label(__('navigation.design.font_family'))
+                                    ->label(__('laravix::navigation.design.font_family'))
                                     ->options($fontFamilyOptions)
                                     ->columnSpan(2)
                                     ->live(),
                                 TextInput::make('nav_design.footer.font_size')
-                                    ->label(__('navigation.design.font_size'))
+                                    ->label(__('laravix::navigation.design.font_size'))
                                     ->numeric()
                                     ->suffix('px')
                                     ->live(debounce: 500),
                                 Select::make('nav_design.footer.font_weight')
-                                    ->label(__('navigation.design.font_weight'))
+                                    ->label(__('laravix::navigation.design.font_weight'))
                                     ->options($fontWeightOptions)
                                     ->live(),
                             ])
                             ->columns(4),
 
-                        Section::make(__('navigation.design.section_layout'))
+                        Section::make(__('laravix::navigation.design.section_layout'))
                             ->schema([
                                 TextInput::make('nav_design.footer.padding_y')
-                                    ->label(__('navigation.design.padding_y'))
+                                    ->label(__('laravix::navigation.design.padding_y'))
                                     ->numeric()
                                     ->suffix('px')
                                     ->placeholder('32')
                                     ->live(debounce: 500),
                                 Select::make('nav_design.footer.layout')
-                                    ->label(__('navigation.design.layout'))
+                                    ->label(__('laravix::navigation.design.layout'))
                                     ->options($footerLayoutOptions)
                                     ->live(),
                                 Select::make('nav_design.footer.icon_position')
-                                    ->label(__('navigation.design.icon_position'))
+                                    ->label(__('laravix::navigation.design.icon_position'))
                                     ->options($iconPositionOptions)
                                     ->live(),
                             ])
                             ->columns(3),
 
-                        Section::make(__('navigation.design.section_content'))
+                        Section::make(__('laravix::navigation.design.section_content'))
                             ->schema([
                                 TextInput::make('nav_design.footer.copyright_text')
-                                    ->label(__('navigation.design.copyright_text'))
+                                    ->label(__('laravix::navigation.design.copyright_text'))
                                     ->columnSpan(3)
                                     ->live(debounce: 500),
                                 Toggle::make('nav_design.footer.show_copyright')
-                                    ->label(__('navigation.design.show_copyright'))
+                                    ->label(__('laravix::navigation.design.show_copyright'))
                                     ->default(true)
                                     ->live(),
                             ])
@@ -321,7 +321,7 @@ class ManageNavigation extends Page
         $this->refreshPreview();
 
         Notification::make()
-            ->title(__('navigation.messages.saved'))
+            ->title(__('laravix::navigation.messages.saved'))
             ->success()
             ->send();
     }
@@ -330,7 +330,7 @@ class ManageNavigation extends Page
     {
         return [
             Action::make('save')
-                ->label(__('navigation.actions.save'))
+                ->label(__('laravix::navigation.actions.save'))
                 ->action('save'),
         ];
     }
@@ -344,8 +344,8 @@ class ManageNavigation extends Page
             ->live(debounce: 500);
 
         $fontFamilyOptions = [
-            __('navigation.design.font_group_system') => [
-                '' => __('navigation.design.font_system'),
+            __('laravix::navigation.design.font_group_system') => [
+                '' => __('laravix::navigation.design.font_system'),
                 'ui-sans-serif, system-ui, sans-serif' => 'Sans-serif',
                 'ui-serif, Georgia, serif' => 'Serif',
                 'ui-monospace, monospace' => 'Monospace',
@@ -355,7 +355,7 @@ class ManageNavigation extends Page
                 'Trebuchet MS, sans-serif' => 'Trebuchet MS',
                 'Times New Roman, serif' => 'Times New Roman',
             ],
-            __('navigation.design.font_group_sans') => [
+            __('laravix::navigation.design.font_group_sans') => [
                 'Inter, sans-serif' => 'Inter',
                 'Roboto, sans-serif' => 'Roboto',
                 'Open Sans, sans-serif' => 'Open Sans',
@@ -374,7 +374,7 @@ class ManageNavigation extends Page
                 'Outfit, sans-serif' => 'Outfit',
                 'Plus Jakarta Sans, sans-serif' => 'Plus Jakarta Sans',
             ],
-            __('navigation.design.font_group_serif') => [
+            __('laravix::navigation.design.font_group_serif') => [
                 'Playfair Display, serif' => 'Playfair Display',
                 'Merriweather, serif' => 'Merriweather',
                 'Lora, serif' => 'Lora',
@@ -387,43 +387,43 @@ class ManageNavigation extends Page
         ];
 
         $fontWeightOptions = [
-            '300' => __('navigation.design.weight_light'),
-            '400' => __('navigation.design.weight_normal'),
-            '500' => __('navigation.design.weight_medium'),
-            '600' => __('navigation.design.weight_semibold'),
-            '700' => __('navigation.design.weight_bold'),
+            '300' => __('laravix::navigation.design.weight_light'),
+            '400' => __('laravix::navigation.design.weight_normal'),
+            '500' => __('laravix::navigation.design.weight_medium'),
+            '600' => __('laravix::navigation.design.weight_semibold'),
+            '700' => __('laravix::navigation.design.weight_bold'),
         ];
 
         $borderWidthOptions = [
-            '0px' => __('navigation.design.border_none'),
+            '0px' => __('laravix::navigation.design.border_none'),
             '1px' => '1px',
             '2px' => '2px',
             '3px' => '3px',
         ];
 
         $shadowOptions = [
-            '' => __('navigation.design.shadow_none'),
-            'shadow_sm' => __('navigation.design.shadow_sm'),
-            'shadow_md' => __('navigation.design.shadow_md'),
-            'shadow_lg' => __('navigation.design.shadow_lg'),
+            '' => __('laravix::navigation.design.shadow_none'),
+            'shadow_sm' => __('laravix::navigation.design.shadow_sm'),
+            'shadow_md' => __('laravix::navigation.design.shadow_md'),
+            'shadow_lg' => __('laravix::navigation.design.shadow_lg'),
         ];
 
         $linksAlignOptions = [
-            'flex-end' => __('navigation.design.align_right'),
-            'center' => __('navigation.design.align_center'),
-            'flex-start' => __('navigation.design.align_left'),
+            'flex-end' => __('laravix::navigation.design.align_right'),
+            'center' => __('laravix::navigation.design.align_center'),
+            'flex-start' => __('laravix::navigation.design.align_left'),
         ];
 
         $footerLayoutOptions = [
-            'row' => __('navigation.design.footer_layout_row'),
-            'stacked' => __('navigation.design.footer_layout_stacked'),
+            'row' => __('laravix::navigation.design.footer_layout_row'),
+            'stacked' => __('laravix::navigation.design.footer_layout_stacked'),
         ];
 
         $iconPositionOptions = [
-            '' => __('navigation.design.icon_none'),
-            'before' => __('navigation.design.icon_pos_before'),
-            'after' => __('navigation.design.icon_pos_after'),
-            'only' => __('navigation.design.icon_pos_only'),
+            '' => __('laravix::navigation.design.icon_none'),
+            'before' => __('laravix::navigation.design.icon_pos_before'),
+            'after' => __('laravix::navigation.design.icon_pos_after'),
+            'only' => __('laravix::navigation.design.icon_pos_only'),
         ];
 
         return [$colorInput, $fontFamilyOptions, $fontWeightOptions, $borderWidthOptions, $shadowOptions, $linksAlignOptions, $footerLayoutOptions, $iconPositionOptions];

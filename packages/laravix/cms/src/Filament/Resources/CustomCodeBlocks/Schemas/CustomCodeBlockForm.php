@@ -7,16 +7,14 @@
 
 namespace Laravix\Cms\Filament\Resources\CustomCodeBlocks\Schemas;
 
-use Laravix\Cms\Support\BlockIconRegistry;
+use Filament\Forms\Components\CodeEditor;
+use Filament\Forms\Components\CodeEditor\Enums\Language;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
-use Filament\Forms\Components\CodeEditor;
-use Filament\Forms\Components\CodeEditor\Enums\Language;
-
+use Laravix\Cms\Support\BlockIconRegistry;
 
 class CustomCodeBlockForm
 {
@@ -27,10 +25,10 @@ class CustomCodeBlockForm
                 Tabs::make()
                     ->columnSpanFull()
                     ->tabs([
-                        Tab::make(__('common.general'))
+                        Tab::make(__('laravix::common.general'))
                             ->schema([
                                 TextInput::make('name')
-                                    ->label(__('common.name'))
+                                    ->label(__('laravix::common.name'))
                                     ->required()
                                     ->maxLength(255),
                                 Select::make('icon')
@@ -38,7 +36,7 @@ class CustomCodeBlockForm
                                     ->allowHtml()
                                     ->nullable()
                                     ->optionsLimit(200)
-                                    ->options(fn() => BlockIconRegistry::selectOptions()),
+                                    ->options(fn () => BlockIconRegistry::selectOptions()),
                             ]),
                         Tab::make('HTML')
                             ->schema([

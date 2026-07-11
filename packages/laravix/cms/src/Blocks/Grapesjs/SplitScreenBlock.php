@@ -14,9 +14,9 @@ class SplitScreenBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('split-screen')
-            ->label('blocks.gjs.split_screen')
+            ->label('laravix::blocks.gjs.split_screen')
             ->icon('fa-table-columns')
-            ->category('blocks.categories.artistic')
+            ->category('laravix::blocks.categories.artistic')
             ->canvasHtml(<<<'HTML'
 <div class="lx-split">
     <div class="lx-split__half lx-split__half--dark">

@@ -24,10 +24,10 @@ class ActivityLogsTable
                     ->getStateUsing(fn ($record): ?string => $record->causer?->getFilamentAvatarUrl())
                     ->size(36),
                 TextColumn::make('causer.name')
-                    ->label(__('common.user'))
+                    ->label(__('laravix::common.user'))
                     ->searchable(),
                 TextColumn::make('description')
-                    ->label(__('common.action'))
+                    ->label(__('laravix::common.action'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'created' => 'success',
@@ -36,12 +36,12 @@ class ActivityLogsTable
                         default => 'gray',
                     }),
                 TextColumn::make('subject_type')
-                    ->label(__('common.model'))
+                    ->label(__('laravix::common.model'))
                     ->formatStateUsing(fn (string $state): string => class_basename($state))
                     ->badge()
                     ->color('gray'),
                 TextColumn::make('subject_name')
-                    ->label(__('common.title'))
+                    ->label(__('laravix::common.title'))
                     ->getStateUsing(function ($record): string {
                         $changes = $record->attribute_changes;
                         $attrs = $changes['attributes'] ?? $changes['old'] ?? [];
@@ -50,21 +50,21 @@ class ActivityLogsTable
                     })
                     ->sortable(false),
                 TextColumn::make('subject_id')
-                    ->label(__('common.id'))
+                    ->label(__('laravix::common.id'))
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label(__('common.when'))
+                    ->label(__('laravix::common.when'))
                     ->dateTime()
                     ->sortable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('description')
-                    ->label(__('common.action'))
+                    ->label(__('laravix::common.action'))
                     ->options([
-                        'created' => __('common.created'),
-                        'updated' => __('common.updated'),
-                        'deleted' => __('common.deleted'),
+                        'created' => __('laravix::common.created'),
+                        'updated' => __('laravix::common.updated'),
+                        'deleted' => __('laravix::common.deleted'),
                     ]),
             ]);
     }

@@ -14,9 +14,9 @@ class TimelineBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('timeline')
-            ->label('blocks.gjs.timeline')
+            ->label('laravix::blocks.gjs.timeline')
             ->icon('fa-timeline')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--md">

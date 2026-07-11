@@ -14,9 +14,9 @@ class ComparisonBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('comparison')
-            ->label('blocks.gjs.comparison')
+            ->label('laravix::blocks.gjs.comparison')
             ->icon('fa-scale-balanced')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--lg">

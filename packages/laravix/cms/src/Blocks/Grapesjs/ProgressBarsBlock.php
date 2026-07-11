@@ -14,9 +14,9 @@ class ProgressBarsBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('progress-bars')
-            ->label('blocks.gjs.progress_bars')
+            ->label('laravix::blocks.gjs.progress_bars')
             ->icon('fa-bars-progress')
-            ->category('blocks.categories.interactive')
+            ->category('laravix::blocks.categories.interactive')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--md">

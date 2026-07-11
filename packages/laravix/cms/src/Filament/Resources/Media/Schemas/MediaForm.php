@@ -17,11 +17,11 @@ class MediaForm
     {
         return $schema
             ->components([
-                Section::make(__('common.general'))
+                Section::make(__('laravix::common.general'))
                     ->columnSpanFull()
                     ->schema([
                         FileUpload::make('path')
-                            ->label(__('common.file'))
+                            ->label(__('laravix::common.file'))
                             ->required()
                             ->disk('public')
                             ->directory('media')

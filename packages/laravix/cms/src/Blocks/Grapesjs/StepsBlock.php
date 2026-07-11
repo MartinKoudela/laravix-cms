@@ -14,9 +14,9 @@ class StepsBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('steps')
-            ->label('blocks.gjs.steps')
+            ->label('laravix::blocks.gjs.steps')
             ->icon('fa-list-ol')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--lg">

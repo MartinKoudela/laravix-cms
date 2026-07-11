@@ -14,9 +14,9 @@ class TableBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('table')
-            ->label('blocks.gjs.table')
+            ->label('laravix::blocks.gjs.table')
             ->icon('fa-table')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml(<<<'HTML'
 <div class="lx-table">
     <table class="lx-table__el">

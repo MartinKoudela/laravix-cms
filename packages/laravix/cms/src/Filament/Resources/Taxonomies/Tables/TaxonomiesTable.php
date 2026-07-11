@@ -7,13 +7,13 @@
 
 namespace Laravix\Cms\Filament\Resources\Taxonomies\Tables;
 
-use Laravix\Cms\Support\TaxonomyTypeRegistry;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Laravix\Cms\Support\TaxonomyTypeRegistry;
 
 class TaxonomiesTable
 {
@@ -24,28 +24,28 @@ class TaxonomiesTable
             ->columnToggleFormMaxHeight('400')
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('common.title'))
+                    ->label(__('laravix::common.title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
-                    ->label(__('common.type'))
+                    ->label(__('laravix::common.type'))
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => TaxonomyTypeRegistry::label($state))
                     ->sortable(),
                 TextColumn::make('site.name')
-                    ->label(__('common.site'))
+                    ->label(__('laravix::common.site'))
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('parent.name')
-                    ->label(__('common.parent'))
+                    ->label(__('laravix::common.parent'))
                     ->searchable()
                     ->placeholder('—'),
                 TextColumn::make('slug')
-                    ->label(__('common.slug'))
+                    ->label(__('laravix::common.slug'))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
-                    ->label(__('common.created_at'))
+                    ->label(__('laravix::common.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -53,8 +53,8 @@ class TaxonomiesTable
             ->filters([
                 SelectFilter::make('type')
                     ->options([
-                        'category' => __('taxonomy.types.category'),
-                        'tag' => __('taxonomy.types.tag'),
+                        'category' => __('laravix::taxonomy.types.category'),
+                        'tag' => __('laravix::taxonomy.types.tag'),
                     ]),
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),

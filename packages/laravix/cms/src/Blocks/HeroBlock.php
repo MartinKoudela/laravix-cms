@@ -7,22 +7,22 @@
 
 namespace Laravix\Cms\Blocks;
 
-use Laravix\Cms\Support\BlockDefinition;
-use Laravix\Cms\Support\FieldComponentFactory;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Laravix\Cms\Support\BlockDefinition;
+use Laravix\Cms\Support\FieldComponentFactory;
 
 class HeroBlock
 {
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('hero')
-            ->label('blocks.types.hero')
+            ->label('laravix::blocks.types.hero')
             ->icon('heroicon-o-photo')
             ->gjsIcon('fa-image')
-            ->category('blocks.categories.hero')
+            ->category('laravix::blocks.categories.hero')
             ->canvasHtml(<<<'HTML'
 <section style="padding:80px 24px;text-align:center;background:#f9fafb;">
     <div style="max-width:720px;margin:0 auto;">
@@ -33,21 +33,21 @@ class HeroBlock
 </section>
 HTML)
             ->schema(fn () => [
-                TextInput::make('heading')->label(fn () => __('common.heading'))->columnSpanFull(),
-                Textarea::make('subheading')->label(fn () => __('blocks.fields.subheading'))->columnSpanFull(),
-                FieldComponentFactory::mediaSelect('image_id', __('common.image')),
+                TextInput::make('heading')->label(fn () => __('laravix::common.heading'))->columnSpanFull(),
+                Textarea::make('subheading')->label(fn () => __('laravix::blocks.fields.subheading'))->columnSpanFull(),
+                FieldComponentFactory::mediaSelect('image_id', __('laravix::common.image')),
                 Repeater::make('buttons')
-                    ->label(fn () => __('blocks.fields.buttons'))
+                    ->label(fn () => __('laravix::blocks.fields.buttons'))
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('label')->label(fn () => __('common.label')),
-                        TextInput::make('href')->label(fn () => __('common.url')),
+                        TextInput::make('label')->label(fn () => __('laravix::common.label')),
+                        TextInput::make('href')->label(fn () => __('laravix::common.url')),
                         Select::make('variant')
-                            ->label(fn () => __('blocks.fields.variant'))
+                            ->label(fn () => __('laravix::blocks.fields.variant'))
                             ->options(fn () => [
-                                'primary' => __('blocks.styles.primary'),
-                                'secondary' => __('blocks.styles.secondary'),
-                                'outline' => __('blocks.styles.outline'),
+                                'primary' => __('laravix::blocks.styles.primary'),
+                                'secondary' => __('laravix::blocks.styles.secondary'),
+                                'outline' => __('laravix::blocks.styles.outline'),
                             ]),
                     ]),
             ]);

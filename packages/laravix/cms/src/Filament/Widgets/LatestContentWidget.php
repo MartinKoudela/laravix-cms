@@ -7,14 +7,14 @@
 
 namespace Laravix\Cms\Filament\Widgets;
 
-use Laravix\Cms\Enums\ContentStatus;
-use Laravix\Cms\Filament\Resources\Contents\ContentResource;
-use Laravix\Cms\Models\Content;
 use Filament\Actions\Action;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Filament\Resources\Contents\ContentResource;
+use Laravix\Cms\Models\Content;
 
 class LatestContentWidget extends BaseWidget
 {
@@ -22,7 +22,7 @@ class LatestContentWidget extends BaseWidget
 
     public function getTableHeading(): string
     {
-        return __('content.stats.recent');
+        return __('laravix::content.stats.recent');
     }
 
     protected int|string|array $columnSpan = 'full';
@@ -38,16 +38,16 @@ class LatestContentWidget extends BaseWidget
             )
             ->columns([
                 TextColumn::make('title')
-                    ->label(__('common.title'))
+                    ->label(__('laravix::common.title'))
                     ->searchable(),
                 TextColumn::make('site.name')
-                    ->label(__('common.site'))
+                    ->label(__('laravix::common.site'))
                     ->sortable(),
                 TextColumn::make('type')
-                    ->label(__('common.type'))
+                    ->label(__('laravix::common.type'))
                     ->badge(),
                 TextColumn::make('status')
-                    ->label(__('common.status'))
+                    ->label(__('laravix::common.status'))
                     ->badge()
                     ->color(fn (ContentStatus $state): string => match ($state) {
                         ContentStatus::PUBLISHED => 'success',
@@ -56,7 +56,7 @@ class LatestContentWidget extends BaseWidget
                     })
                     ->formatStateUsing(fn (ContentStatus $state): string => $state->value),
                 TextColumn::make('updated_at')
-                    ->label(__('common.updated_at'))
+                    ->label(__('laravix::common.updated_at'))
                     ->dateTime()
                     ->sortable(),
             ])

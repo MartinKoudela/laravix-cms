@@ -27,7 +27,9 @@
     },
     "autoload": {
         "psr-4": {
-            "Laravix\\Cms\\": "src/"
+            "Laravix\\Cms\\": "src/",
+            "Laravix\\Cms\\Database\\Factories\\": "database/factories/",
+            "Laravix\\Cms\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "extra": {

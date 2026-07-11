@@ -14,9 +14,9 @@ class SpacerBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('spacer')
-            ->label('blocks.gjs.spacer')
+            ->label('laravix::blocks.gjs.spacer')
             ->icon('fa-up-down')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml('<div class="lx-spacer"></div>');
     }
 }

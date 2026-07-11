@@ -28,13 +28,13 @@ class SettingsRelationManager extends RelationManager
         return $schema
             ->components([
                 TextInput::make('key')
-                    ->label(__('common.key'))
+                    ->label(__('laravix::common.key'))
                     ->required()
                     ->maxLength(255)
-                    ->helperText(__('settings.hints.setting_key')),
+                    ->helperText(__('laravix::settings.hints.setting_key')),
                 Textarea::make('value')
-                    ->label(__('common.value'))
-                    ->helperText(__('settings.hints.setting_value'))
+                    ->label(__('laravix::common.value'))
+                    ->helperText(__('laravix::settings.hints.setting_value'))
                     ->columnSpanFull(),
             ]);
     }

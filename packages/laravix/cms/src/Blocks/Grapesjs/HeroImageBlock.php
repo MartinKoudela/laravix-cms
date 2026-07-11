@@ -14,9 +14,9 @@ class HeroImageBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('hero-image')
-            ->label('blocks.gjs.hero_image')
+            ->label('laravix::blocks.gjs.hero_image')
             ->icon('fa-image')
-            ->category('blocks.categories.hero')
+            ->category('laravix::blocks.categories.hero')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section--hero lx-section--light">
     <div class="lx-hero__inner">

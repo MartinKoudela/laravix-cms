@@ -14,9 +14,9 @@ class ContactFormBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('contact-form')
-            ->label('blocks.gjs.contact_form')
+            ->label('laravix::blocks.gjs.contact_form')
             ->icon('fa-envelope')
-            ->category('blocks.categories.conversion')
+            ->category('laravix::blocks.categories.conversion')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">
     <div class="lx-container--form">

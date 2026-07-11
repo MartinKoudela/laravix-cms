@@ -7,10 +7,10 @@
 
 namespace Laravix\Cms\Support;
 
+use Illuminate\Support\Facades\Cache;
 use Laravix\Cms\Enums\FieldType;
 use Laravix\Cms\Models\ContentTypeField;
 use Laravix\Cms\Models\Site;
-use Illuminate\Support\Facades\Cache;
 
 class FieldRegistry
 {
@@ -65,7 +65,7 @@ class FieldRegistry
                     'key' => $field->key,
                     'type' => $field->type->value,
                     'label' => $field->label,
-                    'group' => $field->group ?? 'content.sections.content',
+                    'group' => $field->group ?? 'laravix::content.sections.content',
                     'hint' => $field->hint ?? '',
                     'config' => $field->config ?? [],
                 ])

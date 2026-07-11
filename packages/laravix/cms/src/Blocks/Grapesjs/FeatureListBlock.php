@@ -14,9 +14,9 @@ class FeatureListBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('feature-list')
-            ->label('blocks.gjs.feature_list')
+            ->label('laravix::blocks.gjs.feature_list')
             ->icon('fa-list-check')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container">

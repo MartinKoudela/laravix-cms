@@ -7,6 +7,12 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents;
 
+use BackedEnum;
+use Filament\Navigation\NavigationItem;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Laravix\Cms\Filament\Resources\Contents\Pages\CreateContent;
 use Laravix\Cms\Filament\Resources\Contents\Pages\EditContent;
 use Laravix\Cms\Filament\Resources\Contents\Pages\ListContents;
@@ -17,12 +23,6 @@ use Laravix\Cms\Filament\Resources\Contents\Tables\ContentsTable;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Support\ContentTypeDefinition;
 use Laravix\Cms\Support\ContentTypeRegistry;
-use BackedEnum;
-use Filament\Navigation\NavigationItem;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 use function Filament\Support\original_request;
 
@@ -30,12 +30,12 @@ class ContentResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('content.singular');
+        return __('laravix::content.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('content.plural');
+        return __('laravix::content.plural');
     }
 
     protected static ?string $model = Content::class;

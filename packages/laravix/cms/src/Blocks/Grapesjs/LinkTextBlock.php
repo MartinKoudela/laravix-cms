@@ -14,9 +14,9 @@ class LinkTextBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('link-text')
-            ->label('blocks.gjs.link')
+            ->label('laravix::blocks.gjs.link')
             ->icon('fa-link')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml('<a href="#" class="lx-link">Click here</a>');
     }
 }

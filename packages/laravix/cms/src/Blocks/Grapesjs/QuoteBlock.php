@@ -14,9 +14,9 @@ class QuoteBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('quote')
-            ->label('blocks.gjs.quote')
+            ->label('laravix::blocks.gjs.quote')
             ->icon('fa-quote-right')
-            ->category('blocks.categories.artistic')
+            ->category('laravix::blocks.categories.artistic')
             ->canvasHtml(<<<'HTML'
 <div class="lx-quote">
     <i class="fa-solid fa-quote-left lx-quote__mark"></i>

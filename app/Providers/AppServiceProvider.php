@@ -98,119 +98,119 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        TaxonomyTypeRegistry::register('category', 'taxonomy.types.category');
-        TaxonomyTypeRegistry::register('tag', 'taxonomy.types.tag');
+        TaxonomyTypeRegistry::register('category', 'laravix::taxonomy.types.category');
+        TaxonomyTypeRegistry::register('tag', 'laravix::taxonomy.types.tag');
 
         ContentTypeRegistry::register(
             ContentTypeDefinition::make('page')
-                ->label('content.types.page')
-                ->pluralLabel('content.types_plural.page')
+                ->label('laravix::content.types.page')
+                ->pluralLabel('laravix::content.types_plural.page')
                 ->linkableInNavigation(),
             ContentTypeDefinition::make('post')
-                ->label('content.types.post')
-                ->pluralLabel('content.types_plural.post'),
+                ->label('laravix::content.types.post')
+                ->pluralLabel('laravix::content.types_plural.post'),
             ContentTypeDefinition::make('archive')
-                ->label('content.types.archive')
-                ->pluralLabel('content.types_plural.archive')
+                ->label('laravix::content.types.archive')
+                ->pluralLabel('laravix::content.types_plural.archive')
                 ->linkableInNavigation(),
         );
 
         FieldRegistry::content([
             FieldDefinition::make('meta_title')
-                ->label('content.fields.meta_title')
-                ->group('content.sections.seo_group')
-                ->hint('content.hints.meta_title'),
+                ->label('laravix::content.fields.meta_title')
+                ->group('laravix::content.sections.seo_group')
+                ->hint('laravix::content.hints.meta_title'),
             FieldDefinition::make('meta_description')
                 ->type(FieldType::TEXTAREA)
-                ->label('content.fields.meta_description')
-                ->group('content.sections.seo_group')
-                ->hint('content.hints.meta_description'),
+                ->label('laravix::content.fields.meta_description')
+                ->group('laravix::content.sections.seo_group')
+                ->hint('laravix::content.hints.meta_description'),
             FieldDefinition::make('og_image')
                 ->type(FieldType::IMAGE)
-                ->label('content.fields.og_image')
-                ->group('content.sections.seo_group')
-                ->hint('content.hints.og_image'),
+                ->label('laravix::content.fields.og_image')
+                ->group('laravix::content.sections.seo_group')
+                ->hint('laravix::content.hints.og_image'),
             FieldDefinition::make('noindex')
                 ->type(FieldType::BOOLEAN)
-                ->label('content.fields.noindex')
-                ->group('content.sections.seo_group'),
+                ->label('laravix::content.fields.noindex')
+                ->group('laravix::content.sections.seo_group'),
         ]);
 
         SettingRegistry::register([
             SettingDefinition::make('site_name')
-                ->label('settings.fields.site_name')
-                ->group('settings.tabs.general')
+                ->label('laravix::settings.fields.site_name')
+                ->group('laravix::settings.tabs.general')
                 ->required(),
             SettingDefinition::make('site_description')
                 ->type(FieldType::TEXTAREA)
-                ->label('settings.fields.site_description')
-                ->group('settings.tabs.general'),
+                ->label('laravix::settings.fields.site_description')
+                ->group('laravix::settings.tabs.general'),
             SettingDefinition::make('logo')
                 ->type(FieldType::IMAGE)
-                ->label('settings.fields.site_logo')
-                ->group('settings.tabs.general')
-                ->hint('settings.hints.logo'),
+                ->label('laravix::settings.fields.site_logo')
+                ->group('laravix::settings.tabs.general')
+                ->hint('laravix::settings.hints.logo'),
             SettingDefinition::make('favicon')
                 ->type(FieldType::IMAGE)
-                ->label('settings.fields.favicon')
-                ->group('settings.tabs.general')
-                ->hint('settings.hints.favicon'),
+                ->label('laravix::settings.fields.favicon')
+                ->group('laravix::settings.tabs.general')
+                ->hint('laravix::settings.hints.favicon'),
             SettingDefinition::make('locale')
-                ->label('settings.fields.locale')
-                ->group('settings.tabs.general')
+                ->label('laravix::settings.fields.locale')
+                ->group('laravix::settings.tabs.general')
                 ->default('en')
-                ->hint('settings.hints.locale'),
+                ->hint('laravix::settings.hints.locale'),
             SettingDefinition::make('contact_email')
-                ->label('settings.fields.contact_email')
-                ->group('settings.tabs.general')
-                ->hint('settings.hints.contact_email')
+                ->label('laravix::settings.fields.contact_email')
+                ->group('laravix::settings.tabs.general')
+                ->hint('laravix::settings.hints.contact_email')
                 ->config(['email' => true]),
 
             SettingDefinition::make('meta_title')
-                ->label('settings.fields.meta_title')
-                ->group('settings.tabs.seo')
-                ->hint('settings.hints.meta_title'),
+                ->label('laravix::settings.fields.meta_title')
+                ->group('laravix::settings.tabs.seo')
+                ->hint('laravix::settings.hints.meta_title'),
             SettingDefinition::make('meta_description')
                 ->type(FieldType::TEXTAREA)
-                ->label('settings.fields.meta_description')
-                ->group('settings.tabs.seo')
-                ->hint('settings.hints.meta_description')
+                ->label('laravix::settings.fields.meta_description')
+                ->group('laravix::settings.tabs.seo')
+                ->hint('laravix::settings.hints.meta_description')
                 ->config(['maxLength' => 160]),
             SettingDefinition::make('og_image')
                 ->type(FieldType::IMAGE)
-                ->label('settings.fields.og_image')
-                ->group('settings.tabs.seo')
-                ->hint('settings.hints.og_image'),
+                ->label('laravix::settings.fields.og_image')
+                ->group('laravix::settings.tabs.seo')
+                ->hint('laravix::settings.hints.og_image'),
             SettingDefinition::make('google_site_verification')
-                ->label('settings.fields.google_verification')
-                ->group('settings.tabs.seo')
-                ->hint('settings.hints.google_verification'),
+                ->label('laravix::settings.fields.google_verification')
+                ->group('laravix::settings.tabs.seo')
+                ->hint('laravix::settings.hints.google_verification'),
             SettingDefinition::make('robots_txt')
                 ->type(FieldType::TEXTAREA)
-                ->label('settings.fields.robots_txt')
-                ->group('settings.tabs.seo')
-                ->hint('settings.hints.robots_txt')
+                ->label('laravix::settings.fields.robots_txt')
+                ->group('laravix::settings.tabs.seo')
+                ->hint('laravix::settings.hints.robots_txt')
                 ->config(['placeholder' => "User-agent: *\nAllow: /\n\nUser-agent: GPTBot\nDisallow: /"]),
             SettingDefinition::make('twitter_url')
                 ->type(FieldType::URL)
-                ->label('settings.fields.twitter')
-                ->group('settings.tabs.social'),
+                ->label('laravix::settings.fields.twitter')
+                ->group('laravix::settings.tabs.social'),
             SettingDefinition::make('linkedin_url')
                 ->type(FieldType::URL)
-                ->label('settings.fields.linkedin')
-                ->group('settings.tabs.social'),
+                ->label('laravix::settings.fields.linkedin')
+                ->group('laravix::settings.tabs.social'),
             SettingDefinition::make('facebook_url')
                 ->type(FieldType::URL)
-                ->label('settings.fields.facebook')
-                ->group('settings.tabs.social'),
+                ->label('laravix::settings.fields.facebook')
+                ->group('laravix::settings.tabs.social'),
             SettingDefinition::make('instagram_url')
                 ->type(FieldType::URL)
-                ->label('settings.fields.instagram')
-                ->group('settings.tabs.social'),
+                ->label('laravix::settings.fields.instagram')
+                ->group('laravix::settings.tabs.social'),
             SettingDefinition::make('github_url')
                 ->type(FieldType::URL)
-                ->label('settings.fields.github')
-                ->group('settings.tabs.social'),
+                ->label('laravix::settings.fields.github')
+                ->group('laravix::settings.tabs.social'),
         ]);
 
         BlockRegistry::register(
@@ -271,8 +271,8 @@ class AppServiceProvider extends ServiceProvider
         );
 
         NavigationRegistry::register(
-            NavigationDefinition::make('header')->label('navigation.labels.header'),
-            NavigationDefinition::make('footer')->label('navigation.labels.footer'),
+            NavigationDefinition::make('header')->label('laravix::navigation.labels.header'),
+            NavigationDefinition::make('footer')->label('laravix::navigation.labels.footer'),
         );
     }
 
@@ -309,35 +309,16 @@ class AppServiceProvider extends ServiceProvider
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
                 ->locales(['en', 'cs', 'sk'])
-                // ->locales(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt_BR', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh_CN', 'ar', 'ru', 'ko', 'hi'])
                 ->flags([
                     'en' => 'https://flagcdn.com/gb.svg',
                     'cs' => 'https://flagcdn.com/cz.svg',
                     'sk' => 'https://flagcdn.com/sk.svg',
-                    // 'de' => 'https://flagcdn.com/de.svg',
-                    // 'fr' => 'https://flagcdn.com/fr.svg',
-                    // 'es' => 'https://flagcdn.com/es.svg',
-                    // 'it' => 'https://flagcdn.com/it.svg',
-                    // 'pl' => 'https://flagcdn.com/pl.svg',
-                    // 'pt_BR' => 'https://flagcdn.com/br.svg',
-                    // 'uk' => 'https://flagcdn.com/ua.svg',
-                    // 'nl' => 'https://flagcdn.com/nl.svg',
-                    // 'hu' => 'https://flagcdn.com/hu.svg',
-                    // 'ro' => 'https://flagcdn.com/ro.svg',
-                    // 'sv' => 'https://flagcdn.com/se.svg',
-                    // 'tr' => 'https://flagcdn.com/tr.svg',
-                    // 'ja' => 'https://flagcdn.com/jp.svg',
-                    // 'zh_CN' => 'https://flagcdn.com/cn.svg',
-                    // 'ar' => 'https://flagcdn.com/sa.svg',
-                    // 'ru' => 'https://flagcdn.com/ru.svg',
-                    // 'ko' => 'https://flagcdn.com/kr.svg',
-                    // 'hi' => 'https://flagcdn.com/in.svg',
                 ])
                 ->circular()
                 ->maxHeight('40rem')
                 ->nativeLabel()
                 ->visible(insidePanels: true, outsidePanels: true)
-                ->userPreferredLocale(fn () => request()->getPreferredLanguage(['en', 'cs', 'sk', 'de', 'fr', 'es', 'it', 'pl', 'pt_BR', 'uk', 'nl', 'hu', 'ro', 'sv', 'tr', 'ja', 'zh_CN', 'ar', 'ru', 'ko', 'hi']));
+                ->userPreferredLocale(fn () => request()->getPreferredLanguage(['en', 'cs', 'sk']));
         });
     }
 }

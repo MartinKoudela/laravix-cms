@@ -5,32 +5,30 @@
  * Licensed under GPL-3.0-or-later. See LICENSE for details.
  */
 
-
 namespace Laravix\Cms\Filament\Resources\CustomCodeBlocks;
 
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Laravix\Cms\Filament\Resources\CustomCodeBlocks\Pages\CreateCustomCodeBlock;
 use Laravix\Cms\Filament\Resources\CustomCodeBlocks\Pages\EditCustomCodeBlock;
 use Laravix\Cms\Filament\Resources\CustomCodeBlocks\Pages\ListCustomCodeBlocks;
 use Laravix\Cms\Filament\Resources\CustomCodeBlocks\Schemas\CustomCodeBlockForm;
 use Laravix\Cms\Filament\Resources\CustomCodeBlocks\Tables\CustomCodeBlocksTable;
 use Laravix\Cms\Models\CustomCodeBlock;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class CustomCodeBlockResource extends Resource
 {
-
     public static function getModelLabel(): string
     {
-        return __('custom_code_blocks.singular');
+        return __('laravix::custom_code_blocks.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('custom_code_blocks.plural');
+        return __('laravix::custom_code_blocks.plural');
     }
 
     protected static ?string $model = CustomCodeBlock::class;

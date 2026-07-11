@@ -14,9 +14,9 @@ class MapBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('map')
-            ->label('blocks.gjs.map')
+            ->label('laravix::blocks.gjs.map')
             ->icon('fa-map-location-dot')
-            ->category('blocks.categories.media')
+            ->category('laravix::blocks.categories.media')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div data-gjs-type="map-embed" class="lx-map__embed">

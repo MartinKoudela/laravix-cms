@@ -7,13 +7,13 @@
 
 namespace Laravix\Cms\Http\Controllers;
 
-use Laravix\Cms\Models\User;
-use Laravix\Cms\Models\UserInvitation;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Laravix\Cms\Models\User;
+use Laravix\Cms\Models\UserInvitation;
 
 class InvitationController extends Controller
 {
@@ -30,7 +30,7 @@ class InvitationController extends Controller
             abort(410, 'This invitation has expired.');
         }
 
-        return view('invitation.accept', compact('invitation'));
+        return view('laravix::invitation.accept', compact('invitation'));
     }
 
     public function accept(Request $request, string $token): RedirectResponse
@@ -59,6 +59,6 @@ class InvitationController extends Controller
 
         Auth::login($user);
 
-        return redirect('/admin/' . $invitation->site_id);
+        return redirect('/admin/'.$invitation->site_id);
     }
 }

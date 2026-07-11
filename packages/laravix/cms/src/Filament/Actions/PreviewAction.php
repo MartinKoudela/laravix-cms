@@ -24,7 +24,7 @@ class PreviewAction extends Action
     {
         parent::setUp();
 
-        $this->label(__('common.preview'));
+        $this->label(__('laravix::common.preview'));
 
         $this->tableIcon(FilamentIcon::resolve(ActionsIconAlias::VIEW_ACTION) ?? Heroicon::Eye);
 

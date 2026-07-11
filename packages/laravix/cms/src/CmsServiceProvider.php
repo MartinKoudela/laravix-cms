@@ -26,13 +26,15 @@ class CmsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravix');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravix');
     }
 
     public function boot(): void
     {
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName): string => 'Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName): string => 'Laravix\\Cms\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
 
         Factory::guessModelNamesUsing(

@@ -7,12 +7,12 @@
 
 namespace Laravix\Cms\Http\Controllers;
 
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Services\PageDataBuilder;
 use Laravix\Cms\Services\SeoBuilder;
-use Illuminate\Http\Response;
-use Illuminate\View\View;
 
 class PreviewController extends Controller
 {
@@ -23,7 +23,7 @@ class PreviewController extends Controller
 
     private function loading(): Response
     {
-        return response(view('preview-loading'));
+        return response(view('laravix::preview-loading'));
     }
 
     public function nav(string $token): View|Response

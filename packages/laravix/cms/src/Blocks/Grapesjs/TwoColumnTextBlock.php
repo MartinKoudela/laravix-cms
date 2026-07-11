@@ -14,9 +14,9 @@ class TwoColumnTextBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('two-column-text')
-            ->label('blocks.gjs.two_column_text')
+            ->label('laravix::blocks.gjs.two_column_text')
             ->icon('fa-columns')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container">

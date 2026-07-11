@@ -14,9 +14,9 @@ class TeamBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('team')
-            ->label('blocks.gjs.team')
+            ->label('laravix::blocks.gjs.team')
             ->icon('fa-people-group')
-            ->category('blocks.categories.social_proof')
+            ->category('laravix::blocks.categories.social_proof')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-container--lg">

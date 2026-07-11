@@ -14,9 +14,9 @@ class VideoEmbedBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('video-embed')
-            ->label('blocks.gjs.video_mp4')
+            ->label('laravix::blocks.gjs.video_mp4')
             ->icon('fa-clapperboard')
-            ->category('blocks.categories.media')
+            ->category('laravix::blocks.categories.media')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section">
     <div class="lx-video__inner">

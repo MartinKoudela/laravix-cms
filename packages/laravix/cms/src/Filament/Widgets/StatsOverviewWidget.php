@@ -7,12 +7,12 @@
 
 namespace Laravix\Cms\Filament\Widgets;
 
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
+use Filament\Widgets\StatsOverviewWidget\Stat;
 use Laravix\Cms\Enums\ContentStatus;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\Media;
 use Laravix\Cms\Models\Site;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class StatsOverviewWidget extends BaseWidget
 {
@@ -21,17 +21,17 @@ class StatsOverviewWidget extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make(__('sites.stats.title'), Site::count())
-                ->description(__('sites.stats.total'))
+            Stat::make(__('laravix::sites.stats.title'), Site::count())
+                ->description(__('laravix::sites.stats.total'))
                 ->color('primary'),
-            Stat::make(__('content.stats.published'), Content::where('status', ContentStatus::PUBLISHED->value)->count())
-                ->description(__('content.stats.published_description'))
+            Stat::make(__('laravix::content.stats.published'), Content::where('status', ContentStatus::PUBLISHED->value)->count())
+                ->description(__('laravix::content.stats.published_description'))
                 ->color('success'),
-            Stat::make(__('content.stats.drafts'), Content::where('status', ContentStatus::DRAFT->value)->count())
-                ->description(__('content.stats.awaiting'))
+            Stat::make(__('laravix::content.stats.drafts'), Content::where('status', ContentStatus::DRAFT->value)->count())
+                ->description(__('laravix::content.stats.awaiting'))
                 ->color('warning'),
-            Stat::make(__('media.stats.files'), Media::count())
-                ->description(__('media.stats.uploaded'))
+            Stat::make(__('laravix::media.stats.files'), Media::count())
+                ->description(__('laravix::media.stats.uploaded'))
                 ->color('gray'),
         ];
     }

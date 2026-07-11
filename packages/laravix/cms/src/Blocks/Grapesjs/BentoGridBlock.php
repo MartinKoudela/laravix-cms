@@ -14,9 +14,9 @@ class BentoGridBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('bento-grid')
-            ->label('blocks.gjs.bento_grid')
+            ->label('laravix::blocks.gjs.bento_grid')
             ->icon('fa-border-all')
-            ->category('blocks.categories.artistic')
+            ->category('laravix::blocks.categories.artistic')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">
     <div class="lx-bento">

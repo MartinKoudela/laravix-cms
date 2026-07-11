@@ -7,7 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Users\Tables;
 
-use Laravix\Cms\Enums\SiteRole;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -15,6 +14,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Laravix\Cms\Enums\SiteRole;
 
 class UsersTable
 {
@@ -28,18 +28,18 @@ class UsersTable
                     ->getStateUsing(fn ($record): string => $record->getFilamentAvatarUrl())
                     ->size(36),
                 TextColumn::make('name')
-                    ->label(__('common.name'))
+                    ->label(__('laravix::common.name'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
-                    ->label(__('common.email'))
+                    ->label(__('laravix::common.email'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('role')
-                    ->label(__('common.role'))
+                    ->label(__('laravix::common.role'))
                     ->badge()
                     ->formatStateUsing(fn (?string $state, $record): string => $record->is_super_admin
-                        ? __('users.super_admin')
+                        ? __('laravix::users.super_admin')
                         : $state)
                     ->color(fn (?string $state, $record): string => match (true) {
                         $record->is_super_admin => 'danger',
@@ -48,12 +48,12 @@ class UsersTable
                         default => 'gray',
                     }),
                 TextColumn::make('email_verified_at')
-                    ->label(__('common.verified'))
+                    ->label(__('laravix::common.verified'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
-                    ->label(__('common.created_at'))
+                    ->label(__('laravix::common.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -14,9 +14,9 @@ class CookieBannerBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('cookie-banner')
-            ->label('blocks.gjs.cookie_banner')
+            ->label('laravix::blocks.gjs.cookie_banner')
             ->icon('fa-cookie-bite')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml(<<<'HTML'
 <div class="lx-cookie" id="lx-cookie-banner">
     <p class="lx-cookie__text">We use cookies to improve your experience and analyze traffic. <a href="#">Learn more</a></p>

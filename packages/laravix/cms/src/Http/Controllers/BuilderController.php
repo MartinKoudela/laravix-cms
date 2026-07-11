@@ -7,14 +7,14 @@
 
 namespace Laravix\Cms\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\CustomCodeBlock;
 use Laravix\Cms\Models\Media;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Support\BlockRegistry;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class BuilderController extends Controller
 {
@@ -43,7 +43,7 @@ class BuilderController extends Controller
             ->get()
             ->toArray();
 
-        return view('builder.editor', [
+        return view('laravix::builder.editor', [
             'site' => $site,
             'content' => $content,
             'mediaItems' => $mediaItems,
@@ -158,7 +158,7 @@ class BuilderController extends Controller
                 return [
                     'id' => 'custom-code-'.$block->id,
                     'label' => $block->name,
-                    'category' => __('blocks.categories.custom'),
+                    'category' => __('laravix::blocks.categories.custom'),
                     'content' => '<div '.$attrs.'>'.($block->html_content ?? '').'</div>',
                     'media' => $media,
                 ];

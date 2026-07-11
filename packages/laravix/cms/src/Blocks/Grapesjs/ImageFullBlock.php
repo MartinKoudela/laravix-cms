@@ -14,9 +14,9 @@ class ImageFullBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('image-block')
-            ->label('blocks.gjs.image_full')
+            ->label('laravix::blocks.gjs.image_full')
             ->icon('fa-image')
-            ->category('blocks.categories.elements')
+            ->category('laravix::blocks.categories.elements')
             ->canvasHtml('<img src="https://placehold.co/800x400?text=Photo" data-gjs-type="media-image" class="lx-img-full" alt="">');
     }
 }

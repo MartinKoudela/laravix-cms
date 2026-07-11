@@ -20,28 +20,28 @@ class SitesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label(__('common.title'))
+                    ->label(__('laravix::common.title'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('domain')
-                    ->label(__('common.domain'))
+                    ->label(__('laravix::common.domain'))
                     ->searchable()
                     ->url(fn ($record) => 'https://'.$record->domain)
                     ->openUrlInNewTab(),
                 TextColumn::make('theme')
-                    ->label(__('common.theme'))
+                    ->label(__('laravix::common.theme'))
                     ->badge()
                     ->sortable(),
                 TextColumn::make('users_count')
-                    ->label(__('sites.fields.users_count'))
+                    ->label(__('laravix::sites.fields.users_count'))
                     ->counts('users')
                     ->sortable(),
                 TextColumn::make('contents_count')
-                    ->label(__('sites.fields.contents_count'))
+                    ->label(__('laravix::sites.fields.contents_count'))
                     ->counts('contents')
                     ->sortable(),
                 TextColumn::make('created_at')
-                    ->label(__('common.created_at'))
+                    ->label(__('laravix::common.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -14,9 +14,9 @@ class StatsBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('stats')
-            ->label('blocks.gjs.stats')
+            ->label('laravix::blocks.gjs.stats')
             ->icon('fa-chart-bar')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--dark">
     <div class="lx-stats__grid lx-container--lg">

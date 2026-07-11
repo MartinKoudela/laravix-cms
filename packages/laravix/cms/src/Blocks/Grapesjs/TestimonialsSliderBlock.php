@@ -14,9 +14,9 @@ class TestimonialsSliderBlock
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('testimonials-slider')
-            ->label('blocks.gjs.testimonials_slider')
+            ->label('laravix::blocks.gjs.testimonials_slider')
             ->icon('fa-quote-left')
-            ->category('blocks.categories.social_proof')
+            ->category('laravix::blocks.categories.social_proof')
             ->canvasHtml(<<<'HTML'
 <section class="lx-section lx-section--light">
     <div class="lx-container--md">

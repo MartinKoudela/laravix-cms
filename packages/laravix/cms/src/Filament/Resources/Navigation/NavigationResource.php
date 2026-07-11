@@ -7,23 +7,23 @@
 
 namespace Laravix\Cms\Filament\Resources\Navigation;
 
-use Laravix\Cms\Enums\SiteRole;
-use Laravix\Cms\Filament\Resources\Navigation\Pages\ManageNavigation;
-use Laravix\Cms\Models\Site;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
+use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Filament\Resources\Navigation\Pages\ManageNavigation;
+use Laravix\Cms\Models\Site;
 
 class NavigationResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('navigation.singular');
+        return __('laravix::navigation.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('navigation.singular');
+        return __('laravix::navigation.singular');
     }
 
     protected static ?string $model = Site::class;

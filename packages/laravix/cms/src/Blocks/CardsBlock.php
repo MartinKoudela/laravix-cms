@@ -7,22 +7,22 @@
 
 namespace Laravix\Cms\Blocks;
 
-use Laravix\Cms\Support\BlockDefinition;
-use Laravix\Cms\Support\BlockRegistry;
-use Laravix\Cms\Support\FieldComponentFactory;
 use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
+use Laravix\Cms\Support\BlockDefinition;
+use Laravix\Cms\Support\BlockRegistry;
+use Laravix\Cms\Support\FieldComponentFactory;
 
 class CardsBlock
 {
     public static function definition(): BlockDefinition
     {
         return BlockDefinition::make('cards')
-            ->label('blocks.types.cards')
+            ->label('laravix::blocks.types.cards')
             ->icon('heroicon-o-squares-2x2')
             ->gjsIcon('fa-grip')
-            ->category('blocks.categories.content')
+            ->category('laravix::blocks.categories.content')
             ->canvasHtml(<<<'HTML'
 <section style="padding:64px 24px;background:#f9fafb;">
     <div style="max-width:1100px;margin:0 auto;">
@@ -37,13 +37,13 @@ class CardsBlock
 HTML)
             ->nestable(false)
             ->schema(fn () => [
-                TextInput::make('heading')->label(fn () => __('common.heading'))->columnSpanFull(),
+                TextInput::make('heading')->label(fn () => __('laravix::common.heading'))->columnSpanFull(),
                 Repeater::make('items')
-                    ->label(fn () => __('blocks.fields.cards'))
+                    ->label(fn () => __('laravix::blocks.fields.cards'))
                     ->schema([
-                        TextInput::make('title')->label(fn () => __('common.title')),
-                        FieldComponentFactory::mediaSelect('image_id', __('common.image')),
-                        TextInput::make('link')->label(fn () => __('common.link'))->url(),
+                        TextInput::make('title')->label(fn () => __('laravix::common.title')),
+                        FieldComponentFactory::mediaSelect('image_id', __('laravix::common.image')),
+                        TextInput::make('link')->label(fn () => __('laravix::common.link'))->url(),
                         Builder::make('blocks')
                             ->blocks(BlockRegistry::toNestableBlocks())
                             ->collapsible()

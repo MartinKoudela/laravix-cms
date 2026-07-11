@@ -7,17 +7,17 @@
 
 namespace Laravix\Cms\Filament\Resources\ContentTypeFields;
 
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
 use Laravix\Cms\Filament\Resources\ContentTypeFields\Pages\CreateContentTypeField;
 use Laravix\Cms\Filament\Resources\ContentTypeFields\Pages\EditContentTypeField;
 use Laravix\Cms\Filament\Resources\ContentTypeFields\Pages\ListContentTypeFields;
 use Laravix\Cms\Filament\Resources\ContentTypeFields\Schemas\ContentTypeFieldForm;
 use Laravix\Cms\Filament\Resources\ContentTypeFields\Tables\ContentTypeFieldsTable;
 use Laravix\Cms\Models\ContentTypeField;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class ContentTypeFieldResource extends Resource
 {
@@ -31,12 +31,12 @@ class ContentTypeFieldResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return __('content_type_field.singular');
+        return __('laravix::content_type_field.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('content_type_field.plural');
+        return __('laravix::content_type_field.plural');
     }
 
     public static function form(Schema $schema): Schema

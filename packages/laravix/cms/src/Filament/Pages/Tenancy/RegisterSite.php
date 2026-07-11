@@ -7,13 +7,13 @@
 
 namespace Laravix\Cms\Filament\Pages\Tenancy;
 
-use Laravix\Cms\Enums\SiteMode;
-use Laravix\Cms\Models\Site;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Pages\Tenancy\RegisterTenant;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Models\Site;
 
 class RegisterSite extends RegisterTenant
 {
@@ -29,7 +29,7 @@ class RegisterSite extends RegisterTenant
 
     public static function getLabel(): string
     {
-        return __('sites.actions.create');
+        return __('laravix::sites.actions.create');
     }
 
     public function form(Schema $schema): Schema
@@ -37,27 +37,27 @@ class RegisterSite extends RegisterTenant
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label(__('common.title'))
+                    ->label(__('laravix::common.title'))
                     ->required()
                     ->maxLength(255)
-                    ->helperText(__('sites.messages.public_name')),
+                    ->helperText(__('laravix::sites.messages.public_name')),
                 TextInput::make('domain')
-                    ->label(__('common.domain'))
+                    ->label(__('laravix::common.domain'))
                     ->required()
                     ->maxLength(255)
                     ->placeholder('example.com')
                     ->unique(table: 'sites', column: 'domain'),
                 Select::make('mode')
-                    ->label(__('sites.fields.mode'))
+                    ->label(__('laravix::sites.fields.mode'))
                     ->options([
-                        SiteMode::THEME->value => __('sites.modes.theme'),
-                        SiteMode::HEADLESS->value => __('sites.modes.headless'),
+                        SiteMode::THEME->value => __('laravix::sites.modes.theme'),
+                        SiteMode::HEADLESS->value => __('laravix::sites.modes.headless'),
                     ])
                     ->default(SiteMode::THEME->value)
                     ->required()
                     ->live(),
                 Select::make('theme')
-                    ->label(__('common.theme'))
+                    ->label(__('laravix::common.theme'))
                     ->default('default')
                     ->options(Site::availableThemes())
                     ->visible(fn (Get $get) => $get('mode') === SiteMode::THEME->value)

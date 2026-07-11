@@ -7,14 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Users;
 
-use Laravix\Cms\Enums\SiteRole;
-use Laravix\Cms\Filament\Resources\Users\Pages\CreateUser;
-use Laravix\Cms\Filament\Resources\Users\Pages\EditUser;
-use Laravix\Cms\Filament\Resources\Users\Pages\ListUsers;
-use Laravix\Cms\Filament\Resources\Users\Schemas\UserForm;
-use Laravix\Cms\Filament\Resources\Users\Tables\UsersTable;
-use Laravix\Cms\Models\Site;
-use Laravix\Cms\Models\User;
 use BackedEnum;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
@@ -23,17 +15,25 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Filament\Resources\Users\Pages\CreateUser;
+use Laravix\Cms\Filament\Resources\Users\Pages\EditUser;
+use Laravix\Cms\Filament\Resources\Users\Pages\ListUsers;
+use Laravix\Cms\Filament\Resources\Users\Schemas\UserForm;
+use Laravix\Cms\Filament\Resources\Users\Tables\UsersTable;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\User;
 
 class UserResource extends Resource
 {
     public static function getModelLabel(): string
     {
-        return __('users.singular');
+        return __('laravix::users.singular');
     }
 
     public static function getPluralModelLabel(): string
     {
-        return __('users.plural');
+        return __('laravix::users.plural');
     }
 
     protected static ?string $model = User::class;

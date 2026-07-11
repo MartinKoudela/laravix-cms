@@ -7,12 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents\Schemas;
 
-use Laravix\Cms\Enums\ContentStatus;
-use Laravix\Cms\Models\Content;
-use Laravix\Cms\Models\Taxonomy;
-use Laravix\Cms\Support\ContentTypeRegistry;
-use Laravix\Cms\Support\FieldComponentFactory;
-use Laravix\Cms\Support\FieldRegistry;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -24,6 +18,12 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Taxonomy;
+use Laravix\Cms\Support\ContentTypeRegistry;
+use Laravix\Cms\Support\FieldComponentFactory;
+use Laravix\Cms\Support\FieldRegistry;
 
 class ContentForm
 {
@@ -34,13 +34,13 @@ class ContentForm
                 Tabs::make()
                     ->columnSpanFull()
                     ->tabs([
-                        Tab::make(__('content.sections.content'))
+                        Tab::make(__('laravix::content.sections.content'))
                             ->schema(fn (Get $get): array => [
-                                Section::make(__('common.general'))
+                                Section::make(__('laravix::common.general'))
                                     ->columns(2)
                                     ->schema([
                                         TextInput::make('title')
-                                            ->label(__('common.title'))
+                                            ->label(__('laravix::common.title'))
                                             ->required()
                                             ->maxLength(255)
                                             ->live(debounce: 500)
@@ -49,7 +49,7 @@ class ContentForm
                                             )
                                             ->columnSpanFull(),
                                         TextInput::make('slug')
-                                            ->label(__('common.slug'))
+                                            ->label(__('laravix::common.slug'))
                                             ->required()
                                             ->maxLength(255)
                                             ->key('slug')
@@ -57,10 +57,10 @@ class ContentForm
                                             ->unique(table: 'contents', column: 'slug', ignoreRecord: true, modifyRuleUsing: fn ($rule, Get $get) => $rule
                                                 ->where('site_id', filament()->getTenant()?->id)
                                                 ->where('locale', $get('locale') ?: filament()->getTenant()?->defaultLocale() ?? 'en'))
-                                            ->helperText(__('common.must_be_unique')),
+                                            ->helperText(__('laravix::common.must_be_unique')),
                                         Toggle::make('is_homepage')
-                                            ->label(__('content.messages.set_as_homepage'))
-                                            ->helperText(__('content.messages.only_one_homepage'))
+                                            ->label(__('laravix::content.messages.set_as_homepage'))
+                                            ->helperText(__('laravix::content.messages.only_one_homepage'))
                                             ->live()
                                             ->afterStateUpdated(fn (bool $state, Set $set) => $state ? $set('slug', '/') : null)
                                             ->columnSpanFull()
@@ -81,11 +81,11 @@ class ContentForm
                                                     ->exists();
                                             }),
                                     ]),
-                                Section::make(__('content.sections.publishing'))
+                                Section::make(__('laravix::content.sections.publishing'))
                                     ->columns(2)
                                     ->schema([
                                         Select::make('type')
-                                            ->label(__('common.type'))
+                                            ->label(__('laravix::common.type'))
                                             ->required()
                                             ->options(fn () => ContentTypeRegistry::options())
                                             ->default(fn () => ContentTypeRegistry::default()->key)
@@ -93,7 +93,7 @@ class ContentForm
                                             ->dehydrated()
                                             ->live(),
                                         Select::make('locale')
-                                            ->label(__('content.fields.locale'))
+                                            ->label(__('laravix::content.fields.locale'))
                                             ->required()
                                             ->options(fn () => collect(filament()->getTenant()?->enabledLocales() ?? ['en'])
                                                 ->mapWithKeys(fn (string $locale) => [$locale => strtoupper($locale)]))
@@ -103,7 +103,7 @@ class ContentForm
                                             ->live()
                                             ->visible(fn () => filament()->getTenant()?->isMultilingual() ?? false),
                                         Select::make('status')
-                                            ->label(__('common.status'))
+                                            ->label(__('laravix::common.status'))
                                             ->required()
                                             ->options(collect(ContentStatus::cases())->mapWithKeys(
                                                 fn (ContentStatus $case) => [$case->value => $case->name]
@@ -113,10 +113,10 @@ class ContentForm
                                         DateTimePicker::make('published_at')
                                             ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
                                     ]),
-                                Section::make(__('content.sections.taxonomies'))
+                                Section::make(__('laravix::content.sections.taxonomies'))
                                     ->schema([
                                         Select::make('taxonomies')
-                                            ->label(__('content.sections.taxonomies'))
+                                            ->label(__('laravix::content.sections.taxonomies'))
                                             ->relationship('taxonomies', 'name')
                                             ->multiple()
                                             ->searchable()
@@ -131,19 +131,19 @@ class ContentForm
                                     ]),
                                 ...static::fieldSections(static::contentGroups($get)),
                             ]),
-                        Tab::make(__('common.seo'))
+                        Tab::make(__('laravix::common.seo'))
                             ->schema(fn (Get $get): array => [
                                 Section::make()
                                     ->columns(2)
                                     ->schema(array_map(
                                         fn ($definition) => FieldComponentFactory::make($definition),
-                                        static::groupedFields($get)['content.sections.seo_group'] ?? [],
+                                        static::groupedFields($get)['laravix::content.sections.seo_group'] ?? [],
                                     )),
                             ]),
-                        Tab::make(__('content.sections.builder'))
+                        Tab::make(__('laravix::content.sections.builder'))
                             ->hidden(fn (Get $get, ?Content $record): bool => ! (ContentTypeRegistry::find($get('type') ?? '')?->hasBuilder ?? false) || $record === null || filament()->getTenant()?->isHeadless())
                             ->schema([
-                                View::make('filament.partials.block-builder')
+                                View::make('laravix::filament.partials.block-builder')
                                     ->viewData(fn ($livewire) => [
                                         'record' => $livewire->record,
                                     ])
@@ -162,7 +162,7 @@ class ContentForm
     {
         return array_filter(
             static::groupedFields($get),
-            fn (string $group) => $group !== 'content.sections.seo_group',
+            fn (string $group) => $group !== 'laravix::content.sections.seo_group',
             ARRAY_FILTER_USE_KEY,
         );
     }
