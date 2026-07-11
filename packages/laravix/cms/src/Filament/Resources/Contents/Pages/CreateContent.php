@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * Laravix CMS — Copyright (C) 2026 Martin Koudela (laravix.com)
+ * Licensed under GPL-3.0-or-later. See LICENSE for details.
+ */
+
+namespace Laravix\Cms\Filament\Resources\Contents\Pages;
+
+use Laravix\Cms\Filament\Resources\Contents\ContentResource;
+use Laravix\Cms\Support\ContentTypeRegistry;
+use Laravix\Cms\Support\FieldRegistry;
+use Filament\Resources\Pages\CreateRecord;
+
+class CreateContent extends CreateRecord
+{
+    protected static string $resource = ContentResource::class;
+
+    protected array $fieldData = [];
+
+    protected function fillForm(): void
+    {
+        $this->callHook('beforeFill');
+
+        $type = request()->query('type');
+
+        $this->form->fill(
+            ContentTypeRegistry::has($type) ? ['type' => $type] : null
+        );
+
+        $this->callHook('afterFill');
+    }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $type = $data['type'] ?? null;
+
+        foreach (FieldRegistry::forContentType($type, filament()->getTenant()?->id) as $definition) {
+            $this->fieldData[$definition->key] = $data['field_'.$definition->key] ?? null;
+            unset($data['field_'.$definition->key]);
+        }
+
+        $data['created_by'] = auth()->id();
+
+        return $data;
+    }
+
+    protected function afterCreate(): void
+    {
+        foreach ($this->fieldData as $key => $value) {
+            $this->record->fields()->updateOrCreate(
+                ['key' => $key],
+                ['value' => $value],
+            );
+        }
+
+        $this->record->refreshSearchText();
+    }
+}

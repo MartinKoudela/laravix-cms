@@ -1,5 +1,5 @@
 @php
-    use App\Enums\ImageVariant;
+    use Laravix\Cms\Enums\ImageVariant;
     $imageMedia = !empty($image_id) ? ($mediaMap[$image_id] ?? null) : null;
     $paddingMap = ['none' => 'py-0', 'sm' => 'py-8', 'md' => 'py-16', 'lg' => 'py-24'];
     $paddingClass = $paddingMap[$padding ?? 'md'] ?? 'py-16';

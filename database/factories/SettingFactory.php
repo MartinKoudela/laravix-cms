@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Setting;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravix\Cms\Models\Setting;
 
 class SettingFactory extends Factory
 {

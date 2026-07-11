@@ -7,10 +7,10 @@
 
 namespace Laravix\Docs\Support;
 
-use App\Models\Content;
-use App\Models\Site;
-use App\Models\Taxonomy;
 use Illuminate\Support\Collection;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\Taxonomy;
 
 class DocsTree
 {

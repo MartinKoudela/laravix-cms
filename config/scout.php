@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Content;
+use Laravix\Cms\Models\Content;
 
 return [
 

@@ -7,14 +7,14 @@
 
 namespace Laravix\Changelog;
 
-use App\Support\BlockRegistry;
-use App\Support\FilamentPluginRegistry;
-use App\Support\HydratorRegistry;
-use App\Support\RouteRegistry;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravix\Changelog\Blocks\ChangelogBlock;
 use Laravix\Changelog\Http\Controllers\ChangelogController;
+use Laravix\Cms\Support\BlockRegistry;
+use Laravix\Cms\Support\FilamentPluginRegistry;
+use Laravix\Cms\Support\HydratorRegistry;
+use Laravix\Cms\Support\RouteRegistry;
 
 class ChangelogServiceProvider extends ServiceProvider
 {

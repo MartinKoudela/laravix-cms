@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Site;
-use App\Models\SiteApiToken;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\SiteApiToken;
 
 /**
  * @extends Factory<SiteApiToken>

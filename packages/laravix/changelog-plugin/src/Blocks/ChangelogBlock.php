@@ -7,7 +7,7 @@
 
 namespace Laravix\Changelog\Blocks;
 
-use App\Support\BlockDefinition;
+use Laravix\Cms\Support\BlockDefinition;
 
 class ChangelogBlock
 {

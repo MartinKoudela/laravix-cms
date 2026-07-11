@@ -2,7 +2,7 @@
 
 @section('content')
     @php
-        use App\Enums\ImageVariant;
+        use Laravix\Cms\Enums\ImageVariant;
         $hasBuilderContent = $content->grapesjs_html || ! empty($content->blocks);
     @endphp
 

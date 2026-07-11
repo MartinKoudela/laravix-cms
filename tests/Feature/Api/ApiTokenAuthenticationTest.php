@@ -1,10 +1,10 @@
 <?php
 
-use App\Enums\SiteMode;
-use App\Models\Site;
-use App\Models\SiteApiToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\SiteApiToken;
 
 function headlessSite(string $domain = 'headless.test'): Site
 {

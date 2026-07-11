@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Enums\SiteRole;
-use App\Models\Site;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\User;
 
 class DatabaseSeeder extends Seeder
 {

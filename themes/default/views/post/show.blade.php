@@ -2,7 +2,7 @@
 
 @section('content')
     @php
-        use App\Enums\ImageVariant;
+        use Laravix\Cms\Enums\ImageVariant;
         $extraFields = $content->fields->whereNotIn('key', $systemFieldKeys);
         $ogImageId = (int) ($content->fields->firstWhere('key', 'og_image')?->value ?? 0);
         $heroMedia = $ogImageId ? ($mediaMap[$ogImageId] ?? null) : null;

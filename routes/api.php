@@ -5,13 +5,13 @@
  * Licensed under GPL-3.0-or-later. See LICENSE for details.
  */
 
-use App\Http\Controllers\Api\V1\NavigationController;
-use App\Http\Controllers\Api\V1\PageController;
-use App\Http\Controllers\Api\V1\PostController;
-use App\Http\Controllers\Api\V1\SearchController;
-use App\Http\Controllers\Api\V1\SettingsController;
-use App\Http\Controllers\Api\V1\TaxonomyController;
 use Illuminate\Support\Facades\Route;
+use Laravix\Cms\Http\Controllers\Api\V1\NavigationController;
+use Laravix\Cms\Http\Controllers\Api\V1\PageController;
+use Laravix\Cms\Http\Controllers\Api\V1\PostController;
+use Laravix\Cms\Http\Controllers\Api\V1\SearchController;
+use Laravix\Cms\Http\Controllers\Api\V1\SettingsController;
+use Laravix\Cms\Http\Controllers\Api\V1\TaxonomyController;
 
 Route::middleware(['api.site', 'api.token', 'throttle:api'])->prefix('v1')->group(function (): void {
     Route::get('/pages', [PageController::class, 'index']);

@@ -7,10 +7,10 @@
 
 namespace Laravix\Changelog\Models;
 
-use App\Models\Site;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravix\Cms\Models\Site;
 
 class ChangelogRelease extends Model
 {

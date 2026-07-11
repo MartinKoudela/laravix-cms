@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Enums\ContentStatus;
-use App\Models\Content;
-use App\Models\Site;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\User;
 
 /**
  * @extends Factory<Content>
@@ -24,7 +24,7 @@ class ContentFactory extends Factory
             'title' => fake()->word(),
             'slug' => fake()->unique()->slug(),
             'status' => $status,
-            'published_at' =>  fake()->dateTimeBetween('-1 year'),
+            'published_at' => fake()->dateTimeBetween('-1 year'),
         ];
     }
 }

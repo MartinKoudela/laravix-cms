@@ -1,11 +1,11 @@
 <?php
 
-use App\Enums\SiteMode;
-use App\Filament\Resources\Settings\Pages\ManageSettings;
-use App\Models\Site;
-use App\Models\SiteApiToken;
-use App\Models\User;
 use Filament\Facades\Filament;
+use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Filament\Resources\Settings\Pages\ManageSettings;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\SiteApiToken;
+use Laravix\Cms\Models\User;
 use Livewire\Livewire;
 
 beforeEach(function () {

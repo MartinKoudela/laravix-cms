@@ -7,15 +7,15 @@
 
 namespace Laravix\Docs;
 
-use App\Enums\FieldType;
-use App\Support\ContentTypeDefinition;
-use App\Support\ContentTypeRegistry;
-use App\Support\FieldDefinition;
-use App\Support\FieldRegistry;
-use App\Support\RouteRegistry;
-use App\Support\TaxonomyTypeRegistry;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravix\Cms\Enums\FieldType;
+use Laravix\Cms\Support\ContentTypeDefinition;
+use Laravix\Cms\Support\ContentTypeRegistry;
+use Laravix\Cms\Support\FieldDefinition;
+use Laravix\Cms\Support\FieldRegistry;
+use Laravix\Cms\Support\RouteRegistry;
+use Laravix\Cms\Support\TaxonomyTypeRegistry;
 use Laravix\Docs\Http\Controllers\DocsController;
 use Laravix\Docs\Http\Controllers\DocsSearchController;
 

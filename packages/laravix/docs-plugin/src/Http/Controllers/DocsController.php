@@ -7,15 +7,15 @@
 
 namespace Laravix\Docs\Http\Controllers;
 
-use App\Models\Content;
-use App\Models\Site;
-use App\Models\Taxonomy;
-use App\Services\PageDataBuilder;
-use App\Services\SiteResolver;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\Taxonomy;
+use Laravix\Cms\Services\PageDataBuilder;
+use Laravix\Cms\Services\SiteResolver;
 use Laravix\Docs\MarkdownRenderer;
 use Laravix\Docs\Support\DocsTree;
 

@@ -1,9 +1,9 @@
 <?php
 
-use App\Enums\ContentStatus;
-use App\Models\Content;
-use App\Models\Site;
-use App\Models\User;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\User;
 
 test('the application returns a successful response', function () {
     $site = Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);

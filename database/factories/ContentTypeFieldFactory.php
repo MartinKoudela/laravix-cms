@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Enums\FieldType;
-use App\Models\ContentTypeField;
-use App\Models\Site;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravix\Cms\Enums\FieldType;
+use Laravix\Cms\Models\ContentTypeField;
+use Laravix\Cms\Models\Site;
 
 /**
  * @extends Factory<ContentTypeField>

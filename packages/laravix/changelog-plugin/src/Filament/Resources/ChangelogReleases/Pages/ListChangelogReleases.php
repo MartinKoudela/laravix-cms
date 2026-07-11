@@ -7,13 +7,13 @@
 
 namespace Laravix\Changelog\Filament\Resources\ChangelogReleases\Pages;
 
-use App\Models\Setting;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Support\Icons\Heroicon;
 use Laravix\Changelog\Filament\Resources\ChangelogReleases\ChangelogReleaseResource;
+use Laravix\Cms\Models\Setting;
 
 class ListChangelogReleases extends ListRecords
 {

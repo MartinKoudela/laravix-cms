@@ -1,11 +1,11 @@
 <?php
 
-use App\Enums\ContentStatus;
-use App\Enums\SiteMode;
-use App\Models\Content;
-use App\Models\Site;
-use App\Models\SiteApiToken;
-use App\Models\User;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\SiteApiToken;
+use Laravix\Cms\Models\User;
 
 test('application route wins over cms catch-all', function () {
     Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);

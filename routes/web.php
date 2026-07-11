@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\BuilderController;
-use App\Http\Controllers\CmsController;
-use App\Http\Controllers\InvitationController;
-use App\Http\Controllers\PreviewController;
-use App\Http\Controllers\SitemapController;
-use App\Http\Controllers\ThemePreviewController;
-use App\Support\RouteRegistry;
 use BezhanSalleh\LanguageSwitch\Http\Middleware\SwitchLanguageLocale;
 use Illuminate\Support\Facades\Route;
+use Laravix\Cms\Http\Controllers\BuilderController;
+use Laravix\Cms\Http\Controllers\CmsController;
+use Laravix\Cms\Http\Controllers\InvitationController;
+use Laravix\Cms\Http\Controllers\PreviewController;
+use Laravix\Cms\Http\Controllers\SitemapController;
+use Laravix\Cms\Http\Controllers\ThemePreviewController;
+use Laravix\Cms\Support\RouteRegistry;
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');

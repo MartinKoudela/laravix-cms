@@ -1,10 +1,10 @@
 <?php
 
-use App\Enums\ContentStatus;
-use App\Models\Content;
-use App\Models\Site;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\User;
 
 function makeContent(): Content
 {

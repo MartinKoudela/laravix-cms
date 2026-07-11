@@ -89,7 +89,7 @@ return [
     |
     */
 
-    'class_namespace' => 'App\\Livewire',
+    'class_namespace' => 'Laravix\Cms\\Livewire',
 
     /*
     |---------------------------------------------------------------------------

@@ -7,11 +7,11 @@
 
 namespace Laravix\Changelog\Http\Controllers;
 
-use App\Models\Setting;
-use App\Services\SiteResolver;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Laravix\Changelog\Models\ChangelogRelease;
+use Laravix\Cms\Models\Setting;
+use Laravix\Cms\Services\SiteResolver;
 
 class ChangelogController
 {

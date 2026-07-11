@@ -7,13 +7,13 @@
 
 namespace Laravix\Changelog;
 
-use App\Models\Content;
-use App\Models\Site;
-use App\Support\BlockHydrator;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
 use Laravix\Changelog\Models\ChangelogRelease;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Support\BlockHydrator;
 
 class ChangelogHydrator implements BlockHydrator
 {

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Taxonomy;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Laravix\Cms\Models\Taxonomy;
 
 class TaxonomySeeder extends Seeder
 {

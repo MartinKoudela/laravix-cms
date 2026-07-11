@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @php use App\Enums\ImageVariant; @endphp
+    @php use Laravix\Cms\Enums\ImageVariant; @endphp
     @if($faviconMedia)
         <link rel="icon" href="{{ $faviconMedia->variantUrl(ImageVariant::FAVICON) }}">
     @endif
@@ -242,7 +242,7 @@
                             $urlPath  = parse_url($item['url'] ?? '', PHP_URL_PATH) ?? '';
                             $isActive = $urlPath && ($currentPath === $urlPath || ($urlPath !== '/' && str_starts_with($currentPath, rtrim($urlPath, '/'))));
                             $linkColor = ($isActive && $hActive) ? $hActive : $hText;
-                            $hIconSvg = ($hIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                            $hIconSvg = ($hIconPos && ! empty($item['icon'])) ? \Laravix\Cms\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
                             $linkStyle = collect([$hLinkFontStyle, 'color:' . $linkColor, $hIconSvg ? 'display:inline-flex;align-items:center;gap:5px' : null])->filter()->implode(';');
                             $hLinkText = $hIconPos === 'only' && $hIconSvg ? '' : e($item['label']);
                             $hLinkHtml = match($hIconPos) {
@@ -263,7 +263,7 @@
                                      style="background-color:{{ $hDropdownBg }};border:1px solid {{ $hBorderColor }}">
                                     @foreach ($item['children'] as $child)
                                         @php
-                                            $cIconSvg = ($hIconPos && ! empty($child['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($child['icon']) : '';
+                                            $cIconSvg = ($hIconPos && ! empty($child['icon'])) ? \Laravix\Cms\Support\NavigationIconRegistry::renderSvg($child['icon']) : '';
                                             $cLinkText = $hIconPos === 'only' && $cIconSvg ? '' : e($child['label']);
                                             $cLinkHtml = match($hIconPos) {
                                                 'before' => $cIconSvg . '<span>' . $cLinkText . '</span>',
@@ -305,7 +305,7 @@
                         $urlPath  = parse_url($item['url'] ?? '', PHP_URL_PATH) ?? '';
                         $isActive = $urlPath && ($currentPath === $urlPath || ($urlPath !== '/' && str_starts_with($currentPath, rtrim($urlPath, '/'))));
                         $linkColor = ($isActive && $hActive) ? $hActive : $hText;
-                        $mIconSvg = ($hIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                        $mIconSvg = ($hIconPos && ! empty($item['icon'])) ? \Laravix\Cms\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
                         $mLinkText = $hIconPos === 'only' && $mIconSvg ? '' : e($item['label']);
                         $mLinkHtml = match($hIconPos) {
                             'before' => $mIconSvg . '<span>' . $mLinkText . '</span>',
@@ -357,7 +357,7 @@
                 <nav class="{{ $fLayout === 'stacked' ? 'flex flex-col items-center gap-2' : 'flex flex-wrap justify-center gap-5' }}">
                     @foreach ($navigations['footer'] ?? [] as $item)
                         @php
-                            $fIconSvg = ($fIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                            $fIconSvg = ($fIconPos && ! empty($item['icon'])) ? \Laravix\Cms\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
                             $fLinkText = $fIconPos === 'only' && $fIconSvg ? '' : e($item['label']);
                             $fLinkHtml = match($fIconPos) {
                                 'before' => $fIconSvg . '<span>' . $fLinkText . '</span>',

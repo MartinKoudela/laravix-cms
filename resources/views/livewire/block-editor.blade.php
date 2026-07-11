@@ -88,7 +88,7 @@
                         data-index="{{ $index }}"
                     >
                         <div style="display:flex; align-items:center; justify-content:center; width:2.25rem; height:2.25rem; border-radius:0.5rem; background:#f3f4f6; color:#6b7280; flex-shrink:0;">
-                            @php $def = \App\Support\BlockRegistry::all()[$block['type']] ?? null; @endphp
+                            @php $def = \Laravix\Cms\Support\BlockRegistry::all()[$block['type']] ?? null; @endphp
                             @if($def?->icon)
                                 <x-filament::icon :icon="$def->icon" style="width:1rem;height:1rem;" />
                             @else
@@ -134,7 +134,7 @@
                 {{ __('blocks.actions.back') }}
             </button>
             <span style="font-size:0.875rem; font-weight:600; color:#374151; text-transform:capitalize;">
-                @php $def = \App\Support\BlockRegistry::all()[$blocks[$editingIndex]['type'] ?? ''] ?? null; @endphp
+                @php $def = \Laravix\Cms\Support\BlockRegistry::all()[$blocks[$editingIndex]['type'] ?? ''] ?? null; @endphp
                 {{ $def ? __($def->label) : ($blocks[$editingIndex]['type'] ?? '') }}
             </span>
         </div>

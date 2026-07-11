@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Site;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Laravix\Cms\Models\Site;
 
 class SiteSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class SiteSeeder extends Seeder
         // defailt localhost domain for docker or other server
         Site::factory()->create([
             'name' => 'localhost',
-            'domain' => 'localhost'
+            'domain' => 'localhost',
         ]);
 
         Site::factory()->count(6)->create();

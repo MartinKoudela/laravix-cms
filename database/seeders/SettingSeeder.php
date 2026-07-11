@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Setting;
-use App\Models\Site;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Laravix\Cms\Models\Setting;
+use Laravix\Cms\Models\Site;
 
 class SettingSeeder extends Seeder
 {

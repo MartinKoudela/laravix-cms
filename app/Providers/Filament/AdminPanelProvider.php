@@ -7,10 +7,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\EditProfile;
-use App\Filament\Pages\Tenancy\RegisterSite;
-use App\Models\Site;
-use App\Support\FilamentPluginRegistry;
 use Devonab\FilamentEasyFooter\EasyFooterPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -30,6 +26,10 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Laravix\Cms\Filament\Pages\EditProfile;
+use Laravix\Cms\Filament\Pages\Tenancy\RegisterSite;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Support\FilamentPluginRegistry;
 use Promethys\Revive\RevivePlugin;
 
 class AdminPanelProvider extends PanelProvider
@@ -58,12 +58,12 @@ class AdminPanelProvider extends PanelProvider
             ->profile(EditProfile::class)
             ->tenant(Site::class, slugAttribute: 'id')
             ->tenantRegistration(RegisterSite::class)
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
+            ->discoverResources(in: base_path('packages/laravix/cms/src/Filament/Resources'), for: 'Laravix\Cms\Filament\Resources')
+            ->discoverPages(in: base_path('packages/laravix/cms/src/Filament/Pages'), for: 'Laravix\Cms\Filament\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
+            ->discoverWidgets(in: base_path('packages/laravix/cms/src/Filament/Widgets'), for: 'Laravix\Cms\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
             ])

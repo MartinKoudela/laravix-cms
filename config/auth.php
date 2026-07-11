@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use Laravix\Cms\Models\User;
 
 return [
 

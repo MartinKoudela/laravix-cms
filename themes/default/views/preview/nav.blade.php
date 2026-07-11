@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @php use App\Enums\ImageVariant; @endphp
+    @php use Laravix\Cms\Enums\ImageVariant; @endphp
 
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -180,7 +180,7 @@
                             $urlPath  = parse_url($item['url'] ?? '', PHP_URL_PATH) ?? '';
                             $isActive = $urlPath && $currentPath === $urlPath;
                             $linkColor = ($isActive && $hActive) ? $hActive : $hText;
-                            $hIconSvg = ($hIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                            $hIconSvg = ($hIconPos && ! empty($item['icon'])) ? \Laravix\Cms\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
                             $linkStyle = collect([$hLinkFontStyle, 'color:'.$linkColor, $hIconSvg ? 'display:inline-flex;align-items:center;gap:5px' : null])->filter()->implode(';');
                             $hLinkText = $hIconPos === 'only' && $hIconSvg ? '' : e($item['label']);
                             $hLinkHtml = match($hIconPos) {
@@ -233,7 +233,7 @@
                 <nav class="{{ $fLayout === 'stacked' ? 'flex flex-col items-center gap-2' : 'flex flex-wrap justify-center gap-5' }}">
                     @foreach ($navigations['footer'] ?? [] as $item)
                         @php
-                            $fIconSvg = ($fIconPos && ! empty($item['icon'])) ? \App\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
+                            $fIconSvg = ($fIconPos && ! empty($item['icon'])) ? \Laravix\Cms\Support\NavigationIconRegistry::renderSvg($item['icon']) : '';
                             $fLinkText = $fIconPos === 'only' && $fIconSvg ? '' : e($item['label']);
                             $fLinkHtml = match($fIconPos) {
                                 'before' => $fIconSvg.'<span>'.$fLinkText.'</span>',

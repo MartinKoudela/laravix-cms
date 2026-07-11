@@ -1,5 +1,5 @@
 @php
-    use App\Enums\ImageVariant;
+    use Laravix\Cms\Enums\ImageVariant;
     $paddingMap = ['none' => 'py-0', 'sm' => 'py-4', 'md' => 'py-8', 'lg' => 'py-16'];
     $paddingClass = $paddingMap[$padding ?? 'md'] ?? 'py-8';
 @endphp

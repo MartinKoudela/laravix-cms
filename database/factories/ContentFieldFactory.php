@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Content;
-use App\Models\ContentField;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Models\ContentField;
 
 /**
  * @extends Factory<ContentField>

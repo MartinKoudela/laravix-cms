@@ -5,7 +5,7 @@
         return;
     }
 
-    $actions = \App\Support\FastActions::all($tenant->id);
+    $actions = \Laravix\Cms\Support\FastActions::all($tenant->id);
 @endphp
 
 @if (count($actions))

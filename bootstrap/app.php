@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Middleware\AuthenticateApiToken;
-use App\Http\Middleware\HandleRedirects;
-use App\Http\Middleware\ResolveSiteForApi;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Laravix\Cms\Http\Middleware\AuthenticateApiToken;
+use Laravix\Cms\Http\Middleware\HandleRedirects;
+use Laravix\Cms\Http\Middleware\ResolveSiteForApi;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(

@@ -7,10 +7,10 @@
 
 namespace Laravix\Docs\Http\Controllers;
 
-use App\Models\Content;
-use App\Services\SiteResolver;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Laravix\Cms\Models\Content;
+use Laravix\Cms\Services\SiteResolver;
 use Laravix\Docs\Support\DocsTree;
 
 class DocsSearchController
