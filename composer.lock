@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4533e8d05c4c7605b3c66230b5e1d51",
+    "content-hash": "4cefc9b79b1cb2ba71c722be6ea24102",
     "packages": [
         {
             "name": "bezhansalleh/filament-language-switch",
@@ -2962,7 +2962,7 @@
         },
         {
             "name": "laravix/changelog-plugin",
-            "version": "dev-main",
+            "version": "dev-restructure/core-package",
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/changelog-plugin",
@@ -3000,8 +3000,59 @@
             }
         },
         {
+            "name": "laravix/cms",
+            "version": "dev-restructure/core-package",
+            "dist": {
+                "type": "path",
+                "url": "packages/laravix/cms",
+                "reference": "35c6ea368522e7eed9fe4a08b863295750ef6cec"
+            },
+            "require": {
+                "bezhansalleh/filament-language-switch": "^4.3",
+                "devonab/filament-easy-footer": "^2.0",
+                "ext-fileinfo": "*",
+                "filament/filament": "^5.0",
+                "http-interop/http-factory-guzzle": "^1.2",
+                "intervention/image-laravel": "^4.0",
+                "laravel/framework": "^13.0",
+                "laravel/scout": "^11.3",
+                "meilisearch/meilisearch-php": "^1.16",
+                "php": "^8.4",
+                "promethys/revive": "^3.0",
+                "spatie/laravel-activitylog": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravix\\Cms\\CmsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravix\\Cms\\": "src/"
+                }
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "Laravix CMS core — a multi-tenant content management system built on Laravel and Filament.",
+            "keywords": [
+                "cms",
+                "content-management",
+                "filament",
+                "laravel",
+                "multi-tenant"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "laravix/docs-plugin",
-            "version": "dev-main",
+            "version": "dev-restructure/core-package",
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/docs-plugin",
@@ -12502,6 +12553,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "laravix/changelog-plugin": 20,
+        "laravix/cms": 20,
         "laravix/docs-plugin": 20
     },
     "prefer-stable": true,
