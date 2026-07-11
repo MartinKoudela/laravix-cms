@@ -8,6 +8,9 @@
 namespace Laravix\Cms;
 
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
+use Filament\Support\Assets\Js;
+use Filament\Support\Assets\Theme;
+use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -147,6 +150,7 @@ class CmsServiceProvider extends ServiceProvider
 
         $this->registerMiddleware();
         $this->registerRoutes();
+        $this->registerAssets();
 
         RateLimiter::for('api', function (Request $request) {
             $token = $request->attributes->get('apiToken');
@@ -198,6 +202,26 @@ class CmsServiceProvider extends ServiceProvider
                 $schedule->command('cms:publish-scheduled')->everyMinute();
             });
         }
+    }
+
+    private function registerAssets(): void
+    {
+        FilamentAsset::register([
+            Theme::make('laravix-admin', __DIR__.'/../dist/filament-theme.css'),
+            Js::make('laravix-admin', __DIR__.'/../dist/filament-app.js'),
+        ], 'laravix/cms');
+
+        $this->publishes([
+            __DIR__.'/../dist' => public_path('vendor/laravix'),
+        ], 'laravix-assets');
+
+        $this->publishes([
+            __DIR__.'/../resources/themes/default' => base_path('themes/default'),
+        ], 'laravix-theme');
+
+        $this->publishes([
+            __DIR__.'/../resources/views/overrides/tenant-menu.blade.php' => resource_path('views/vendor/filament-panels/components/tenant-menu.blade.php'),
+        ], 'laravix-views');
     }
 
     private function registerMiddleware(): void

@@ -16,6 +16,9 @@
 /public/build
 /public/hot
 /public/storage
+/public/vendor/laravix
+/public/css/laravix
+/public/js/laravix
 /storage/*.key
 /storage/pail
 /vendor

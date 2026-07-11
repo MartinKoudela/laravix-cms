@@ -1,9 +1,9 @@
-@import '../../../../vendor/filament/filament/resources/css/theme.css';
+@import '../../../../../../../vendor/filament/filament/resources/css/theme.css';
 
-@source '../../../../app/Filament/**/*';
-@source '../../../../resources/views/filament/**/*';
-@source '../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
-@source '../../../../vendor/bezhansalleh/filament-language-switch/**';
+@source '../../../../src/Filament/**/*';
+@source '../../../views/filament/**/*';
+@source '../../../../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
+@source '../../../../../../../vendor/bezhansalleh/filament-language-switch/**';
 
 :root {
     --lx-brand: #ff0465;

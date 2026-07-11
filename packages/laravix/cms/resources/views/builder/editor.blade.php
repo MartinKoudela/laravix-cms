@@ -56,7 +56,7 @@
             data-save-url="{{ route('builder.save', [$site, $content]) }}"
             data-upload-url="{{ route('builder.upload', $site) }}"
             data-csrf="{{ csrf_token() }}"
-            data-canvas-css="{{ Vite::asset('resources/css/app.css') }}"
+            data-canvas-css="{{ \Laravix\Cms\Laravix::asset('app.css') }}"
             data-media-items="{{ json_encode($mediaItems) }}"
             data-gjs-blocks="{{ json_encode($gjsBlocks) }}"
             data-trans="{{ json_encode(__('builder')) }}"
@@ -65,6 +65,7 @@
 
 </div>
 
-@vite('resources/js/builder.js')
+<link rel="stylesheet" href="{{ \Laravix\Cms\Laravix::asset('builder.css') }}">
+<script type="module" src="{{ \Laravix\Cms\Laravix::asset('builder.js') }}"></script>
 </body>
 </html>
