@@ -7,13 +7,13 @@
 
 namespace Laravix\Cms\Console\Commands;
 
-use Laravix\Cms\Enums\ContentStatus;
-use Laravix\Cms\Models\Content;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Models\Content;
 
-#[Signature('cms:publish-scheduled')]
+#[Signature('laravix:publish-scheduled')]
 #[Description('Publish scheduled content whose published_at date has passed.')]
 class PublishScheduledContent extends Command
 {

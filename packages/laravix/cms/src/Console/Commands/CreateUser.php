@@ -7,20 +7,20 @@
 
 namespace Laravix\Cms\Console\Commands;
 
-use Laravix\Cms\Enums\SiteRole;
-use Laravix\Cms\Models\Site;
-use Laravix\Cms\Models\User;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
+use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\User;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
 
-#[Signature('cms:user {--name=} {--email=} {--password=} {--super : Create a super admin with access to all sites}')]
+#[Signature('laravix:user {--name=} {--email=} {--password=} {--super : Create a super admin with access to all sites}')]
 #[Description('Create a user that can log into the admin panel.')]
 class CreateUser extends Command
 {

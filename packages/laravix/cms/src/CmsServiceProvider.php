@@ -77,7 +77,9 @@ use Laravix\Cms\Blocks\Grapesjs\YoutubeBlock;
 use Laravix\Cms\Blocks\HeroBlock;
 use Laravix\Cms\Blocks\TextBlock;
 use Laravix\Cms\Console\Commands\CreateUser;
+use Laravix\Cms\Console\Commands\Install;
 use Laravix\Cms\Console\Commands\PublishScheduledContent;
+use Laravix\Cms\Console\Commands\Upgrade;
 use Laravix\Cms\Enums\FieldType;
 use Laravix\Cms\Http\Middleware\AuthenticateApiToken;
 use Laravix\Cms\Http\Middleware\HandleRedirects;
@@ -117,6 +119,7 @@ class CmsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/laravix.php', 'laravix');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravix');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'laravix');
@@ -195,11 +198,13 @@ class CmsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateUser::class,
+                Install::class,
                 PublishScheduledContent::class,
+                Upgrade::class,
             ]);
 
             $this->callAfterResolving(Schedule::class, function (Schedule $schedule): void {
-                $schedule->command('cms:publish-scheduled')->everyMinute();
+                $schedule->command('laravix:publish-scheduled')->everyMinute();
             });
         }
     }
@@ -222,6 +227,10 @@ class CmsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views/overrides/tenant-menu.blade.php' => resource_path('views/vendor/filament-panels/components/tenant-menu.blade.php'),
         ], 'laravix-views');
+
+        $this->publishes([
+            __DIR__.'/../config/laravix.php' => config_path('laravix.php'),
+        ], 'laravix-config');
     }
 
     private function registerMiddleware(): void

@@ -116,7 +116,7 @@
                     @php
                         $tenantImage = filament()->getTenantAvatarUrl($tenant);
                         $tenantName = filament()->getTenantName($tenant);
-                        $tenantUrl = config('app.cross_domain_switcher')
+                        $tenantUrl = config('laravix.cross_domain_switcher')
                             ? 'https://'.$tenant->domain.'/'.filament()->getCurrentPanel()->getPath().'/'.$tenant->getKey()
                             : filament()->getUrl($tenant);
                     @endphp

@@ -7,12 +7,28 @@
 
 namespace Laravix\Cms;
 
+use Composer\InstalledVersions;
+use OutOfBoundsException;
+
 class Laravix
 {
+    public static function version(): string
+    {
+        try {
+            return InstalledVersions::getPrettyVersion('laravix/cms') ?? 'dev';
+        } catch (OutOfBoundsException) {
+            return 'dev';
+        }
+    }
+
     public static function asset(string $file): string
     {
-        $path = public_path('vendor/laravix/'.$file);
-        $version = is_file($path) ? filemtime($path) : null;
+        $version = static::version();
+
+        if (str_starts_with($version, 'dev')) {
+            $path = public_path('vendor/laravix/'.$file);
+            $version = is_file($path) ? (string) filemtime($path) : null;
+        }
 
         return asset('vendor/laravix/'.$file).($version ? '?v='.$version : '');
     }

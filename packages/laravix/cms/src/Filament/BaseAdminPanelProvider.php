@@ -27,6 +27,7 @@ use Illuminate\Support\HtmlString;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Laravix\Cms\Filament\Pages\EditProfile;
 use Laravix\Cms\Filament\Pages\Tenancy\RegisterSite;
+use Laravix\Cms\Laravix;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Support\FilamentPluginRegistry;
 use Promethys\Revive\RevivePlugin;
@@ -42,6 +43,7 @@ abstract class BaseAdminPanelProvider extends PanelProvider
             ->theme('laravix-admin')
             ->renderHook('panels::head.end', fn () => new HtmlString('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">'))
             ->renderHook('panels::topbar.end', fn () => view('laravix::filament.partials.fast-actions'))
+            ->renderHook('panels::body.start', fn () => view('laravix::filament.partials.update-banner'))
             ->login()
             ->brandName('Laravix CMS')
             ->brandLogo(asset('laravix-logo-black.svg'))
@@ -94,7 +96,7 @@ abstract class BaseAdminPanelProvider extends PanelProvider
 
                 EasyFooterPlugin::make()
                     ->withSentence(new HtmlString(
-                        '<img src="/favicon.ico" style="" alt="Laravel Logo" width="20" height="20">Laravix v'.config('app.version')
+                        '<img src="/favicon.ico" style="" alt="Laravix Logo" width="20" height="20">Laravix '.Laravix::version()
                     ))
                     ->withLinks([
                         ['title' => 'laravix::panel.footer.website', 'url' => 'https://laravix.com'],
