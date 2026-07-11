@@ -2966,9 +2966,10 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/changelog-plugin",
-                "reference": "2854c30a7499a1bcd0c39c6c1cc73323b981e90c"
+                "reference": "8931f43c2109e539eb47bc685471bad107c0e4b8"
             },
             "require": {
+                "laravix/cms": "@dev",
                 "php": "^8.4"
             },
             "type": "library",
@@ -3058,9 +3059,10 @@
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/docs-plugin",
-                "reference": "0a699f75349d5aac0a8efa8f388e6d9045f83fa2"
+                "reference": "35db6e6d718a0147f76a34d96ed5728f6a73bf32"
             },
             "require": {
+                "laravix/cms": "@dev",
                 "php": "^8.4"
             },
             "type": "library",
