@@ -2962,7 +2962,7 @@
         },
         {
             "name": "laravix/changelog-plugin",
-            "version": "dev-restructure/core-package",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/changelog-plugin",
@@ -3002,7 +3002,7 @@
         },
         {
             "name": "laravix/cms",
-            "version": "dev-restructure/core-package",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/cms",
@@ -3055,7 +3055,7 @@
         },
         {
             "name": "laravix/docs-plugin",
-            "version": "dev-restructure/core-package",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/laravix/docs-plugin",

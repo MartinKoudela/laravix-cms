@@ -12,14 +12,17 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Laravix\Cms\Console\Concerns\RendersBanner;
 use Laravix\Cms\Database\Seeders\DemoSeeder;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
+use Symfony\Component\Console\Terminal;
 use Throwable;
 
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\select;
+use function Laravel\Prompts\spin;
 use function Laravel\Prompts\text;
 
 #[Signature('laravix:install
@@ -33,8 +36,14 @@ use function Laravel\Prompts\text;
 #[Description('Interactive first-run setup: database, assets, first site and super admin.')]
 class Install extends Command
 {
+    use RendersBanner;
+
     public function handle(): int
     {
+        $startedAt = microtime(true);
+
+        $this->renderBanner();
+
         $this->components->info('Laravix CMS installer');
 
         if (! $this->setUpDatabase()) {
@@ -46,7 +55,7 @@ class Install extends Command
         }
 
         $this->call('migrate', ['--force' => true]);
-        $this->callSilently('storage:link');
+        $this->components->task('Linking storage', fn () => $this->callSilently('storage:link') === self::SUCCESS);
 
         $this->publishAssets();
 
@@ -58,16 +67,32 @@ class Install extends Command
         }
 
         if ($this->option('demo') || (! $this->option('no-interaction') && confirm('Seed demo content?', default: true))) {
-            app(DemoSeeder::class)->run($site, $admin);
+            spin(fn () => app(DemoSeeder::class)->run($site, $admin), 'Seeding demo content...');
             info('Demo content created.');
+        } else {
+            $this->components->warn('Demo content skipped.');
         }
 
-        $this->components->info('Laravix CMS is installed.');
-        $this->components->twoColumnDetail('Site', 'https://'.$site->domain);
-        $this->components->twoColumnDetail('Admin panel', url('/admin'));
-        $this->components->twoColumnDetail('Login', $admin->email);
+        $this->renderSummary($site, $admin, $startedAt);
 
         return self::SUCCESS;
+    }
+
+    private function renderSummary(Site $site, User $admin, float $startedAt): void
+    {
+        $elapsed = round(microtime(true) - $startedAt, 1);
+        $rule = str_repeat('━', min((new Terminal)->getWidth(), 60));
+
+        $this->newLine();
+        $this->line("<fg=#ff0465>{$rule}</>");
+        $this->line("  <options=bold>Laravix CMS is installed</>  <fg=#888888>{$elapsed}s</>");
+        $this->newLine();
+        $this->line('  Site          '.$this->hyperlink('https://'.$site->domain));
+        $this->line('  Admin panel   '.$this->hyperlink(url('/admin')));
+        $this->line('  Login         '.$admin->email);
+        $this->newLine();
+        $this->line("<fg=#ff0465>{$rule}</>");
+        $this->newLine();
     }
 
     private function setUpDatabase(): bool
@@ -178,16 +203,24 @@ class Install extends Command
 
     private function publishAssets(): void
     {
-        $this->callSilently('vendor:publish', ['--tag' => 'laravix-assets', '--force' => true]);
-        $this->callSilently('vendor:publish', ['--tag' => 'laravix-config']);
-        $this->callSilently('vendor:publish', ['--tag' => 'laravix-views']);
-        $this->callSilently('filament:assets');
+        $this->components->task('Publishing assets', function () {
+            $this->callSilently('vendor:publish', ['--tag' => 'laravix-assets', '--force' => true]);
+            $this->callSilently('vendor:publish', ['--tag' => 'laravix-config']);
+            $this->callSilently('vendor:publish', ['--tag' => 'laravix-views']);
+            $this->callSilently('filament:assets');
 
-        if (! is_dir(base_path('themes/default'))) {
-            $this->callSilently('vendor:publish', ['--tag' => 'laravix-theme']);
+            return true;
+        });
+
+        if (is_dir(base_path('themes/default'))) {
+            $this->components->warn('Theme already published — skipping.');
+        } else {
+            $this->components->task('Publishing default theme', function () {
+                $this->callSilently('vendor:publish', ['--tag' => 'laravix-theme']);
+
+                return true;
+            });
         }
-
-        info('Assets published.');
     }
 
     private function createFirstSite(): Site

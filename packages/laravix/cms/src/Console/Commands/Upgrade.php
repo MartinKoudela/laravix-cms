@@ -40,11 +40,15 @@ class Upgrade extends Command
             return self::FAILURE;
         }
 
-        if (! $this->runStreaming([...$composer, 'update', 'laravix/cms', '--with-all-dependencies', '--no-interaction'])) {
+        $composerOutput = null;
+
+        if (! $this->runStreaming([...$composer, 'update', 'laravix/cms', '--with-all-dependencies', '--no-interaction'], $composerOutput)) {
             $this->components->error('composer update failed — nothing else was touched.');
 
             return self::FAILURE;
         }
+
+        $this->renderPackageChanges($composerOutput);
 
         foreach ([
             ['migrate', '--force'],
@@ -85,16 +89,43 @@ class Upgrade extends Command
         return null;
     }
 
-    private function runStreaming(array $command): bool
+    private function runStreaming(array $command, ?string &$capturedOutput = null): bool
     {
-        $this->components->task(implode(' ', array_slice($command, -3)), function () use ($command, &$ok) {
+        $buffer = '';
+
+        $this->components->task(implode(' ', array_slice($command, -3)), function () use ($command, &$ok, &$buffer) {
             $process = new Process($command, base_path(), null, null, 600);
-            $process->run(fn ($type, $buffer) => $this->output->write($buffer));
+            $process->run(function ($type, $chunk) use (&$buffer) {
+                $buffer .= $chunk;
+                $this->output->write($chunk);
+            });
 
             return $ok = $process->isSuccessful();
         });
 
+        $capturedOutput = $buffer;
+
         return (bool) $ok;
+    }
+
+    private function renderPackageChanges(string $output): void
+    {
+        preg_match_all('/- (?:Upgrading|Downgrading) (\S+) \(([^)]+) => ([^)]+)\)/', $output, $matches, PREG_SET_ORDER);
+
+        if ($matches === []) {
+            return;
+        }
+
+        $this->newLine();
+        $this->components->info('Package changes');
+
+        foreach ($matches as [, $package, $from, $to]) {
+            $color = $package === 'laravix/cms' ? '#ff0465' : 'white';
+
+            $this->line("  <fg={$color}>{$package}</>  <fg=gray>{$from}</> → <fg=green>{$to}</>");
+        }
+
+        $this->newLine();
     }
 
     private function installedVersionFromComposer(array $composer): ?string
