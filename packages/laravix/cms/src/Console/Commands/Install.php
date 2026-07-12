@@ -7,6 +7,7 @@
 
 namespace Laravix\Cms\Console\Commands;
 
+use Dotenv\Dotenv;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -127,7 +128,7 @@ class Install extends Command
     {
         config(['database.default' => $driver]);
 
-        foreach (parse_ini_file(base_path('.env'), false, INI_SCANNER_RAW) ?: [] as $key => $value) {
+        foreach (Dotenv::parse(file_get_contents(base_path('.env'))) as $key => $value) {
             match ($key) {
                 'DB_HOST' => config(["database.connections.{$driver}.host" => $value]),
                 'DB_PORT' => config(["database.connections.{$driver}.port" => $value]),
