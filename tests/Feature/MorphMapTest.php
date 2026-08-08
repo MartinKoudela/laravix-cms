@@ -78,3 +78,39 @@ test('morph alias migration rewrites legacy class names', function () {
         ->and($activity->causer_type)->toBe('user')
         ->and($item->model_type)->toBe('taxonomy');
 });
+
+class AppUser extends User
+{
+    protected $table = 'users';
+}
+
+test('a subclassed user model still resolves to the user morph alias', function () {
+    expect((new AppUser)->getMorphClass())->toBe('user');
+});
+
+test('a subclassed user can cause activity under the enforced morph map', function () {
+    $site = Site::factory()->create();
+    $user = AppUser::create([
+        'name' => 'App User',
+        'email' => 'app-user@example.test',
+        'password' => bcrypt('secret'),
+    ]);
+
+    auth()->login($user);
+
+    $content = Content::factory()->create([
+        'site_id' => $site->id,
+        'created_by' => $user->id,
+        'type' => 'page',
+        'status' => ContentStatus::PUBLISHED,
+        'published_at' => now()->subDay(),
+    ]);
+
+    $activity = DB::table('activity_log')
+        ->where('subject_id', $content->id)
+        ->orderByDesc('id')
+        ->first();
+
+    expect($activity->causer_type)->toBe('user')
+        ->and($activity->causer_id)->toBe($user->id);
+});
