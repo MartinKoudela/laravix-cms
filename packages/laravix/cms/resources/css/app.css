@@ -3,6 +3,7 @@
 @plugin "@tailwindcss/typography";
 
 @source '../../../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source not '../../dist';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 @source '../../../../../themes/**/*.blade.php';

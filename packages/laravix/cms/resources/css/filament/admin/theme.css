@@ -1,5 +1,6 @@
 @import '../../../../../../../vendor/filament/filament/resources/css/theme.css';
 
+@source not '../../../../dist';
 @source '../../../../src/Filament/**/*';
 @source '../../../views/filament/**/*';
 @source '../../../../../../../vendor/devonab/filament-easy-footer/resources/views/**/*';
