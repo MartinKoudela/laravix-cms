@@ -12,21 +12,18 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Laravix\Cms\Console\Concerns\CtaReference;
 use Laravix\Cms\Console\Concerns\RendersBanner;
-use Laravix\Cms\Database\Seeders\DemoSeeder;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
 use Symfony\Component\Console\Terminal;
 use Throwable;
 
-use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\select;
-use function Laravel\Prompts\spin;
 use function Laravel\Prompts\text;
 
 #[Signature('laravix:install
-    {--demo : Seed demo content into the first site}
     {--force : Run even when sites already exist}
     {--site-name= : Name of the first site}
     {--domain= : Domain of the first site}
@@ -36,6 +33,7 @@ use function Laravel\Prompts\text;
 #[Description('Interactive first-run setup: database, assets, first site and super admin.')]
 class Install extends Command
 {
+    use CtaReference;
     use RendersBanner;
 
     public function handle(): int
@@ -66,14 +64,11 @@ class Install extends Command
             return self::FAILURE;
         }
 
-        if ($this->option('demo') || (! $this->option('no-interaction') && confirm('Seed demo content?', default: true))) {
-            spin(fn () => app(DemoSeeder::class)->run($site, $admin), 'Seeding demo content...');
-            info('Demo content created.');
-        } else {
-            $this->components->warn('Demo content skipped.');
-        }
-
         $this->renderSummary($site, $admin, $startedAt);
+
+        if (! $this->option('no-interaction')) {
+            $this->offerPromo();
+        }
 
         return self::SUCCESS;
     }
