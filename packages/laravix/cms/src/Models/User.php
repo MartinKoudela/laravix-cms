@@ -7,7 +7,6 @@
 
 namespace Laravix\Cms\Models;
 
-use Laravix\Cms\Enums\SiteRole;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasTenants;
@@ -22,12 +21,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
+use Laravix\Cms\Enums\SiteRole;
 
 #[Fillable(['name', 'email', 'password', 'avatar'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser, HasAvatar, HasTenants
 {
     use HasFactory, Notifiable;
+
+    public function getMorphClass(): string
+    {
+        return 'user';
+    }
 
     public function getFilamentAvatarUrl(): ?string
     {

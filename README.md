@@ -47,7 +47,7 @@ Content is built visually in a **drag-and-drop page builder** with 45+ ready-mad
 - **One panel, many sites.** True multi-tenancy is the foundation, not an afterthought. Users get per-site roles, content and settings never leak between tenants, and super admins oversee everything from one place.
 - **Visual building without lock-in.** The GrapesJS-powered builder ships with hero sections, pricing tables, galleries, sliders, forms, FAQs, and dozens more blocks — and every block is a PHP class you can extend or replace.
 - **Themed or headless, per site.** Ship a classic Blade-themed website today and a Nuxt/Next frontend tomorrow, from the same installation. The `/api/v1` endpoints expose pages, posts, taxonomies, navigation, settings, and search. Access requires an API token — create named tokens per site in **Settings → API** and send them as an `Authorization: Bearer lvx_…` header (plus `X-Site-Domain` when not calling through the site's own domain).
-- **Extensible by design.** Registries for blocks, content types, fields, taxonomies, navigation, settings, and routes let plugins hook into every layer. The first-party [Docs](packages/laravix/docs-plugin) and [Changelog](packages/laravix/changelog-plugin) plugins are built on the same API — laravix.com itself runs on them.
+- **Extensible by design.** Registries for blocks, content types, fields, taxonomies, navigation, settings, and routes let plugins hook into every layer — the docs and changelog sections of laravix.com are built as plugins on this same API.
 - **Multilingual everywhere.** Translatable content, localized navigation, and an admin panel in English, Czech and Slovak — more on the way.
 
 ## Feature highlights

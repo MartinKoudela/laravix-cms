@@ -10,4 +10,5 @@ use Laravix\Cms\Http\Controllers\CmsController;
 
 Route::get('/{slug?}', [CmsController::class, 'show'])
     ->where('slug', '.*')
-    ->name('cms.show');
+    ->name('cms.show')
+    ->fallback();
