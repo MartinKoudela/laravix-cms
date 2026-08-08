@@ -30,14 +30,14 @@ class ContentTypeRegistry
         return array_keys(static::$types);
     }
 
-    public static function has(string $key): bool
+    public static function has(?string $key): bool
     {
-        return isset(static::$types[$key]);
+        return $key !== null && isset(static::$types[$key]);
     }
 
-    public static function find(string $key): ?ContentTypeDefinition
+    public static function find(?string $key): ?ContentTypeDefinition
     {
-        return static::$types[$key] ?? null;
+        return $key === null ? null : (static::$types[$key] ?? null);
     }
 
     public static function default(): ContentTypeDefinition
