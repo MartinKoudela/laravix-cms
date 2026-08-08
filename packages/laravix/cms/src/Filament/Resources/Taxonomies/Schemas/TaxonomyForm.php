@@ -70,6 +70,7 @@ class TaxonomyForm
                         return $components;
                     }),
                 Section::make(__('laravix::taxonomy.sections.hierarchy'))
+                    ->columns(2)
                     ->schema([
                         Select::make('parent_id')
                             ->label(__('laravix::common.parent'))
@@ -80,6 +81,10 @@ class TaxonomyForm
                             )
                             ->searchable()
                             ->helperText(__('laravix::taxonomy.messages.optional_parent')),
+                        TextInput::make('sort_order')
+                            ->label(__('laravix::content_type_field.fields.sort_order'))
+                            ->numeric()
+                            ->default(0),
                     ]),
             ]);
     }

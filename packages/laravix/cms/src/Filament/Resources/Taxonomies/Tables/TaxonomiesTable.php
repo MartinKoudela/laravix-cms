@@ -21,8 +21,14 @@ class TaxonomiesTable
     {
         return $table
             ->reorderable('sort_order')
+            ->defaultSort('sort_order')
             ->columnToggleFormMaxHeight('400')
             ->columns([
+                TextColumn::make('sort_order')
+                    ->label(__('laravix::content_type_field.fields.sort_order'))
+                    ->badge()
+                    ->color('gray')
+                    ->sortable(),
                 TextColumn::make('name')
                     ->label(__('laravix::common.title'))
                     ->searchable()
@@ -52,10 +58,7 @@ class TaxonomiesTable
             ])
             ->filters([
                 SelectFilter::make('type')
-                    ->options([
-                        'category' => __('laravix::taxonomy.types.category'),
-                        'tag' => __('laravix::taxonomy.types.tag'),
-                    ]),
+                    ->options(fn () => TaxonomyTypeRegistry::options()),
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),
             ])

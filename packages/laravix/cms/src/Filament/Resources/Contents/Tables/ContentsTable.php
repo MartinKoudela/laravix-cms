@@ -35,6 +35,18 @@ class ContentsTable
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+                TextColumn::make('taxonomies.name')
+                    ->label(__('laravix::content.sections.taxonomies'))
+                    ->badge()
+                    ->color('gray')
+                    ->placeholder('—')
+                    ->toggleable(),
+                TextColumn::make('sort_order')
+                    ->label(__('laravix::content_type_field.fields.sort_order'))
+                    ->badge()
+                    ->color('gray')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('site.name')
                     ->label(__('laravix::common.site'))
                     ->sortable()
@@ -77,6 +89,12 @@ class ContentsTable
             ])
             ->defaultSort('updated_at', 'desc')
             ->filters([
+                SelectFilter::make('taxonomies')
+                    ->label(__('laravix::content.sections.taxonomies'))
+                    ->relationship('taxonomies', 'name', fn ($query) => $query
+                        ->where('site_id', filament()->getTenant()?->id))
+                    ->searchable()
+                    ->preload(),
                 SelectFilter::make('locale')
                     ->label(__('laravix::content.fields.locale'))
                     ->options(fn () => collect(filament()->getTenant()?->enabledLocales() ?? [])

@@ -112,6 +112,10 @@ class ContentForm
                                             ->live(),
                                         DateTimePicker::make('published_at')
                                             ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),
+                                        TextInput::make('sort_order')
+                                            ->label(__('laravix::content_type_field.fields.sort_order'))
+                                            ->numeric()
+                                            ->default(0),
                                     ]),
                                 Section::make(__('laravix::content.sections.taxonomies'))
                                     ->schema([
