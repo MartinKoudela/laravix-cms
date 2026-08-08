@@ -4,6 +4,11 @@ return [
     'singular' => 'uživatel',
     'plural' => 'uživatelé',
     'super_admin' => 'Superadmin',
+    'roles' => [
+        'admin' => 'Správce',
+        'editor' => 'Editor',
+        'viewer' => 'Čtenář',
+    ],
     'sections' => [
         'invite' => 'Pozvat uživatele',
     ],

@@ -4,6 +4,11 @@ return [
     'singular' => 'user',
     'plural' => 'users',
     'super_admin' => 'Superadmin',
+    'roles' => [
+        'admin' => 'Admin',
+        'editor' => 'Editor',
+        'viewer' => 'Viewer',
+    ],
     'sections' => [
         'invite' => 'Invite User',
     ],
