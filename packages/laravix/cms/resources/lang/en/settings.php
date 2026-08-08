@@ -26,6 +26,7 @@ return [
         'linkedin' => 'LinkedIn',
         'facebook' => 'Facebook',
         'instagram' => 'Instagram',
+        'tiktok' => 'TikTok',
         'github' => 'GitHub',
         'api_base_url' => 'API Base URL',
     ],

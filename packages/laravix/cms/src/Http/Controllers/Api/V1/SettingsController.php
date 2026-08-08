@@ -7,19 +7,19 @@
 
 namespace Laravix\Cms\Http\Controllers\Api\V1;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Laravix\Cms\Http\Controllers\Controller;
 use Laravix\Cms\Http\Resources\Api\V1\MediaResource;
 use Laravix\Cms\Models\Media;
 use Laravix\Cms\Models\Setting;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
     private const array PUBLIC_KEYS = [
         'site_name', 'site_description', 'locale', 'contact_email',
         'meta_title', 'meta_description', 'google_site_verification',
-        'twitter_url', 'linkedin_url', 'facebook_url', 'instagram_url', 'github_url',
+        'twitter_url', 'linkedin_url', 'facebook_url', 'instagram_url', 'tiktok_url', 'github_url',
     ];
 
     private const array MEDIA_KEYS = ['logo', 'favicon', 'og_image'];

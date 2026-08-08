@@ -25,6 +25,7 @@ return [
         'linkedin' => 'LinkedIn',
         'facebook' => 'Facebook',
         'instagram' => 'Instagram',
+        'tiktok' => 'TikTok',
         'github' => 'GitHub',
         'robots_txt' => 'robots.txt',
         'api_base_url' => 'Základní URL API',
