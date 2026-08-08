@@ -1,11 +1,14 @@
 <?php
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Laravix\Cms\Enums\ContentStatus;
 use Laravix\Cms\Enums\SiteMode;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\SiteApiToken;
 use Laravix\Cms\Models\User;
+use Laravix\Cms\Support\RouteRegistry;
 
 test('application route wins over cms catch-all', function () {
     Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);
@@ -40,10 +43,21 @@ test('api pages endpoint responds with valid token', function () {
         ->assertJsonFragment(['title' => 'Smoke Page']);
 });
 
-test('docs plugin route registered through route registry responds', function () {
+test('a plugin route registered through the route registry wins over the cms catch-all', function () {
     Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);
 
-    $this->get('/docs')->assertSuccessful();
+    RouteRegistry::register(function (): void {
+        Route::get('/plugin-smoke', fn () => 'ok')->name('plugin.smoke');
+    });
+
+    Route::middleware('web')->group(fn () => RouteRegistry::apply());
+    app('router')->getRoutes()->refreshNameLookups();
+
+    $matched = app('router')->getRoutes()->match(
+        Request::create('http://localhost/plugin-smoke', 'GET')
+    );
+
+    expect($matched->getName())->toBe('plugin.smoke');
 });
 
 test('admin dashboard renders without raw translation keys', function () {
@@ -94,4 +108,22 @@ test('content edit page renders without raw translation keys', function () {
     preg_match_all('/laravix::[a-zA-Z0-9_.]+/', $html, $matches);
 
     expect(array_unique($matches[0]))->toBe([]);
+});
+
+test('tenant dashboard is not shadowed by the cms catch-all', function () {
+    $site = Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);
+
+    $matched = app('router')->getRoutes()->match(
+        Request::create('http://localhost/admin/'.$site->id, 'GET')
+    );
+
+    expect($matched->getName())->toBe('filament.admin.pages.dashboard');
+});
+
+test('cms catch-all is registered as a fallback route', function () {
+    $route = collect(app('router')->getRoutes()->getRoutes())
+        ->first(fn ($route) => $route->getName() === 'cms.show');
+
+    expect($route)->not->toBeNull()
+        ->and($route->isFallback)->toBeTrue();
 });
