@@ -100,6 +100,8 @@ use Laravix\Cms\Models\Taxonomy;
 use Laravix\Cms\Models\User;
 use Laravix\Cms\Models\UserInvitation;
 use Laravix\Cms\Policies\ContentPolicy;
+use Laravix\Cms\Policies\ContentTypeFieldPolicy;
+use Laravix\Cms\Policies\CustomCodeBlockPolicy;
 use Laravix\Cms\Policies\MediaPolicy;
 use Laravix\Cms\Policies\TaxonomyPolicy;
 use Laravix\Cms\Support\BlockRegistry;
@@ -170,6 +172,8 @@ class CmsServiceProvider extends ServiceProvider
         );
 
         Gate::policy(Content::class, ContentPolicy::class);
+        Gate::policy(ContentTypeField::class, ContentTypeFieldPolicy::class);
+        Gate::policy(CustomCodeBlock::class, CustomCodeBlockPolicy::class);
         Gate::policy(Media::class, MediaPolicy::class);
         Gate::policy(Taxonomy::class, TaxonomyPolicy::class);
 
@@ -379,6 +383,10 @@ class CmsServiceProvider extends ServiceProvider
             SettingDefinition::make('instagram_url')
                 ->type(FieldType::URL)
                 ->label('laravix::settings.fields.instagram')
+                ->group('laravix::settings.tabs.social'),
+            SettingDefinition::make('tiktok_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.tiktok')
                 ->group('laravix::settings.tabs.social'),
             SettingDefinition::make('github_url')
                 ->type(FieldType::URL)
