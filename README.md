@@ -73,6 +73,10 @@ cd my-site
 php artisan laravix:install
 ```
 
+The installer asks how you want to run Laravix. Pick **Docker** and it writes a `compose.yaml` with the services you choose — MySQL or PostgreSQL, Meilisearch, Mailpit, Redis — starts them, and finishes the installation inside the container. Ports already taken on your machine are moved out of the way, so Laravix runs alongside your other projects. Pick **Local services** instead and it asks for the credentials of a database you already have.
+
+Need the environment without installing yet? `php artisan laravix:docker` generates it and stops there.
+
 See the [laravix/cms](https://github.com/Laravix/cms) package and the **[documentation](https://laravix.com/docs)** for details. Upgrades are one command: `php artisan laravix:upgrade`.
 
 ## Development setup

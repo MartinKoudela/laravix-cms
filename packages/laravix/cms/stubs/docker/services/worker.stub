@@ -1,0 +1,19 @@
+    worker:
+        build:
+            context: './vendor/laravel/sail/runtimes/8.4'
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP:-1000}'
+        image: 'sail-8.4/app'
+        command: 'php artisan queue:work --tries=3 --max-time=3600'
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        environment:
+            WWWUSER: '${WWWUSER:-1000}'
+            LARAVEL_SAIL: 1
+        volumes:
+            - '.:/var/www/html'
+            - './docker/php.ini:/etc/php/8.4/cli/conf.d/99-laravix.ini'
+        networks:
+            - sail
+{{ depends_on }}        restart: unless-stopped

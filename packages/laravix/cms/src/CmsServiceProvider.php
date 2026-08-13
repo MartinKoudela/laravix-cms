@@ -77,6 +77,7 @@ use Laravix\Cms\Blocks\Grapesjs\YoutubeBlock;
 use Laravix\Cms\Blocks\HeroBlock;
 use Laravix\Cms\Blocks\TextBlock;
 use Laravix\Cms\Console\Commands\CreateUser;
+use Laravix\Cms\Console\Commands\Docker;
 use Laravix\Cms\Console\Commands\Install;
 use Laravix\Cms\Console\Commands\PublishScheduledContent;
 use Laravix\Cms\Console\Commands\Upgrade;
@@ -202,6 +203,7 @@ class CmsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 CreateUser::class,
+                Docker::class,
                 Install::class,
                 PublishScheduledContent::class,
                 Upgrade::class,

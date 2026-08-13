@@ -12,19 +12,33 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Laravix\Cms\Console\Concerns\ConfiguresDockerEnvironment;
 use Laravix\Cms\Console\Concerns\CtaReference;
+use Laravix\Cms\Console\Concerns\InteractsWithContainers;
 use Laravix\Cms\Console\Concerns\RendersBanner;
+use Laravix\Cms\Console\Concerns\WritesEnvFile;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
 use Symfony\Component\Console\Terminal;
+use Symfony\Component\Process\Process;
 use Throwable;
 
 use function Laravel\Prompts\info;
+use function Laravel\Prompts\password;
 use function Laravel\Prompts\select;
 use function Laravel\Prompts\text;
 
 #[Signature('laravix:install
     {--force : Run even when sites already exist}
+    {--docker : Generate a Docker environment and install inside it}
+    {--db= : Database service when installing with Docker: mysql, pgsql or sqlite}
+    {--search : Add a Meilisearch container}
+    {--mail : Add a Mailpit container}
+    {--redis : Add a Redis container}
+    {--no-worker : Leave out the queue worker container}
+    {--no-scheduler : Leave out the scheduler container}
+    {--port= : Host port the site is served on}
+    {--continue= : Internal: resume the installation inside the container from a state file}
     {--site-name= : Name of the first site}
     {--domain= : Domain of the first site}
     {--admin-name= : Name of the super admin}
@@ -33,8 +47,11 @@ use function Laravel\Prompts\text;
 #[Description('Interactive first-run setup: database, assets, first site and super admin.')]
 class Install extends Command
 {
+    use ConfiguresDockerEnvironment;
     use CtaReference;
+    use InteractsWithContainers;
     use RendersBanner;
+    use WritesEnvFile;
 
     public function handle(): int
     {
@@ -43,6 +60,12 @@ class Install extends Command
         $this->renderBanner();
 
         $this->components->info('Laravix CMS installer');
+
+        $this->applyResumeState();
+
+        if ($this->shouldRunInDocker()) {
+            return $this->runInDocker();
+        }
 
         if (! $this->setUpDatabase()) {
             return self::FAILURE;
@@ -166,20 +189,145 @@ class Install extends Command
         DB::purge();
     }
 
-    private function writeEnv(array $values): void
+    private function shouldRunInDocker(): bool
     {
-        $path = base_path('.env');
-        $env = file_get_contents($path);
-
-        foreach ($values as $key => $value) {
-            $line = $key.'='.(preg_match('/\s/', (string) $value) ? '"'.$value.'"' : $value);
-
-            $env = preg_match("/^{$key}=.*/m", $env)
-                ? preg_replace("/^{$key}=.*/m", $line, $env)
-                : $env.PHP_EOL.$line;
+        if ($this->option('continue') || env('LARAVEL_SAIL')) {
+            return false;
         }
 
-        file_put_contents($path, $env);
+        if ($this->option('docker')) {
+            return true;
+        }
+
+        if ($this->option('no-interaction') || is_file(base_path('compose.yaml'))) {
+            return false;
+        }
+
+        return select('How do you want to run Laravix?', [
+            'docker' => 'Docker — database and services in containers',
+            'local' => 'Local services — I already have a database running',
+        ], default: 'docker') === 'docker';
+    }
+
+    private function runInDocker(): int
+    {
+        $environment = $this->askForDockerEnvironment();
+
+        if ($missing = $this->missingDockerStubs($environment)) {
+            $this->components->error('Missing stubs: '.implode(', ', $missing).'. This service is not supported yet.');
+
+            return self::FAILURE;
+        }
+
+        $state = [
+            'site-name' => $this->option('site-name') ?: text('Site name', required: true),
+            'domain' => $this->option('domain') ?: text('Site domain', placeholder: 'example.com', required: true),
+            'admin-name' => $this->option('admin-name') ?: text('Admin name', required: true),
+            'admin-email' => $this->option('admin-email') ?: text('Admin email', required: true, validate: fn (string $value): ?string => filter_var($value, FILTER_VALIDATE_EMAIL) ? null : 'Invalid email address.'),
+            'admin-password' => $this->option('admin-password') ?: password('Admin password', required: true, validate: fn (string $value): ?string => strlen($value) >= 8 ? null : 'Password must be at least 8 characters.'),
+        ];
+
+        foreach ($this->writeDockerFiles($environment) as $file) {
+            $this->components->task($file);
+        }
+
+        $backup = $this->writeEnv($environment->environmentValues());
+        $this->components->task('.env');
+
+        if ($backup !== null) {
+            $this->components->task($backup);
+        }
+
+        $this->ensureApplicationKey();
+
+        if (! $this->startContainers() || ! $this->waitForContainers($environment)) {
+            return self::FAILURE;
+        }
+
+        $exitCode = $this->continueInContainer($state);
+
+        if ($exitCode === self::SUCCESS && ! $this->option('no-interaction')) {
+            $this->offerPromo();
+        }
+
+        return $exitCode;
+    }
+
+    private function ensureApplicationKey(): void
+    {
+        if (config('app.key')) {
+            return;
+        }
+
+        $this->components->task('Generating application key', fn (): bool => $this->callSilently('key:generate') === self::SUCCESS);
+    }
+
+    private function continueInContainer(array $state): int
+    {
+        $relativePath = 'storage/app/private/laravix-install.json';
+        $path = base_path($relativePath);
+
+        if (! is_dir(dirname($path))) {
+            mkdir(dirname($path), 0755, true);
+        }
+
+        file_put_contents($path, json_encode($state));
+        chmod($path, 0600);
+
+        $command = $this->artisanInContainerCommand(array_values(array_filter([
+            'laravix:install',
+            '--continue='.$relativePath,
+            '--no-interaction',
+            $this->option('force') ? '--force' : null,
+        ])));
+
+        if ($command === null) {
+            unlink($path);
+
+            $this->components->error('Could not find a way to run artisan inside the container.');
+
+            return self::FAILURE;
+        }
+
+        try {
+            $process = new Process($command, base_path(), null, null, null);
+            $process->run(fn (string $type, string $chunk) => $this->output->write($chunk));
+
+            return $process->isSuccessful() ? self::SUCCESS : self::FAILURE;
+        } finally {
+            if (is_file($path)) {
+                unlink($path);
+            }
+        }
+    }
+
+    private function applyResumeState(): void
+    {
+        $option = $this->option('continue');
+
+        if (! $option) {
+            return;
+        }
+
+        $path = str_starts_with($option, DIRECTORY_SEPARATOR) ? $option : base_path($option);
+
+        if (! is_file($path)) {
+            return;
+        }
+
+        $state = json_decode(file_get_contents($path), true);
+
+        unlink($path);
+
+        if (! is_array($state)) {
+            return;
+        }
+
+        foreach (['site-name', 'domain', 'admin-name', 'admin-email', 'admin-password'] as $key) {
+            if (! empty($state[$key]) && ! $this->option($key)) {
+                $this->input->setOption($key, $state[$key]);
+            }
+        }
     }
 
     private function guardAgainstExistingInstallation(): bool
