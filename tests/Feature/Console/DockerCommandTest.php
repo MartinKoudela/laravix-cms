@@ -202,6 +202,52 @@ test('it keeps the previously selected services when regenerating', function () 
         ->not->toContain('    mysql:');
 });
 
+test('the interactive run builds the environment from the answers', function () {
+    $this->artisan('laravix:docker')
+        ->expectsQuestion('Database', 'pgsql')
+        ->expectsQuestion('Additional services', ['meilisearch', 'worker'])
+        ->expectsQuestion('Host port', '8080')
+        ->assertSuccessful();
+
+    $compose = file_get_contents($this->basePath.'/compose.yaml');
+
+    expect($compose)
+        ->toContain('    pgsql:')
+        ->toContain('    meilisearch:')
+        ->toContain('    worker:')
+        ->not->toContain('    mysql:')
+        ->not->toContain('    mailpit:')
+        ->not->toContain('    scheduler:');
+
+    expect(file_get_contents($this->basePath.'/.env'))
+        ->toContain('DB_CONNECTION=pgsql')
+        ->toContain('APP_PORT=8080')
+        ->toContain('SCOUT_DRIVER=meilisearch');
+});
+
+test('the companions can be unticked in the interactive run', function () {
+    $this->artisan('laravix:docker')
+        ->expectsQuestion('Database', 'sqlite')
+        ->expectsQuestion('Additional services', [])
+        ->expectsQuestion('Host port', '80')
+        ->assertSuccessful();
+
+    expect(file_get_contents($this->basePath.'/compose.yaml'))
+        ->not->toContain('    worker:')
+        ->not->toContain('    scheduler:');
+});
+
+test('the interactive run warns before overwriting', function () {
+    file_put_contents($this->basePath.'/compose.yaml', 'services: {}');
+
+    $this->artisan('laravix:docker', ['--force' => true])
+        ->expectsOutputToContain('compose.yaml will be overwritten')
+        ->expectsQuestion('Database', 'mysql')
+        ->expectsQuestion('Additional services', [])
+        ->expectsQuestion('Host port', '80')
+        ->assertSuccessful();
+});
+
 test('every selectable service ships a stub', function (string $service) {
     expect(dirname(__DIR__, 3)."/packages/laravix/cms/stubs/docker/services/{$service}.stub")
         ->toBeReadableFile();
