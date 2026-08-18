@@ -56,3 +56,4 @@ boost.json
 
 # Testing
 /coverage
+/public/themes

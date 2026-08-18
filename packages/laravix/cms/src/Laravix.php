@@ -21,6 +21,18 @@ class Laravix
         }
     }
 
+    public static function themeAsset(string $file, string $theme): ?string
+    {
+        $file = ltrim($file, '/');
+        $path = base_path("themes/{$theme}/dist/{$file}");
+
+        if (! is_file($path)) {
+            return null;
+        }
+
+        return asset("themes/{$theme}/{$file}").'?v='.filemtime($path);
+    }
+
     public static function asset(string $file): string
     {
         $version = static::version();

@@ -69,6 +69,9 @@
     <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
 
     <link rel="stylesheet" href="{{ \Laravix\Cms\Laravix::asset('app.css') }}">
+    @if ($themeStylesheet = \Laravix\Cms\Laravix::themeAsset('app.css', $site->theme ?? 'default'))
+        <link rel="stylesheet" href="{{ $themeStylesheet }}">
+    @endif
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     @php

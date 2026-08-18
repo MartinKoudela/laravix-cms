@@ -1,24 +1,5 @@
 <?php
 
-function removeDirectory(string $path): void
-{
-    if (! is_dir($path)) {
-        return;
-    }
-
-    foreach (scandir($path) as $entry) {
-        if ($entry === '.' || $entry === '..') {
-            continue;
-        }
-
-        $target = $path.'/'.$entry;
-
-        is_dir($target) ? removeDirectory($target) : unlink($target);
-    }
-
-    rmdir($path);
-}
-
 beforeEach(function () {
     $this->basePath = sys_get_temp_dir().'/laravix-docker-'.uniqid();
 

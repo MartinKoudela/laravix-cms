@@ -7,7 +7,6 @@
 
 namespace Laravix\Cms\Models;
 
-use Laravix\Cms\Enums\SiteMode;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
+use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Support\ThemeManifest;
 use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
@@ -138,22 +138,14 @@ class Site extends Model implements HasAvatar
 
     public static function availableThemes(): array
     {
-        return collect(glob(base_path('themes/*'), GLOB_ONLYDIR))
-            ->mapWithKeys(fn ($path) => [basename($path) => Str::headline(basename($path))])
+        return collect(ThemeManifest::all())
+            ->map(fn (ThemeManifest $theme): string => $theme->name)
             ->all();
     }
 
     public static function themePreviewPath(string $theme): ?string
     {
-        foreach (['svg', 'webp', 'png', 'jpg'] as $extension) {
-            $path = base_path("themes/{$theme}/preview.{$extension}");
-
-            if (file_exists($path)) {
-                return $path;
-            }
-        }
-
-        return null;
+        return ThemeManifest::find($theme)?->screenshotPath();
     }
 
     public static function themePreviewUrl(string $theme): ?string
@@ -163,13 +155,22 @@ class Site extends Model implements HasAvatar
 
     public static function themeOptionLabel(string $theme): string
     {
-        $label = e(static::availableThemes()[$theme] ?? Str::headline($theme));
+        $manifest = ThemeManifest::find($theme);
+        $label = e($manifest?->name ?? $theme);
+        $byline = $manifest?->byline();
         $preview = static::themePreviewUrl($theme);
 
         $image = $preview
             ? '<img src="'.e($preview).'" style="width:160px;height:100px;object-fit:cover;border-radius:8px;flex-shrink:0;border:1px solid rgba(0,0,0,.1)">'
             : '<div style="width:160px;height:100px;border-radius:8px;flex-shrink:0;background:#f3f4f6;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:12px">'.$label.'</div>';
 
-        return '<div style="display:flex;align-items:center;gap:16px;padding:8px 0">'.$image.'<span style="font-weight:500;font-size:14px">'.$label.'</span></div>';
+        $text = '<span style="font-weight:500;font-size:14px">'.$label.'</span>';
+
+        if ($byline !== null) {
+            $text .= '<span style="font-size:12px;color:#9ca3af">'.e($byline).'</span>';
+        }
+
+        return '<div style="display:flex;align-items:center;gap:16px;padding:8px 0">'.$image
+            .'<span style="display:flex;flex-direction:column;gap:2px">'.$text.'</span></div>';
     }
 }

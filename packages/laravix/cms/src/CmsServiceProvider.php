@@ -79,6 +79,7 @@ use Laravix\Cms\Blocks\TextBlock;
 use Laravix\Cms\Console\Commands\CreateUser;
 use Laravix\Cms\Console\Commands\Docker;
 use Laravix\Cms\Console\Commands\Install;
+use Laravix\Cms\Console\Commands\LinkThemes;
 use Laravix\Cms\Console\Commands\PublishScheduledContent;
 use Laravix\Cms\Console\Commands\Upgrade;
 use Laravix\Cms\Enums\FieldType;
@@ -116,6 +117,7 @@ use Laravix\Cms\Support\RouteRegistry;
 use Laravix\Cms\Support\SettingDefinition;
 use Laravix\Cms\Support\SettingRegistry;
 use Laravix\Cms\Support\TaxonomyTypeRegistry;
+use Laravix\Cms\Support\ThemeManifest;
 use Livewire\Livewire;
 
 class CmsServiceProvider extends ServiceProvider
@@ -180,9 +182,18 @@ class CmsServiceProvider extends ServiceProvider
 
         Livewire::component('block-editor', BlockEditor::class);
 
-        foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) as $themePath) {
-            $themeName = basename($themePath);
-            View::addNamespace("themes.{$themeName}", "{$themePath}/views");
+        $baseThemeViews = base_path('themes/default/views');
+
+        ThemeManifest::flush();
+
+        foreach (ThemeManifest::all() as $theme) {
+            $paths = [$theme->path('views')];
+
+            if ($paths[0] !== $baseThemeViews && is_dir($baseThemeViews)) {
+                $paths[] = $baseThemeViews;
+            }
+
+            View::replaceNamespace("themes.{$theme->key}", $paths);
         }
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
@@ -205,6 +216,7 @@ class CmsServiceProvider extends ServiceProvider
                 CreateUser::class,
                 Docker::class,
                 Install::class,
+                LinkThemes::class,
                 PublishScheduledContent::class,
                 Upgrade::class,
             ]);

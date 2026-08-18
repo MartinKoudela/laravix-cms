@@ -77,6 +77,7 @@ class Install extends Command
 
         $this->call('migrate', ['--force' => true]);
         $this->components->task('Linking storage', fn () => $this->callSilently('storage:link') === self::SUCCESS);
+        $this->components->task('Linking themes', fn () => $this->callSilently('laravix:theme:link') === self::SUCCESS);
 
         $this->publishAssets();
 

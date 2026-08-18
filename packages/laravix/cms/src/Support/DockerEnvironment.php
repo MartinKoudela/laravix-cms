@@ -9,7 +9,7 @@ namespace Laravix\Cms\Support;
 
 use InvalidArgumentException;
 
-final class DockerEnvironment
+class DockerEnvironment
 {
     public const DATABASES = ['mysql', 'pgsql', 'sqlite'];
 
