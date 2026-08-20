@@ -113,8 +113,8 @@ cd laravix-cms
 5. Install NPM by `sail npm install`
 6. Install NPM by `sail npm run build` (for dev/watch run `sail npm run dev`)
 7. Migrate user preferences `sail artisan migrate:fresh --seed` - Migrate all data 
-8. Simulate real server (Supervisor simulating)
-   - Run `sail artisan horizon ` to start background jobs.
+8. ~~Simulate real server (Supervisor simulating)~~
+   - ~~Run `sail artisan horizon ` to start background jobs.~~
 
 Open **http://localhost/admin** and log in with the seeded account (`admin@example.com` / `example_`).
 
