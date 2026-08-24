@@ -11,9 +11,10 @@ use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Process;
 use Laravix\Cms\Laravix;
+use Laravix\Cms\Services\UpdateChecker;
 use Symfony\Component\Process\ExecutableFinder;
-use Symfony\Component\Process\Process;
 
 use function Laravel\Prompts\confirm;
 
@@ -21,7 +22,7 @@ use function Laravel\Prompts\confirm;
 #[Description('Upgrade the Laravix CMS core: composer update, migrations and asset republish.')]
 class Upgrade extends Command
 {
-    public function handle(): int
+    public function handle(UpdateChecker $updateChecker): int
     {
         $current = Laravix::version();
 
@@ -41,11 +42,22 @@ class Upgrade extends Command
         }
 
         $composerOutput = null;
+        $arguments = $this->composerArguments($current, $updateChecker->latestVersion());
 
-        if (! $this->runStreaming([...$composer, 'update', 'laravix/cms', '--with-all-dependencies', '--no-interaction'], $composerOutput)) {
-            $this->components->error('composer update failed — nothing else was touched.');
+        if ($arguments[0] === 'require') {
+            $this->components->info("Raising the composer.json constraint to {$arguments[1]}.");
+        }
 
-            return self::FAILURE;
+        if (! $this->runStreaming([...$composer, ...$arguments], $composerOutput)) {
+            $installed = $this->installedVersionFromComposer($composer);
+
+            if ($installed === null || $this->isSameVersion($installed, $current)) {
+                $this->components->error('composer update failed — nothing else was touched.');
+
+                return self::FAILURE;
+            }
+
+            $this->components->warn("Composer scripts reported an error, but laravix/cms is now {$installed} — finishing the upgrade.");
         }
 
         $this->renderPackageChanges($composerOutput);
@@ -72,6 +84,16 @@ class Upgrade extends Command
         return self::SUCCESS;
     }
 
+    public function composerArguments(string $current, ?string $latest): array
+    {
+        if ($latest !== null && ! str_starts_with($current, 'dev')
+            && version_compare(ltrim($latest, 'v'), ltrim($current, 'v'), '>')) {
+            return ['require', 'laravix/cms:^'.ltrim($latest, 'v'), '--with-all-dependencies', '--no-interaction'];
+        }
+
+        return ['update', 'laravix/cms', '--with-all-dependencies', '--no-interaction'];
+    }
+
     private function composerCommand(): ?array
     {
         if ($binary = env('COMPOSER_BINARY')) {
@@ -91,26 +113,30 @@ class Upgrade extends Command
 
     private function runStreaming(array $command, ?string &$capturedOutput = null): bool
     {
-        $buffer = '';
+        $ok = false;
 
-        $this->components->task(implode(' ', array_slice($command, -3)), function () use ($command, &$ok, &$buffer) {
-            $process = new Process($command, base_path(), null, null, 600);
-            $process->run(function ($type, $chunk) use (&$buffer) {
-                $buffer .= $chunk;
-                $this->output->write($chunk);
-            });
+        $this->components->task(implode(' ', array_slice($command, -3)), function () use ($command, &$ok, &$capturedOutput) {
+            $result = Process::path(base_path())->timeout(600)->run(
+                $command,
+                fn (string $type, string $chunk) => $this->output->write($chunk),
+            );
 
-            return $ok = $process->isSuccessful();
+            $capturedOutput = $result->output().$result->errorOutput();
+
+            return $ok = $result->successful();
         });
 
-        $capturedOutput = $buffer;
-
-        return (bool) $ok;
+        return $ok;
     }
 
-    private function renderPackageChanges(string $output): void
+    private function isSameVersion(string $left, string $right): bool
     {
-        preg_match_all('/- (?:Upgrading|Downgrading) (\S+) \(([^)]+) => ([^)]+)\)/', $output, $matches, PREG_SET_ORDER);
+        return version_compare(ltrim($left, 'v'), ltrim($right, 'v'), '==');
+    }
+
+    private function renderPackageChanges(?string $output): void
+    {
+        preg_match_all('/- (?:Upgrading|Downgrading) (\S+) \(([^)]+) => ([^)]+)\)/', (string) $output, $matches, PREG_SET_ORDER);
 
         if ($matches === []) {
             return;
@@ -130,13 +156,13 @@ class Upgrade extends Command
 
     private function installedVersionFromComposer(array $composer): ?string
     {
-        $process = new Process([...$composer, 'show', 'laravix/cms', '--format=json'], base_path(), null, null, 60);
-        $process->run();
+        $result = Process::path(base_path())->timeout(60)
+            ->run([...$composer, 'show', 'laravix/cms', '--format=json']);
 
-        if (! $process->isSuccessful()) {
+        if (! $result->successful()) {
             return null;
         }
 
-        return json_decode($process->getOutput(), true)['versions'][0] ?? null;
+        return json_decode($result->output(), true)['versions'][0] ?? null;
     }
 }

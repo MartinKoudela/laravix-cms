@@ -60,7 +60,7 @@ Then serve the application and open **/admin**.
 php artisan laravix:upgrade
 ```
 
-Runs `composer update laravix/cms`, migrates the database and republishes the assets. The admin panel shows a banner whenever a new release is available.
+Raises the `laravix/cms` constraint in `composer.json` to the newest release, updates the dependencies, migrates the database and republishes the assets. The admin panel shows a banner whenever a new release is available.
 
 ## Why Laravix?
 
