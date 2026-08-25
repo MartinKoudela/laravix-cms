@@ -80,6 +80,11 @@ class NavigationIconRegistry
         return svg('heroicon-o-'.$name, '', ['style' => $style])->toHtml();
     }
 
+    public static function brandIconClass(string $name): ?string
+    {
+        return static::socialIcons()[$name][0] ?? null;
+    }
+
     /** @return array<string, array{0: string, 1: string}> name => [fa-class, label] */
     private static function socialIcons(): array
     {

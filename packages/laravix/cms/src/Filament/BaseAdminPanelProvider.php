@@ -65,7 +65,7 @@ abstract class BaseAdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: __DIR__.'/Widgets', for: 'Laravix\Cms\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
+                // AccountWidget::class,
             ])
             ->navigationGroups([
                 'Content' => NavigationGroup::make(fn () => __('laravix::panel.groups.content')),

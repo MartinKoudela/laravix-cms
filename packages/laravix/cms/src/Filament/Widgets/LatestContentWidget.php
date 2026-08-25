@@ -18,6 +18,8 @@ use Laravix\Cms\Models\Content;
 
 class LatestContentWidget extends BaseWidget
 {
+    protected static ?int $sort = 2;
+
     protected ?string $pollingInterval = null;
 
     public function getTableHeading(): string

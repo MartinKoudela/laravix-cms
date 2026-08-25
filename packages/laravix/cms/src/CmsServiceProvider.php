@@ -385,27 +385,78 @@ class CmsServiceProvider extends ServiceProvider
             SettingDefinition::make('twitter_url')
                 ->type(FieldType::URL)
                 ->label('laravix::settings.fields.twitter')
-                ->group('laravix::settings.tabs.social'),
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-twitter-x']),
             SettingDefinition::make('linkedin_url')
                 ->type(FieldType::URL)
                 ->label('laravix::settings.fields.linkedin')
-                ->group('laravix::settings.tabs.social'),
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-linkedin']),
             SettingDefinition::make('facebook_url')
                 ->type(FieldType::URL)
                 ->label('laravix::settings.fields.facebook')
-                ->group('laravix::settings.tabs.social'),
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-facebook']),
             SettingDefinition::make('instagram_url')
                 ->type(FieldType::URL)
                 ->label('laravix::settings.fields.instagram')
-                ->group('laravix::settings.tabs.social'),
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-instagram']),
             SettingDefinition::make('tiktok_url')
                 ->type(FieldType::URL)
                 ->label('laravix::settings.fields.tiktok')
-                ->group('laravix::settings.tabs.social'),
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-tiktok']),
             SettingDefinition::make('github_url')
                 ->type(FieldType::URL)
                 ->label('laravix::settings.fields.github')
-                ->group('laravix::settings.tabs.social'),
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-github']),
+            SettingDefinition::make('youtube_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.youtube')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-youtube']),
+            SettingDefinition::make('discord_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.discord')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-discord']),
+            SettingDefinition::make('telegram_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.telegram')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-telegram']),
+            SettingDefinition::make('whatsapp_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.whatsapp')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-whatsapp']),
+            SettingDefinition::make('pinterest_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.pinterest')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-pinterest']),
+            SettingDefinition::make('reddit_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.reddit')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-reddit']),
+            SettingDefinition::make('twitch_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.twitch')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-twitch']),
+            SettingDefinition::make('snapchat_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.snapchat')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-snapchat']),
+            SettingDefinition::make('spotify_url')
+                ->type(FieldType::URL)
+                ->label('laravix::settings.fields.spotify')
+                ->group('laravix::settings.tabs.social')
+                ->config(['prefixIcon' => 'fa-spotify']),
         ]);
     }
 

@@ -66,6 +66,6 @@ class SettingDefinition
     public function config(array $config): static
     {
         return new static($this->key, $this->type, $this->label,
-            $this->group, $this->hint, $this->required, $this->default, $config);
+            $this->group, $this->hint, $this->required, $this->default, [...$this->config, ...$config]);
     }
 }

@@ -20,6 +20,8 @@ class SettingsController extends Controller
         'site_name', 'site_description', 'locale', 'contact_email',
         'meta_title', 'meta_description', 'google_site_verification',
         'twitter_url', 'linkedin_url', 'facebook_url', 'instagram_url', 'tiktok_url', 'github_url',
+        'youtube_url', 'discord_url', 'telegram_url', 'whatsapp_url',
+        'pinterest_url', 'reddit_url', 'twitch_url', 'snapchat_url', 'spotify_url',
     ];
 
     private const array MEDIA_KEYS = ['logo', 'favicon', 'og_image'];

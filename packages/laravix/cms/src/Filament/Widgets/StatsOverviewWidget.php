@@ -16,6 +16,8 @@ use Laravix\Cms\Models\Site;
 
 class StatsOverviewWidget extends BaseWidget
 {
+    protected static ?int $sort = 1;
+
     protected ?string $pollingInterval = null;
 
     protected function getStats(): array

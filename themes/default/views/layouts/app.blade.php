@@ -56,7 +56,17 @@
             $settings->get('linkedin_url'),
             $settings->get('facebook_url'),
             $settings->get('instagram_url'),
+            $settings->get('tiktok_url'),
             $settings->get('github_url'),
+            $settings->get('youtube_url'),
+            $settings->get('discord_url'),
+            $settings->get('telegram_url'),
+            $settings->get('whatsapp_url'),
+            $settings->get('pinterest_url'),
+            $settings->get('reddit_url'),
+            $settings->get('twitch_url'),
+            $settings->get('snapchat_url'),
+            $settings->get('spotify_url'),
         ]));
         $jsonLd = [
             '@context' => 'https://schema.org',

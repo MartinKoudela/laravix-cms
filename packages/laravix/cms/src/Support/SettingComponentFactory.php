@@ -7,7 +7,6 @@
 
 namespace Laravix\Cms\Support;
 
-use Laravix\Cms\Enums\FieldType;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
@@ -15,6 +14,8 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Illuminate\Support\HtmlString;
+use Laravix\Cms\Enums\FieldType;
 
 class SettingComponentFactory
 {
@@ -60,6 +61,23 @@ class SettingComponentFactory
             $component->placeholder($definition->config['placeholder']);
         }
 
+        if ($component instanceof TextInput && isset($definition->config['prefixIcon'])) {
+            $component->prefixIcon(static::icon($definition->config['prefixIcon']));
+        }
+
         return $component;
+    }
+
+    private static function icon(string $name): string|HtmlString
+    {
+        $brandClass = NavigationIconRegistry::brandIconClass($name);
+
+        if ($brandClass === null) {
+            return $name;
+        }
+
+        return new HtmlString(
+            '<i class="'.$brandClass.'" style="font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%"></i>'
+        );
     }
 }

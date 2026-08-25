@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravix\Cms\Enums\ContentStatus;
 use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Filament\Resources\UserInvitations\UserInvitationResource;
+use Laravix\Cms\Filament\Resources\Users\UserResource;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\SiteApiToken;
@@ -83,9 +85,23 @@ test('admin navigation is complete in non-default locale', function () {
         ->assertSuccessful()
         ->getContent();
 
-    foreach (['Nastavení', 'Uživatelé', 'Navigace', 'Pozvánky', 'Aktivita'] as $label) {
+    foreach (['Nastavení', 'Uživatelé', 'Navigace', 'Aktivita'] as $label) {
         expect($html)->toContain($label);
     }
+});
+
+test('invitations are reachable as a child of users in the sidebar', function () {
+    $site = Site::factory()->create(['domain' => 'localhost', 'theme' => 'default']);
+    $admin = User::factory()->create(['is_super_admin' => true]);
+
+    $invitationsUrl = UserInvitationResource::getUrl('index', panel: 'admin', tenant: $site);
+
+    $html = $this->actingAs($admin)
+        ->get(UserResource::getUrl('index', panel: 'admin', tenant: $site))
+        ->assertSuccessful()
+        ->getContent();
+
+    expect($html)->toContain($invitationsUrl);
 });
 
 test('content edit page renders without raw translation keys', function () {

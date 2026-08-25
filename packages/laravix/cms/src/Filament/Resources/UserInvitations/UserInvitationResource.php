@@ -16,6 +16,7 @@ use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Filament\Resources\UserInvitations\Pages\ListUserInvitations;
 use Laravix\Cms\Filament\Resources\UserInvitations\Schemas\UserInvitationForm;
 use Laravix\Cms\Filament\Resources\UserInvitations\Tables\UserInvitationsTable;
+use Laravix\Cms\Filament\Resources\Users\UserResource;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\UserInvitation;
 
@@ -36,6 +37,8 @@ class UserInvitationResource extends Resource
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
+
+    protected static ?string $navigationParentItem = UserResource::class;
 
     protected static ?string $recordTitleAttribute = 'email';
 
