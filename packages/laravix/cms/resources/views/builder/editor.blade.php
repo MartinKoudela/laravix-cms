@@ -59,7 +59,7 @@
             data-canvas-css="{{ \Laravix\Cms\Laravix::asset('app.css') }}"
             data-media-items="{{ json_encode($mediaItems) }}"
             data-gjs-blocks="{{ json_encode($gjsBlocks) }}"
-            data-trans="{{ json_encode(__('builder')) }}"
+            data-trans="{{ json_encode(__('laravix::builder')) }}"
         ></div>
     </div>
 

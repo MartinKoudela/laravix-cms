@@ -16,7 +16,7 @@
     <div class="box">
         <p class="code">@yield('code')</p>
         <p class="title">@yield('title')</p>
-        <a href="/">{{ __('common.back_home') }}</a>
+        <a href="/">{{ __('laravix::common.back_home') }}</a>
     </div>
 </body>
 </html>
