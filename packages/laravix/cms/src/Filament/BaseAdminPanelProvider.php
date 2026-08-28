@@ -99,9 +99,9 @@ abstract class BaseAdminPanelProvider extends PanelProvider
                         '<img src="/favicon.ico" style="" alt="Laravix Logo" width="20" height="20">Laravix '.Laravix::version()
                     ))
                     ->withLinks([
-                        ['title' => 'laravix::panel.footer.website', 'url' => 'https://laravix.com'],
-                        ['title' => 'laravix::panel.footer.docs', 'url' => 'https://laravix.com/docs'],
-                        ['title' => 'laravix::panel.footer.contact', 'url' => 'https://laravix.com/contact'],
+                        ['title' => 'Website', 'url' => 'https://laravix.com'],
+                        ['title' => 'Docs', 'url' => 'https://laravix.com/docs'],
+                        ['title' => 'Contact', 'url' => 'https://laravix.com/contact'],
                     ]),
 
                 ...FilamentPluginRegistry::all(),

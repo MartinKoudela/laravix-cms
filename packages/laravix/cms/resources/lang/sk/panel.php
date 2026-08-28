@@ -9,9 +9,4 @@ return [
     'update' => [
         'available' => 'Je dostupný Laravix CMS :version. Spustite:',
     ],
-    'footer' => [
-        'website' => 'Website',
-        'docs' => 'Dokumentácia',
-        'contact' => 'Kontakt',
-    ],
 ];
