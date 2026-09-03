@@ -77,6 +77,8 @@ The installer asks how you want to run Laravix. Pick **Docker** and it writes a 
 
 Need the environment without installing yet? `php artisan laravix:docker` generates it and stops there.
 
+The generated `compose.yaml` is a **development** environment. The database, Meilisearch, Mailpit, and Redis ports are published to `127.0.0.1` only, so nothing behind them is reachable from your network — but the passwords come from your `.env` and the app itself is served by `artisan serve`. Do not expose this stack to the internet; deploy production with your own hardened setup.
+
 See the [laravix/cms](https://github.com/Laravix/cms) package and the **[documentation](https://laravix.com/docs)** for details. Upgrades are one command: `php artisan laravix:upgrade`.
 
 ## Development setup

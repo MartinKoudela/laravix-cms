@@ -234,6 +234,41 @@ test('every selectable service ships a stub', function (string $service) {
         ->toBeReadableFile();
 })->with(['mysql', 'pgsql', 'meilisearch', 'mailpit', 'redis', 'worker', 'scheduler']);
 
+test('the database port is published to the loopback interface only', function (string $database, string $port) {
+    $this->artisan('laravix:docker', [
+        '--db' => $database,
+        '--no-worker' => true,
+        '--no-scheduler' => true,
+        '--no-interaction' => true,
+    ])->assertSuccessful();
+
+    expect(file_get_contents($this->basePath.'/compose.yaml'))
+        ->toContain("- '127.0.0.1:\${FORWARD_DB_PORT:-{$port}}:{$port}'")
+        ->not->toContain('MYSQL_ALLOW_EMPTY_PASSWORD');
+})->with([
+    'mysql' => ['mysql', '3306'],
+    'pgsql' => ['pgsql', '5432'],
+]);
+
+test('no backing service is published to every interface', function () {
+    $this->artisan('laravix:docker', [
+        '--db' => 'mysql',
+        '--search' => true,
+        '--mail' => true,
+        '--redis' => true,
+        '--no-interaction' => true,
+    ])->assertSuccessful();
+
+    $compose = file_get_contents($this->basePath.'/compose.yaml');
+
+    expect($compose)
+        ->toContain("- '127.0.0.1:\${FORWARD_MEILISEARCH_PORT:-7700}:7700'")
+        ->toContain("- '127.0.0.1:\${FORWARD_MAILPIT_PORT:-1025}:1025'")
+        ->toContain("- '127.0.0.1:\${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'")
+        ->toContain("- '127.0.0.1:\${FORWARD_REDIS_PORT:-6379}:6379'")
+        ->not->toContain("- '\${FORWARD_");
+});
+
 test('it composes every service into one valid file', function () {
     $this->artisan('laravix:docker', [
         '--db' => 'mysql',
