@@ -7,9 +7,6 @@ return [
     'saved' => 'Uložené',
     'save_error' => 'Chyba pri ukladaní',
 
-    'form_success' => 'Správa odoslaná. Čoskoro sa ozveme!',
-    'form_error' => 'Nastala chyba. Skúste to prosím znova.',
-
     'no_assets' => 'Žiadne médiá — nahrajte súbory v sekcii Médiá.',
 
     'sector_layout' => 'Rozloženie',

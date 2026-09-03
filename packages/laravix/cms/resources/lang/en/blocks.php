@@ -52,7 +52,6 @@ return [
         'team' => 'Team',
         'cta' => 'Call to action (CTA)',
         'pricing' => 'Pricing',
-        'contact_form' => 'Contact form',
         'newsletter' => 'Newsletter',
         'faq' => 'FAQ',
         'accordion' => 'Accordion (interactive)',

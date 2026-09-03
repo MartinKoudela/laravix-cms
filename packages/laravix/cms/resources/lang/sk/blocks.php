@@ -52,7 +52,6 @@ return [
         'team' => 'Tím',
         'cta' => 'Výzva k akcii (CTA)',
         'pricing' => 'Cenník',
-        'contact_form' => 'Kontaktný formulár',
         'newsletter' => 'Newsletter',
         'faq' => 'FAQ',
         'accordion' => 'Accordion (interaktívny)',

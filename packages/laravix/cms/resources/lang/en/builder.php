@@ -7,9 +7,6 @@ return [
     'saved' => 'Saved',
     'save_error' => 'Error saving',
 
-    'form_success' => 'Message sent. We\'ll be in touch!',
-    'form_error' => 'An error occurred. Please try again.',
-
     'no_assets' => 'No media — upload files in the Media section.',
 
     'sector_layout' => 'Layout',

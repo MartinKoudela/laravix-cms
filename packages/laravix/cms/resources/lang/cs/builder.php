@@ -9,8 +9,6 @@ return [
     'save_error' => 'Chyba při ukládání',
 
     // Contact form
-    'form_success' => 'Zpráva odeslána. Brzy se ozveme!',
-    'form_error' => 'Nastala chyba. Zkuste to prosím znovu.',
 
     // Asset manager
     'no_assets' => 'Žádná média — nahryjte soubory v sekci Média.',

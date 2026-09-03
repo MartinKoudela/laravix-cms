@@ -1,13 +1,10 @@
-import { t } from './trans';
-
-export function setupCanvas(editor, { contactUrl, csrfToken }) {
+export function setupCanvas(editor) {
     editor.on('canvas:frame:load', () => {
         const win = editor.Canvas.getWindow();
         const canvasDoc = editor.Canvas.getDocument();
         if (!canvasDoc) return;
 
         win?.AOS?.init?.({ once: true });
-        attachContactFormHandler(canvasDoc, { contactUrl, csrfToken });
 
         if (!canvasDoc.getElementById('builder-base')) {
             const style = canvasDoc.createElement('style');
@@ -154,45 +151,6 @@ function initBeforeAfter(doc) {
         };
         update(range.value);
         range.addEventListener('input', () => update(range.value));
-    });
-}
-
-function attachContactFormHandler(doc, { contactUrl, csrfToken }) {
-    doc.addEventListener('submit', async (e) => {
-        const form = e.target.closest('[data-contact-form]');
-        if (!form) return;
-        e.preventDefault();
-
-        const btn    = form.querySelector('[type="submit"]');
-        const status = form.querySelector('#form-status');
-        btn.disabled = true;
-
-        const data = Object.fromEntries(new FormData(form).entries());
-
-        try {
-            const res = await fetch(contactUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': csrfToken,
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-            if (!res.ok) throw new Error();
-            form.reset();
-            status.style.display = 'block';
-            status.style.background = '#f0fdf4';
-            status.style.color = '#15803d';
-            status.textContent = t('form_success');
-        } catch {
-            status.style.display = 'block';
-            status.style.background = '#fef2f2';
-            status.style.color = '#b91c1c';
-            status.textContent = t('form_error');
-        } finally {
-            btn.disabled = false;
-        }
     });
 }
 

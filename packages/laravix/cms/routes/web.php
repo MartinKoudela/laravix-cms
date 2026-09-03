@@ -33,6 +33,3 @@ Route::middleware(['auth', SwitchLanguageLocale::class])->group(function () {
     Route::post('/admin/{site}/builder/upload', [BuilderController::class, 'upload'])
         ->name('builder.upload');
 });
-
-Route::post('/builder/{site}/contact', [BuilderController::class, 'contact'])
-    ->name('builder.contact');

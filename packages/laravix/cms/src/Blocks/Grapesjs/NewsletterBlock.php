@@ -22,7 +22,7 @@ class NewsletterBlock
     <div class="lx-container--form" style="text-align:center;">
         <h2 class="lx-section-head__title">Stay informed</h2>
         <p class="lx-section-head__subtitle">News and tips straight to your email. No spam, unsubscribe anytime.</p>
-        <form data-contact-form class="lx-newsletter__form">
+        <form class="lx-newsletter__form">
             <input name="email" type="email" placeholder="your@email.com" required class="lx-newsletter__input">
             <button type="submit" class="lx-newsletter__btn">Subscribe</button>
         </form>

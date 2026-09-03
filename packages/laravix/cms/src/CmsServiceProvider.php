@@ -36,7 +36,6 @@ use Laravix\Cms\Blocks\Grapesjs\BigTypographyBlock;
 use Laravix\Cms\Blocks\Grapesjs\ButtonPrimaryBlock;
 use Laravix\Cms\Blocks\Grapesjs\CardsSliderBlock;
 use Laravix\Cms\Blocks\Grapesjs\ComparisonBlock;
-use Laravix\Cms\Blocks\Grapesjs\ContactFormBlock;
 use Laravix\Cms\Blocks\Grapesjs\CookieBannerBlock;
 use Laravix\Cms\Blocks\Grapesjs\CountdownBlock;
 use Laravix\Cms\Blocks\Grapesjs\CtaBlock;
@@ -486,7 +485,6 @@ class CmsServiceProvider extends ServiceProvider
             TeamBlock::definition(),
             CtaBlock::definition(),
             PricingBlock::definition(),
-            ContactFormBlock::definition(),
             NewsletterBlock::definition(),
             FaqBlock::definition(),
             AccordionBlock::definition(),

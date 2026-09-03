@@ -19,7 +19,6 @@ const csrfToken   = el.dataset.csrf;
 const canvasCss   = el.dataset.canvasCss;
 const mediaItems  = JSON.parse(el.dataset.mediaItems  || '[]');
 const gjsBlocks   = JSON.parse(el.dataset.gjsBlocks   || '[]');
-const contactUrl  = el.dataset.contactUrl;
 const uploadUrl   = el.dataset.uploadUrl;
 
 setTrans(JSON.parse(el.dataset.trans || '{}'));
@@ -31,7 +30,7 @@ setupStyleManager(editor);
 setupMediaTrait(editor, { mediaItems, csrfToken, uploadUrl });
 registerComponents(editor);
 registerBlocks(editor, gjsBlocks);
-setupCanvas(editor, { contactUrl, csrfToken });
+setupCanvas(editor);
 setupSave(editor, { saveUrl, csrfToken });
 
 if (savedData) {

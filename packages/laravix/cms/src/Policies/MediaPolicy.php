@@ -28,13 +28,13 @@ class MediaPolicy
         return $user->roleForSite($media->site) !== null;
     }
 
-    public function create(User $user): bool
+    public function create(User $user, ?Site $site = null): bool
     {
         if ($user->is_super_admin) {
             return true;
         }
 
-        $site = filament()->getTenant();
+        $site ??= filament()->getTenant();
 
         return $site instanceof Site
             && in_array($user->roleForSite($site), [SiteRole::ADMIN, SiteRole::EDITOR]);

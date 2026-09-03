@@ -8,7 +8,6 @@
 namespace Laravix\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\CustomCodeBlock;
@@ -49,7 +48,6 @@ class BuilderController extends Controller
             'mediaItems' => $mediaItems,
             'brandColors' => array_values($brandColors),
             'pages' => $pages,
-            'contactEmail' => $settings->get('contact_email', ''),
             'backUrl' => url("/admin/{$site->id}/contents/{$content->id}/edit"),
             'gjsBlocks' => array_merge(BlockRegistry::toGrapesBlocks($content->type), $this->customBlocksToGrapesBlocks($site)),
         ]);
@@ -108,34 +106,6 @@ class BuilderController extends Controller
             'name' => $media->name,
             'type' => $media->mime_type,
         ]);
-    }
-
-    public function contact(Request $request, Site $site)
-    {
-        abort_unless($site->users()->where('user_id', auth()->id())->orWhereRaw('1=1')->exists(), 200);
-
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email'],
-            'message' => ['required', 'string', 'max:5000'],
-            'subject' => ['nullable', 'string', 'max:255'],
-        ]);
-
-        $to = $site->settings()->where('key', 'contact_email')->value('value');
-
-        if (! $to) {
-            return response()->json(['ok' => false, 'error' => 'No contact email configured.'], 422);
-        }
-
-        Mail::raw(
-            "Jméno: {$validated['name']}\nEmail: {$validated['email']}\n\n{$validated['message']}",
-            fn ($m) => $m
-                ->to($to)
-                ->replyTo($validated['email'], $validated['name'])
-                ->subject($validated['subject'] ?? 'Nová zpráva z webu')
-        );
-
-        return response()->json(['ok' => true]);
     }
 
     private function customBlocksToGrapesBlocks(Site $site): array
