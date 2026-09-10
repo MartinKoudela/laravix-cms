@@ -15,6 +15,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\DB;
 use Laravix\Cms\Models\ContentRevision;
+use Laravix\Cms\Support\ContentRevisionRestorer;
 
 class RevisionsRelationManager extends RelationManager
 {
@@ -24,7 +25,10 @@ class RevisionsRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('created_at')
-            ->modifyQueryUsing(fn ($query) => $query->select([
+            // Builder saves used to write a revision of their own shape, which
+            // carries no snapshot to restore. Those rows stay in the database
+            // but are no longer offered here.
+            ->modifyQueryUsing(fn ($query) => $query->whereNull('data->source')->select([
                 'id',
                 'content_id',
                 'created_by',
@@ -46,24 +50,8 @@ class RevisionsRelationManager extends RelationManager
                     ->icon('heroicon-o-arrow-uturn-left')
                     ->color('warning')
                     ->requiresConfirmation()
-                    ->action(function ($record, $livewire) {
-                        $record = ContentRevision::find($record->id);
-                        $content = $record->content;
-                        $data = $record->data;
-
-                        $content->update([
-                            'title' => $data['title'],
-                            'slug' => $data['slug'],
-                            'status' => $data['status'],
-                            'is_homepage' => $data['is_homepage'],
-                            'published_at' => $data['published_at'],
-                            'blocks' => $data['blocks'],
-                        ]);
-
-                        foreach ($data['fields'] as $key => $value) {
-                            $content->fields()->updateOrCreate(['key' => $key], ['value' => $value]);
-                        }
-                        $content->fields()->whereNotIn('key', array_keys($data['fields']))->delete();
+                    ->action(function ($record, $livewire, ContentRevisionRestorer $restorer) {
+                        $restorer->restore(ContentRevision::findOrFail($record->id));
 
                         $livewire->redirect(request()->header('Referer'));
                     }),

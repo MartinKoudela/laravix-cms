@@ -70,14 +70,6 @@ class BuilderController extends Controller
             'grapesjs_html' => $validated['grapesjs_html'] ?? null,
         ]);
 
-        $content->revisions()->create([
-            'created_by' => auth()->id(),
-            'data' => [
-                'source' => 'builder',
-                'grapesjs_data' => $validated['grapesjs_data'],
-            ],
-        ]);
-
         return response()->json(['ok' => true]);
     }
 
