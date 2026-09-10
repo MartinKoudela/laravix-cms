@@ -8,6 +8,7 @@
 namespace Laravix\Cms\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\CustomCodeBlock;
@@ -20,7 +21,7 @@ class BuilderController extends Controller
     public function edit(Site $site, Content $content)
     {
         abort_unless($content->site_id === $site->id, 404);
-        abort_unless($site->users()->where('user_id', auth()->id())->exists(), 403);
+        Gate::authorize('update', $content);
 
         $mediaItems = Media::where('site_id', $site->id)
             ->orderByDesc('created_at')
@@ -56,7 +57,7 @@ class BuilderController extends Controller
     public function save(Request $request, Site $site, Content $content)
     {
         abort_unless($content->site_id === $site->id, 404);
-        abort_unless($site->users()->where('user_id', auth()->id())->exists(), 403);
+        Gate::authorize('update', $content);
 
         $validated = $request->validate([
             'grapesjs_data' => ['required', 'string'],
@@ -81,7 +82,7 @@ class BuilderController extends Controller
 
     public function upload(Request $request, Site $site)
     {
-        abort_unless($site->users()->where('user_id', auth()->id())->exists(), 403);
+        Gate::authorize('create', [Media::class, $site]);
 
         $request->validate([
             'file' => ['required', 'file', 'max:524288', 'mimes:jpg,jpeg,png,gif,webp,svg,mp4,webm,mov,avi'],
