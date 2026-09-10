@@ -26,7 +26,11 @@ class MediaForm
                             ->disk('public')
                             ->directory('media')
                             ->storeFileNamesIn('name')
-                            ->acceptedFileTypes(['image/*', 'video/*', 'audio/*'])
+                            ->acceptedFileTypes([
+                                'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif',
+                                'video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo',
+                                'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/mp4',
+                            ])
                             ->maxSize(524288)
                             ->imageEditor()
                             ->columnSpanFull(),

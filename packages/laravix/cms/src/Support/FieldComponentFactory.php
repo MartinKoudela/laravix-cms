@@ -82,7 +82,7 @@ class FieldComponentFactory
                     ->disk('public')
                     ->directory('media')
                     ->storeFileNamesIn('name')
-                    ->acceptedFileTypes(['image/*'])
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif'])
                     ->maxSize(524288)
                     ->imageEditor()
                     ->columnSpanFull(),

@@ -85,7 +85,7 @@ class BuilderController extends Controller
         Gate::authorize('create', [Media::class, $site]);
 
         $request->validate([
-            'file' => ['required', 'file', 'max:524288', 'mimes:jpg,jpeg,png,gif,webp,svg,mp4,webm,mov,avi'],
+            'file' => ['required', 'file', 'max:524288', 'mimes:jpg,jpeg,png,gif,webp,mp4,webm,mov,avi'],
         ]);
 
         $file = $request->file('file');
