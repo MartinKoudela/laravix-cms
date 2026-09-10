@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Filament\Resources\Media\Pages\CreateMedia;
 use Laravix\Cms\Models\Media;
+use Laravix\Cms\Models\Setting;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
 use Laravix\Cms\Support\FieldComponentFactory;
@@ -84,4 +85,22 @@ test('the filament uploads list no wildcard types', function (string $field) {
     foreach ($types as $type) {
         expect($type)->not->toContain('*');
     }
+})->with('filament uploads');
+
+test('the builder accepts an svg once the site opts in', function () {
+    Setting::create(['site_id' => $this->site->id, 'key' => 'allow_svg_uploads', 'value' => '1']);
+
+    $this->actingAs($this->editor)
+        ->post(route('builder.upload', $this->site), [
+            'file' => UploadedFile::fake()->create('logo.svg', 4, 'image/svg+xml'),
+        ])
+        ->assertOk();
+
+    expect(Media::where('site_id', $this->site->id)->count())->toBe(1);
+});
+
+test('the filament uploads accept svg once the site opts in', function (string $field) {
+    Setting::create(['site_id' => $this->site->id, 'key' => 'allow_svg_uploads', 'value' => '1']);
+
+    expect(acceptedTypesFor($field))->toContain('image/svg+xml');
 })->with('filament uploads');

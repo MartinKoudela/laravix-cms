@@ -10,6 +10,7 @@ namespace Laravix\Cms\Filament\Resources\Media\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Laravix\Cms\Support\AllowedMediaTypes;
 
 class MediaForm
 {
@@ -26,11 +27,7 @@ class MediaForm
                             ->disk('public')
                             ->directory('media')
                             ->storeFileNamesIn('name')
-                            ->acceptedFileTypes([
-                                'image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif',
-                                'video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo',
-                                'audio/mpeg', 'audio/ogg', 'audio/wav', 'audio/mp4',
-                            ])
+                            ->acceptedFileTypes(fn (): array => AllowedMediaTypes::all())
                             ->maxSize(524288)
                             ->imageEditor()
                             ->columnSpanFull(),

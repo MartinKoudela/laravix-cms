@@ -7,20 +7,22 @@
 
 namespace Laravix\Cms\Observers;
 
-use Laravix\Cms\Jobs\GenerateImageVariants;
 use Laravix\Cms\Models\Media;
 use Laravix\Cms\Support\AllowedMediaTypes;
+use Laravix\Cms\Support\SvgSanitizer;
 
-class ImageTransformationObserver
+class SvgSanitizationObserver
 {
+    public function __construct(
+        private readonly SvgSanitizer $sanitizer,
+    ) {}
+
     public function created(Media $media): void
     {
-        if ($media->mime_type === AllowedMediaTypes::SVG) {
+        if ($media->mime_type !== AllowedMediaTypes::SVG) {
             return;
         }
 
-        if (str_starts_with($media->mime_type, 'image/')) {
-            GenerateImageVariants::dispatch($media);
-        }
+        $this->sanitizer->sanitizeStoredFile($media->disk, $media->path);
     }
 }

@@ -14,6 +14,7 @@ use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\CustomCodeBlock;
 use Laravix\Cms\Models\Media;
 use Laravix\Cms\Models\Site;
+use Laravix\Cms\Support\AllowedMediaTypes;
 use Laravix\Cms\Support\BlockRegistry;
 
 class BuilderController extends Controller
@@ -85,7 +86,7 @@ class BuilderController extends Controller
         Gate::authorize('create', [Media::class, $site]);
 
         $request->validate([
-            'file' => ['required', 'file', 'max:524288', 'mimes:jpg,jpeg,png,gif,webp,mp4,webm,mov,avi'],
+            'file' => ['required', 'file', 'max:524288', 'mimetypes:'.implode(',', AllowedMediaTypes::imagesAndVideo($site))],
         ]);
 
         $file = $request->file('file');

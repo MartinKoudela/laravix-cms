@@ -7,14 +7,15 @@
 
 namespace Laravix\Cms\Jobs;
 
-use Laravix\Cms\Enums\ImageVariant;
-use Laravix\Cms\Models\Media;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Encoders\JpegEncoder;
 use Intervention\Image\ImageManager;
+use Laravix\Cms\Enums\ImageVariant;
+use Laravix\Cms\Models\Media;
+use Laravix\Cms\Support\AllowedMediaTypes;
 
 class GenerateImageVariants implements ShouldQueue
 {
@@ -26,6 +27,10 @@ class GenerateImageVariants implements ShouldQueue
 
     public function handle(): void
     {
+        if ($this->media->mime_type === AllowedMediaTypes::SVG) {
+            return;
+        }
+
         if (! str_starts_with($this->media->mime_type, 'image/')) {
             return;
         }

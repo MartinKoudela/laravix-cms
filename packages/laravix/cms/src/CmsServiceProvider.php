@@ -355,6 +355,11 @@ class CmsServiceProvider extends ServiceProvider
                 ->group('laravix::settings.tabs.general')
                 ->hint('laravix::settings.hints.contact_email')
                 ->config(['email' => true]),
+            SettingDefinition::make('allow_svg_uploads')
+                ->type(FieldType::BOOLEAN)
+                ->label('laravix::settings.fields.allow_svg_uploads')
+                ->group('laravix::settings.tabs.general')
+                ->hint('laravix::settings.hints.allow_svg_uploads'),
 
             SettingDefinition::make('meta_title')
                 ->label('laravix::settings.fields.meta_title')

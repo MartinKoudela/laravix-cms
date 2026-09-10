@@ -7,8 +7,6 @@
 
 namespace Laravix\Cms\Models;
 
-use Laravix\Cms\Enums\ImageVariant;
-use Laravix\Cms\Observers\ImageTransformationObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,12 +14,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Laravix\Cms\Enums\ImageVariant;
+use Laravix\Cms\Observers\ImageTransformationObserver;
+use Laravix\Cms\Observers\SvgSanitizationObserver;
 use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
 #[Fillable(['site_id', 'name', 'path', 'disk', 'mime_type', 'size', 'created_by', 'variants'])]
-#[ObservedBy(ImageTransformationObserver::class)]
+#[ObservedBy([SvgSanitizationObserver::class, ImageTransformationObserver::class])]
 class Media extends Model
 {
     use HasFactory, LogsActivity, Recyclable, SoftDeletes;
