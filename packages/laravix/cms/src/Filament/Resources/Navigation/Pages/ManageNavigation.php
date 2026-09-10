@@ -15,6 +15,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 use Laravix\Cms\Filament\Resources\Navigation\NavigationResource;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Support\NavigationComponentFactory;
@@ -46,6 +47,7 @@ class ManageNavigation extends Page
     public function mount(): void
     {
         $this->site = filament()->getTenant();
+        $this->previewToken = Str::random(40);
         $navigations = $this->site?->navigations ?? [];
         $navDesign = $this->site?->nav_design ?? [];
 
@@ -71,8 +73,6 @@ class ManageNavigation extends Page
 
     public function refreshPreview(): void
     {
-        $this->previewToken = md5($this->site->id.'-'.auth()->id().'-nav-preview');
-
         cache()->put("preview_nav_{$this->previewToken}", [
             'site_id' => $this->site->id,
             'navigations' => array_merge(

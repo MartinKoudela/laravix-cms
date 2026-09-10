@@ -13,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Str;
 use Laravix\Cms\Enums\ContentStatus;
 use Laravix\Cms\Filament\Resources\Contents\ContentResource;
 use Laravix\Cms\Models\Content;
@@ -28,7 +29,7 @@ class EditContent extends EditRecord
 
     public function mount(int|string $record): void
     {
-        $this->blockPreviewToken = md5($record.'-'.auth()->id().'-block-preview');
+        $this->blockPreviewToken = Str::random(40);
 
         parent::mount($record);
 
