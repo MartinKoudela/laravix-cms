@@ -15,7 +15,12 @@ class ContentResolver
 {
     public function resolve(Site $site, string $slug, ?string $locale = null): Content
     {
-        $content = Content::query()
+        return $this->find($site, $slug, $locale) ?? throw new NotFoundHttpException;
+    }
+
+    public function find(Site $site, string $slug, ?string $locale = null): ?Content
+    {
+        return Content::query()
             ->where('site_id', $site->id)
             ->where('status', 'published')
             ->when($locale, fn ($q) => $q->where('locale', $locale))
@@ -31,11 +36,5 @@ class ContentResolver
             })
             ->with(['fields', 'taxonomies'])
             ->first();
-
-        if (! $content) {
-            throw new NotFoundHttpException;
-        }
-
-        return $content;
     }
 }

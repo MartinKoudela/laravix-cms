@@ -7,9 +7,6 @@
 
 namespace Laravix\Cms\Models;
 
-use Laravix\Cms\Enums\ContentStatus;
-use Laravix\Cms\Observers\ContentObserver;
-use Laravix\Cms\Support\ContentTypeRegistry;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Observers\ContentObserver;
+use Laravix\Cms\Support\ContentTypeRegistry;
 use Promethys\Revive\Concerns\Recyclable;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
@@ -46,6 +46,11 @@ class Content extends Model
     {
         return $this->status === ContentStatus::PUBLISHED
             && ($this->published_at === null || $this->published_at->isPast());
+    }
+
+    public function hasBuilderContent(): bool
+    {
+        return filled($this->grapesjs_html) || ! empty($this->blocks);
     }
 
     public function getActivitylogOptions(): LogOptions
