@@ -2,10 +2,10 @@
 
 namespace Laravix\Cms\Filament\Resources\ContentTypeFields\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseCreateRecord;
 use Laravix\Cms\Filament\Resources\ContentTypeFields\ContentTypeFieldResource;
-use Filament\Resources\Pages\CreateRecord;
 
-class CreateContentTypeField extends CreateRecord
+class CreateContentTypeField extends BaseCreateRecord
 {
     protected static string $resource = ContentTypeFieldResource::class;
 }

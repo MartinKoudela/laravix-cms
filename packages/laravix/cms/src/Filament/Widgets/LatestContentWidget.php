@@ -34,7 +34,8 @@ class LatestContentWidget extends BaseWidget
         return $table
             ->query(
                 Content::query()
-                    ->with(['site', 'author'])
+                    ->where('site_id', filament()->getTenant()?->id)
+                    ->with('author')
                     ->latest('updated_at')
                     ->limit(8)
             )
@@ -42,9 +43,6 @@ class LatestContentWidget extends BaseWidget
                 TextColumn::make('title')
                     ->label(__('laravix::common.title'))
                     ->searchable(),
-                TextColumn::make('site.name')
-                    ->label(__('laravix::common.site'))
-                    ->sortable(),
                 TextColumn::make('type')
                     ->label(__('laravix::common.type'))
                     ->badge(),

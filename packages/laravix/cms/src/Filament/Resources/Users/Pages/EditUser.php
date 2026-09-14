@@ -7,22 +7,14 @@
 
 namespace Laravix\Cms\Filament\Resources\Users\Pages;
 
-use Laravix\Cms\Filament\Resources\Users\UserResource;
-use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
-use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use Laravix\Cms\Filament\Pages\BaseEditRecord;
+use Laravix\Cms\Filament\Resources\Users\UserResource;
 
-class EditUser extends EditRecord
+class EditUser extends BaseEditRecord
 {
     protected static string $resource = UserResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {

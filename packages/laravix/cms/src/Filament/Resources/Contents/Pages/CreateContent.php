@@ -7,12 +7,12 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseCreateRecord;
 use Laravix\Cms\Filament\Resources\Contents\ContentResource;
 use Laravix\Cms\Support\ContentTypeRegistry;
 use Laravix\Cms\Support\FieldRegistry;
-use Filament\Resources\Pages\CreateRecord;
 
-class CreateContent extends CreateRecord
+class CreateContent extends BaseCreateRecord
 {
     protected static string $resource = ContentResource::class;
 

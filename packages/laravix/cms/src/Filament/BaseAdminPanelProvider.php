@@ -90,7 +90,7 @@ abstract class BaseAdminPanelProvider extends PanelProvider
                     ->authorize(fn () => auth()->user()?->isAdmin())
                     ->navigationGroup('Management')
                     ->navigationIcon('heroicon-o-archive-box-arrow-down')
-                    ->navigationSort(1)
+                    ->navigationSort(40)
                     ->navigationLabel(fn () => __('laravix::panel.bin'))
                     ->title(fn () => __('laravix::panel.bin')),
 

@@ -7,18 +7,10 @@
 
 namespace Laravix\Cms\Filament\Resources\Media\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseEditRecord;
 use Laravix\Cms\Filament\Resources\Media\MediaResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
 
-class EditMedia extends EditRecord
+class EditMedia extends BaseEditRecord
 {
     protected static string $resource = MediaResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
 }

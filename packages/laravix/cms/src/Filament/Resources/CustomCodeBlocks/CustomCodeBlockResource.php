@@ -35,6 +35,8 @@ class CustomCodeBlockResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';
 
+    protected static ?int $navigationSort = 40;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCodeBracketSquare;
 
     protected static ?string $recordTitleAttribute = 'name';

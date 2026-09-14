@@ -11,7 +11,7 @@ use Filament\Actions\Action;
 use Filament\Actions\View\ActionsIconAlias;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Support\Icons\Heroicon;
-use Illuminate\Database\Eloquent\Model;
+use Laravix\Cms\Models\Content;
 
 class PreviewAction extends Action
 {
@@ -28,12 +28,12 @@ class PreviewAction extends Action
 
         $this->tableIcon(FilamentIcon::resolve(ActionsIconAlias::VIEW_ACTION) ?? Heroicon::Eye);
 
-        $this->url(function (Model $record): string {
+        $this->visible(fn (Content $record): bool => $record->isPublished());
+
+        $this->url(function (Content $record): string {
             $record->loadMissing('site');
 
-            $slug = $record->is_homepage ? '' : ltrim($record->slug, '/');
-
-            return 'https://'.$record->site->domain.'/'.$slug;
+            return request()->getScheme().'://'.$record->site->domain.$record->path($record->site->defaultLocale());
         }, shouldOpenInNewTab: true);
     }
 }

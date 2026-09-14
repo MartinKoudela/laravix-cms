@@ -36,6 +36,8 @@ class UserInvitationResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
+    protected static ?int $navigationSort = 31;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
 
     protected static ?string $navigationParentItem = UserResource::class;

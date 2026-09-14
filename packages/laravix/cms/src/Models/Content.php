@@ -44,6 +44,11 @@ class Content extends Model
 
     public function shouldBeSearchable(): bool
     {
+        return $this->isPublished();
+    }
+
+    public function isPublished(): bool
+    {
         return $this->status === ContentStatus::PUBLISHED
             && ($this->published_at === null || $this->published_at->isPast());
     }

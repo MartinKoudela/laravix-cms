@@ -3,7 +3,12 @@
 return [
     'plural' => 'obsahy',
     'singular' => 'obsah',
+    'relations' => [
+        'revisions' => 'Revize',
+        'redirects' => 'Přesměrování',
+    ],
     'sections' => [
+        'content' => 'Obsah',
         'seo_group' => 'SEO',
         'publishing' => 'Publikování',
         'taxonomies' => 'Taxonomie',

@@ -35,6 +35,8 @@ class TaxonomyResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';
 
+    protected static ?int $navigationSort = 30;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
     protected static ?string $recordTitleAttribute = 'name';

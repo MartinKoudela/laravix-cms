@@ -13,6 +13,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Laravix\Cms\Models\ContentRevision;
 use Laravix\Cms\Support\ContentRevisionRestorer;
@@ -20,6 +21,11 @@ use Laravix\Cms\Support\ContentRevisionRestorer;
 class RevisionsRelationManager extends RelationManager
 {
     protected static string $relationship = 'revisions';
+
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __('laravix::content.relations.revisions');
+    }
 
     public function table(Table $table): Table
     {

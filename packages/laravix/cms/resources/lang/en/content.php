@@ -3,6 +3,10 @@
 return [
     'singular' => 'content',
     'plural' => 'contents',
+    'relations' => [
+        'revisions' => 'Revisions',
+        'redirects' => 'Redirects',
+    ],
     'sections' => [
         'content' => 'Content',
         'publishing' => 'Publishing',

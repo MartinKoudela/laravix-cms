@@ -7,18 +7,10 @@
 
 namespace Laravix\Cms\Filament\Resources\Sites\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseEditRecord;
 use Laravix\Cms\Filament\Resources\Sites\SiteResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
 
-class EditSite extends EditRecord
+class EditSite extends BaseEditRecord
 {
     protected static string $resource = SiteResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
 }

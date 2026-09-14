@@ -22,17 +22,21 @@ class StatsOverviewWidget extends BaseWidget
 
     protected function getStats(): array
     {
+        $siteId = filament()->getTenant()?->id;
+
         return [
-            Stat::make(__('laravix::sites.stats.title'), Site::count())
-                ->description(__('laravix::sites.stats.total'))
-                ->color('primary'),
-            Stat::make(__('laravix::content.stats.published'), Content::where('status', ContentStatus::PUBLISHED->value)->count())
+            ...(auth()->user()?->is_super_admin ? [
+                Stat::make(__('laravix::sites.stats.title'), Site::count())
+                    ->description(__('laravix::sites.stats.total'))
+                    ->color('primary'),
+            ] : []),
+            Stat::make(__('laravix::content.stats.published'), Content::where('site_id', $siteId)->where('status', ContentStatus::PUBLISHED->value)->count())
                 ->description(__('laravix::content.stats.published_description'))
                 ->color('success'),
-            Stat::make(__('laravix::content.stats.drafts'), Content::where('status', ContentStatus::DRAFT->value)->count())
+            Stat::make(__('laravix::content.stats.drafts'), Content::where('site_id', $siteId)->where('status', ContentStatus::DRAFT->value)->count())
                 ->description(__('laravix::content.stats.awaiting'))
                 ->color('warning'),
-            Stat::make(__('laravix::media.stats.files'), Media::count())
+            Stat::make(__('laravix::media.stats.files'), Media::where('site_id', $siteId)->count())
                 ->description(__('laravix::media.stats.uploaded'))
                 ->color('gray'),
         ];

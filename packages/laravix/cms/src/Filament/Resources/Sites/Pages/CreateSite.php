@@ -7,10 +7,10 @@
 
 namespace Laravix\Cms\Filament\Resources\Sites\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseCreateRecord;
 use Laravix\Cms\Filament\Resources\Sites\SiteResource;
-use Filament\Resources\Pages\CreateRecord;
 
-class CreateSite extends CreateRecord
+class CreateSite extends BaseCreateRecord
 {
     protected static string $resource = SiteResource::class;
 }

@@ -7,7 +7,6 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents\RelationManagers;
 
-use Laravix\Cms\Enums\RedirectStatusCode;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -19,10 +18,17 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use Laravix\Cms\Enums\RedirectStatusCode;
 
 class RedirectsRelationManager extends RelationManager
 {
     protected static string $relationship = 'redirects';
+
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __('laravix::content.relations.redirects');
+    }
 
     public function form(Schema $schema): Schema
     {

@@ -7,6 +7,7 @@
 
 namespace Laravix\Cms\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Laravix\Cms\Models\Content;
@@ -44,9 +45,8 @@ class PreviewController extends Controller
             ?? Content::where('site_id', $site->id)
                 ->where('status', 'published')
                 ->with(['fields', 'taxonomies'])
-                ->first();
-
-        abort_if(! $content, 404);
+                ->first()
+            ?? $this->stubContent($site);
 
         $data = $this->pageDataBuilder->build($site, $content);
         $data['navigations'] = $cached['navigations'];
@@ -80,6 +80,24 @@ class PreviewController extends Controller
         $seo = $this->buildSeo($content, $data);
 
         return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));
+    }
+
+    private function stubContent(Site $site): Content
+    {
+        $content = new Content([
+            'site_id' => $site->id,
+            'type' => 'page',
+            'title' => $site->name,
+            'slug' => '/',
+            'is_homepage' => true,
+            'locale' => $site->defaultLocale(),
+        ]);
+
+        $content->setRelation('site', $site);
+        $content->setRelation('fields', new Collection);
+        $content->setRelation('taxonomies', new Collection);
+
+        return $content;
     }
 
     private function resolveView(Site $site, Content $content): string

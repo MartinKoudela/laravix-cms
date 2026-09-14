@@ -37,6 +37,8 @@ class ActivityLogResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
+    protected static ?int $navigationSort = 90;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
     public static function canViewAny(): bool

@@ -2,10 +2,10 @@
 
 namespace Laravix\Cms\Filament\Resources\CustomCodeBlocks\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseCreateRecord;
 use Laravix\Cms\Filament\Resources\CustomCodeBlocks\CustomCodeBlockResource;
-use Filament\Resources\Pages\CreateRecord;
 
-class CreateCustomCodeBlock extends CreateRecord
+class CreateCustomCodeBlock extends BaseCreateRecord
 {
     protected static string $resource = CustomCodeBlockResource::class;
 }

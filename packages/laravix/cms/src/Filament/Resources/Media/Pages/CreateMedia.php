@@ -7,11 +7,11 @@
 
 namespace Laravix\Cms\Filament\Resources\Media\Pages;
 
-use Laravix\Cms\Filament\Resources\Media\MediaResource;
-use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Facades\Storage;
+use Laravix\Cms\Filament\Pages\BaseCreateRecord;
+use Laravix\Cms\Filament\Resources\Media\MediaResource;
 
-class CreateMedia extends CreateRecord
+class CreateMedia extends BaseCreateRecord
 {
     protected static string $resource = MediaResource::class;
 

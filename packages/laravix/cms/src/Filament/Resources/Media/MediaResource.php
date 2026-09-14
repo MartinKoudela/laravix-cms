@@ -35,6 +35,8 @@ class MediaResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';
 
+    protected static ?int $navigationSort = 20;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPhoto;
 
     protected static ?string $recordTitleAttribute = 'name';

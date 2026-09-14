@@ -7,18 +7,10 @@
 
 namespace Laravix\Cms\Filament\Resources\Taxonomies\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseEditRecord;
 use Laravix\Cms\Filament\Resources\Taxonomies\TaxonomyResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
 
-class EditTaxonomy extends EditRecord
+class EditTaxonomy extends BaseEditRecord
 {
     protected static string $resource = TaxonomyResource::class;
-
-    protected function getHeaderActions(): array
-    {
-        return [
-            DeleteAction::make(),
-        ];
-    }
 }

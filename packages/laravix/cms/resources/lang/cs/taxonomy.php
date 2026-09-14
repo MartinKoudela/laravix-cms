@@ -2,7 +2,7 @@
 
 return [
     'singular' => 'taxonomie',
-    'plural' => 'taxonymy',
+    'plural' => 'taxonomie',
     'sections' => [
         'translations' => 'Překlady',
         'hierarchy' => 'Hierarchie',

@@ -42,6 +42,8 @@ class ContentResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';
 
+    protected static ?int $navigationSort = 10;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $recordTitleAttribute = 'title';

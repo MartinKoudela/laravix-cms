@@ -36,6 +36,8 @@ class SettingResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
+    protected static ?int $navigationSort = 20;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
 
     public static function canViewAny(): bool

@@ -47,10 +47,6 @@ class ContentsTable
                     ->color('gray')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('site.name')
-                    ->label(__('laravix::common.site'))
-                    ->sortable()
-                    ->searchable(),
                 TextColumn::make('locale')
                     ->label(__('laravix::content.fields.locale'))
                     ->badge()
@@ -104,8 +100,6 @@ class ContentsTable
                     ->options(collect(ContentStatus::cases())->mapWithKeys(
                         fn (ContentStatus $case) => [$case->value => $case->name]
                     )),
-                SelectFilter::make('site')
-                    ->relationship('site', 'name'),
             ])
             ->recordActions([
                 EditAction::make(),

@@ -7,10 +7,10 @@
 
 namespace Laravix\Cms\Filament\Resources\Taxonomies\Pages;
 
+use Laravix\Cms\Filament\Pages\BaseCreateRecord;
 use Laravix\Cms\Filament\Resources\Taxonomies\TaxonomyResource;
-use Filament\Resources\Pages\CreateRecord;
 
-class CreateTaxonomy extends CreateRecord
+class CreateTaxonomy extends BaseCreateRecord
 {
     protected static string $resource = TaxonomyResource::class;
 }

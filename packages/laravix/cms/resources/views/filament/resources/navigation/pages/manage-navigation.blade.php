@@ -67,6 +67,12 @@
 
     </div>
 
+    <div class="flex justify-end">
+        <x-filament::button wire:click="save" wire:loading.attr="disabled">
+            {{ __('laravix::navigation.actions.save') }}
+        </x-filament::button>
+    </div>
+
     <script>
         let previewTimer = null;
 

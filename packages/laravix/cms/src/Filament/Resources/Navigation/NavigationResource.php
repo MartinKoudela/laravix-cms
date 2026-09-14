@@ -32,6 +32,8 @@ class NavigationResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Management';
 
+    protected static ?int $navigationSort = 10;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBars3;
 
     public static function canViewAny(): bool

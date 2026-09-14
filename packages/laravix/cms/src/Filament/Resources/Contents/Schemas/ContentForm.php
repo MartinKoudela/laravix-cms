@@ -16,7 +16,6 @@ use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\View;
 use Filament\Schemas\Schema;
 use Laravix\Cms\Enums\ContentStatus;
 use Laravix\Cms\Models\Content;
@@ -143,15 +142,6 @@ class ContentForm
                                         fn ($definition) => FieldComponentFactory::make($definition),
                                         static::groupedFields($get)['laravix::content.sections.seo_group'] ?? [],
                                     )),
-                            ]),
-                        Tab::make(__('laravix::content.sections.builder'))
-                            ->hidden(fn (Get $get, ?Content $record): bool => ! (ContentTypeRegistry::find($get('type') ?? '')?->hasBuilder ?? false) || $record === null || filament()->getTenant()?->isHeadless())
-                            ->schema([
-                                View::make('laravix::filament.partials.block-builder')
-                                    ->viewData(fn ($livewire) => [
-                                        'record' => $livewire->record,
-                                    ])
-                                    ->columnSpanFull(),
                             ]),
                     ]),
             ]);

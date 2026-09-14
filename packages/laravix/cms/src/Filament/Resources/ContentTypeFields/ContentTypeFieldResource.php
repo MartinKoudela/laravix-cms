@@ -27,6 +27,8 @@ class ContentTypeFieldResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Content';
 
+    protected static ?int $navigationSort = 50;
+
     protected static ?string $recordTitleAttribute = 'label';
 
     public static function getModelLabel(): string

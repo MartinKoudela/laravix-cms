@@ -8,18 +8,19 @@
 namespace Laravix\Cms\Filament\Resources\Contents\Pages;
 
 use Filament\Actions\Action;
-use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
 use Filament\Notifications\Notification;
-use Filament\Resources\Pages\EditRecord;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
 use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Filament\Actions\PreviewAction;
+use Laravix\Cms\Filament\Pages\BaseEditRecord;
 use Laravix\Cms\Filament\Resources\Contents\ContentResource;
 use Laravix\Cms\Models\Content;
+use Laravix\Cms\Support\ContentTypeRegistry;
 use Laravix\Cms\Support\FieldRegistry;
 
-class EditContent extends EditRecord
+class EditContent extends BaseEditRecord
 {
     protected static string $resource = ContentResource::class;
 
@@ -56,17 +57,14 @@ class EditContent extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('preview')
-                ->label(__('laravix::common.preview'))
-                ->icon(Heroicon::OutlinedEye)
+            ...parent::getHeaderActions(),
+            Action::make('builder')
+                ->label(__('laravix::content.actions.open_builder'))
+                ->icon(Heroicon::OutlinedSquares2x2)
                 ->color('gray')
-                ->url(function (): string {
-                    /** @var Content $record */
-                    $record = $this->getRecord();
-                    $record->loadMissing('site');
-
-                    return 'https://'.$record->site->domain.$record->path($record->site->defaultLocale());
-                }, shouldOpenInNewTab: true),
+                ->visible(fn (): bool => $this->hasBuilder())
+                ->url(fn (): string => route('builder.edit', [$this->getRecord()->site_id, $this->getRecord()->id])),
+            PreviewAction::make()->color('gray'),
             Action::make('translate')
                 ->label(__('laravix::content.actions.translate'))
                 ->icon(Heroicon::OutlinedLanguage)
@@ -102,8 +100,16 @@ class EditContent extends EditRecord
 
                     $this->redirect(ContentResource::getUrl('edit', ['record' => $copy]));
                 }),
-            DeleteAction::make(),
         ];
+    }
+
+    private function hasBuilder(): bool
+    {
+        if (filament()->getTenant()?->isHeadless()) {
+            return false;
+        }
+
+        return ContentTypeRegistry::find($this->getRecord()->type)?->hasBuilder ?? false;
     }
 
     private function missingLocales(): array

@@ -42,6 +42,8 @@ class SiteResource extends Resource
 
     protected static string|null|\UnitEnum $navigationGroup = 'Laravix';
 
+    protected static ?int $navigationSort = 10;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedGlobeAlt;
 
     protected static ?string $recordTitleAttribute = 'name';
