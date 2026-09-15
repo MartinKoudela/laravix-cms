@@ -14,4 +14,7 @@ return [
     'messages' => [
         'optional_parent' => 'Voliteľné. Nastavte nadradenú kategóriu pre vnorenie.',
     ],
+    'actions' => [
+        'show_contents' => 'Zobraziť obsah',
+    ],
 ];

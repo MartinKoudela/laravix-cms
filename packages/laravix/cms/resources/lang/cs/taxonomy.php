@@ -14,4 +14,7 @@ return [
     'messages' => [
         'optional_parent' => 'Volitelné. Nastavte nadřazenou kategorii pro vytvoření vnořené struktury.',
     ],
+    'actions' => [
+        'show_contents' => 'Zobrazit obsah',
+    ],
 ];

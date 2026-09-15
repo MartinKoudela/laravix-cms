@@ -7,12 +7,12 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents\Pages;
 
-use Laravix\Cms\Filament\Resources\Contents\ContentResource;
-use Laravix\Cms\Support\ContentTypeRegistry;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Laravix\Cms\Filament\Resources\Contents\ContentResource;
+use Laravix\Cms\Support\ContentTypeRegistry;
 use Livewire\Attributes\Url;
 
 class ListContents extends ListRecords
@@ -29,6 +29,15 @@ class ListContents extends ListRecords
         if (! ContentTypeRegistry::has($this->type)) {
             $this->type = ContentTypeRegistry::default()->key;
         }
+    }
+
+    public function mountInteractsWithTable(): void
+    {
+        if ($taxonomy = request()->query('taxonomy')) {
+            $this->tableFilters = ['taxonomies' => ['value' => (string) $taxonomy]];
+        }
+
+        parent::mountInteractsWithTable();
     }
 
     public function getTitle(): string

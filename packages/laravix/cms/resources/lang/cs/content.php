@@ -32,6 +32,9 @@ return [
         'awaiting' => 'Čeká na publikování',
     ],
     'messages' => [
+        'duplicated' => 'Obsah zduplikován',
+        'published' => 'Obsah publikován',
+        'unpublished' => 'Publikování zrušeno',
         'translation_created' => 'Překlad vytvořen',
         'set_as_homepage' => 'Nastavit jako úvodní stránku',
         'only_one_homepage' => 'Pouze jeden obsah na webu může být úvodní stránka.',
@@ -57,6 +60,8 @@ return [
         'field_value' => 'The value for this field. Plugins may use this data to extend content functionality.',
     ],
     'actions' => [
+        'publish' => 'Publikovat',
+        'unpublish' => 'Zrušit publikování',
         'revert' => 'Vrátit',
         'open_builder' => 'Otevřít Builder',
         'translate' => 'Přeložit',

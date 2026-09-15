@@ -14,4 +14,7 @@ return [
     'messages' => [
         'optional_parent' => 'Optional. Set a parent to create nested categories.',
     ],
+    'actions' => [
+        'show_contents' => 'Show contents',
+    ],
 ];

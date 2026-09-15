@@ -8,6 +8,7 @@
 namespace Laravix\Cms\Filament\Resources\ContentTypeFields\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
@@ -15,6 +16,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Laravix\Cms\Enums\FieldType;
+use Laravix\Cms\Filament\Actions\DuplicateContentTypeFieldAction;
+use Laravix\Cms\Filament\Actions\HoverActions;
+use Laravix\Cms\Filament\Actions\ReorderRecordsAction;
 use Laravix\Cms\Support\ContentTypeRegistry;
 
 class ContentTypeFieldsTable
@@ -22,6 +26,7 @@ class ContentTypeFieldsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->reorderable('sort_order')
             ->columns([
                 TextColumn::make('label')
                     ->label(__('laravix::content_type_field.fields.label'))
@@ -64,9 +69,12 @@ class ContentTypeFieldsTable
                         fn (FieldType $case) => [$case->value => $case->name]
                     )),
             ])
-            ->recordActions([
+            ->recordActions(HoverActions::wrap([
                 EditAction::make(),
-            ])
+                DuplicateContentTypeFieldAction::make(),
+                ReorderRecordsAction::make(),
+                DeleteAction::make(),
+            ]))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

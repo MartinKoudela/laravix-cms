@@ -8,6 +8,7 @@
 namespace Laravix\Cms\Filament\Resources\Media\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Support\Enums\FontWeight;
@@ -16,6 +17,9 @@ use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Laravix\Cms\Filament\Actions\CopyMediaUrlAction;
+use Laravix\Cms\Filament\Actions\HoverActions;
+use Laravix\Cms\Filament\Actions\OpenMediaAction;
 
 class MediaTable
 {
@@ -52,9 +56,12 @@ class MediaTable
                 ]),
             ])
             ->defaultSort('created_at', 'desc')
-            ->recordActions([
+            ->recordActions(HoverActions::wrap([
                 EditAction::make(),
-            ])
+                OpenMediaAction::make(),
+                CopyMediaUrlAction::make(),
+                DeleteAction::make(),
+            ]))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

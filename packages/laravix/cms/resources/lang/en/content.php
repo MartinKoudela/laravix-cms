@@ -42,11 +42,16 @@ return [
         'field_value' => 'The value for this field. Plugins may use this data to extend content functionality.',
     ],
     'actions' => [
+        'publish' => 'Publish',
+        'unpublish' => 'Unpublish',
         'translate' => 'Translate',
         'revert' => 'Revert',
         'open_builder' => 'Open Builder',
     ],
     'messages' => [
+        'duplicated' => 'Content duplicated',
+        'published' => 'Content published',
+        'unpublished' => 'Content unpublished',
         'translation_created' => 'Translation created',
         'set_as_homepage' => 'Set as homepage',
         'only_one_homepage' => 'Only one content per site can be the homepage.',

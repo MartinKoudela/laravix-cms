@@ -8,11 +8,14 @@
 namespace Laravix\Cms\Filament\Resources\CustomCodeBlocks\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Laravix\Cms\Filament\Actions\DuplicateCustomCodeBlockAction;
+use Laravix\Cms\Filament\Actions\HoverActions;
 
 class CustomCodeBlocksTable
 {
@@ -40,9 +43,11 @@ class CustomCodeBlocksTable
                     ->color('gray'),
             ])
             ->defaultSort('name')
-            ->recordActions([
+            ->recordActions(HoverActions::wrap([
                 EditAction::make(),
-            ])
+                DuplicateCustomCodeBlockAction::make(),
+                DeleteAction::make(),
+            ]))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

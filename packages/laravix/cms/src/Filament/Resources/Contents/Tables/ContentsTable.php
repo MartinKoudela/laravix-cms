@@ -8,6 +8,7 @@
 namespace Laravix\Cms\Filament\Resources\Contents\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
@@ -15,7 +16,13 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Filament\Actions\DuplicateContentAction;
+use Laravix\Cms\Filament\Actions\HoverActions;
+use Laravix\Cms\Filament\Actions\OpenBuilderAction;
 use Laravix\Cms\Filament\Actions\PreviewAction;
+use Laravix\Cms\Filament\Actions\ReorderRecordsAction;
+use Laravix\Cms\Filament\Actions\TogglePublishAction;
+use Laravix\Cms\Filament\Actions\TranslateContentAction;
 
 class ContentsTable
 {
@@ -101,10 +108,16 @@ class ContentsTable
                         fn (ContentStatus $case) => [$case->value => $case->name]
                     )),
             ])
-            ->recordActions([
+            ->recordActions(HoverActions::wrap([
                 EditAction::make(),
+                OpenBuilderAction::make(),
                 PreviewAction::make(),
-            ])
+                TranslateContentAction::make(),
+                DuplicateContentAction::make(),
+                TogglePublishAction::make(),
+                ReorderRecordsAction::make(),
+                DeleteAction::make(),
+            ]))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

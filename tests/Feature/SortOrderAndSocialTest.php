@@ -1,6 +1,7 @@
 <?php
 
 use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\Setting;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\SiteApiToken;
@@ -82,4 +83,15 @@ test('admin taxonomies table renders without raw translation keys', function () 
     preg_match_all('/laravix::[a-zA-Z0-9_.]+/', $html, $matches);
 
     expect(array_unique($matches[0]))->toBe([]);
+});
+
+test('a cleared sort order falls back to zero instead of failing on insert', function () {
+    $site = Site::factory()->create();
+    $user = User::factory()->create();
+
+    $content = Content::factory()->for($site)->create(['created_by' => $user->id, 'sort_order' => null]);
+    $taxonomy = Taxonomy::factory()->for($site)->create(['sort_order' => null]);
+
+    expect($content->refresh()->sort_order)->toBe(0)
+        ->and($taxonomy->refresh()->sort_order)->toBe(0);
 });

@@ -30,6 +30,11 @@ class Taxonomy extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saving(fn (self $taxonomy) => $taxonomy->sort_order ??= 0);
+    }
+
     public function localizedName(?string $locale = null): string
     {
         $locale ??= app()->getLocale();

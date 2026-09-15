@@ -27,6 +27,8 @@ class ContentObserver
 
     public function saving(Content $content): void
     {
+        $content->sort_order ??= 0;
+
         if ($content->isDirty(['title', 'grapesjs_html', 'blocks'])) {
             $content->search_text = $content->computeSearchText();
         }

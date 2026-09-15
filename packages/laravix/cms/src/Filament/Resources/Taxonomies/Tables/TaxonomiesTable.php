@@ -8,11 +8,15 @@
 namespace Laravix\Cms\Filament\Resources\Taxonomies\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Laravix\Cms\Filament\Actions\HoverActions;
+use Laravix\Cms\Filament\Actions\ReorderRecordsAction;
+use Laravix\Cms\Filament\Actions\ShowTaxonomyContentsAction;
 use Laravix\Cms\Support\TaxonomyTypeRegistry;
 
 class TaxonomiesTable
@@ -62,9 +66,12 @@ class TaxonomiesTable
                 SelectFilter::make('site')
                     ->relationship('site', 'name'),
             ])
-            ->recordActions([
+            ->recordActions(HoverActions::wrap([
                 EditAction::make(),
-            ])
+                ShowTaxonomyContentsAction::make(),
+                ReorderRecordsAction::make(),
+                DeleteAction::make(),
+            ]))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

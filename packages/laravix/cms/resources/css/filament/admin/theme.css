@@ -237,8 +237,71 @@
     opacity: 0.4 !important;
 }
 
-.dark .fi-ta-row:hover td {
-    background-color: rgba(255, 4, 101, 0.03) !important;
+
+.fi-ta-row,
+.fi-ta-record {
+    transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+.fi-ta-row:hover td,
+.fi-ta-row:focus-within td,
+.fi-ta-record:hover,
+.fi-ta-record:focus-within {
+    background-color: var(--lx-brand-soft) !important;
+}
+
+.fi-ta-row:hover td:first-child,
+.fi-ta-row:focus-within td:first-child,
+.fi-ta-record:hover,
+.fi-ta-record:focus-within {
+    box-shadow: inset 3px 0 0 var(--lx-brand);
+}
+
+.fi-ta-row .fi-ta-actions,
+.fi-ta-record .fi-ta-actions {
+    gap: 0.125rem !important;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.fi-ta-row:hover .fi-ta-actions,
+.fi-ta-row:focus-within .fi-ta-actions,
+.fi-ta-record:hover .fi-ta-actions,
+.fi-ta-record:focus-within .fi-ta-actions,
+.fi-ta-actions:has([aria-expanded='true']) {
+    opacity: 1;
+    transform: none;
+}
+
+.fi-ta-row .fi-ta-actions .fi-icon-btn,
+.fi-ta-record .fi-ta-actions .fi-icon-btn {
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: var(--lx-radius-sm) !important;
+    color: var(--lx-icon) !important;
+    transition: background-color 0.12s, color 0.12s !important;
+}
+
+.fi-ta-row .fi-ta-actions .fi-icon-btn:hover,
+.fi-ta-record .fi-ta-actions .fi-icon-btn:hover {
+    background-color: rgba(255, 4, 101, 0.1) !important;
+    color: var(--lx-brand-icon-active) !important;
+}
+
+.fi-ta-row .fi-ta-actions .fi-icon-btn.fi-color-danger:hover,
+.fi-ta-record .fi-ta-actions .fi-icon-btn.fi-color-danger:hover {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    color: rgb(239, 68, 68) !important;
+}
+
+/* Touch devices have no hover — keep the bar visible. */
+@media (hover: none) {
+    .fi-ta-row .fi-ta-actions,
+    .fi-ta-record .fi-ta-actions {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .fi-btn.fi-color-primary:not(.fi-outlined) {

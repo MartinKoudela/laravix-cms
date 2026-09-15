@@ -7,17 +7,12 @@
 
 namespace Laravix\Cms\Filament\Resources\Contents\Pages;
 
-use Filament\Actions\Action;
-use Filament\Forms\Components\Select;
-use Filament\Notifications\Notification;
-use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
-use Laravix\Cms\Enums\ContentStatus;
+use Laravix\Cms\Filament\Actions\OpenBuilderAction;
 use Laravix\Cms\Filament\Actions\PreviewAction;
+use Laravix\Cms\Filament\Actions\TranslateContentAction;
 use Laravix\Cms\Filament\Pages\BaseEditRecord;
 use Laravix\Cms\Filament\Resources\Contents\ContentResource;
-use Laravix\Cms\Models\Content;
-use Laravix\Cms\Support\ContentTypeRegistry;
 use Laravix\Cms\Support\FieldRegistry;
 
 class EditContent extends BaseEditRecord
@@ -58,76 +53,10 @@ class EditContent extends BaseEditRecord
     {
         return [
             ...parent::getHeaderActions(),
-            Action::make('builder')
-                ->label(__('laravix::content.actions.open_builder'))
-                ->icon(Heroicon::OutlinedSquares2x2)
-                ->color('gray')
-                ->visible(fn (): bool => $this->hasBuilder())
-                ->url(fn (): string => route('builder.edit', [$this->getRecord()->site_id, $this->getRecord()->id])),
+            OpenBuilderAction::make(),
             PreviewAction::make()->color('gray'),
-            Action::make('translate')
-                ->label(__('laravix::content.actions.translate'))
-                ->icon(Heroicon::OutlinedLanguage)
-                ->color('gray')
-                ->visible(fn (): bool => $this->missingLocales() !== [])
-                ->schema([
-                    Select::make('locale')
-                        ->label(__('laravix::content.fields.locale'))
-                        ->options(fn () => collect($this->missingLocales())
-                            ->mapWithKeys(fn (string $locale) => [$locale => strtoupper($locale)]))
-                        ->required(),
-                ])
-                ->action(function (array $data): void {
-                    /** @var Content $record */
-                    $record = $this->getRecord();
-
-                    $copy = $record->replicate();
-                    $copy->locale = $data['locale'];
-                    $copy->translation_group_id = $record->translation_group_id;
-                    $copy->status = ContentStatus::DRAFT;
-                    $copy->published_at = null;
-                    $copy->created_by = auth()->id();
-                    $copy->save();
-
-                    foreach ($record->fields as $field) {
-                        $copy->fields()->create(['key' => $field->key, 'value' => $field->value]);
-                    }
-
-                    Notification::make()
-                        ->title(__('laravix::content.messages.translation_created'))
-                        ->success()
-                        ->send();
-
-                    $this->redirect(ContentResource::getUrl('edit', ['record' => $copy]));
-                }),
+            TranslateContentAction::make(),
         ];
-    }
-
-    private function hasBuilder(): bool
-    {
-        if (filament()->getTenant()?->isHeadless()) {
-            return false;
-        }
-
-        return ContentTypeRegistry::find($this->getRecord()->type)?->hasBuilder ?? false;
-    }
-
-    private function missingLocales(): array
-    {
-        $site = filament()->getTenant();
-
-        if (! $site?->isMultilingual()) {
-            return [];
-        }
-
-        /** @var Content $record */
-        $record = $this->getRecord();
-
-        $existing = Content::where('translation_group_id', $record->translation_group_id)
-            ->pluck('locale')
-            ->all();
-
-        return array_values(array_diff($site->enabledLocales(), $existing));
     }
 
     protected function mutateFormDataBeforeFill(array $data): array
