@@ -9,6 +9,7 @@ namespace Laravix\Cms\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\Site;
@@ -77,6 +78,21 @@ class PreviewController extends Controller
 
         $data = $this->pageDataBuilder->build($site, $content);
 
+        $seo = $this->buildSeo($content, $data);
+
+        return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));
+    }
+
+    public function thumbnail(Content $content): View
+    {
+        Gate::authorize('view', $content);
+
+        $content->loadMissing(['fields', 'taxonomies', 'site']);
+        $site = $content->site;
+
+        abort_if($site->isHeadless(), 404);
+
+        $data = $this->pageDataBuilder->build($site, $content);
         $seo = $this->buildSeo($content, $data);
 
         return view($this->resolveView($site, $content), array_merge($data, compact('content', 'site', 'seo')));

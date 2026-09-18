@@ -48,6 +48,10 @@ return [
     'key' => 'Kľúč',
     'value' => 'Hodnota',
     'back_home' => 'Späť domov',
+    'layout' => [
+        'grid' => 'Zobraziť ako mriežku',
+        'list' => 'Zobraziť ako zoznam',
+    ],
     'errors' => [
         '404' => 'Stránka sa nenašla',
         '500' => 'Niečo sa pokazilo',

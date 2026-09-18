@@ -11,6 +11,11 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\Column;
+use Filament\Tables\Columns\Layout\Component as Layout;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -77,5 +82,33 @@ class TaxonomiesTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function gridColumns(): array
+    {
+        return [
+            Stack::make([
+                TextColumn::make('name')
+                    ->weight(FontWeight::SemiBold)
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('parent.name')
+                    ->color('gray')
+                    ->size('xs')
+                    ->placeholder('—'),
+                Split::make([
+                    TextColumn::make('type')
+                        ->badge()
+                        ->formatStateUsing(fn (string $state): string => TaxonomyTypeRegistry::label($state))
+                        ->grow(false),
+                    TextColumn::make('contents_count')
+                        ->counts('contents')
+                        ->formatStateUsing(fn (int $state): string => trans_choice('laravix::taxonomy.contents_count', $state, ['count' => $state]))
+                        ->color('gray')
+                        ->size('xs')
+                        ->alignEnd(),
+                ]),
+            ])->space(2),
+        ];
     }
 }

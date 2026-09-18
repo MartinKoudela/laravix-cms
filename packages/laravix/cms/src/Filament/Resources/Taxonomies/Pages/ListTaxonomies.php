@@ -7,13 +7,28 @@
 
 namespace Laravix\Cms\Filament\Resources\Taxonomies\Pages;
 
-use Laravix\Cms\Filament\Resources\Taxonomies\TaxonomyResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Tables\Table;
+use Laravix\Cms\Filament\Concerns\HasTableLayoutSwitcher;
+use Laravix\Cms\Filament\Resources\Taxonomies\Tables\TaxonomiesTable;
+use Laravix\Cms\Filament\Resources\Taxonomies\TaxonomyResource;
 
 class ListTaxonomies extends ListRecords
 {
+    use HasTableLayoutSwitcher;
+
     protected static string $resource = TaxonomyResource::class;
+
+    public function table(Table $table): Table
+    {
+        return $this->applyTableLayout(parent::table($table));
+    }
+
+    protected static function gridColumns(): array
+    {
+        return TaxonomiesTable::gridColumns();
+    }
 
     protected function getHeaderActions(): array
     {

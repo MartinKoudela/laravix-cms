@@ -52,6 +52,10 @@ return [
     'key' => 'Key',
     'value' => 'Value',
     'back_home' => 'Back to homepage',
+    'layout' => [
+        'grid' => 'Show as grid',
+        'list' => 'Show as list',
+    ],
     'errors' => [
         '404' => 'Page not found',
         '500' => 'Something went wrong',

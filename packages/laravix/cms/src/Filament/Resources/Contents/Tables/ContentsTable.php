@@ -11,8 +11,14 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\Layout\Component as Layout;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Laravix\Cms\Enums\ContentStatus;
@@ -123,5 +129,52 @@ class ContentsTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    public static function gridColumns(): array
+    {
+        return [
+            Stack::make([
+                ViewColumn::make('thumbnail')
+                    ->view('laravix::filament.columns.page-thumbnail')
+                    ->visible(fn (): bool => ! (filament()->getTenant()?->isHeadless() ?? true)),
+                TextColumn::make('title')
+                    ->weight(FontWeight::SemiBold)
+                    ->limit(60)
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('slug')
+                    ->formatStateUsing(fn (string $state): string => str_starts_with($state, '/') ? $state : '/'.$state)
+                    ->color('gray')
+                    ->size('xs')
+                    ->searchable(),
+                Split::make([
+                    TextColumn::make('status')
+                        ->badge()
+                        ->color(fn (ContentStatus $state): string => match ($state) {
+                            ContentStatus::PUBLISHED => 'success',
+                            ContentStatus::SCHEDULED => 'warning',
+                            default => 'gray',
+                        })
+                        ->formatStateUsing(fn (ContentStatus $state): string => $state->value)
+                        ->grow(false),
+                    TextColumn::make('locale')
+                        ->badge()
+                        ->color('gray')
+                        ->formatStateUsing(fn (?string $state): string => strtoupper($state ?? ''))
+                        ->visible(fn (): bool => filament()->getTenant()?->isMultilingual() ?? false)
+                        ->grow(false),
+                    TextColumn::make('updated_at')
+                        ->since()
+                        ->color('gray')
+                        ->size('xs')
+                        ->alignEnd(),
+                ]),
+                TextColumn::make('taxonomies.name')
+                    ->badge()
+                    ->color('gray')
+                    ->placeholder(''),
+            ])->space(2),
+        ];
     }
 }

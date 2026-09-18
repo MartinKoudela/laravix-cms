@@ -11,12 +11,16 @@ use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Laravix\Cms\Filament\Concerns\HasTableLayoutSwitcher;
 use Laravix\Cms\Filament\Resources\Contents\ContentResource;
+use Laravix\Cms\Filament\Resources\Contents\Tables\ContentsTable;
 use Laravix\Cms\Support\ContentTypeRegistry;
 use Livewire\Attributes\Url;
 
 class ListContents extends ListRecords
 {
+    use HasTableLayoutSwitcher;
+
     protected static string $resource = ContentResource::class;
 
     #[Url]
@@ -47,8 +51,13 @@ class ListContents extends ListRecords
 
     public function table(Table $table): Table
     {
-        return parent::table($table)
+        return $this->applyTableLayout(parent::table($table))
             ->modifyQueryUsing(fn (Builder $query) => $query->where('type', $this->type));
+    }
+
+    protected static function gridColumns(): array
+    {
+        return ContentsTable::gridColumns();
     }
 
     protected function getHeaderActions(): array

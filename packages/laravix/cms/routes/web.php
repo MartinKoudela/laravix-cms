@@ -26,6 +26,8 @@ Route::prefix('/__preview')->group(function () {
 });
 
 Route::middleware(['auth', SwitchLanguageLocale::class])->group(function () {
+    Route::get('/__preview/content/{content}', [PreviewController::class, 'thumbnail'])
+        ->name('content.thumbnail');
     Route::get('/admin/{site}/contents/{content}/builder', [BuilderController::class, 'edit'])
         ->name('builder.edit');
     Route::post('/admin/{site}/contents/{content}/builder', [BuilderController::class, 'save'])

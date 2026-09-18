@@ -295,13 +295,42 @@
     color: rgb(239, 68, 68) !important;
 }
 
-/* Touch devices have no hover — keep the bar visible. */
 @media (hover: none) {
     .fi-ta-row .fi-ta-actions,
     .fi-ta-record .fi-ta-actions {
         opacity: 1;
         transform: none;
     }
+}
+
+.lx-page-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: var(--lx-radius-sm);
+    background: var(--lx-body-bg);
+    border: 1px solid var(--lx-border-faint);
+}
+
+.lx-page-thumb iframe {
+    position: absolute;
+    inset: 0;
+    width: 1280px;
+    height: 800px;
+    border: 0;
+    transform-origin: 0 0;
+    pointer-events: none;
+    background: #fff;
+}
+
+.lx-page-thumb-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lx-icon);
 }
 
 .fi-btn.fi-color-primary:not(.fi-outlined) {
