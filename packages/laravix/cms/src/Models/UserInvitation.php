@@ -59,6 +59,16 @@ class UserInvitation extends Model
         $query->whereNull('accepted_at')->where('expires_at', '>', now());
     }
 
+    public function resolvedRole(): ?Role
+    {
+        return Role::findBySlug($this->site_id, $this->role);
+    }
+
+    public function roleName(): string
+    {
+        return $this->resolvedRole()?->name ?? $this->role;
+    }
+
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);

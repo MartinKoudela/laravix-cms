@@ -7,7 +7,6 @@
 
 namespace Laravix\Cms\Policies;
 
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Models\Media;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
@@ -16,58 +15,35 @@ class MediaPolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasTenantPermission('media.view');
     }
 
     public function view(User $user, Media $media): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return $user->roleForSite($media->site) !== null;
+        return $user->hasSitePermission($media->site, 'media.view');
     }
 
     public function create(User $user, ?Site $site = null): bool
     {
-        if ($user->is_super_admin) {
-            return true;
+        if ($site instanceof Site) {
+            return $user->hasSitePermission($site, 'media.create');
         }
 
-        $site ??= filament()->getTenant();
-
-        return $site instanceof Site
-            && in_array($user->roleForSite($site), [SiteRole::ADMIN, SiteRole::EDITOR]);
-    }
-
-    public function deleteAny(User $user): bool
-    {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return $user->hasTenantPermission('media.create');
     }
 
     public function update(User $user, Media $media): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return in_array($user->roleForSite($media->site),
-            [SiteRole::ADMIN, SiteRole::EDITOR]);
+        return $user->hasSitePermission($media->site, 'media.update');
     }
 
     public function delete(User $user, Media $media): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
+        return $user->hasSitePermission($media->site, 'media.delete');
+    }
 
-        return $user->roleForSite($media->site) === SiteRole::ADMIN;
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasTenantPermission('media.delete');
     }
 }

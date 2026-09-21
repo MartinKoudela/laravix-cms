@@ -7,15 +7,6 @@
 
 namespace Laravix\Cms\Models;
 
-use Laravix\Cms\Enums\SiteRole;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class SiteUser extends Pivot
-{
-    protected function casts(): array
-    {
-        return [
-            'role' => SiteRole::class,
-        ];
-    }
-}
+class SiteUser extends Pivot {}

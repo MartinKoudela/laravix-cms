@@ -15,6 +15,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Models\Role;
+use Laravix\Cms\Models\Site;
 
 class UsersTable
 {
@@ -40,7 +42,7 @@ class UsersTable
                     ->badge()
                     ->formatStateUsing(fn (?string $state, $record): string => $record->is_super_admin
                         ? __('laravix::users.super_admin')
-                        : $state)
+                        : (static::roleNames()[$state] ?? (string) $state))
                     ->color(fn (?string $state, $record): string => match (true) {
                         $record->is_super_admin => 'danger',
                         $state === SiteRole::ADMIN->value => 'warning',
@@ -60,9 +62,7 @@ class UsersTable
             ])
             ->filters([
                 SelectFilter::make('role')
-                    ->options(collect(SiteRole::cases())->mapWithKeys(
-                        fn (SiteRole $case) => [$case->value => $case->name]
-                    )),
+                    ->options(fn (): array => static::roleNames()),
             ])
             ->recordClasses(fn ($record) => $record->is_super_admin ? 'opacity-50 grayscale' : null)
             ->recordActions([
@@ -74,5 +74,12 @@ class UsersTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    protected static function roleNames(): array
+    {
+        $site = filament()->getTenant();
+
+        return $site instanceof Site ? Role::optionsForSite($site) : [];
     }
 }

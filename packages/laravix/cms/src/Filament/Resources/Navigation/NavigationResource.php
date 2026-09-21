@@ -10,7 +10,6 @@ namespace Laravix\Cms\Filament\Resources\Navigation;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Filament\Resources\Navigation\Pages\ManageNavigation;
 use Laravix\Cms\Models\Site;
 
@@ -38,20 +37,7 @@ class NavigationResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = auth()->user();
-
-        if (! $user) {
-            return false;
-        }
-
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return auth()->user()?->hasTenantPermission('navigation.manage') ?? false;
     }
 
     public static function getPages(): array

@@ -82,6 +82,7 @@ use Laravix\Cms\Console\Commands\LinkThemes;
 use Laravix\Cms\Console\Commands\PublishScheduledContent;
 use Laravix\Cms\Console\Commands\Upgrade;
 use Laravix\Cms\Enums\FieldType;
+use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Http\Middleware\AuthenticateApiToken;
 use Laravix\Cms\Http\Middleware\HandleRedirects;
 use Laravix\Cms\Http\Middleware\ResolveSiteForApi;
@@ -93,6 +94,7 @@ use Laravix\Cms\Models\ContentTypeField;
 use Laravix\Cms\Models\CustomCodeBlock;
 use Laravix\Cms\Models\Media;
 use Laravix\Cms\Models\Redirect;
+use Laravix\Cms\Models\Role;
 use Laravix\Cms\Models\Setting;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\SiteApiToken;
@@ -104,6 +106,7 @@ use Laravix\Cms\Policies\ContentPolicy;
 use Laravix\Cms\Policies\ContentTypeFieldPolicy;
 use Laravix\Cms\Policies\CustomCodeBlockPolicy;
 use Laravix\Cms\Policies\MediaPolicy;
+use Laravix\Cms\Policies\RolePolicy;
 use Laravix\Cms\Policies\TaxonomyPolicy;
 use Laravix\Cms\Support\BlockRegistry;
 use Laravix\Cms\Support\ContentTypeDefinition;
@@ -112,6 +115,8 @@ use Laravix\Cms\Support\FieldDefinition;
 use Laravix\Cms\Support\FieldRegistry;
 use Laravix\Cms\Support\NavigationDefinition;
 use Laravix\Cms\Support\NavigationRegistry;
+use Laravix\Cms\Support\PermissionDefinition;
+use Laravix\Cms\Support\PermissionRegistry;
 use Laravix\Cms\Support\RouteRegistry;
 use Laravix\Cms\Support\SettingDefinition;
 use Laravix\Cms\Support\SettingRegistry;
@@ -132,6 +137,7 @@ class CmsServiceProvider extends ServiceProvider
         $this->registerContentTypes();
         $this->registerContentFields();
         $this->registerSettings();
+        $this->registerPermissions();
         $this->registerBlocks();
         $this->registerNavigations();
     }
@@ -146,6 +152,7 @@ class CmsServiceProvider extends ServiceProvider
             'custom_code_block' => CustomCodeBlock::class,
             'media' => Media::class,
             'redirect' => Redirect::class,
+            'role' => Role::class,
             'setting' => Setting::class,
             'site' => Site::class,
             'site_api_token' => SiteApiToken::class,
@@ -177,6 +184,7 @@ class CmsServiceProvider extends ServiceProvider
         Gate::policy(ContentTypeField::class, ContentTypeFieldPolicy::class);
         Gate::policy(CustomCodeBlock::class, CustomCodeBlockPolicy::class);
         Gate::policy(Media::class, MediaPolicy::class);
+        Gate::policy(Role::class, RolePolicy::class);
         Gate::policy(Taxonomy::class, TaxonomyPolicy::class);
 
         Livewire::component('block-editor', BlockEditor::class);
@@ -461,6 +469,35 @@ class CmsServiceProvider extends ServiceProvider
                 ->label('laravix::settings.fields.spotify')
                 ->group('laravix::settings.tabs.social')
                 ->config(['prefixIcon' => 'fa-spotify']),
+        ]);
+    }
+
+    private function registerPermissions(): void
+    {
+        $everyone = [SiteRole::ADMIN, SiteRole::EDITOR, SiteRole::VIEWER];
+        $editors = [SiteRole::ADMIN, SiteRole::EDITOR];
+        $admins = [SiteRole::ADMIN];
+
+        $crud = fn (string $group): array => [
+            PermissionDefinition::make("{$group}.view")->label('laravix::permissions.actions.view')->grantTo($everyone),
+            PermissionDefinition::make("{$group}.create")->label('laravix::permissions.actions.create')->grantTo($editors),
+            PermissionDefinition::make("{$group}.update")->label('laravix::permissions.actions.update')->grantTo($editors),
+            PermissionDefinition::make("{$group}.delete")->label('laravix::permissions.actions.delete')->grantTo($admins),
+        ];
+
+        PermissionRegistry::register([
+            ...$crud('content'),
+            PermissionDefinition::make('content.publish')->label('laravix::permissions.actions.publish')->grantTo($editors),
+            ...$crud('media'),
+            ...$crud('taxonomies'),
+            ...$crud('content_type_fields'),
+            ...$crud('custom_code_blocks'),
+            PermissionDefinition::make('navigation.manage')->label('laravix::permissions.actions.manage')->grantTo($admins),
+            PermissionDefinition::make('settings.manage')->label('laravix::permissions.actions.manage')->grantTo($admins),
+            PermissionDefinition::make('users.manage')->label('laravix::permissions.actions.manage')->grantTo($admins),
+            PermissionDefinition::make('roles.manage')->label('laravix::permissions.actions.manage')->grantTo($admins),
+            PermissionDefinition::make('activity_log.view')->label('laravix::permissions.actions.view')->grantTo($admins),
+            PermissionDefinition::make('recycle_bin.manage')->label('laravix::permissions.actions.manage')->grantTo($admins),
         ]);
     }
 

@@ -7,67 +7,43 @@
 
 namespace Laravix\Cms\Policies;
 
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Models\Content;
-use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
 
 class ContentPolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasTenantPermission('content.view');
     }
 
     public function view(User $user, Content $content): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return $user->roleForSite($content->site) !== null;
+        return $user->hasSitePermission($content->site, 'content.view');
     }
 
     public function create(User $user): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && in_array($user->roleForSite($site), [SiteRole::ADMIN, SiteRole::EDITOR]);
-    }
-
-    public function deleteAny(User $user): bool
-    {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return $user->hasTenantPermission('content.create');
     }
 
     public function update(User $user, Content $content): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return in_array($user->roleForSite($content->site),
-            [SiteRole::ADMIN, SiteRole::EDITOR]);
+        return $user->hasSitePermission($content->site, 'content.update');
     }
 
     public function delete(User $user, Content $content): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
+        return $user->hasSitePermission($content->site, 'content.delete');
+    }
 
-        return $user->roleForSite($content->site) === SiteRole::ADMIN;
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasTenantPermission('content.delete');
+    }
+
+    public function publish(User $user, Content $content): bool
+    {
+        return $user->hasSitePermission($content->site, 'content.publish');
     }
 }

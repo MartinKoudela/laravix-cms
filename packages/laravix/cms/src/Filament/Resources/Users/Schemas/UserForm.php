@@ -11,7 +11,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Models\Role;
+use Laravix\Cms\Models\Site;
+use Laravix\Cms\Models\User;
 
 class UserForm
 {
@@ -28,11 +30,21 @@ class UserForm
                             ->maxLength(255),
                         Select::make('role')
                             ->label(__('laravix::common.role'))
-                            ->options(collect(SiteRole::cases())->mapWithKeys(
-                                fn (SiteRole $case) => [$case->value => $case->name]
-                            ))
+                            ->options(fn (): array => static::roleOptions())
                             ->required(),
                     ]),
             ]);
+    }
+
+    public static function roleOptions(): array
+    {
+        $user = auth()->user();
+        $site = filament()->getTenant();
+
+        if (! $user instanceof User || ! $site instanceof Site) {
+            return [];
+        }
+
+        return Role::assignableOptions($user, $site);
     }
 }

@@ -7,67 +7,38 @@
 
 namespace Laravix\Cms\Policies;
 
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Models\ContentTypeField;
-use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
 
 class ContentTypeFieldPolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasTenantPermission('content_type_fields.view');
     }
 
     public function view(User $user, ContentTypeField $field): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return $user->roleForSite($field->site) !== null;
+        return $user->hasSitePermission($field->site, 'content_type_fields.view');
     }
 
     public function create(User $user): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && in_array($user->roleForSite($site), [SiteRole::ADMIN, SiteRole::EDITOR]);
-    }
-
-    public function deleteAny(User $user): bool
-    {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return $user->hasTenantPermission('content_type_fields.create');
     }
 
     public function update(User $user, ContentTypeField $field): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return in_array($user->roleForSite($field->site),
-            [SiteRole::ADMIN, SiteRole::EDITOR]);
+        return $user->hasSitePermission($field->site, 'content_type_fields.update');
     }
 
     public function delete(User $user, ContentTypeField $field): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
+        return $user->hasSitePermission($field->site, 'content_type_fields.delete');
+    }
 
-        return $user->roleForSite($field->site) === SiteRole::ADMIN;
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasTenantPermission('content_type_fields.delete');
     }
 }

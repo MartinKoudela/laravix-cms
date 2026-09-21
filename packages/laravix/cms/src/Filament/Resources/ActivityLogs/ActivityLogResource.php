@@ -13,7 +13,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Filament\Resources\ActivityLogs\Pages\ListActivityLogs;
 use Laravix\Cms\Filament\Resources\ActivityLogs\Tables\ActivityLogsTable;
 use Laravix\Cms\Models\Site;
@@ -43,20 +42,7 @@ class ActivityLogResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = auth()->user();
-
-        if (! $user) {
-            return false;
-        }
-
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return auth()->user()?->hasTenantPermission('activity_log.view') ?? false;
     }
 
     public static function getEloquentQuery(): Builder

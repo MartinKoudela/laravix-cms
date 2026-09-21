@@ -12,7 +12,6 @@ use Filament\Navigation\NavigationItem;
 use Filament\Resources\Resource;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Str;
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Filament\Resources\Settings\Pages\ManageSettings;
 use Laravix\Cms\Models\Setting;
 use Laravix\Cms\Models\Site;
@@ -42,20 +41,7 @@ class SettingResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = auth()->user();
-
-        if (! $user) {
-            return false;
-        }
-
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return auth()->user()?->hasTenantPermission('settings.manage') ?? false;
     }
 
     public static function groupOptions(): array

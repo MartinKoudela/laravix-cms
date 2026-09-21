@@ -23,7 +23,7 @@
             <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
                 {!! __('laravix::invitations.accept.intro', [
                     'site' => '<strong class="font-medium text-zinc-700 dark:text-zinc-200">'.e($invitation->site->name).'</strong>',
-                    'role' => '<strong class="font-medium text-zinc-700 dark:text-zinc-200">'.e(__('laravix::users.roles.'.$invitation->role)).'</strong>',
+                    'role' => '<strong class="font-medium text-zinc-700 dark:text-zinc-200">'.e($invitation->roleName()).'</strong>',
                 ]) !!}
             </p>
 

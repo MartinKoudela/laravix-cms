@@ -33,7 +33,7 @@ class UserInvitationMail extends Mailable
             markdown: 'laravix::emails.user-invitation',
             with: [
                 'siteName' => $this->invitation->site->name,
-                'role' => $this->invitation->role,
+                'role' => $this->invitation->roleName(),
                 'acceptUrl' => route('invitation.accept', $this->invitation->token),
                 'expiresAt' => $this->invitation->expires_at->format('M j, Y'),
             ],

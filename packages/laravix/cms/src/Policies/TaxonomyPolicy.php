@@ -7,8 +7,6 @@
 
 namespace Laravix\Cms\Policies;
 
-use Laravix\Cms\Enums\SiteRole;
-use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\Taxonomy;
 use Laravix\Cms\Models\User;
 
@@ -16,58 +14,31 @@ class TaxonomyPolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasTenantPermission('taxonomies.view');
     }
 
     public function view(User $user, Taxonomy $taxonomy): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return $user->roleForSite($taxonomy->site) !== null;
+        return $user->hasSitePermission($taxonomy->site, 'taxonomies.view');
     }
 
     public function create(User $user): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && in_array($user->roleForSite($site), [SiteRole::ADMIN, SiteRole::EDITOR]);
-    }
-
-    public function deleteAny(User $user): bool
-    {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return $user->hasTenantPermission('taxonomies.create');
     }
 
     public function update(User $user, Taxonomy $taxonomy): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return in_array($user->roleForSite($taxonomy->site),
-            [SiteRole::ADMIN, SiteRole::EDITOR]);
+        return $user->hasSitePermission($taxonomy->site, 'taxonomies.update');
     }
 
     public function delete(User $user, Taxonomy $taxonomy): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
+        return $user->hasSitePermission($taxonomy->site, 'taxonomies.delete');
+    }
 
-        return $user->roleForSite($taxonomy->site) === SiteRole::ADMIN;
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasTenantPermission('taxonomies.delete');
     }
 }

@@ -68,10 +68,12 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasTenant
         return $this->is_super_admin || $this->sites()->exists();
     }
 
+    private array $resolvedSiteRoles = [];
+
     public function isAdmin(): bool
     {
         return $this->is_super_admin || $this->sites()
-            ->wherePivot('role', SiteRole::ADMIN)
+            ->wherePivot('role', SiteRole::ADMIN->value)
             ->exists();
     }
 
@@ -84,13 +86,54 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasTenant
         return $this->sites;
     }
 
-    public function roleForSite(Site $site): ?SiteRole
+    public function roleSlugForSite(Site $site): ?string
     {
         return $this->sites()
             ->whereKey($site)
             ->first()
             ?->pivot
             ->role;
+    }
+
+    public function roleForSite(Site $site): ?Role
+    {
+        if (! array_key_exists($site->id, $this->resolvedSiteRoles)) {
+            $slug = $this->roleSlugForSite($site);
+
+            $this->resolvedSiteRoles[$site->id] = $slug === null ? null : Role::findBySlug($site, $slug);
+        }
+
+        return $this->resolvedSiteRoles[$site->id];
+    }
+
+    public function forgetResolvedRoles(): void
+    {
+        $this->resolvedSiteRoles = [];
+    }
+
+    public function isMemberOf(Site $site): bool
+    {
+        return $this->is_super_admin || $this->roleSlugForSite($site) !== null;
+    }
+
+    public function hasSitePermission(?Site $site, string $permission): bool
+    {
+        if ($this->is_super_admin) {
+            return true;
+        }
+
+        if (! $site instanceof Site) {
+            return false;
+        }
+
+        return $this->roleForSite($site)?->allows($permission) ?? false;
+    }
+
+    public function hasTenantPermission(string $permission): bool
+    {
+        $tenant = filament()->getTenant();
+
+        return $this->hasSitePermission($tenant instanceof Site ? $tenant : null, $permission);
     }
 
     public function canAccessTenant(Model $tenant): bool

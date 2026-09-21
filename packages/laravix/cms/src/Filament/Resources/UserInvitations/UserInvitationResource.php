@@ -12,12 +12,10 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Filament\Resources\UserInvitations\Pages\ListUserInvitations;
 use Laravix\Cms\Filament\Resources\UserInvitations\Schemas\UserInvitationForm;
 use Laravix\Cms\Filament\Resources\UserInvitations\Tables\UserInvitationsTable;
 use Laravix\Cms\Filament\Resources\Users\UserResource;
-use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\UserInvitation;
 
 class UserInvitationResource extends Resource
@@ -46,20 +44,7 @@ class UserInvitationResource extends Resource
 
     public static function canViewAny(): bool
     {
-        $user = auth()->user();
-
-        if (! $user) {
-            return false;
-        }
-
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return auth()->user()?->hasTenantPermission('users.manage') ?? false;
     }
 
     public static function form(Schema $schema): Schema

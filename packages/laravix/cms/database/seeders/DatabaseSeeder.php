@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
         Site::all()->each(function (Site $site) {
             User::all()->each(function (User $user) use ($site) {
                 $site->users()->attach($user->id, [
-                    'role' => fake()->randomElement(SiteRole::cases()),
+                    'role' => fake()->randomElement(SiteRole::cases())->value,
                 ]);
             });
         });

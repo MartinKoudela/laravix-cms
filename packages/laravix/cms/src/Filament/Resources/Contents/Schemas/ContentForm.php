@@ -108,6 +108,8 @@ class ContentForm
                                                 fn (ContentStatus $case) => [$case->value => $case->name]
                                             ))
                                             ->default(ContentStatus::DRAFT->value)
+                                            ->disabled(fn (): bool => ! (auth()->user()?->hasTenantPermission('content.publish') ?? false))
+                                            ->dehydrated()
                                             ->live(),
                                         DateTimePicker::make('published_at')
                                             ->visible(fn (Get $get): bool => $get('status') === ContentStatus::SCHEDULED->value),

@@ -12,6 +12,7 @@ use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Models\Role;
 use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
 
@@ -58,7 +59,7 @@ class CreateUser extends Command
 
                 $role = select(
                     'Role',
-                    collect(SiteRole::cases())->mapWithKeys(fn (SiteRole $r) => [$r->value => ucfirst($r->value)])->all(),
+                    Role::optionsForSite(Site::findOrFail($siteId)),
                     default: SiteRole::ADMIN->value,
                 );
 

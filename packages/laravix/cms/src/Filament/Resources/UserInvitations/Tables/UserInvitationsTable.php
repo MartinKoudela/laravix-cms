@@ -13,6 +13,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Models\Role;
+use Laravix\Cms\Models\Site;
 
 class UserInvitationsTable
 {
@@ -28,6 +30,7 @@ class UserInvitationsTable
                 TextColumn::make('role')
                     ->label(__('laravix::common.role'))
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => static::roleNames()[$state] ?? $state)
                     ->color(fn (string $state): string => match ($state) {
                         SiteRole::ADMIN->value => 'warning',
                         SiteRole::EDITOR->value => 'info',
@@ -51,14 +54,19 @@ class UserInvitationsTable
             ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('role')
-                    ->options(collect(SiteRole::cases())->mapWithKeys(
-                        fn (SiteRole $case) => [$case->value => $case->name]
-                    )),
+                    ->options(fn (): array => static::roleNames()),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+
+    protected static function roleNames(): array
+    {
+        $site = filament()->getTenant();
+
+        return $site instanceof Site ? Role::optionsForSite($site) : [];
     }
 }

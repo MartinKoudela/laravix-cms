@@ -34,7 +34,8 @@ class TogglePublishAction extends Action
 
         $this->color('gray');
 
-        $this->authorize(fn (Content $record): bool => auth()->user()?->can('update', $record) ?? false);
+        $this->authorize(fn (Content $record): bool => (auth()->user()?->can('update', $record) ?? false)
+            && (auth()->user()?->can('publish', $record) ?? false));
 
         $this->action(function (Content $record): void {
             $publishing = $record->status !== ContentStatus::PUBLISHED;

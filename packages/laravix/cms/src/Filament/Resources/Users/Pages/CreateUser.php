@@ -15,7 +15,7 @@ use Filament\Resources\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Mail;
-use Laravix\Cms\Enums\SiteRole;
+use Laravix\Cms\Filament\Resources\Users\Schemas\UserForm;
 use Laravix\Cms\Filament\Resources\Users\UserResource;
 use Laravix\Cms\Mail\UserInvitationMail;
 use Laravix\Cms\Models\UserInvitation;
@@ -48,9 +48,9 @@ class CreateUser extends Page
                             ->required()
                             ->maxLength(255),
                         Select::make('role')
-                            ->options(collect(SiteRole::cases())->mapWithKeys(
-                                fn (SiteRole $case) => [$case->value => $case->name]
-                            ))
+                            ->label(__('laravix::common.role'))
+                            ->options(fn (): array => UserForm::roleOptions())
+                            ->in(fn (): array => array_keys(UserForm::roleOptions()))
                             ->required()
                             ->helperText(__('laravix::users.messages.role_determines')),
                     ]),

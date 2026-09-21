@@ -45,6 +45,11 @@ class Site extends Model implements HasAvatar
 
     }
 
+    protected static function booted(): void
+    {
+        static::created(fn (self $site) => Role::seedSystemRolesFor($site));
+    }
+
     protected function casts(): array
     {
         return [
@@ -121,6 +126,11 @@ class Site extends Model implements HasAvatar
     public function apiTokens(): HasMany
     {
         return $this->hasMany(SiteApiToken::class);
+    }
+
+    public function roles(): HasMany
+    {
+        return $this->hasMany(Role::class);
     }
 
     public function users(): BelongsToMany

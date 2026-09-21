@@ -13,6 +13,7 @@ use Filament\Pages\Tenancy\RegisterTenant;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Laravix\Cms\Enums\SiteMode;
+use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Models\Site;
 
 class RegisterSite extends RegisterTenant
@@ -69,7 +70,7 @@ class RegisterSite extends RegisterTenant
     {
         $site = Site::create($data);
 
-        $site->users()->attach(auth()->id());
+        $site->users()->attach(auth()->id(), ['role' => SiteRole::ADMIN->value]);
 
         return $site;
     }

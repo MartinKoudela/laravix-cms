@@ -87,7 +87,7 @@ abstract class BaseAdminPanelProvider extends PanelProvider
             ])
             ->plugins([
                 RevivePlugin::make()
-                    ->authorize(fn () => auth()->user()?->isAdmin())
+                    ->authorize(fn () => auth()->user()?->hasTenantPermission('recycle_bin.manage') ?? false)
                     ->navigationGroup('Management')
                     ->navigationIcon('heroicon-o-archive-box-arrow-down')
                     ->navigationSort(40)

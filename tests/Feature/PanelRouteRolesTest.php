@@ -18,7 +18,6 @@ function signInWithRole(Site $site, SiteRole $role): User
     return $user;
 }
 
-
 dataset('panel paths', [
     'contents' => ['contents', ['admin' => 200, 'editor' => 200, 'viewer' => 200]],
     'contents/create' => ['contents/create', ['admin' => 200, 'editor' => 200, 'viewer' => 403]],
@@ -37,6 +36,8 @@ dataset('panel paths', [
     'user-invitations' => ['user-invitations', ['admin' => 200, 'editor' => 403, 'viewer' => 403]],
     'users' => ['users', ['admin' => 200, 'editor' => 403, 'viewer' => 403]],
     'users/create' => ['users/create', ['admin' => 200, 'editor' => 403, 'viewer' => 403]],
+    'roles' => ['roles', ['admin' => 200, 'editor' => 403, 'viewer' => 403]],
+    'roles/create' => ['roles/create', ['admin' => 200, 'editor' => 403, 'viewer' => 403]],
 
     'sites' => ['sites', ['admin' => 403, 'editor' => 403, 'viewer' => 403]],
     'sites/create' => ['sites/create', ['admin' => 403, 'editor' => 403, 'viewer' => 403]],
@@ -60,7 +61,6 @@ test('a super admin reaches the sites resource', function () {
 
 test('a member of another site cannot reach this tenant', function () {
     signInWithRole(Site::factory()->create(), SiteRole::ADMIN);
-
 
     $this->get("/admin/{$this->site->id}/contents")->assertNotFound();
 });

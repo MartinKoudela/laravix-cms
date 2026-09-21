@@ -7,67 +7,38 @@
 
 namespace Laravix\Cms\Policies;
 
-use Laravix\Cms\Enums\SiteRole;
 use Laravix\Cms\Models\CustomCodeBlock;
-use Laravix\Cms\Models\Site;
 use Laravix\Cms\Models\User;
 
 class CustomCodeBlockPolicy
 {
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasTenantPermission('custom_code_blocks.view');
     }
 
     public function view(User $user, CustomCodeBlock $block): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return $user->roleForSite($block->site) !== null;
+        return $user->hasSitePermission($block->site, 'custom_code_blocks.view');
     }
 
     public function create(User $user): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && in_array($user->roleForSite($site), [SiteRole::ADMIN, SiteRole::EDITOR]);
-    }
-
-    public function deleteAny(User $user): bool
-    {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        $site = filament()->getTenant();
-
-        return $site instanceof Site
-            && $user->roleForSite($site) === SiteRole::ADMIN;
+        return $user->hasTenantPermission('custom_code_blocks.create');
     }
 
     public function update(User $user, CustomCodeBlock $block): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
-
-        return in_array($user->roleForSite($block->site),
-            [SiteRole::ADMIN, SiteRole::EDITOR]);
+        return $user->hasSitePermission($block->site, 'custom_code_blocks.update');
     }
 
     public function delete(User $user, CustomCodeBlock $block): bool
     {
-        if ($user->is_super_admin) {
-            return true;
-        }
+        return $user->hasSitePermission($block->site, 'custom_code_blocks.delete');
+    }
 
-        return $user->roleForSite($block->site) === SiteRole::ADMIN;
+    public function deleteAny(User $user): bool
+    {
+        return $user->hasTenantPermission('custom_code_blocks.delete');
     }
 }
