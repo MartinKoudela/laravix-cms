@@ -16,7 +16,7 @@ if (!el) throw new Error('GrapeJS container not found');
 const savedData   = el.dataset.projectData ? JSON.parse(el.dataset.projectData) : null;
 const saveUrl     = el.dataset.saveUrl;
 const csrfToken   = el.dataset.csrf;
-const canvasCss   = el.dataset.canvasCss;
+const canvasStyles = JSON.parse(el.dataset.canvasStyles || '[]');
 const mediaItems  = JSON.parse(el.dataset.mediaItems  || '[]');
 const gjsBlocks   = JSON.parse(el.dataset.gjsBlocks   || '[]');
 const uploadUrl   = el.dataset.uploadUrl;
@@ -24,7 +24,7 @@ const uploadUrl   = el.dataset.uploadUrl;
 setTrans(JSON.parse(el.dataset.trans || '{}'));
 preloadFonts();
 
-const editor = grapesjs.init(buildConfig({ canvasCss, mediaItems }));
+const editor = grapesjs.init(buildConfig({ canvasStyles, mediaItems }));
 
 setupStyleManager(editor);
 setupMediaTrait(editor, { mediaItems, csrfToken, uploadUrl });

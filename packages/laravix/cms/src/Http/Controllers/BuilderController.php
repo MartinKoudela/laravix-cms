@@ -10,6 +10,7 @@ namespace Laravix\Cms\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Laravix\Cms\Laravix;
 use Laravix\Cms\Models\Content;
 use Laravix\Cms\Models\CustomCodeBlock;
 use Laravix\Cms\Models\Media;
@@ -52,6 +53,10 @@ class BuilderController extends Controller
             'pages' => $pages,
             'backUrl' => url("/admin/{$site->id}/contents/{$content->id}/edit"),
             'gjsBlocks' => array_merge(BlockRegistry::toGrapesBlocks($content->type), $this->customBlocksToGrapesBlocks($site)),
+            'canvasStyles' => array_values(array_filter([
+                Laravix::asset('app.css'),
+                Laravix::themeAsset('app.css', $site->theme ?? 'default'),
+            ])),
         ]);
     }
 

@@ -56,7 +56,7 @@
             data-save-url="{{ route('builder.save', [$site, $content]) }}"
             data-upload-url="{{ route('builder.upload', $site) }}"
             data-csrf="{{ csrf_token() }}"
-            data-canvas-css="{{ \Laravix\Cms\Laravix::asset('app.css') }}"
+            data-canvas-styles="{{ json_encode($canvasStyles) }}"
             data-media-items="{{ json_encode($mediaItems) }}"
             data-gjs-blocks="{{ json_encode($gjsBlocks) }}"
             data-trans="{{ json_encode(__('laravix::builder')) }}"

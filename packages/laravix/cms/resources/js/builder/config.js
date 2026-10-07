@@ -2,7 +2,7 @@ import grapesjsPresetWebpage from 'grapesjs-preset-webpage';
 import { FONT_AWESOME_CSS, GOOGLE_FONTS } from './constants';
 import { t } from './trans';
 
-export function buildConfig({ canvasCss, mediaItems }) {
+export function buildConfig({ canvasStyles, mediaItems }) {
     const FONT_OPTIONS = [
         { value: 'inherit',   name: t('val_font_inherit', '— Inherit —') },
         ...GOOGLE_FONTS.map(f => ({ value: `'${f}', sans-serif`, name: f })),
@@ -17,7 +17,7 @@ export function buildConfig({ canvasCss, mediaItems }) {
         storageManager: false,
         undoManager: { trackChanges: true },
         canvas: {
-            styles: [canvasCss, FONT_AWESOME_CSS, 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'],
+            styles: [...canvasStyles, FONT_AWESOME_CSS, 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'],
             scripts: [
                 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js',
                 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
