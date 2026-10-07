@@ -18,7 +18,15 @@ class ThemeManifest
         public readonly ?string $author = null,
         public readonly ?string $description = null,
         public readonly ?string $screenshot = null,
+        public readonly ?string $directory = null,
+        public readonly bool $bundled = false,
     ) {}
+
+
+    public static function bundledPath(): string
+    {
+        return dirname(__DIR__, 2).'/resources/themes';
+    }
 
     public static function all(): array
     {
@@ -28,11 +36,15 @@ class ThemeManifest
 
         self::$cache = [];
 
-        foreach (glob(base_path('themes/*'), GLOB_ONLYDIR) ?: [] as $path) {
-            if ($manifest = self::read(basename($path), $path)) {
-                self::$cache[$manifest->key] = $manifest;
+        foreach ([self::bundledPath() => true, base_path('themes') => false] as $root => $bundled) {
+            foreach (glob($root.'/*', GLOB_ONLYDIR) ?: [] as $path) {
+                if ($manifest = self::read(basename($path), $path, $bundled)) {
+                    self::$cache[$manifest->key] = $manifest;
+                }
             }
         }
+
+        ksort(self::$cache);
 
         return self::$cache;
     }
@@ -49,7 +61,7 @@ class ThemeManifest
 
     public function path(string $append = ''): string
     {
-        return base_path("themes/{$this->key}").($append === '' ? '' : '/'.ltrim($append, '/'));
+        return ($this->directory ?? base_path("themes/{$this->key}")).($append === '' ? '' : '/'.ltrim($append, '/'));
     }
 
     public function screenshotPath(): ?string
@@ -74,7 +86,7 @@ class ThemeManifest
         return $parts === [] ? null : implode(' · ', $parts);
     }
 
-    private static function read(string $key, string $path): ?self
+    private static function read(string $key, string $path, bool $bundled): ?self
     {
         if (! is_file($file = $path.'/theme.json')) {
             return null;
@@ -93,6 +105,8 @@ class ThemeManifest
             author: self::string($data, 'author'),
             description: self::string($data, 'description'),
             screenshot: self::string($data, 'screenshot'),
+            directory: $path,
+            bundled: $bundled,
         );
     }
 

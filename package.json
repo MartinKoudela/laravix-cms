@@ -3,8 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build --config packages/laravix/cms/vite.config.js",
-        "dev": "vite build --config packages/laravix/cms/vite.config.js --watch"
+        "build": "vite build --config packages/laravix/cms/vite.config.js && node packages/laravix/cms/vite.themes.js",
+        "dev": "concurrently -k -n core,themes \"vite build --config packages/laravix/cms/vite.config.js --watch\" \"node packages/laravix/cms/vite.themes.js --watch\""
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.19",

@@ -51,6 +51,7 @@ test('a failing composer script does not abort the upgrade when the package move
         ->assertSuccessful();
 
     Process::assertRan(fn ($process) => in_array('migrate', $process->command, true));
+    Process::assertRan(fn ($process) => in_array('laravix:theme:link', $process->command, true));
     Process::assertRan(fn ($process) => in_array('optimize:clear', $process->command, true));
 });
 

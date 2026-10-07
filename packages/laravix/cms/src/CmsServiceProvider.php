@@ -189,14 +189,14 @@ class CmsServiceProvider extends ServiceProvider
 
         Livewire::component('block-editor', BlockEditor::class);
 
-        $baseThemeViews = base_path('themes/default/views');
-
         ThemeManifest::flush();
+
+        $baseThemeViews = ThemeManifest::find('default')?->path('views');
 
         foreach (ThemeManifest::all() as $theme) {
             $paths = [$theme->path('views')];
 
-            if ($paths[0] !== $baseThemeViews && is_dir($baseThemeViews)) {
+            if ($baseThemeViews !== null && $paths[0] !== $baseThemeViews && is_dir($baseThemeViews)) {
                 $paths[] = $baseThemeViews;
             }
 

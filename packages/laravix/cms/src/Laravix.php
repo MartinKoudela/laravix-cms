@@ -8,6 +8,7 @@
 namespace Laravix\Cms;
 
 use Composer\InstalledVersions;
+use Laravix\Cms\Support\ThemeManifest;
 use OutOfBoundsException;
 
 class Laravix
@@ -24,9 +25,9 @@ class Laravix
     public static function themeAsset(string $file, string $theme): ?string
     {
         $file = ltrim($file, '/');
-        $path = base_path("themes/{$theme}/dist/{$file}");
+        $path = ThemeManifest::find($theme)?->path("dist/{$file}");
 
-        if (! is_file($path)) {
+        if ($path === null || ! is_file($path)) {
             return null;
         }
 

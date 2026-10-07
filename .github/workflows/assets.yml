@@ -28,4 +28,6 @@ jobs:
       - run: npm run build
 
       - name: Committed dist must match built assets
-        run: git diff --exit-code packages/laravix/cms/dist
+        run: |
+          git add --intent-to-add packages/laravix/cms/dist packages/laravix/cms/resources/themes
+          git diff --exit-code packages/laravix/cms/dist packages/laravix/cms/resources/themes

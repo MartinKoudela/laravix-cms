@@ -66,6 +66,7 @@ class Upgrade extends Command
             ['migrate', '--force'],
             ['vendor:publish', '--tag=laravix-assets', '--force'],
             ['filament:assets'],
+            ['laravix:theme:link'],
             ['optimize:clear'],
         ] as $artisanCommand) {
             if (! $this->runStreaming([PHP_BINARY, 'artisan', ...$artisanCommand])) {
