@@ -3,23 +3,23 @@
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: 200px;
     gap: 16px;
-    max-width: 1100px;
+    max-width: var(--lx-container);
     margin: 0 auto;
 }
 .lx-bento__card {
-    background: #fff;
-    border-radius: 20px;
+    background: var(--lx-color-surface);
+    border-radius: var(--lx-radius-2xl);
     padding: 32px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    border: 1px solid #f3f4f6;
+    border: 1px solid var(--lx-color-border-subtle);
 }
 .lx-bento__card--wide  { grid-column: span 2; }
 .lx-bento__card--tall  { grid-row: span 2; }
-.lx-bento__card--dark  { background: #111827; border-color: transparent; }
-.lx-bento__card--blue  { background: #eff6ff; border-color: transparent; }
+.lx-bento__card--dark  { background: var(--lx-color-dark); border-color: transparent; }
+.lx-bento__card--blue  { background: var(--lx-color-primary-soft); border-color: transparent; }
 .lx-bento__card--green { background: #f0fdf4; border-color: transparent; }
 .lx-bento__card--purple { background: #faf5ff; border-color: transparent; }
 .lx-bento__label {
@@ -27,16 +27,16 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .08em;
-    color: #9ca3af;
+    color: var(--lx-color-subtle);
     margin: 0 0 8px;
 }
-.lx-bento__card--dark .lx-bento__label { color: #6b7280; }
-.lx-bento__title { font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0; }
-.lx-bento__card--dark .lx-bento__title { color: #fff; }
-.lx-bento__text { font-size: .9375rem; color: #6b7280; margin: 8px 0 0; line-height: 1.6; }
-.lx-bento__card--dark .lx-bento__text { color: #9ca3af; }
-.lx-bento__icon { font-size: 2.5rem; color: #e5e7eb; margin: 0 0 auto; }
-.lx-bento__card--dark .lx-bento__icon { color: #374151; }
+.lx-bento__card--dark .lx-bento__label { color: var(--lx-color-muted); }
+.lx-bento__title { font-size: 1.25rem; font-weight: 700; color: var(--lx-color-heading); margin: 0; }
+.lx-bento__card--dark .lx-bento__title { color: var(--lx-color-on-dark); }
+.lx-bento__text { font-size: .9375rem; color: var(--lx-color-muted); margin: 8px 0 0; line-height: 1.6; }
+.lx-bento__card--dark .lx-bento__text { color: var(--lx-color-on-dark-muted); }
+.lx-bento__icon { font-size: 2.5rem; color: var(--lx-color-border); margin: 0 0 auto; }
+.lx-bento__card--dark .lx-bento__icon { color: var(--lx-color-dark-surface); }
 
 @media (max-width: 768px) {
     .lx-bento { grid-template-columns: repeat(2, 1fr); }

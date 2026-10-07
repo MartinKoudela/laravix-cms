@@ -1,0 +1,86 @@
+:root {
+    /* Brand */
+    --lx-color-primary:        #2563eb;
+    --lx-color-primary-soft:   #eff6ff;
+    --lx-color-primary-muted:  #bfdbfe;
+    --lx-color-on-primary:     #fff;
+
+    /* Light surfaces & text */
+    --lx-color-surface:        #fff;
+    --lx-color-surface-alt:    #f9fafb;
+    --lx-color-heading:        #111827;
+    --lx-color-text:           #374151;
+    --lx-color-muted:          #6b7280;
+    --lx-color-subtle:         #9ca3af;
+    --lx-color-faint:          #d1d5db;
+    --lx-color-border:         #e5e7eb;
+    --lx-color-border-subtle:  #f3f4f6;
+
+    /* Dark surfaces & text */
+    --lx-color-dark:           #111827;
+    --lx-color-dark-surface:   #374151;
+    --lx-color-dark-border:    #1f2937;
+    --lx-color-on-dark:        #fff;
+    --lx-color-on-dark-soft:   #e5e7eb;
+    --lx-color-on-dark-text:   #d1d5db;
+    --lx-color-on-dark-muted:  #9ca3af;
+    --lx-color-on-dark-subtle: #4b5563;
+    --lx-color-on-dark-link:   #60a5fa;
+
+    /* Status */
+    --lx-color-success:        #16a34a;
+    --lx-color-rating:         #f59e0b;
+
+    /* Effects */
+    --lx-gradient-hero:        linear-gradient(135deg, #667eea 0%, #764ba2 40%, #f093fb 80%, #f5576c 100%);
+    --lx-shadow-sm:            0 1px 4px rgba(0,0,0,.06);
+    --lx-shadow-md:            0 4px 12px rgba(0,0,0,.1);
+    --lx-shadow-lg:            0 8px 32px rgba(0,0,0,.3);
+
+    /* Shape */
+    --lx-radius-xs:            4px;
+    --lx-radius-sm:            6px;
+    --lx-radius:               8px;
+    --lx-radius-md:            10px;
+    --lx-radius-lg:            12px;
+    --lx-radius-xl:            16px;
+    --lx-radius-2xl:           20px;
+
+    /* Typography */
+    --lx-font-heading:         inherit;
+    --lx-heading-tracking:     normal;
+
+    /* Rhythm */
+    --lx-gutter:               24px;
+    --lx-section-y:            64px;
+    --lx-section-y-lg:         80px;
+    --lx-section-y-sm:         40px;
+    --lx-container:            1100px;
+}
+
+.lx-section-head__title,
+.lx-hero__title,
+.lx-hero-video__title,
+.lx-cta__title,
+.lx-stats__value,
+.lx-steps__title,
+.lx-faq__question,
+.lx-accordion__summary,
+.lx-cards-slider__card-title,
+.lx-team__name,
+.lx-pricing__price,
+.lx-bento__title,
+.lx-split__title,
+.lx-bigtype__text,
+.lx-gradient-hero__title,
+.lx-quote__text,
+.lx-timeline__title,
+.lx-features__title,
+.lx-two-col__title,
+.lx-tabs__panel-title,
+.lx-countdown__num,
+.lx-counter__num,
+.lx-post-list__title {
+    font-family: var(--lx-font-heading);
+    letter-spacing: var(--lx-heading-tracking);
+}

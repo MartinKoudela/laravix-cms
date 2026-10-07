@@ -7,7 +7,7 @@
 .lx-steps__number {
     width: 56px;
     height: 56px;
-    background: #eff6ff;
+    background: var(--lx-color-primary-soft);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -15,7 +15,7 @@
     margin: 0 auto 16px;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #2563eb;
+    color: var(--lx-color-primary);
 }
-.lx-steps__title { font-size: 1rem; font-weight: 600; color: #111827; margin: 0 0 8px; }
-.lx-steps__text  { font-size: .9375rem; color: #6b7280; margin: 0; line-height: 1.6; }
+.lx-steps__title { font-size: 1rem; font-weight: 600; color: var(--lx-color-heading); margin: 0 0 8px; }
+.lx-steps__text  { font-size: .9375rem; color: var(--lx-color-muted); margin: 0; line-height: 1.6; }

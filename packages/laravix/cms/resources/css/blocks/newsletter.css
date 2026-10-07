@@ -8,19 +8,19 @@
     flex: 1;
     min-width: 220px;
     padding: 12px 16px;
-    border: 1px solid #bfdbfe;
-    border-radius: 8px;
+    border: 1px solid var(--lx-color-primary-muted);
+    border-radius: var(--lx-radius);
     font-size: .9375rem;
-    background: #fff;
+    background: var(--lx-color-surface);
     box-sizing: border-box;
 }
 .lx-newsletter__btn {
     padding: 12px 24px;
-    background: #2563eb;
-    color: #fff;
+    background: var(--lx-color-primary);
+    color: var(--lx-color-on-primary);
     font-weight: 600;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--lx-radius);
     font-size: .9375rem;
     cursor: pointer;
     white-space: nowrap;

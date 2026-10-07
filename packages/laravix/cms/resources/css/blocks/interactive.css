@@ -1,7 +1,7 @@
 .lx-tabs__nav {
     display: flex;
     gap: 4px;
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 2px solid var(--lx-color-border);
     margin: 0 0 32px;
     flex-wrap: wrap;
 }
@@ -9,21 +9,21 @@
     padding: 10px 20px;
     font-size: .9375rem;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--lx-color-muted);
     background: transparent;
     border: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -2px;
     cursor: pointer;
-    border-radius: 6px 6px 0 0;
+    border-radius: var(--lx-radius-sm) var(--lx-radius-sm) 0 0;
     transition: color .15s;
 }
-.lx-tabs__btn:hover { color: #111827; }
-.lx-tabs__btn--active { color: #2563eb; border-bottom-color: #2563eb; }
+.lx-tabs__btn:hover { color: var(--lx-color-heading); }
+.lx-tabs__btn--active { color: var(--lx-color-primary); border-bottom-color: var(--lx-color-primary); }
 .lx-tabs__panel { display: none; }
 .lx-tabs__panel--active { display: block; }
-.lx-tabs__panel-title { font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0 0 12px; }
-.lx-tabs__panel-text  { font-size: 1rem; color: #6b7280; line-height: 1.7; margin: 0; }
+.lx-tabs__panel-title { font-size: 1.25rem; font-weight: 700; color: var(--lx-color-heading); margin: 0 0 12px; }
+.lx-tabs__panel-text  { font-size: 1rem; color: var(--lx-color-muted); line-height: 1.7; margin: 0; }
 
 .lx-countdown__grid {
     display: flex;
@@ -37,13 +37,13 @@
     display: block;
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 900;
-    color: #fff;
+    color: var(--lx-color-on-dark);
     line-height: 1;
     font-variant-numeric: tabular-nums;
     min-width: 80px;
 }
-.lx-countdown__label { font-size: .8125rem; font-weight: 500; color: #6b7280; text-transform: uppercase; letter-spacing: .08em; margin-top: 8px; display: block; }
-.lx-countdown__sep { font-size: 3rem; font-weight: 900; color: #374151; align-self: center; padding-top: 0; line-height: 1; }
+.lx-countdown__label { font-size: .8125rem; font-weight: 500; color: var(--lx-color-muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 8px; display: block; }
+.lx-countdown__sep { font-size: 3rem; font-weight: 900; color: var(--lx-color-dark-surface); align-self: center; padding-top: 0; line-height: 1; }
 
 .lx-counter__grid {
     display: grid;
@@ -55,18 +55,18 @@
     display: block;
     font-size: 3rem;
     font-weight: 900;
-    color: #111827;
+    color: var(--lx-color-heading);
     line-height: 1;
     margin: 0 0 8px;
     font-variant-numeric: tabular-nums;
 }
 .lx-counter__suffix { font-size: 2rem; font-weight: 900; }
-.lx-counter__label { font-size: .9375rem; color: #6b7280; }
+.lx-counter__label { font-size: .9375rem; color: var(--lx-color-muted); }
 
 .lx-before-after {
     position: relative;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: var(--lx-radius-lg);
     cursor: col-resize;
     user-select: none;
     max-width: 800px;
@@ -121,7 +121,7 @@
     color: #fff;
     font-size: .75rem;
     font-weight: 600;
-    border-radius: 4px;
+    border-radius: var(--lx-radius-xs);
     pointer-events: none;
 }
 .lx-before-after__label--before { left: 12px; }
@@ -134,7 +134,7 @@
     align-items: center;
     margin: 0 0 8px;
 }
-.lx-progress__name  { font-size: .9375rem; font-weight: 600; color: #111827; }
-.lx-progress__value { font-size: .875rem; font-weight: 600; color: #6b7280; }
-.lx-progress__bar   { height: 8px; background: #f3f4f6; border-radius: 999px; overflow: hidden; }
-.lx-progress__fill  { height: 100%; background: #2563eb; border-radius: 999px; transition: width .6s ease; }
+.lx-progress__name  { font-size: .9375rem; font-weight: 600; color: var(--lx-color-heading); }
+.lx-progress__value { font-size: .875rem; font-weight: 600; color: var(--lx-color-muted); }
+.lx-progress__bar   { height: 8px; background: var(--lx-color-border-subtle); border-radius: 999px; overflow: hidden; }
+.lx-progress__fill  { height: 100%; background: var(--lx-color-primary); border-radius: 999px; transition: width .6s ease; }

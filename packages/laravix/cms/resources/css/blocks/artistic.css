@@ -7,29 +7,29 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .12em;
-    color: #9ca3af;
+    color: var(--lx-color-subtle);
     margin: 0 0 16px;
 }
 .lx-bigtype__text {
     font-size: clamp(3rem, 8vw, 8rem);
     font-weight: 900;
-    color: #111827;
+    color: var(--lx-color-heading);
     margin: 0;
     line-height: 1.05;
     letter-spacing: -.03em;
 }
-.lx-bigtype--light .lx-bigtype__text  { color: #f3f4f6; }
-.lx-bigtype--dark  { background: #111827; }
-.lx-bigtype--dark .lx-bigtype__text   { color: #fff; }
-.lx-bigtype--dark .lx-bigtype__label  { color: #4b5563; }
+.lx-bigtype--light .lx-bigtype__text  { color: var(--lx-color-border-subtle); }
+.lx-bigtype--dark  { background: var(--lx-color-dark); }
+.lx-bigtype--dark .lx-bigtype__text   { color: var(--lx-color-on-dark); }
+.lx-bigtype--dark .lx-bigtype__label  { color: var(--lx-color-on-dark-subtle); }
 .lx-bigtype__sub {
     font-size: 1.125rem;
-    color: #6b7280;
+    color: var(--lx-color-muted);
     margin: 20px 0 0;
     max-width: 560px;
     line-height: 1.7;
 }
-.lx-bigtype--dark .lx-bigtype__sub { color: #6b7280; }
+.lx-bigtype--dark .lx-bigtype__sub { color: var(--lx-color-muted); }
 
 .lx-gradient-hero {
     position: relative;
@@ -40,7 +40,7 @@
     text-align: center;
     padding: 80px 24px;
     overflow: hidden;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 40%, #f093fb 80%, #f5576c 100%);
+    background: var(--lx-gradient-hero);
     background-size: 300% 300%;
     animation: lx-gradient-shift 8s ease infinite;
 }
@@ -48,7 +48,7 @@
 .lx-gradient-hero__title {
     font-size: clamp(2.25rem, 5vw, 4rem);
     font-weight: 900;
-    color: #fff;
+    color: var(--lx-color-on-dark);
     margin: 0 0 20px;
     line-height: 1.1;
     letter-spacing: -.02em;
@@ -67,14 +67,14 @@
 }
 
 .lx-quote { max-width: 720px; margin: 0 auto; text-align: center; padding: 80px 24px; }
-.lx-quote__mark { font-size: 4rem; color: #e5e7eb; line-height: 1; display: block; margin: 0 0 24px; }
+.lx-quote__mark { font-size: 4rem; color: var(--lx-color-border); line-height: 1; display: block; margin: 0 0 24px; }
 .lx-quote__text {
     font-size: clamp(1.375rem, 3vw, 2rem);
     font-weight: 600;
-    color: #111827;
+    color: var(--lx-color-heading);
     line-height: 1.5;
     margin: 0 0 28px;
     font-style: italic;
 }
-.lx-quote__author { font-size: .9375rem; color: #9ca3af; font-style: normal; }
-.lx-quote__author strong { color: #374151; }
+.lx-quote__author { font-size: .9375rem; color: var(--lx-color-subtle); font-style: normal; }
+.lx-quote__author strong { color: var(--lx-color-text); }

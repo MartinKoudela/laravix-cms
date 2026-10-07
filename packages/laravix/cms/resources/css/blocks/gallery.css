@@ -7,7 +7,7 @@
     width: 100%;
     aspect-ratio: 4/3;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: var(--lx-radius);
     display: block;
 }
 
@@ -17,6 +17,6 @@
     width: 100%;
     height: 260px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: var(--lx-radius-md);
     display: block;
 }

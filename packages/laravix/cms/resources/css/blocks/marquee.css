@@ -1,7 +1,7 @@
 .lx-marquee {
     overflow: hidden;
     padding: 24px 0;
-    background: #111827;
+    background: var(--lx-color-dark);
     white-space: nowrap;
 }
 .lx-marquee__track {
@@ -15,20 +15,20 @@
     display: inline-block;
     font-size: 1.125rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--lx-color-on-dark);
     padding: 0 32px;
     text-transform: uppercase;
     letter-spacing: .05em;
 }
 .lx-marquee__sep {
     display: inline-block;
-    color: #4b5563;
+    color: var(--lx-color-on-dark-subtle);
     font-size: 1.25rem;
     flex-shrink: 0;
 }
-.lx-marquee--light { background: #f9fafb; }
-.lx-marquee--light .lx-marquee__item { color: #111827; }
-.lx-marquee--light .lx-marquee__sep  { color: #d1d5db; }
+.lx-marquee--light { background: var(--lx-color-surface-alt); }
+.lx-marquee--light .lx-marquee__item { color: var(--lx-color-heading); }
+.lx-marquee--light .lx-marquee__sep  { color: var(--lx-color-on-dark-text); }
 
 @keyframes lx-marquee-scroll {
     from { transform: translateX(0); }

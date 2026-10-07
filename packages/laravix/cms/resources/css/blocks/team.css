@@ -12,5 +12,5 @@
     display: block;
     object-fit: cover;
 }
-.lx-team__name { font-size: 1rem; font-weight: 600; color: #111827; margin: 0 0 4px; }
-.lx-team__role { font-size: .875rem; color: #6b7280; margin: 0; }
+.lx-team__name { font-size: 1rem; font-weight: 600; color: var(--lx-color-heading); margin: 0 0 4px; }
+.lx-team__role { font-size: .875rem; color: var(--lx-color-muted); margin: 0; }

@@ -1,13 +1,13 @@
 .lx-logo-bar {
     padding: 40px 24px;
-    border-top: 1px solid #e5e7eb;
-    border-bottom: 1px solid #e5e7eb;
+    border-top: 1px solid var(--lx-color-border);
+    border-bottom: 1px solid var(--lx-color-border);
 }
 .lx-logo-bar__inner { max-width: 960px; margin: 0 auto; }
 .lx-logo-bar__label {
     font-size: .875rem;
     font-weight: 500;
-    color: #9ca3af;
+    color: var(--lx-color-subtle);
     text-align: center;
     margin: 0 0 28px;
     text-transform: uppercase;
@@ -23,6 +23,6 @@
 .lx-logo-bar__item {
     font-size: 1.375rem;
     font-weight: 800;
-    color: #d1d5db;
+    color: var(--lx-color-faint);
     letter-spacing: -.02em;
 }
