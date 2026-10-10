@@ -23,6 +23,13 @@ export function buildConfig({ canvasStyles, mediaItems }) {
                 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
             ],
             customBadgeLabel: (component) => component.getName(),
+
+            frameStyle: `
+                :where(body) { background-color: #fff }
+                * ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1) }
+                * ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2) }
+                * ::-webkit-scrollbar { width: 10px }
+            `,
         },
         deviceManager: {
             devices: [
